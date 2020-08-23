@@ -1,0 +1,48 @@
+/*
+.pf-c-page__sidebar .pf-c-nav .pf-c-nav__simple-list .pf-c-nav__link {
+  font-size: 14px;
+}
+*/
+
+/* 
+--pf-c-page__header--MinHeight: 4.75rem
+--pf-c-page__sidebar-body--PaddingTop: var(--pf-global--spacer--sm);
+*/
+
+/*
+Limits the height of the header
+*/
+.pf-c-page__header {
+  max-height: 48px;
+  min-height: 48px;
+}
+
+/*
+Removes the top padding on left side menu
+*/
+.pf-c-page__sidebar-body {
+  padding-top: 0px;
+}
+
+/*
+page section padding fixed
+*/
+.pf-c-page__main-section {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+/*
+Removes the gray color of bottom page
+*/
+.pf-c-page__main {
+  background-color: white;
+}
+
+/*
+Removes hover on text logo
+*/
+.rb-logo-text,
+a:hover {
+  text-decoration: none;
+}

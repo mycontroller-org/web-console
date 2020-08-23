@@ -1,0 +1,64 @@
+.react-grid-layout {
+  background: #fff;
+}
+
+.react-grid-item:not(.react-grid-placeholder) {
+  background: #eee;
+  border: 1px solid rgb(235, 235, 235);
+}
+
+.react-grid-item.resizing {
+  opacity: 0.9;
+}
+
+.react-grid-item.static {
+  background: #cce;
+}
+
+.react-grid-item .add {
+  cursor: pointer;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: black;
+  opacity: 0.2;
+}
+
+#dashboard-card {
+  position: relative;
+  height: 100%;
+  /*
+  border: 0.1% solid #D5D5D5;
+  */
+  background-color: #ffffff;
+  border-radius: 0px;
+  position: relative;
+  width: 100% !important;
+  overflow: auto !important;
+}
+
+#dashboard-card .dashboard-card-title {
+  /*
+  display: block;
+  background-color: #D5D5D5;
+  border-bottom: 0.1mm solid #D5D5D5;
+  color: #3A3A3A;
+  text-align: left;
+  padding-top: 5px;
+  padding-left: 15px;
+    max-height: 30px;
+ color: #333;
+  */
+  padding: 10px 15px;
+  /*
+  font-size: 15px;
+  font-weight: 600;
+  */
+}
+
+#dashboard-card .dashboard-card-body {
+  padding-top: 10px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}

@@ -1,0 +1,33 @@
+.rb-selector .pf-c-dropdown__toggle.pf-m-plain {
+  color: inherit;
+}
+
+.rb-selector .pf-c-dropdown__menu {
+  max-height: 45vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rb-selector {
+  border-radius: 5px;
+}
+
+.rb-selector .rb-selector-dropdown {
+  display: flex;
+  padding: 0px;
+}
+
+.rb-selector .rb-selector-bookmark {
+  padding: 5px;
+  padding-left: 10px;
+  color: darkgray;
+}
+
+.rb-selector .rb-selector-bookmark :hover{
+  color: gray;
+}
+
+.rb-selector .rb-selector-item {
+  width: 100%;
+  padding: 5px;
+}
