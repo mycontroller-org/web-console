@@ -4,7 +4,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard"
 import DummyPage from "../Pages/DummyPage/DummyPage"
 import DummyPage2 from "../Pages/DummyPage2/DummyPage2"
 import { TachometerAltIcon } from "@patternfly/react-icons"
-import GatewayPage from "../Pages/Resources/Gateway/Gateway"
+import GatewayListPage from "../Pages/Resources/Gateway/List"
 
 const routes = [
   {
@@ -35,7 +35,7 @@ const routes = [
         id: "gateway",
         title: "Gateway",
         to: "/resources/gateway",
-        component: GatewayPage,
+        component: GatewayListPage,
       },
       {
         id: "node",
