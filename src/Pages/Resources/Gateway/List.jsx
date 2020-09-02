@@ -9,7 +9,7 @@ import McToolbar from "../../../Components/McToolbar/McToolbar"
 import McSpinner from "../../../Components/McSpinner/McSpinner"
 import { DetailedView, getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
 
-const columns = ["Enabled", "Name", "Provider", "Type", "Status", "Since", "Message", ""]
+const columns = ["Enabled", "Name", "Provider", "Protocol", "Status", "Since", "Message", ""]
 export default class GatewayListPage extends React.Component {
   state = {
     loading: true,
@@ -72,8 +72,8 @@ export default class GatewayListPage extends React.Component {
         return [
           { title: getStatusBool(d.enabled) },
           d.name,
-          d.providerConfig.type,
-          d.providerConfig.gatewayType,
+          d.provider.type,
+          d.provider.protocolType,
           { title: getStatus(d.state.status) },
           d.state.since,
           d.state.message,
