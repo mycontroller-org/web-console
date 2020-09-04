@@ -7,7 +7,6 @@ import {
   Divider,
   Grid,
   GridItem,
-  Button,
 } from "@patternfly/react-core"
 
 const PageTitle = ({ title, description, actions }) => {

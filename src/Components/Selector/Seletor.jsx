@@ -1,9 +1,7 @@
 import React from "react"
-import { Divider, Dropdown, DropdownItem, DropdownToggle, Grid, GridItem } from "@patternfly/react-core"
+import { Divider, Dropdown, DropdownItem, DropdownToggle } from "@patternfly/react-core"
 import {
   CaretDownIcon,
-  PlusCircleIcon,
-  MinusCircleIcon,
   OutlinedBookmarkIcon,
   BookmarkIcon,
 } from "@patternfly/react-icons"

@@ -1,5 +1,4 @@
 import axios from "axios"
-import { t } from "typy"
 import qs from "qs"
 
 import * as u from "../Util/Util"

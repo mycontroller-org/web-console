@@ -22,7 +22,7 @@ export default class Actions extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { items } = this.props
+    const { items, isDisabled } = this.props
 
     const dropdownItems = items.map((item) => {
       switch (item.type) {
@@ -38,6 +38,8 @@ export default class Actions extends React.Component {
           return drawItem("delete", "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
         case "separator":
           return <DropdownSeparator key="separator" />
+        default:
+          return null
       }
     })
     return (
@@ -45,7 +47,13 @@ export default class Actions extends React.Component {
         className="mc-actions"
         onSelect={this.onSelect}
         toggle={
-          <DropdownToggle id="toggle-id" onToggle={this.onToggle} toggleIndicator={CaretDownIcon}>
+          <DropdownToggle
+            isPlain={true}
+            id="toggle-id"
+            isDisabled={isDisabled}
+            onToggle={this.onToggle}
+            toggleIndicator={CaretDownIcon}
+          >
             Actions
           </DropdownToggle>
         }

@@ -1,7 +1,5 @@
 import React from "react"
 import RGL, { WidthProvider } from "react-grid-layout"
-import moment from "moment"
-import { Line } from "react-chartjs-2"
 import "chartjs-plugin-colorschemes"
 // https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
 
@@ -10,23 +8,15 @@ import {
   CardBody,
   CardTitle,
   Spinner,
-  ContextSelector,
-  ContextSelectorItem,
   PageSection,
   PageSectionVariants,
   Divider,
 } from "@patternfly/react-core"
-import { Table, TableHeader, TableBody, TableVariant } from "@patternfly/react-table"
 
-import PageTitle from "../../Components/PageTitle/PageTitle"
 import PageContent from "../../Components/PageContent/PageContent"
-import { api as API } from "../../Service/Api"
 
 import "./Dashboard.css"
 import Selector from "../../Components/Selector/Seletor"
-
-const A_DAYS = 21
-const DAYS = A_DAYS * 3
 
 const ReactGridLayout = WidthProvider(RGL)
 

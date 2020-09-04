@@ -1,7 +1,5 @@
 import React from "react"
 import {
-  Button,
-  ButtonVariant,
   Nav,
   NavItem,
   NavList,
@@ -10,7 +8,6 @@ import {
   DropdownGroup,
   DropdownToggle,
   DropdownItem,
-  DropdownSeparator,
   PageHeader,
   PageSidebar,
   SkipToContent,
@@ -27,14 +24,13 @@ import {
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
 //import spacingStyles from "@patternfly/react-styles/css/utilities/Spacing/spacing";
 //import { css } from "@patternfly/react-styles";
-import { CogIcon, HelpIcon, UserIcon, PowerOffIcon, QuestionCircleIcon } from "@patternfly/react-icons"
+import { CogIcon, HelpIcon, UserIcon, PowerOffIcon, InfoAltIcon } from "@patternfly/react-icons"
 //import imgBrand from "./imgBrand.svg";
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.css"
 import { routes, hiddenRoutes } from "../Service/Routes"
 import { withRouter } from "react-router"
 import { Route, Redirect, Switch } from "react-router-dom"
-import McAboutModal from "../Pages/McAboutModel/McAboutModel"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -171,14 +167,14 @@ class PageLayoutExpandableNav extends React.Component {
     )
 
     const kebabDropdownItems = [
-      <DropdownItem>
+      <DropdownItem key="settings">
         <CogIcon /> Settings
       </DropdownItem>,
-      <DropdownItem>
+      <DropdownItem key="help">
         <HelpIcon /> Help
       </DropdownItem>,
-      <DropdownItem>
-        <McAboutModal />
+      <DropdownItem key="about">
+        <InfoAltIcon /> About
       </DropdownItem>,
     ]
 
@@ -195,12 +191,6 @@ class PageLayoutExpandableNav extends React.Component {
 
     const headerTools = (
       <PageHeaderTools>
-        <PageHeaderToolsGroup
-          breakpointMods={[
-            { modifier: "hidden" },
-            { modifier: "visible", breakpoint: "lg" },
-          ]} /** the settings and help icon buttons are only visible on desktop sizes and replaced by a kebab dropdown for other sizes */
-        ></PageHeaderToolsGroup>
         <PageHeaderToolsGroup>
           <PageHeaderToolsItem
             breakpointMods={[

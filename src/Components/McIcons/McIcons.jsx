@@ -52,5 +52,5 @@ export const getStatus = (status) => {
 }
 
 export const getStatusBool = (status) => {
-  return <div style={{ textAlign: "center" }}>{getStatus(status ? "enabled" : "disabled")}</div>
+  return <div>{getStatus(status ? "enabled" : "disabled")}</div>
 }
