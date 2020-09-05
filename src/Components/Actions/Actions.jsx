@@ -7,6 +7,13 @@ import {
   RetweetIcon,
   EditIcon,
   OutlinedTrashAltIcon,
+  HeartbeatIcon,
+  EraserIcon,
+  PowerOffIcon,
+  InfoAltIcon,
+  RebootingIcon,
+  UploadIcon,
+  SearchIcon,
 } from "@patternfly/react-icons"
 
 export default class Actions extends React.Component {
@@ -24,7 +31,7 @@ export default class Actions extends React.Component {
     const { isOpen } = this.state
     const { items, isDisabled } = this.props
 
-    const dropdownItems = items.map((item) => {
+    const dropdownItems = items.map((item, index) => {
       switch (item.type) {
         case "enable":
           return drawItem("enable", "Enable", CircleIcon, item.disabled, item.onClick)
@@ -32,14 +39,32 @@ export default class Actions extends React.Component {
           return drawItem("disable", "Disable", OutlinedCircleIcon, item.disabled, item.onClick)
         case "reload":
           return drawItem("reload", "Reload", RetweetIcon, item.disabled, item.onClick)
+        case "discover":
+          return drawItem("discover", "Discover", SearchIcon, item.disabled, item.onClick)
         case "edit":
           return drawItem("edit", "Edit", EditIcon, item.disabled, item.onClick)
         case "delete":
           return drawItem("delete", "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
+        case "reboot":
+          return drawItem("reboot", "Reboot", RebootingIcon, item.disabled, item.onClick)
+        case "heartbeat_request":
+          return drawItem(
+            "heartbeat_request",
+            "Heartbeat Request",
+            HeartbeatIcon,
+            item.disabled,
+            item.onClick
+          )
+        case "refresh_node_info":
+          return drawItem("refresh_node_info", "Refresh", InfoAltIcon, item.disabled, item.onClick)
+        case "firmware_update":
+          return drawItem("firmware_update", "Firmware Update", UploadIcon, item.disabled, item.onClick)
+        case "reset":
+          return drawItem("reset", "Reset", EraserIcon, item.disabled, item.onClick)
         case "separator":
-          return <DropdownSeparator key="separator" />
+          return <DropdownSeparator key={"separator-" + index} />
         default:
-          return null
+          return <DropdownItem key={"el-" + index}>{item}</DropdownItem>
       }
     })
     return (

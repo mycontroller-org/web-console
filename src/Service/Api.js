@@ -92,6 +92,21 @@ export const api = {
     get: (id) => newRequest(HTTP_VERBS.GET, "/gateway/" + id, {}, {}),
     update: (data) => newRequest(HTTP_VERBS.POST, "/gateway/", {}, data),
   },
+  node: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/node", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/node/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/node/", {}, data),
+  },
+  sensor: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/sensor", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/sensor/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/sensor/", {}, data),
+  },
+  sensorField: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/sensorfield", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/sensorfield/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield/", {}, data),
+  },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),
     getByKey: (key) => newRequest(HTTP_VERBS.GET, "/settings/" + key, {}, {}),

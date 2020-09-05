@@ -5,6 +5,9 @@ import DummyPage from "../Pages/DummyPage/DummyPage"
 import DummyPage2 from "../Pages/DummyPage2/DummyPage2"
 import { TachometerAltIcon } from "@patternfly/react-icons"
 import GatewayListPage from "../Pages/Resources/Gateway/List"
+import NodeListPage from "../Pages/Resources/Node/List"
+import SensorListPage from "../Pages/Resources/Sensor/Sensor"
+import SensorFieldListPage from "../Pages/Resources/SensorField/SensorField"
 
 const routes = [
   {
@@ -41,13 +44,19 @@ const routes = [
         id: "node",
         title: "Node",
         to: "/resources/node",
-        component: DummyPage,
+        component: NodeListPage,
       },
       {
         id: "sensor",
         title: "Sensor",
         to: "/resources/sensor",
-        component: DummyPage,
+        component: SensorListPage,
+      },
+      {
+        id: "field",
+        title: "Sensor Field",
+        to: "/resources/field",
+        component: SensorFieldListPage,
       },
     ],
   },

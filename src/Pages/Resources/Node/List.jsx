@@ -1,32 +1,26 @@
 import React from "react"
 import ListPage from "../../../Components/ListPage/ListPage"
 import { api } from "../../../Service/Api"
-import { DetailedView, getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
+import { DetailedView, getStatus } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 
 const columns = [
-  <span className="align-center">Enabled</span>,
-  "ID",
+  "Gateway ID",
+  "Node ID",
   "Name",
-  "Provider",
-  "Protocol",
   <span className="align-center">Status</span>,
-  "Since",
-  "Message",
+  "Last Seen",
   "",
 ]
 
 const rowFn = (data) => {
   return {
     cells: [
-      { title: getStatusBool(data.enabled) },
-      data.id,
+      data.gatewayId,
+      data.nodeId,
       data.name,
-      data.provider.type,
-      data.provider.protocolType,
-      { title: getStatus(data.state.status) },
-      { title: <LastSeen date={data.state.since} /> },
-      data.state.message,
+      { title: getStatus(data.status.status) },
+      { title: <LastSeen date={data.lastSeen} /> },
       { title: <DetailedView onClick={() => console.log("clicked details")} /> },
     ],
     rid: data.id,
@@ -34,15 +28,11 @@ const rowFn = (data) => {
 }
 
 const actions = [
-  {
-    type: "enable",
-    onClick: () => {
-      console.log("Enabled clicked")
-    },
-  },
-  { type: "disable" },
-  { type: "reload" },
-  { type: "discover" },
+  { type: "heartbeat_request" },
+  { type: "refresh_node_info" },
+  { type: "firmware_update" },
+  { type: "reboot", onClick: () => {} },
+  { type: "reset" },
   { type: "separator" },
   { type: "edit", disabled: true },
   { type: "delete" },
@@ -62,13 +52,7 @@ const toolbarItems = [
 
 const List = () => {
   return (
-    <ListPage
-      title="Gateway"
-      listFn={api.gateway.list}
-      toolbar={toolbarItems}
-      rowFn={rowFn}
-      columns={columns}
-    />
+    <ListPage title="Node" listFn={api.node.list} toolbar={toolbarItems} rowFn={rowFn} columns={columns} />
   )
 }
 
