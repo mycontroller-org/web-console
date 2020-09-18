@@ -1,7 +1,10 @@
 import axios from "axios"
 import qs from "qs"
 
-import * as u from "../Util/Util"
+import store from "../store/configureStore"
+import { notificationAdd } from "../store/entities/notification"
+import { toasterAdd } from "../store/entities/toaster"
+import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 
 export const HTTP_CODES = {
   OK: 200,
@@ -31,10 +34,12 @@ const myAxios = axios.create({
 // Add a request interceptor
 myAxios.interceptors.request.use(
   (request) => {
-    //console.log('Request:', request)
+    // console.log("request:", request)
+    store.dispatch(spinnerShow())
     return request
   },
   (error) => {
+    store.dispatch(spinnerHide())
     console.log("REQ-Error:", error)
     return Promise.reject(error)
   }
@@ -44,10 +49,21 @@ myAxios.interceptors.request.use(
 myAxios.interceptors.response.use(
   (response) => {
     //console.log('Response:', response)
+    store.dispatch(spinnerHide())
     return response
   },
   (error) => {
-    // do some action
+    const alert = {
+      type: "danger",
+      title: error.message,
+      description: ["URL: " + error.config.url],
+    }
+    if (error.response && error.response.data) {
+      alert.description.push("Message: " + error.response.data)
+    }
+    store.dispatch(spinnerHide())
+    store.dispatch(notificationAdd(alert))
+    store.dispatch(toasterAdd(alert))
     return Promise.reject(error)
   }
 )
@@ -64,7 +80,8 @@ const updateFilter = (qp) => {
   const keys = ["filter", "sortBy"]
   keys.forEach((k) => {
     if (qp[k]) {
-      qp[k] = u.toString(qp[k])
+      // qp[k] = u.toString(qp[k])
+      qp[k] = JSON.stringify(qp[k])
     }
   })
   return qp
@@ -90,22 +107,28 @@ export const api = {
   gateway: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/gateway", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/gateway/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/gateway/", {}, data),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/gateway", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/gateway/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/gateway/disable", {}, data),
+    reload: (data) => newRequest(HTTP_VERBS.POST, "/gateway/reload", {}, data),
   },
   node: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/node", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/node/" + id, {}, {}),
     update: (data) => newRequest(HTTP_VERBS.POST, "/node/", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/node", {}, data),
   },
   sensor: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/sensor", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/sensor/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/sensor/", {}, data),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/sensor", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensor", {}, data),
   },
   sensorField: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/sensorfield", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/sensorfield/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield/", {}, data),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensorfield", {}, data),
   },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),

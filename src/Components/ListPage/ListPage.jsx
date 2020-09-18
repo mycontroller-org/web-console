@@ -6,6 +6,7 @@ import { Divider, Pagination, PaginationVariant } from "@patternfly/react-core"
 import McToolbar from "../McToolbar/McToolbar"
 import McSpinner from "../McSpinner/McSpinner"
 import "./ListPage.css"
+import DeleteDialog from "../Dialog/DeleteDialog"
 
 export default class ListPage extends React.Component {
   state = {
@@ -23,12 +24,17 @@ export default class ListPage extends React.Component {
       limit: pagination.limit,
       offset: pagination.limit * pagination.page,
     }
-    this.props.listFn(_page).then((res) => {
-      const rows = res.data.data.map((d) => {
-        return this.props.rowFn(d)
+    this.props
+      .listFn(_page)
+      .then((res) => {
+        const rows = res.data.data.map((d) => {
+          return this.props.rowFn(d)
+        })
+        this.setState({ rows: rows, data: res.data, loading: false, pagination, count: res.data.count })
       })
-      this.setState({ rows: rows, data: res.data, loading: false, pagination, count: res.data.count })
-    })
+      .catch((e) => {
+        this.setState({ loading: false })
+      })
   }
 
   componentDidMount() {
@@ -36,7 +42,22 @@ export default class ListPage extends React.Component {
     this.fetchRecords(pagination)
   }
 
+  onPerPage = (e, perPage) => {
+    console.log("per page called")
+    this.fetchRecords({ limit: perPage, page: 0 })
+  }
+
+  onPageSet = (e, page) => {
+    const pagination = { ...this.state.pagination }
+    pagination.page = page - 1
+    this.fetchRecords(pagination)
+  }
+
+  /*
+  // onPageSet called on the below actions
+
   onNextPage = () => {
+    console.log("next called")
     const pagination = { ...this.state.pagination }
     pagination.page = pagination.page + 1
     this.fetchRecords(pagination)
@@ -45,12 +66,6 @@ export default class ListPage extends React.Component {
   onPreviousPage = () => {
     const pagination = { ...this.state.pagination }
     pagination.page = pagination.page - 1
-    this.fetchRecords(pagination)
-  }
-
-  onPageSet = (e, page) => {
-    const pagination = { ...this.state.pagination }
-    pagination.page = page - 1
     this.fetchRecords(pagination)
   }
 
@@ -65,13 +80,10 @@ export default class ListPage extends React.Component {
     pagination.page = page - 1
     this.fetchRecords(pagination)
   }
-
-  onPerPage = (e, perPage) => {
-    this.fetchRecords({ limit: perPage, page: 0 })
-  }
+  */
 
   onSelect = (event, isSelected, rowId) => {
-    console.log(rowId, isSelected)
+    //console.log(rowId, isSelected)
     this.setState((prevState) => {
       let rows
       if (rowId === -1) {
@@ -92,10 +104,15 @@ export default class ListPage extends React.Component {
     if (this.state.loading) {
       elements.push(<McSpinner key="spinner" />)
     } else {
-      // toolbar
-
       elements.push(
-        <McToolbar key="tb1" items={this.props.toolbar} groupAlignment={{ right1: "alignRight" }} />
+        <McToolbar
+          key="tb1"
+          rows={this.state.rows}
+          refreshFn={() => this.fetchRecords(this.state.pagination)}
+          items={this.props.toolbar}
+          groupAlignment={{ right1: "alignRight" }}
+          resourceName={this.props.resourceName}
+        />
       )
 
       const tbl = (
@@ -109,7 +126,7 @@ export default class ListPage extends React.Component {
             onSelect={this.onSelect}
             className="mc-table"
             rowWrapper={(props) => {
-              console.log(props)
+              // console.log(props)
               return <RowWrapper {...props} className={props.row.selected ? "table-row-selected" : ""} />
             }}
             borders={true}
@@ -127,10 +144,10 @@ export default class ListPage extends React.Component {
             variant={PaginationVariant.bottom}
             onSetPage={this.onPageSet}
             onPerPageSelect={this.onPerPage}
-            onNextClick={this.onNextPage}
-            onPreviousClick={this.onPreviousPage}
-            onFirstClick={this.onFirstPage}
-            onLastClick={this.onLastPage}
+            //onNextClick={this.onNextPage}
+            //onPreviousClick={this.onPreviousPage}
+            //onFirstClick={this.onFirstPage}
+            //onLastClick={this.onLastPage}
           />
         </div>
       )

@@ -1,13 +1,14 @@
 import React from "react"
 import { t } from "typy"
 import Dashboard from "../Pages/Dashboard/Dashboard"
+import TopologyPage from "../Pages/Topology/Topology"
 import DummyPage from "../Pages/DummyPage/DummyPage"
 import DummyPage2 from "../Pages/DummyPage2/DummyPage2"
 import { TachometerAltIcon } from "@patternfly/react-icons"
 import GatewayListPage from "../Pages/Resources/Gateway/List"
 import NodeListPage from "../Pages/Resources/Node/List"
-import SensorListPage from "../Pages/Resources/Sensor/Sensor"
-import SensorFieldListPage from "../Pages/Resources/SensorField/SensorField"
+import SensorListPage from "../Pages/Resources/Sensor/List"
+import SensorFieldListPage from "../Pages/Resources/SensorField/List"
 
 const routes = [
   {
@@ -26,7 +27,7 @@ const routes = [
         id: "dashboardTopology",
         title: "Topology",
         to: "/dashboard/topology",
-        component: Dashboard,
+        component: TopologyPage,
       },
     ],
   },

@@ -1,9 +1,19 @@
 import React from "react"
 import { Toolbar, ToolbarContent, ToolbarItem, ToolbarGroup } from "@patternfly/react-core"
 import Actions from "../Actions/Actions"
-import { AddButton } from "../Buttons/Buttons"
+import { AddButton, RefreshButton } from "../Buttons/Buttons"
 
-const McToolbar = ({ items, groupAlignment = {} }) => {
+import "./McToolbar.css"
+
+const McToolbar = ({
+  rowsSelectionCount,
+  items,
+  groupAlignment = {},
+  refreshFn = () => {},
+  resourceName,
+  filters = null,
+  clearAllFilters,
+}) => {
   const tbItems = {}
   items.forEach((item, index) => {
     const group = item.group
@@ -14,7 +24,13 @@ const McToolbar = ({ items, groupAlignment = {} }) => {
       case "actions":
         tbItems[group].push(
           <ToolbarItem key={"tb-items-" + index}>
-            <Actions isDisabled={item.disabled} items={item.actions} />
+            <Actions
+              resourceName={resourceName}
+              rowsSelectionCount={rowsSelectionCount}
+              isDisabled={item.disabled}
+              items={item.actions}
+              refreshFn={refreshFn}
+            />
           </ToolbarItem>
         )
         break
@@ -22,6 +38,13 @@ const McToolbar = ({ items, groupAlignment = {} }) => {
         tbItems[group].push(
           <ToolbarItem key={"tb-items-" + index}>
             <AddButton onClick={item.onClick} />
+          </ToolbarItem>
+        )
+        break
+      case "refresh":
+        tbItems[group].push(
+          <ToolbarItem key={"tb-items-" + index}>
+            <RefreshButton onClick={item.onClick ? item.click : refreshFn} />
           </ToolbarItem>
         )
         break
@@ -43,8 +66,17 @@ const McToolbar = ({ items, groupAlignment = {} }) => {
   })
 
   return (
-    <Toolbar id="toolbar" key="toolbar">
-      <ToolbarContent toolbarId={"t1"} clearAllFilters={() => {}}>{finalItems}</ToolbarContent>
+    <Toolbar
+      id="toolbar"
+      key="toolbar"
+      isExpanded={false}
+      toggleIsExpanded={() => {}}
+      clearAllFilters={clearAllFilters}
+    >
+      <ToolbarContent toolbarId={"t1"} isExpanded={false}>
+        {filters}
+        {finalItems}
+      </ToolbarContent>
     </Toolbar>
   )
 }

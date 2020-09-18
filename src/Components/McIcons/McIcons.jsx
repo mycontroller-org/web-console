@@ -6,6 +6,7 @@ import {
   HelpIcon,
   ErrorCircleOIcon,
   ChevronCircleRightIcon,
+  EditAltIcon,
 } from "@patternfly/react-icons"
 
 const iconFn = (Icon, color, onClickFn) => {
@@ -34,6 +35,10 @@ export const Unavailable = ({ onClick }) => {
 
 export const DetailedView = ({ onClick }) => {
   return iconFn(ChevronCircleRightIcon, "#0088ce", onClick)
+}
+
+export const Edit = ({ onClick }) => {
+  return iconFn(EditAltIcon, "#0088ce", onClick)
 }
 
 export const getStatus = (status) => {

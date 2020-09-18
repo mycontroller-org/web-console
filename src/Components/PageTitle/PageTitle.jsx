@@ -14,7 +14,7 @@ const PageTitle = ({ title, description, actions }) => {
     <PageSection variant={PageSectionVariants.light}>
       <Grid hasGutter={false}>
         <GridItem span={6}>
-          <Title headingLevel="h2" size="lg">
+          <Title headingLevel="h2" size="xl">
             {title}
           </Title>
           {description ? (

@@ -1,22 +1,21 @@
 import React from "react"
 import {
   AboutModal,
-  Button,
   TextContent,
   TextList,
   TextListItem,
   Divider,
   Text,
   TextVariants,
-  ButtonVariant,
 } from "@patternfly/react-core"
-import { InfoAltIcon } from "@patternfly/react-icons"
 //import brandImg from "./examples/brandImg.svg"
+//import brandImg from "../../logo_full.png"
 import { api } from "../../Service/Api"
+import { connect } from "react-redux"
+import { aboutHide } from "../../store/entities/about"
 
 class McAboutModal extends React.Component {
   state = {
-    showModel: false,
     backend: {},
     loading: true,
   }
@@ -32,25 +31,18 @@ class McAboutModal extends React.Component {
       })
   }
 
-  open = () => {
-    this.setState({ showModel: true })
-  }
 
-  close = () => {
-    this.setState({ showModel: false })
-
-  }
 
   render() {
     const bk = this.state.backend
     return (
       <AboutModal
-        isOpen={this.state.showModel}
-        onClose={this.close}
+        isOpen={this.props.showModel}
+        onClose={this.props.hideAbout}
         trademark="TODO: Trademark and copyright information"
         //brandImageSrc={brandImg}
-        //brandImageAlt="Patternfly Logo"
-        //productName="MYCONTROLLER.ORG"
+        //brandImageAlt="MyController.org Logo"
+        productName="MYCONTROLLER.ORG"
       >
         <TextContent>
           <Text component={TextVariants.h2}>Backend</Text>
@@ -88,4 +80,12 @@ class McAboutModal extends React.Component {
   }
 }
 
-export default McAboutModal
+const mapStateToProps = (state) => ({
+  showModel: state.entities.about.show,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  hideAbout: () => dispatch(aboutHide())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(McAboutModal)

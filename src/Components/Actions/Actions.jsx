@@ -9,17 +9,18 @@ import {
   OutlinedTrashAltIcon,
   HeartbeatIcon,
   EraserIcon,
-  PowerOffIcon,
   InfoAltIcon,
   RebootingIcon,
   UploadIcon,
   SearchIcon,
 } from "@patternfly/react-icons"
+import DeleteDialog from "../Dialog/DeleteDialog"
 
 export default class Actions extends React.Component {
   state = {
     isOpen: false,
   }
+
   onToggle = (isOpen) => {
     this.setState({ isOpen })
   }
@@ -29,7 +30,7 @@ export default class Actions extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { items, isDisabled } = this.props
+    const { items, isDisabled, rowsSelectionCount } = this.props
 
     const dropdownItems = items.map((item, index) => {
       switch (item.type) {
@@ -42,7 +43,7 @@ export default class Actions extends React.Component {
         case "discover":
           return drawItem("discover", "Discover", SearchIcon, item.disabled, item.onClick)
         case "edit":
-          return drawItem("edit", "Edit", EditIcon, item.disabled, item.onClick)
+          return drawItem("edit", "Edit", EditIcon, rowsSelectionCount !== 1 && item.disabled, item.onClick)
         case "delete":
           return drawItem("delete", "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
         case "reboot":
@@ -68,23 +69,32 @@ export default class Actions extends React.Component {
       }
     })
     return (
-      <Dropdown
-        className="mc-actions"
-        onSelect={this.onSelect}
-        toggle={
-          <DropdownToggle
-            isPlain={true}
-            id="toggle-id"
-            isDisabled={isDisabled}
-            onToggle={this.onToggle}
-            toggleIndicator={CaretDownIcon}
-          >
-            Actions
-          </DropdownToggle>
-        }
-        isOpen={isOpen}
-        dropdownItems={dropdownItems}
-      />
+      <>
+        <Dropdown
+          className="mc-actions"
+          onSelect={this.onSelect}
+          toggle={
+            <DropdownToggle
+              isPlain={true}
+              id="toggle-id"
+              isDisabled={isDisabled || rowsSelectionCount === 0}
+              onToggle={this.onToggle}
+              toggleIndicator={CaretDownIcon}
+            >
+              Actions
+            </DropdownToggle>
+          }
+          isOpen={isOpen}
+          dropdownItems={dropdownItems}
+        />
+        <DeleteDialog
+          key="deleteDialog"
+          resourceName={this.props.resourceName}
+          show={this.state.showDeleteDialog}
+          onCloseFn={this.onCloseDeleteDialog}
+          onOkFn={this.onConfirmDeleteDialog}
+        />
+      </>
     )
   }
 }
@@ -92,7 +102,7 @@ export default class Actions extends React.Component {
 const drawItem = (key, text, icon, disabled, onClickFn) => {
   const Icon = icon
   return (
-    <DropdownItem key={key} isDisabled={disabled} icon={<Icon />} onClick={onClickFn ? onClickFn : () => {}}>
+    <DropdownItem key={key} isDisabled={disabled} icon={<Icon />} onClick={onClickFn}>
       {text}
     </DropdownItem>
   )

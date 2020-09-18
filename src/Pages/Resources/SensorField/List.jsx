@@ -1,7 +1,7 @@
 import React from "react"
 import ListPage from "../../../Components/ListPage/ListPageNew"
 import { api } from "../../../Service/Api"
-import { DetailedView, getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
+import { DetailedView } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -14,8 +14,9 @@ import {
   deleteFilterCategory,
   deleteAllFilter,
   onSortBy,
-} from "../../../store/entities/resources/gateway"
+} from "../../../store/entities/resources/sensorField"
 import { connect } from "react-redux"
+import { METRIC_TYPES } from "../../../config/globalConfig"
 
 class List extends ListPage {
   state = {
@@ -32,27 +33,6 @@ class List extends ListPage {
   }
 
   actions = [
-    {
-      type: "enable",
-      onClick: () => {
-        this.withRefresh(api.gateway.enable)
-      },
-    },
-    {
-      type: "disable",
-      onClick: () => {
-        this.withRefresh(api.gateway.disable)
-      },
-    },
-    {
-      type: "reload",
-      onClick: () => {
-        this.withRefresh(api.gateway.reload)
-      },
-    },
-    { type: "separator" },
-    { type: "discover" },
-    { type: "separator" },
     { type: "edit", disabled: true },
     { type: "delete", onClick: this.onDeleteActionClick },
   ]
@@ -72,7 +52,7 @@ class List extends ListPage {
   render() {
     return (
       <>
-        <PageTitle title="Gateway" />
+        <PageTitle title="Sensor Field" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -80,33 +60,34 @@ class List extends ListPage {
 }
 
 // Properties definition
-
 const tableColumns = [
-  { title: <span className="align-center">Enabled</span>, fieldKey: "enabled", sortable: true },
-  { title: "ID", fieldKey: "id", sortable: true },
+  { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
+  { title: "Node ID", fieldKey: "nodeId", sortable: true },
+  { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
+  { title: "Field ID", fieldKey: "fieldId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Provider", fieldKey: "provider.type", sortable: true },
-  { title: "Protocol", fieldKey: "provider.protocolType", sortable: true },
-  { title: <span className="align-center">Status</span>, fieldKey: "state.status", sortable: true },
-  { title: "Since", fieldKey: "state.since", sortable: true },
-  { title: "Message", fieldKey: "state.message", sortable: true },
+  { title: "Type", fieldKey: "type", sortable: true },
+  { title: "Unit", fieldKey: "unit", sortable: true },
+  { title: "Value", fieldKey: "payload.value", sortable: true },
+  { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
+  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
   { title: "", fieldKey: "", sortable: false },
 ]
 
 const toRowFuncImpl = (rawData) => {
   return {
     cells: [
-      { title: getStatusBool(rawData.enabled) },
-      rawData.id,
+      rawData.gatewayId,
+      rawData.nodeId,
+      rawData.sensorId,
+      rawData.fieldId,
       rawData.name,
-      rawData.provider.type,
-      rawData.provider.protocolType,
-      { title: getStatus(rawData.state.status) },
-      { title: <LastSeen date={rawData.state.since} /> },
-      rawData.state.message,
-      {
-        title: <DetailedView key="detailed" onClick={() => console.log("clicked details")} />,
-      },
+      METRIC_TYPES[rawData.type],
+      rawData.unit,
+      rawData.payload.value,
+      rawData.previousPayload.value,
+      { title: <LastSeen date={rawData.lastSeen} /> },
+      { title: <DetailedView onClick={() => console.log("clicked details")} /> },
     ],
     rid: rawData.id,
   }
@@ -114,30 +95,32 @@ const toRowFuncImpl = (rawData) => {
 
 const filtersDefinition = [
   { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
+  { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
+  { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
+  { category: "sensorId", categoryName: "Sensor ID", fieldType: "input", dataType: "string" },
+  { category: "fieldId", categoryName: "Filed ID", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.gateway.list,
-  apiDeleteRecords: api.gateway.delete,
+  apiGetRecords: api.sensorField.list,
+  apiDeleteRecords: api.sensorField.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Gateway(s)",
+  resourceName: "Sensor Fields(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.resourceGateway.loading,
-  records: state.entities.resourceGateway.records,
-  pagination: state.entities.resourceGateway.pagination,
-  count: state.entities.resourceGateway.count,
-  lastUpdate: state.entities.resourceGateway.lastUpdate,
-  revision: state.entities.resourceGateway.revision,
-  filters: state.entities.resourceGateway.filters,
-  sortBy: state.entities.resourceGateway.sortBy,
+  loading: state.entities.resourceSensorField.loading,
+  records: state.entities.resourceSensorField.records,
+  pagination: state.entities.resourceSensorField.pagination,
+  count: state.entities.resourceSensorField.count,
+  lastUpdate: state.entities.resourceSensorField.lastUpdate,
+  revision: state.entities.resourceSensorField.revision,
+  filters: state.entities.resourceSensorField.filters,
+  sortBy: state.entities.resourceSensorField.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

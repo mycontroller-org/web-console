@@ -11,7 +11,6 @@ import {
   PageHeader,
   PageSidebar,
   SkipToContent,
-  KebabToggle,
   TextContent,
   Text,
   TextVariants,
@@ -19,18 +18,34 @@ import {
   PageHeaderToolsGroup,
   PageHeaderToolsItem,
   NavExpandable,
+  NotificationBadge,
+  //Spinner,
 } from "@patternfly/react-core"
 // make sure you've installed @patternfly/patternfly
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
 //import spacingStyles from "@patternfly/react-styles/css/utilities/Spacing/spacing";
 //import { css } from "@patternfly/react-styles";
-import { CogIcon, HelpIcon, UserIcon, PowerOffIcon, InfoAltIcon } from "@patternfly/react-icons"
+import {
+  CogIcon,
+  HelpIcon,
+  UserIcon,
+  PowerOffIcon,
+  InfoAltIcon,
+  BellIcon,
+} from "@patternfly/react-icons"
 //import imgBrand from "./imgBrand.svg";
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.css"
 import { routes, hiddenRoutes } from "../Service/Routes"
 import { withRouter } from "react-router"
 import { Route, Redirect, Switch } from "react-router-dom"
+import NotificationContainer from "./NotificationContainer"
+import { notificationDrawerToggle } from "../store/entities/notification"
+import { connect } from "react-redux"
+import { aboutShow } from "../store/entities/about"
+import McAboutModel from "../Pages/McAboutModel/McAboutModel"
+import Toaster from "../Components/Toaster/Toaster"
+import Spinner from "../Components/Spinner/Spinner"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -166,6 +181,8 @@ class PageLayoutExpandableNav extends React.Component {
       </Nav>
     )
 
+    const notificationDrawer = <NotificationContainer />
+
     const kebabDropdownItems = [
       <DropdownItem key="settings">
         <CogIcon /> Settings
@@ -173,7 +190,7 @@ class PageLayoutExpandableNav extends React.Component {
       <DropdownItem key="help">
         <HelpIcon /> Help
       </DropdownItem>,
-      <DropdownItem key="about">
+      <DropdownItem key="about" onClick={this.props.showAbout}>
         <InfoAltIcon /> About
       </DropdownItem>,
     ]
@@ -191,27 +208,37 @@ class PageLayoutExpandableNav extends React.Component {
 
     const headerTools = (
       <PageHeaderTools>
-        <PageHeaderToolsGroup>
-          <PageHeaderToolsItem
-            breakpointMods={[
-              { modifier: "hidden", breakpoint: "lg" },
-            ]} /** this kebab dropdown replaces the icon buttons and is hidden for desktop sizes */
-          >
+        <PageHeaderToolsGroup key="spinner">
+          {this.props.showGlobalSpinner ? <Spinner size="lg" /> : null}
+        </PageHeaderToolsGroup>
+        <PageHeaderToolsGroup key="others">
+          <PageHeaderToolsItem visibility={{ default: "visible" }} isSelected={this.props.isDrawerExpanded}>
+            <NotificationBadge
+              variant={this.props.notificationDisplayVariant}
+              onClick={this.props.onNotificationBadgeClick}
+              aria-label="Notifications"
+              count={this.props.notificationCount}
+            >
+              <BellIcon />
+            </NotificationBadge>
+          </PageHeaderToolsItem>
+          <PageHeaderToolsItem>
             <Dropdown
               isPlain
               position="right"
               onSelect={this.onKebabDropdownSelect}
-              toggle={<KebabToggle onToggle={this.onKebabDropdownToggle} icon={<HelpIcon />} />}
+              toggle={
+                <DropdownToggle
+                  toggleIndicator={null}
+                  onToggle={this.onKebabDropdownToggle}
+                  icon={<HelpIcon />}
+                />
+              }
               isOpen={this.state.isKebabDropdownOpen}
               dropdownItems={kebabDropdownItems}
             />
           </PageHeaderToolsItem>
-          <PageHeaderToolsItem
-            breakpointMods={[
-              { modifier: "hidden" },
-              { modifier: "visible", breakpoint: "md" },
-            ]} /** this user dropdown is hidden on mobile sizes */
-          >
+          <PageHeaderToolsItem>
             <Dropdown
               isPlain
               position="right"
@@ -260,6 +287,8 @@ class PageLayoutExpandableNav extends React.Component {
 
     return (
       <React.Fragment>
+        <McAboutModel />
+        <Toaster />
         <Page
           onPageResize={() => {
             window.dispatchEvent(new Event("resize"))
@@ -269,6 +298,8 @@ class PageLayoutExpandableNav extends React.Component {
           isManagedSidebar={true}
           skipToContent={PageSkipToContent}
           mainContainerId={pageId}
+          notificationDrawer={notificationDrawer}
+          isNotificationDrawerExpanded={this.props.isDrawerExpanded}
         >
           {this.renderContent()}
         </Page>
@@ -277,4 +308,16 @@ class PageLayoutExpandableNav extends React.Component {
   }
 }
 
-export default withRouter(PageLayoutExpandableNav)
+const mapStateToProps = (state) => ({
+  isDrawerExpanded: state.entities.notification.isDrawerExpanded,
+  notificationDisplayVariant: state.entities.notification.displayVariant,
+  notificationCount: state.entities.notification.unreadCount,
+  showGlobalSpinner: state.entities.spinner.show,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onNotificationBadgeClick: () => dispatch(notificationDrawerToggle()),
+  showAbout: () => dispatch(aboutShow()),
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageLayoutExpandableNav))
