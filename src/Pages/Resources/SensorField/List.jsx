@@ -1,5 +1,5 @@
 import React from "react"
-import ListPage from "../../../Components/ListPage/ListPageNew"
+import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
 import { DetailedView } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
@@ -17,8 +17,9 @@ import {
 } from "../../../store/entities/resources/sensorField"
 import { connect } from "react-redux"
 import { METRIC_TYPES } from "../../../config/globalConfig"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 
-class List extends ListPage {
+class List extends ListBase {
   state = {
     loading: true,
     pagination: {
@@ -74,7 +75,7 @@ const tableColumns = [
   { title: "", fieldKey: "", sortable: false },
 ]
 
-const toRowFuncImpl = (rawData) => {
+const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
       rawData.gatewayId,
@@ -87,7 +88,16 @@ const toRowFuncImpl = (rawData) => {
       rawData.payload.value,
       rawData.previousPayload.value,
       { title: <LastSeen date={rawData.lastSeen} /> },
-      { title: <DetailedView onClick={() => console.log("clicked details")} /> },
+      {
+        title: (
+          <DetailedView
+            key="detailed"
+            onClick={(e) => {
+              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
+            }}
+          />
+        ),
+      },
     ],
     rid: rawData.id,
   }

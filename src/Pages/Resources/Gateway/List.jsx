@@ -1,5 +1,5 @@
 import React from "react"
-import ListPage from "../../../Components/ListPage/ListPageNew"
+import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
 import { DetailedView, getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
@@ -16,8 +16,9 @@ import {
   onSortBy,
 } from "../../../store/entities/resources/gateway"
 import { connect } from "react-redux"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 
-class List extends ListPage {
+class List extends ListBase {
   state = {
     loading: true,
     pagination: {
@@ -93,7 +94,7 @@ const tableColumns = [
   { title: "", fieldKey: "", sortable: false },
 ]
 
-const toRowFuncImpl = (rawData) => {
+const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
       { title: getStatusBool(rawData.enabled) },
@@ -105,7 +106,16 @@ const toRowFuncImpl = (rawData) => {
       { title: <LastSeen date={rawData.state.since} /> },
       rawData.state.message,
       {
-        title: <DetailedView key="detailed" onClick={() => console.log("clicked details")} />,
+        title: (
+          <DetailedView
+            key="detailed"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              r(history, rMap.resources.gateway.detail, { id: rawData.id })
+            }}
+          />
+        ),
       },
     ],
     rid: rawData.id,

@@ -9,7 +9,7 @@ import moment from "moment"
 import LastUpdate from "../LastUpdate/LastUpdate"
 import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
 
-import "./ListPage.css"
+import "./ListBase.css"
 import Filters from "../Filters/Filters"
 
 export default class ListPage extends React.Component {
@@ -40,7 +40,7 @@ export default class ListPage extends React.Component {
 
   getRows = (records) => {
     const rows = records.map((d) => {
-      return this.props.toRowFunc(d)
+      return this.props.toRowFunc(d, this.props.history)
     })
     return rows
   }
