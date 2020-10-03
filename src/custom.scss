@@ -1,0 +1,50 @@
+// This
+
+// :root {
+//   // --pf-global--LineHeight--md: 1.35;
+// }
+
+.pf-c-button {
+  --pf-c-button--LineHeight: 1.35;
+}
+
+.pf-c-form-control {
+  --pf-global--LineHeight--md: 1.3;
+}
+
+.pf-c-dropdown {
+  --pf-global--LineHeight--md: 1.35;
+}
+
+.pf-c-select {
+  --pf-global--LineHeight--md: 1.35;
+}
+
+.pf-c-dropdown__menu-item {
+  --pf-c-dropdown__menu-item--PaddingTop: 0.4rem;
+  // --pf-c-dropdown__menu-item--PaddingRight: 1rem;
+  --pf-c-dropdown__menu-item--PaddingBottom: 0.4rem;
+  // --pf-c-dropdown__menu-item--PaddingLeft: 1rem;
+}
+
+/*
+.pf-c-page .pf-c-app-launcher,
+.pf-c-page .pf-c-button,
+.pf-c-page .pf-c-dropdown,
+.pf-c-page .pf-c-dropdown__menu-item,
+.pf-c-page .pf-c-dropdown__toggle,
+.pf-c-page .pf-c-form-control,
+.modal-dialog .pf-c-app-launcher,
+.modal-dialog .pf-c-button,
+.modal-dialog .pf-c-dropdown,
+.modal-dialog .pf-c-dropdown__menu-item,
+.modal-dialog .pf-c-dropdown__toggle,
+.modal-dialog .pf-c-form-control {
+  font-size: 14px;
+  height: auto;
+}
+*/
+
+.align-center {
+  text-align: center;
+}

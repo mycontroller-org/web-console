@@ -5,7 +5,7 @@ import {
   OutlinedBookmarkIcon,
   BookmarkIcon,
 } from "@patternfly/react-icons"
-import "./Selector.css"
+import "./Selector.scss"
 
 // Sample data
 // {

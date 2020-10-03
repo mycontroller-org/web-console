@@ -9,7 +9,7 @@ import moment from "moment"
 import LastUpdate from "../LastUpdate/LastUpdate"
 import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
 
-import "./ListBase.css"
+import "./ListBase.scss"
 import Filters from "../Filters/Filters"
 
 export default class ListPage extends React.Component {
@@ -52,20 +52,43 @@ export default class ListPage extends React.Component {
     // [{ k: "name", o: "regex", v: "log" }]
 
     keys.forEach((k) => {
-      const values = filters[k]
-      if (k === "labels") {
-        values.forEach((value) => {
-          const kv = value.split("=", 2)
-          if (kv.length === 2) {
-            filter.push({ k: "labels." + kv[0], o: "eq", v: kv[1] })
-          }
-        })
-      } else {
-        if (values.length === 1) {
-          filter.push({ k: k, o: "regex", v: values[0] })
-        } else if (values.length > 1) {
-          filter.push({ k: k, o: "in", v: values })
+      let definition = {}
+      this.props.filtersDefinition.forEach((f) => {
+        if (f.category === k) {
+          definition = f
         }
+      })
+
+      // convert to target data type
+      const values = filters[k].map((v) => {
+        switch (definition.dataType) {
+          case "boolean":
+            return v === "true"
+          default:
+            return v
+        }
+      })
+
+      switch (definition.dataType) {
+        case "boolean":
+          filter.push({ k: k, o: "in", v: values })
+          break
+        default:
+          if (k === "labels") {
+            values.forEach((value) => {
+              const kv = value.split("=", 2)
+              if (kv.length === 2) {
+                filter.push({ k: "labels." + kv[0], o: "eq", v: kv[1] })
+              }
+            })
+          } else {
+            if (values.length === 1) {
+              filter.push({ k: k, o: "regex", v: values[0] })
+            } else if (values.length > 1) {
+              filter.push({ k: k, o: "in", v: values })
+            }
+          }
+          break
       }
     })
     // filter.push({ k: "provider.type", o: "eq", v: "MySensors" })
@@ -131,11 +154,11 @@ export default class ListPage extends React.Component {
     }
   }
 
-  onPerPage = (e, perPage) => {
+  onPerPage = (_e, perPage) => {
     this.fetchRecords({ limit: perPage, page: 0 })
   }
 
-  onPageSet = (e, page) => {
+  onPageSet = (_e, page) => {
     const pagination = { ...this.props.pagination }
     pagination.page = page - 1
     this.fetchRecords(pagination)
@@ -279,7 +302,7 @@ export default class ListPage extends React.Component {
             <TableHeader />
             <TableBody
               rowKey="rid"
-              // onRowClick={(e, cells, rowData) => this.onSelect(e, !cells.selected, rowData.rowIndex)}
+              //onRowClick={(e, cells, rowData) => this.onSelect(e, !cells.selected, rowData.rowIndex)}
             />
           </Table>
           <Flex>

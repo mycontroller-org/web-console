@@ -1,7 +1,6 @@
 import React from "react"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
-import { DetailedView } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -18,6 +17,7 @@ import {
 import { connect } from "react-redux"
 import { METRIC_TYPES } from "../../../config/globalConfig"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { Button } from "@patternfly/react-core"
 
 class List extends ListBase {
   state = {
@@ -67,37 +67,50 @@ const tableColumns = [
   { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
   { title: "Field ID", fieldKey: "fieldId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Type", fieldKey: "type", sortable: true },
+  { title: "Metric Type", fieldKey: "metricType", sortable: true },
   { title: "Unit", fieldKey: "unit", sortable: true },
   { title: "Value", fieldKey: "payload.value", sortable: true },
   { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
-  { title: "", fieldKey: "", sortable: false },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      rawData.gatewayId,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.gateway.detail, { id: rawData.gatewayId })
+            }}
+          >
+            {rawData.gatewayId}
+          </Button>
+        ),
+      },
       rawData.nodeId,
       rawData.sensorId,
-      rawData.fieldId,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.fieldId}
+          </Button>
+        ),
+      },
       rawData.name,
-      METRIC_TYPES[rawData.type],
+      METRIC_TYPES[rawData.metricType],
       rawData.unit,
       rawData.payload.value,
       rawData.previousPayload.value,
       { title: <LastSeen date={rawData.lastSeen} /> },
-      {
-        title: (
-          <DetailedView
-            key="detailed"
-            onClick={(e) => {
-              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
-            }}
-          />
-        ),
-      },
     ],
     rid: rawData.id,
   }

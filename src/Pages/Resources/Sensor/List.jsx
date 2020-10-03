@@ -1,7 +1,6 @@
 import React from "react"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
-import { DetailedView } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -17,6 +16,7 @@ import {
 } from "../../../store/entities/resources/sensor"
 import { connect } from "react-redux"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { Button } from "@patternfly/react-core"
 
 class List extends ListBase {
   state = {
@@ -66,27 +66,40 @@ const tableColumns = [
   { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
-  { title: "", fieldKey: "", sortable: false },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      rawData.gatewayId,
-      rawData.nodeId,
-      rawData.sensorId,
-      rawData.name,
-      { title: <LastSeen date={rawData.lastSeen} /> },
       {
         title: (
-          <DetailedView
-            key="detailed"
-            onClick={(e) => {
-              r(history, rMap.resources.sensor.detail, { id: rawData.id })
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.gateway.detail, { id: rawData.gatewayId })
             }}
-          />
+          >
+            {rawData.gatewayId}
+          </Button>
         ),
       },
+      rawData.nodeId,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.sensor.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.sensorId}
+          </Button>
+        ),
+      },
+      rawData.name,
+      { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,
   }

@@ -14,13 +14,17 @@ import {
   Divider,
 } from "@patternfly/react-core"
 
-import "./DetailBase.css"
+import "./DetailBase.scss"
 import PropTypes from "prop-types"
+import { LineChart } from "../Graphs/Graphs"
+import { RefreshButton } from "../Buttons/Buttons"
 
 export default class DetailBase extends React.Component {
   state = {
     loading: true,
     data: {},
+    metrics: [],
+    others: [],
   }
 
   loadDetail() {
@@ -29,7 +33,11 @@ export default class DetailBase extends React.Component {
       this.props
         .apiGetRecord(id)
         .then((res) => {
-          this.setState({ data: res.data, loading: false })
+          this.setState({ data: res.data, loading: false }, () => {
+            if (this.props.updateOtherDataFunc) {
+              this.props.updateOtherDataFunc(this, res.data)
+            }
+          })
         })
         .catch((_e) => {
           this.setState({ loading: false })
@@ -69,11 +77,41 @@ export default class DetailBase extends React.Component {
     }
 
     const content = this.props.renderFunc(data, this.wrapField, this.wrapCard)
+    const graphs = []
+    this.state.metrics.forEach((m, index) => {
+      //console.log(m)
+      graphs.push(
+        <GridItem key={m.name + "_" + index}>
+          <LineChart
+            key={m.name}
+            title={m.name}
+            unit={m.unit}
+            data={m.data}
+            interpolation={m.interpolation}
+            type={m.type}
+          />
+        </GridItem>
+      )
+    })
+
+    const refreshBtn = (
+      <RefreshButton
+        onClick={() => {
+          this.loadDetail()
+        }}
+      />
+    )
 
     return (
       <>
-        <PageTitle title={this.props.resourceName} />
+        <PageTitle title={this.props.resourceName} actions={refreshBtn} />
         <PageContent>
+          <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
+            {graphs}
+          </Grid>
+          <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
+            {this.state.others}
+          </Grid>
           <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
             {content}
           </Grid>
@@ -86,6 +124,7 @@ export default class DetailBase extends React.Component {
 DetailBase.propTypes = {
   resourceName: PropTypes.string,
   apiGetRecord: PropTypes.func,
+  updateOtherDataFunc: PropTypes.func,
   renderFunc: PropTypes.func,
   redirectUpdatePage: PropTypes.string,
 }

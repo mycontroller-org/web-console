@@ -85,7 +85,7 @@ const getFilterList = (filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, se
       onSelect={onTypeChangeFunc}
       placeholderText={
         <span>
-          <FilterIcon /> {selectedCategoryName}
+          <FilterIcon /> {selectedCategoryName ? selectedCategoryName : "Filter"}
         </span>
       }
     >

@@ -1,6 +1,6 @@
 import React from "react"
 import { Modal, ModalVariant, Button } from "@patternfly/react-core"
-import "./Dialog.css"
+import "./Dialog.scss"
 
 const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
   return (

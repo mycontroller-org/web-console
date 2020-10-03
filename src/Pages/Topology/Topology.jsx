@@ -1,6 +1,6 @@
 import React from "react"
 import { Spinner } from "@patternfly/react-core"
-import "./Topology.css"
+import "./Topology.scss"
 import {
   TopologyView,
   TopologyControlBar,
@@ -40,6 +40,7 @@ class TopologyPage extends React.Component {
       )
       elements.push(
         <TopologyView
+          key="tview"
           className="ws-react-c-topology"
           contextToolbar={<ProjectToolbar />}
           viewToolbar={<ViewToolbar />}

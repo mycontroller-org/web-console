@@ -1,7 +1,7 @@
 import React from "react"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
-import { DetailedView, getStatus } from "../../../Components/McIcons/McIcons"
+import { getStatus } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -17,6 +17,7 @@ import {
 } from "../../../store/entities/resources/node"
 import { connect } from "react-redux"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { Button } from "@patternfly/react-core"
 
 class List extends ListBase {
   state = {
@@ -83,29 +84,42 @@ const tableColumns = [
   { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
   { title: "Status", fieldKey: "state.status", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
-  { title: "", fieldKey: "", sortable: false },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      rawData.gatewayId,
-      rawData.nodeId,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.gateway.detail, { id: rawData.gatewayId })
+            }}
+          >
+            {rawData.gatewayId}
+          </Button>
+        ),
+      },
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.node.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.nodeId}
+          </Button>
+        ),
+      },
       rawData.name,
       rawData.labels.version,
       rawData.labels.library_version,
       { title: getStatus(rawData.state.status) },
       { title: <LastSeen date={rawData.lastSeen} /> },
-      {
-        title: (
-          <DetailedView
-            key="detailed"
-            onClick={(e) => {
-              r(history, rMap.resources.node.detail, { id: rawData.id })
-            }}
-          />
-        ),
-      },
     ],
     rid: rawData.id,
   }

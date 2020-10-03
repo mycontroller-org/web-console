@@ -5,9 +5,8 @@
 
 .pf-c-input-group {
   display: block;
-}
-
-.pf-c-input-group .pf-c-dropdown__toggle {
-  margin-bottom: 2px;
-  width: 100%;
+  .pf-c-dropdown__toggle {
+    margin-bottom: 2px;
+    width: 100%;
+  }
 }

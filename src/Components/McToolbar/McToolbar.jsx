@@ -3,7 +3,7 @@ import { Toolbar, ToolbarContent, ToolbarItem, ToolbarGroup } from "@patternfly/
 import Actions from "../Actions/Actions"
 import { AddButton, RefreshButton } from "../Buttons/Buttons"
 
-import "./McToolbar.css"
+import "./McToolbar.scss"
 
 const McToolbar = ({
   rowsSelectionCount,

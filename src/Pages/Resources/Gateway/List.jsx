@@ -1,7 +1,7 @@
 import React from "react"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { api } from "../../../Service/Api"
-import { DetailedView, getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
+import { getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
 import { LastSeen } from "../../../Components/Time/Time"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -17,6 +17,7 @@ import {
 } from "../../../store/entities/resources/gateway"
 import { connect } from "react-redux"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { Button } from "@patternfly/react-core"
 
 class List extends ListBase {
   state = {
@@ -83,40 +84,39 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: <span className="align-center">Enabled</span>, fieldKey: "enabled", sortable: true },
+  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "ID", fieldKey: "id", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Provider", fieldKey: "provider.type", sortable: true },
   { title: "Protocol", fieldKey: "provider.protocolType", sortable: true },
-  { title: <span className="align-center">Status</span>, fieldKey: "state.status", sortable: true },
+  { title: <div className="align-center">Status</div>, fieldKey: "state.status", sortable: true },
   { title: "Since", fieldKey: "state.since", sortable: true },
   { title: "Message", fieldKey: "state.message", sortable: true },
-  { title: "", fieldKey: "", sortable: false },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      { title: getStatusBool(rawData.enabled) },
-      rawData.id,
-      rawData.name,
+      { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.gateway.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.id}
+          </Button>
+        ),
+      },
+      { title: rawData.name },
       rawData.provider.type,
       rawData.provider.protocolType,
       { title: getStatus(rawData.state.status) },
       { title: <LastSeen date={rawData.state.since} /> },
       rawData.state.message,
-      {
-        title: (
-          <DetailedView
-            key="detailed"
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              r(history, rMap.resources.gateway.detail, { id: rawData.id })
-            }}
-          />
-        ),
-      },
     ],
     rid: rawData.id,
   }

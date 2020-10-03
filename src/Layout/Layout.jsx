@@ -35,7 +35,7 @@ import {
 } from "@patternfly/react-icons"
 //import imgBrand from "./imgBrand.svg";
 //import imgAvatar from "./imgAvatar.svg";
-import "./Layout.css"
+import "./Layout.scss"
 import { routes, hiddenRoutes } from "../Service/Routes"
 import { withRouter } from "react-router"
 import { Route, Redirect, Switch } from "react-router-dom"

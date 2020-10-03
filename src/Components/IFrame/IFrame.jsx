@@ -1,5 +1,6 @@
 import React from "react"
 import { Modal, Button, ModalVariant } from "@patternfly/react-core"
+import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons"
 
 import "./IFrame.scss"
 
@@ -21,21 +22,21 @@ class IFrame extends React.Component {
       <>
         <Button variant="link" isInline onClick={this.handleToggle}>
           {this.props.url}
-        </Button>
+        </Button>{" "}
+        <a href={this.props.url} target="_blank" rel="noopener noreferrer">
+          <ExternalLinkSquareAltIcon />
+        </a>
         <Modal
           title={this.props.url}
           isOpen={isOpen}
           onClose={this.handleToggle}
-          variant={ModalVariant.medium}
+          variant={ModalVariant.default}
           className="mc-iframe"
         >
           <div
             className="iframe"
             dangerouslySetInnerHTML={{
-              __html:
-                '<iframe width="100%" height="500" align-items="stretch" src="' +
-                this.props.url +
-                '"></iframe>',
+              __html: '<iframe width="100%" align-items="stretch" src="' + this.props.url + '"></iframe>',
             }}
           />
         </Modal>

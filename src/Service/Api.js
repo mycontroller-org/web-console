@@ -90,8 +90,8 @@ const updateFilter = (qp) => {
 const newRequest = (method, url, queryParams, data, headers) =>
   myAxios.request({
     method: method,
-    //url: "/api" + url,
-    url: "http://localhost:8080/api" + url,
+    url: "/api" + url,
+    //url: "http://localhost:8080/api" + url,
     data: data,
     headers: { ...getHeaders(), ...headers },
     params: updateFilter(queryParams),
@@ -129,6 +129,9 @@ export const api = {
     get: (id) => newRequest(HTTP_VERBS.GET, "/sensorfield/" + id, {}, {}),
     update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensorfield", {}, data),
+  },
+  metric:{
+    fetch:(queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries)
   },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),

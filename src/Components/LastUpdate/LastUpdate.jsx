@@ -1,7 +1,7 @@
 import React from "react"
 import moment from "moment"
 
-import "./LastUpdate.css"
+import "./LastUpdate.scss"
 
 const LastUpdate = ({ time }) => {
   const lastUpdate = moment(time)

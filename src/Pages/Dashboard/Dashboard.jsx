@@ -15,7 +15,7 @@ import {
 
 import PageContent from "../../Components/PageContent/PageContent"
 
-import "./Dashboard.css"
+import "./Dashboard.scss"
 import Selector from "../../Components/Selector/Seletor"
 
 const ReactGridLayout = WidthProvider(RGL)
