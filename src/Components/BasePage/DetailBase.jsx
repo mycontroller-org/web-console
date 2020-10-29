@@ -23,7 +23,8 @@ export default class DetailBase extends React.Component {
   state = {
     loading: true,
     data: {},
-    metrics: [],
+    graphs: [],
+    graphsHeaders: [],
     others: [],
   }
 
@@ -78,7 +79,7 @@ export default class DetailBase extends React.Component {
 
     const content = this.props.renderFunc(data, this.wrapField, this.wrapCard)
     const graphs = []
-    this.state.metrics.forEach((m, index) => {
+    this.state.graphs.forEach((m, index) => {
       //console.log(m)
       graphs.push(
         <GridItem key={m.name + "_" + index}>
@@ -106,6 +107,9 @@ export default class DetailBase extends React.Component {
       <>
         <PageTitle title={this.props.resourceName} actions={refreshBtn} />
         <PageContent>
+          <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
+            {this.state.graphsHeaders}
+          </Grid>
           <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
             {graphs}
           </Grid>

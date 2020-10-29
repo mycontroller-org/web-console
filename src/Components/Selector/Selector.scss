@@ -10,7 +10,8 @@
     padding: 0px;
   }
   .rb-selector-bookmark {
-    padding: 5px;
+    padding: 10px;
+    padding-right: 5px;
     padding-left: 10px;
     color: darkgray;
     :hover {
@@ -18,10 +19,16 @@
     }
   }
   .rb-selector-item {
-    width: 100%;
-    padding: 5px;
+    padding: 10px;
+    padding-left: 5px;
+    font-size: 16px;
   }
   .pf-c-dropdown__toggle {
     color: inherit;
   }
+}
+
+.selector-title {
+  font-size: 18px;
+  margin-right: 5px;
 }

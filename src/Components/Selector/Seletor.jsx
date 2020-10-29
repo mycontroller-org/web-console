@@ -4,6 +4,8 @@ import {
   CaretDownIcon,
   OutlinedBookmarkIcon,
   BookmarkIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
 } from "@patternfly/react-icons"
 import "./Selector.scss"
 
@@ -104,7 +106,7 @@ class Selector extends React.Component {
     elements.push(...itemUnMarked)
 
     const title = this.props.prefix ? (
-      <span style={{ fontSize: "18px", color: "gray", marginRight: "5px", fontWeight: "bold" }}>
+      <span className="rb-selector-title">
         {this.props.prefix}:
       </span>
     ) : null
@@ -115,7 +117,7 @@ class Selector extends React.Component {
         toggle={
           <DropdownToggle id="selector-toggle-id" onToggle={this.onToggle} toggleIndicator={CaretDownIcon}>
             {title}
-            <span style={{ fontSize: "18px" }}>{this.state.selected.text}</span>
+            <span>{this.state.selected.text}</span>
           </DropdownToggle>
         }
         isOpen={this.state.isOpen}
@@ -126,7 +128,7 @@ class Selector extends React.Component {
 }
 
 const getItem = (item, onSelectFn, onBookmarkChangeFn) => {
-  const Icon = item.bookmarked ? BookmarkIcon : OutlinedBookmarkIcon
+  const Icon = item.bookmarked ? MinusCircleIcon : PlusCircleIcon
   return (
     <DropdownItem key={item.id} className="rb-selector-dropdown">
       <div className="rb-selector-bookmark" onClick={() => onBookmarkChangeFn(item)}>

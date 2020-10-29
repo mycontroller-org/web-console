@@ -84,6 +84,7 @@ export default class SimpleLoginPage extends React.Component {
         passwordValue={this.state.passwordValue}
         onChangePassword={this.handlePasswordChange}
         isValidPassword={this.state.isValidPassword}
+        rememberMeLabel="Keep me logged in for 30 days."
         isRememberMeChecked={this.state.isRememberMeChecked}
         onChangeRememberMe={this.onRememberMeClick}
         onLoginButtonClick={this.onLoginButtonClick}

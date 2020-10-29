@@ -133,6 +133,9 @@ export const api = {
   metric:{
     fetch:(queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries)
   },
+  action:{
+    send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {})
+  },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),
     getByKey: (key) => newRequest(HTTP_VERBS.GET, "/settings/" + key, {}, {}),

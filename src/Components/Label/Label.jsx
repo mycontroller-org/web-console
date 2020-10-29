@@ -37,7 +37,7 @@ export const KeyValue = ({ name, value, index = 0 }) => {
       finalValue = <IFrame url={value} />
       break
     default:
-      finalValue = name === "password" ? "****" : value ? value.toString() : ""
+      finalValue = name === "password" ? "****" : value !== undefined ? String(value) : ""
   }
   return (
     <div className="key-value-map" key={name + index}>

@@ -23,8 +23,8 @@ export const areaTheme = {
     padding: {
       bottom: 40,
       left: 80,
-      right: 5,
-      top: 5,
+      right: 10,
+      top: 15,
     },
   },
   dependentAxis: {

@@ -22,16 +22,19 @@ class Table extends React.Component {
       const value = this.props.filters[key]
       return { k: key, o: "eq", v: value }
     })
+
+    const limit = pagination.limit ? pagination.limit : ITEMS_LIMIT
+    const offset = pagination.page ? pagination.page : 0
     const _page = {
-      limit: pagination.limit ? pagination.limit : ITEMS_LIMIT,
-      offset: pagination.page ? pagination.page : 0,
+      limit: limit,
+      offset: offset * limit,
       filter: filters,
     }
     // update sortBy
     let sortBy = null
     if (pagination.sortBy) {
       sortBy = pagination.sortBy
-    } else if (this.state.sortBy.field) {
+    } else if (this.state.sortBy && this.state.sortBy.field) {
       sortBy = this.state.sortBy
     }
     if (sortBy) {

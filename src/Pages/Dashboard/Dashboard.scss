@@ -20,8 +20,7 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: black;
-  opacity: 0.2;
+  background: var(--pf-global--palette--blue-200);
 }
 
 #dashboard-card {
@@ -49,16 +48,14 @@
     max-height: 30px;
  color: #333;
   */
-  padding: 10px 15px;
+  padding: 7px 10px 0px 10px;
   /*
   font-size: 15px;
   font-weight: 600;
   */
+ 
 }
 
 #dashboard-card .dashboard-card-body {
-  padding-top: 10px;
-  padding-right: 5px;
-  padding-left: 5px;
-  padding-bottom: 5px;
+  padding: 10px 10px;
 }

@@ -13,30 +13,30 @@
 Limits the height of the header
 */
 .pf-c-page__header {
-  max-height: 48px;
-  min-height: 48px;
+  max-height: 48px !important;
+  min-height: 48px !important;
 }
 
 /*
 Removes the top padding on left side menu
 */
 .pf-c-page__sidebar-body {
-  padding-top: 0px;
+  padding-top: 0px !important;
 }
 
 /*
 page section padding fixed
 */
 .pf-c-page__main-section {
-  padding-top: 10px;
-  padding-bottom: 5px;
+  padding-top: 10px !important;
+  padding-bottom: 5px !important;
 }
 
 /*
 Removes the gray color of bottom page
 */
 .pf-c-page__main {
-  background-color: white;
+  background-color: white !important;
 }
 
 /*
