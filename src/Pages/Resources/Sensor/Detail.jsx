@@ -1,4 +1,5 @@
 import React from "react"
+import YAML from "js-yaml"
 import { api } from "../../../Service/Api"
 import DetailBase from "../../../Components/BasePage/DetailBase"
 
@@ -8,6 +9,7 @@ import Table from "../../../Components/Table/Table"
 import { METRIC_TYPES } from "../../../config/globalConfig"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { LastSeen } from "../../../Components/Time/Time"
+import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 
 class Detail extends DetailBase {
   componentDidMount() {
@@ -32,12 +34,12 @@ const renderFunc = (data, wrapFieldFunc, wrapCardFunc) => {
   others.push(wrapFieldFunc("Labels", <Labels data={data.labels} />))
   others.push(wrapFieldFunc("Others", <KeyValueMap data={data.others} />))
 
-  const jsonData = JSON.stringify(data, null, 2)
+  const yamlData = YAML.safeDump(data)
   const content = []
 
   content.push(wrapCardFunc("Overview", fields))
   content.push(wrapCardFunc("Labels and Others", others))
-  content.push(wrapCardFunc("JSON", <pre>{jsonData}</pre>))
+  content.push(wrapCardFunc("YAML", <CodeEditor data={yamlData} />))
 
   return content
 }

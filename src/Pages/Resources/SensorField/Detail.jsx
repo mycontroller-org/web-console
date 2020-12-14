@@ -1,11 +1,14 @@
 import React from "react"
 import moment from "moment"
+import YAML from "js-yaml"
+
 import { api } from "../../../Service/Api"
 import DetailBase from "../../../Components/BasePage/DetailBase"
 
 import { KeyValueMap, Labels } from "../../../Components/Label/Label"
 import Select from "../../../Components/Select/Select"
 import Editor, { monaco } from "@monaco-editor/react"
+import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 
 monaco
   .init()
@@ -192,14 +195,13 @@ const renderFunc = (data, wrapFieldFunc, wrapCardFunc) => {
   payload.push(wrapFieldFunc("Payload", <KeyValueMap data={data.payload} />))
   payload.push(wrapFieldFunc("Previous Payload", <KeyValueMap data={data.previousPayload} />))
 
-  const jsonData = JSON.stringify(data, null, 2)
+  const yamlData = YAML.safeDump(data)
   const content = []
 
   content.push(wrapCardFunc("Overview", fields))
   content.push(wrapCardFunc("Labels and Others", others))
   content.push(wrapCardFunc("Payload", payload))
-  // content.push(wrapCardFunc("JSON", <pre>{jsonData}</pre>))
-  content.push(wrapCardFunc("JSON", <pre>{editor(jsonData)}</pre>))
+  content.push(wrapCardFunc("JSON", <CodeEditor data={yamlData} />))
 
   return content
 }

@@ -1,4 +1,5 @@
 import React from "react"
+import YAML from "js-yaml"
 import { api } from "../../../Service/Api"
 import DetailBase from "../../../Components/BasePage/DetailBase"
 
@@ -8,6 +9,7 @@ import { LastSeen } from "../../../Components/Time/Time"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { GridItem, Button } from "@patternfly/react-core"
 import Table from "../../../Components/Table/Table"
+import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 
 class Detail extends DetailBase {
   componentDidMount() {
@@ -30,16 +32,16 @@ const renderFunc = (data, wrapFieldFunc, wrapCardFunc) => {
 
   const provider = []
   provider.push(wrapFieldFunc("Type", data.provider.type))
-  provider.push(wrapFieldFunc("Protocol", data.provider.protocolType))
+  provider.push(wrapFieldFunc("Protocol", data.provider.protocol.type))
 
   provider.push(wrapFieldFunc("Configuration", <KeyValueMap data={data.provider.config} />))
 
-  const jsonData = JSON.stringify(data, null, 2)
+  const yamlData = YAML.safeDump(data)
   const content = []
 
   content.push(wrapCardFunc("Overview", fields))
   content.push(wrapCardFunc("Provider", provider))
-  content.push(wrapCardFunc("JSON", <pre>{jsonData}</pre>))
+  content.push(wrapCardFunc("YAML", <CodeEditor data={yamlData} />))
 
   return content
 }
