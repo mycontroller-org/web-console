@@ -2,6 +2,7 @@
   "name": "mycontroller-console-web",
   "version": "2.0.0",
   "private": true,
+  "proxy": "http://localhost:8080/",
   "dependencies": {
     "@monaco-editor/react": "^3.6.3",
     "@patternfly/react-charts": "^6.10.4",

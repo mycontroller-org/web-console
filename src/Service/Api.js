@@ -1,10 +1,9 @@
 import axios from "axios"
 import qs from "qs"
-
 import store from "../store/configureStore"
+import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 import { notificationAdd } from "../store/entities/notification"
 import { toasterAdd } from "../store/entities/toaster"
-import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 
 export const HTTP_CODES = {
   OK: 200,
@@ -59,7 +58,7 @@ myAxios.interceptors.response.use(
       description: ["URL: " + error.config.url],
     }
     if (error.response && error.response.data) {
-      alert.description.push("Message: " + error.response.data)
+      alert.description.push("Message: " + JSON.stringify(error.response.data))
     }
     store.dispatch(spinnerHide())
     store.dispatch(notificationAdd(alert))
@@ -87,15 +86,20 @@ const updateFilter = (qp) => {
   return qp
 }
 
-const newRequest = (method, url, queryParams, data, headers) =>
-  myAxios.request({
+const newRequest = (method, url, queryParams, data, headers) => {
+  // grab current state
+  const auth = store.getState().entities.auth
+  const token = "Bearer " + (auth.authenticated ? auth.user.token : "")
+
+  return myAxios.request({
     method: method,
     url: "/api" + url,
     //url: "http://localhost:8080/api" + url,
     data: data,
-    headers: { ...getHeaders(), ...headers },
+    headers: { ...getHeaders(), ...headers, Authorization: token },
     params: updateFilter(queryParams),
   })
+}
 
 export const api = {
   status: {
@@ -103,6 +107,9 @@ export const api = {
   },
   version: {
     get: () => newRequest(HTTP_VERBS.GET, "/version", {}, {}),
+  },
+  auth: {
+    login: (data) => newRequest(HTTP_VERBS.POST, "/user/login", {}, data),
   },
   gateway: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/gateway", filter, {}),
@@ -130,11 +137,11 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensorfield", {}, data),
   },
-  metric:{
-    fetch:(queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries)
+  metric: {
+    fetch: (queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries),
   },
-  action:{
-    send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {})
+  action: {
+    send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
   },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),

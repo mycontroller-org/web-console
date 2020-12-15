@@ -1,15 +1,15 @@
-import React from "react"
+import { Button, GridItem } from "@patternfly/react-core"
 import YAML from "js-yaml"
-import { api } from "../../../Service/Api"
+import React from "react"
 import DetailBase from "../../../Components/BasePage/DetailBase"
-
-import { getStatus } from "../../../Components/McIcons/McIcons"
-import { KeyValueMap, Labels } from "../../../Components/Label/Label"
-import { LastSeen } from "../../../Components/Time/Time"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { GridItem, Button } from "@patternfly/react-core"
-import Table from "../../../Components/Table/Table"
 import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
+import { KeyValueMap, Labels } from "../../../Components/Label/Label"
+import { getStatus } from "../../../Components/McIcons/McIcons"
+import Table from "../../../Components/Table/Table"
+import { LastSeen } from "../../../Components/Time/Time"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+
 
 class Detail extends DetailBase {
   componentDidMount() {

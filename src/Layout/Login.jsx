@@ -1,17 +1,18 @@
-import React from "react"
-//import brandImg from './brandImgColor.svg';
 import {
+  ListItem,
   LoginFooterItem,
   LoginForm,
   LoginMainFooterBandItem,
-  LoginMainFooterLinksItem,
-  LoginPage,
-  BackgroundImageSrc,
-  ListItem,
+  LoginPage
 } from "@patternfly/react-core"
 import { ExclamationCircleIcon } from "@patternfly/react-icons"
+import React from "react"
+import { connect } from "react-redux"
+import { api } from "../Service/Api"
+import { authSuccess } from "../store/entities/auth"
+import brandImg2 from "./logo-mycontroller.org_full.png"
 
-export default class SimpleLoginPage extends React.Component {
+class SimpleLoginPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,6 +22,7 @@ export default class SimpleLoginPage extends React.Component {
       passwordValue: "",
       isValidPassword: true,
       isRememberMeChecked: false,
+      isLoginButtonDisabled: false,
     }
 
     this.handleUsernameChange = (value) => {
@@ -37,9 +39,25 @@ export default class SimpleLoginPage extends React.Component {
 
     this.onLoginButtonClick = (event) => {
       event.preventDefault()
-      this.setState({ isValidUsername: !!this.state.usernameValue })
-      this.setState({ isValidPassword: !!this.state.passwordValue })
-      this.setState({ showHelperText: !this.state.usernameValue || !this.state.passwordValue })
+      this.setState({ isLoginButtonDisabled: true })
+      const loginData = {
+        username: this.state.usernameValue,
+        password: this.state.passwordValue,
+      }
+      api.auth
+        .login(loginData)
+        .then((res) => {
+          const user = { ...res.data }
+          this.props.updateSuccessLogin(user)
+        })
+        .catch((e) => {
+          this.setState({
+            isValidUsername: false,
+            isValidPassword: false,
+            showHelperText: true,
+            isLoginButtonDisabled: false,
+          })
+        })
     }
   }
 
@@ -88,6 +106,7 @@ export default class SimpleLoginPage extends React.Component {
         isRememberMeChecked={this.state.isRememberMeChecked}
         onChangeRememberMe={this.onRememberMeClick}
         onLoginButtonClick={this.onLoginButtonClick}
+        isLoginButtonDisabled={this.state.isLoginButtonDisabled}
       />
     )
 
@@ -102,13 +121,14 @@ export default class SimpleLoginPage extends React.Component {
     return (
       <LoginPage
         footerListVariants="inline"
-        // brandImgSrc={brandImg2}
-        brandImgAlt="PatternFly logo"
+        brandImgSrc={brandImg2}
+        brandImgAlt="MyController.org logo"
         backgroundImgSrc={images}
         backgroundImgAlt="Images"
         footerListItems={listItem}
         textContent="This is placeholder text only. Use this area to place any information or introductory message about your application that may be relevant to users."
-        loginTitle="Log in to your account"
+        loginTitle="Welcome to MyController.org"
+        loginSubtitle="Login to your account"
         forgotCredentials={forgotCredentials}
       >
         {loginForm}
@@ -116,3 +136,11 @@ export default class SimpleLoginPage extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = (dispatch) => ({
+  updateSuccessLogin: (data) => dispatch(authSuccess(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleLoginPage)

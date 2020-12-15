@@ -1,51 +1,44 @@
-import React from "react"
 import {
-  Nav,
-  NavItem,
-  NavList,
-  Page,
   Dropdown,
   DropdownGroup,
-  DropdownToggle,
   DropdownItem,
+  DropdownToggle,
+  Nav,
+  NavExpandable,
+  NavItem,
+  NavList,
+  NotificationBadge,
+  Page,
   PageHeader,
-  PageSidebar,
-  SkipToContent,
-  TextContent,
-  Text,
-  TextVariants,
   PageHeaderTools,
   PageHeaderToolsGroup,
   PageHeaderToolsItem,
-  NavExpandable,
-  NotificationBadge,
-  //Spinner,
+  PageSidebar,
+  SkipToContent,
+  Text,
+  TextContent,
+  TextVariants
 } from "@patternfly/react-core"
 // make sure you've installed @patternfly/patternfly
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
 //import spacingStyles from "@patternfly/react-styles/css/utilities/Spacing/spacing";
 //import { css } from "@patternfly/react-styles";
-import {
-  CogIcon,
-  HelpIcon,
-  UserIcon,
-  PowerOffIcon,
-  InfoAltIcon,
-  BellIcon,
-} from "@patternfly/react-icons"
+import { BellIcon, CogIcon, HelpIcon, InfoAltIcon, PowerOffIcon, UserIcon } from "@patternfly/react-icons"
+import React from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router"
+import { Redirect, Route, Switch } from "react-router-dom"
+import Spinner from "../Components/Spinner/Spinner"
+import Toaster from "../Components/Toaster/Toaster"
+import McAboutModel from "../Pages/McAboutModel/McAboutModel"
+import { hiddenRoutes, routes } from "../Service/Routes"
+import { aboutShow } from "../store/entities/about"
+import { clearAuth } from "../store/entities/auth"
+import { notificationDrawerToggle } from "../store/entities/notification"
 //import imgBrand from "./imgBrand.svg";
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
-import { routes, hiddenRoutes } from "../Service/Routes"
-import { withRouter } from "react-router"
-import { Route, Redirect, Switch } from "react-router-dom"
 import NotificationContainer from "./NotificationContainer"
-import { notificationDrawerToggle } from "../store/entities/notification"
-import { connect } from "react-redux"
-import { aboutShow } from "../store/entities/about"
-import McAboutModel from "../Pages/McAboutModel/McAboutModel"
-import Toaster from "../Components/Toaster/Toaster"
-import Spinner from "../Components/Spinner/Spinner"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -200,7 +193,7 @@ class PageLayoutExpandableNav extends React.Component {
         <DropdownItem key="group 2 profile">
           <UserIcon /> Profile
         </DropdownItem>
-        <DropdownItem key="group 2 logout">
+        <DropdownItem key="group 2 logout" onClick={this.props.doLogout}>
           <PowerOffIcon /> Logout
         </DropdownItem>
       </DropdownGroup>,
@@ -246,7 +239,7 @@ class PageLayoutExpandableNav extends React.Component {
               isOpen={this.state.isDropdownOpen}
               toggle={
                 <DropdownToggle onToggle={this.onDropdownToggle} icon={<UserIcon />}>
-                  Admin User
+                  {this.props.userDetail.fullName}
                 </DropdownToggle>
               }
               dropdownItems={userDropdownItems}
@@ -313,11 +306,13 @@ const mapStateToProps = (state) => ({
   notificationDisplayVariant: state.entities.notification.displayVariant,
   notificationCount: state.entities.notification.unreadCount,
   showGlobalSpinner: state.entities.spinner.show,
+  userDetail: state.entities.auth.user,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onNotificationBadgeClick: () => dispatch(notificationDrawerToggle()),
   showAbout: () => dispatch(aboutShow()),
+  doLogout: () => dispatch(clearAuth()),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageLayoutExpandableNav))

@@ -1,25 +1,30 @@
-import React from "react"
 import {
-  NotificationDrawer,
-  NotificationDrawerHeader,
-  NotificationDrawerBody,
-  EmptyState,
-  Title,
-  EmptyStateBody,
-  EmptyStateVariant,
-  EmptyStateIcon,
-  NotificationDrawerListItem,
-  NotificationDrawerListItemHeader,
-  NotificationDrawerListItemBody,
-  DropdownPosition,
-  DropdownItem,
   Dropdown,
+  DropdownItem,
+  DropdownPosition,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  EmptyStateVariant,
   KebabToggle,
+  NotificationDrawer,
+  NotificationDrawerBody,
+  NotificationDrawerHeader,
+  NotificationDrawerListItem,
+  NotificationDrawerListItemBody,
+  NotificationDrawerListItemHeader,
+  Title
 } from "@patternfly/react-core"
 import { SearchIcon } from "@patternfly/react-icons"
-import { connect } from "react-redux"
-import { notificationClearAll, notificationMarkAllRead, notificationMarkAsRead } from "../store/entities/notification"
 import moment from "moment"
+import React from "react"
+import { connect } from "react-redux"
+import {
+  notificationClearAll,
+  notificationDrawerToggle,
+  notificationMarkAllRead,
+  notificationMarkAsRead
+} from "../store/entities/notification"
 
 class NotificationContainer extends React.Component {
   state = {
@@ -76,7 +81,7 @@ class NotificationContainer extends React.Component {
     }
     return (
       <NotificationDrawer>
-        <NotificationDrawerHeader count={this.props.unreadCount}>
+        <NotificationDrawerHeader count={this.props.unreadCount} onClose={this.props.onNotificationClose}>
           <Dropdown
             onSelect={this.toggleOptions}
             toggle={<KebabToggle onToggle={this.toggleOptions} id="toggle-id-0" />}
@@ -102,6 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
   clearAll: () => dispatch(notificationClearAll()),
   markAllRead: () => dispatch(notificationMarkAllRead()),
   markAsRead: (id) => dispatch(notificationMarkAsRead({ id })),
+  onNotificationClose: () => dispatch(notificationDrawerToggle()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationContainer)
