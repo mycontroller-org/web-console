@@ -31,7 +31,7 @@ import { Redirect, Route, Switch } from "react-router-dom"
 import Spinner from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
 import McAboutModel from "../Pages/McAboutModel/McAboutModel"
-import { hiddenRoutes, routes } from "../Service/Routes"
+import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Service/Routes"
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
 import { notificationDrawerToggle } from "../store/entities/notification"
@@ -190,7 +190,12 @@ class PageLayoutExpandableNav extends React.Component {
 
     const userDropdownItems = [
       <DropdownGroup key="group 2">
-        <DropdownItem key="group 2 profile">
+        <DropdownItem
+          key="group 2 profile"
+          onClick={() => {
+            r(this.props.history, rMap.settings.profile)
+          }}
+        >
           <UserIcon /> Profile
         </DropdownItem>
         <DropdownItem key="group 2 logout" onClick={this.props.doLogout}>

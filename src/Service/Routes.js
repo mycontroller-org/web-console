@@ -1,17 +1,17 @@
+import { TachometerAltIcon } from "@patternfly/react-icons"
 import React from "react"
 import Dashboard from "../Pages/Dashboard/Dashboard"
-import TopologyPage from "../Pages/Topology/Topology"
-import DummyPage from "../Pages/DummyPage/DummyPage"
-import DummyPage2 from "../Pages/DummyPage2/DummyPage2"
-import { TachometerAltIcon } from "@patternfly/react-icons"
-import GatewayListPage from "../Pages/Resources/Gateway/List"
-import NodeListPage from "../Pages/Resources/Node/List"
-import SensorListPage from "../Pages/Resources/Sensor/List"
-import SensorFieldListPage from "../Pages/Resources/SensorField/List"
+// import DummyPage from "../Pages/DummyPage/DummyPage"
 import GatewayDetailPage from "../Pages/Resources/Gateway/Detail"
+import GatewayListPage from "../Pages/Resources/Gateway/List"
 import NodeDetailPage from "../Pages/Resources/Node/Detail"
+import NodeListPage from "../Pages/Resources/Node/List"
 import SensorDetailPage from "../Pages/Resources/Sensor/Detail"
+import SensorListPage from "../Pages/Resources/Sensor/List"
 import SensorFieldDetailPage from "../Pages/Resources/SensorField/Detail"
+import SensorFieldListPage from "../Pages/Resources/SensorField/List"
+import ProfilePage from "../Pages/Settings/Profile/Profile"
+//import TopologyPage from "../Pages/Topology/Topology"
 
 const routeMap = {
   home: "/",
@@ -38,6 +38,9 @@ const routeMap = {
       update: "/resources/field/update/:id",
     },
   },
+  settings: {
+    profile: "/settings/profile",
+  },
 }
 
 const routes = [
@@ -53,12 +56,12 @@ const routes = [
         component: Dashboard,
         icon: <TachometerAltIcon />,
       },
-      {
-        id: "dashboardTopology",
-        title: "Topology",
-        to: "/dashboard/topology",
-        component: TopologyPage,
-      },
+      // {
+      //   id: "dashboardTopology",
+      //   title: "Topology",
+      //   to: "/dashboard/topology",
+      //   component: TopologyPage,
+      // },
     ],
   },
   {
@@ -94,15 +97,21 @@ const routes = [
   {
     id: "settings",
     title: "Settings",
-    to: "/settings",
-    component: DummyPage,
+    children: [
+      {
+        id: "profile",
+        title: "Profile",
+        to: routeMap.settings.profile,
+        component: ProfilePage,
+      },
+    ],
   },
-  {
-    id: "DropPage",
-    title: "Drop Down test",
-    to: "/dropdown",
-    component: DummyPage2,
-  },
+  // {
+  //   id: "dummyPage",
+  //   title: "Dummy Page",
+  //   to: "/dummypage",
+  //   component: DummyPage,
+  // },
 ]
 
 const hiddenRoutes = [

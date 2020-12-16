@@ -1,6 +1,7 @@
 import axios from "axios"
 import qs from "qs"
 import store from "../store/configureStore"
+import { clearAuth } from "../store/entities/auth"
 import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 import { notificationAdd } from "../store/entities/notification"
 import { toasterAdd } from "../store/entities/toaster"
@@ -60,9 +61,17 @@ myAxios.interceptors.response.use(
     if (error.response && error.response.data) {
       alert.description.push("Message: " + JSON.stringify(error.response.data))
     }
-    store.dispatch(spinnerHide())
-    store.dispatch(notificationAdd(alert))
-    store.dispatch(toasterAdd(alert))
+    // update redux, if authenticated
+    if (store.getState().entities.auth.authenticated) {
+      // if unauthorized clear auth data
+      if (error.response.status === 401) {
+        store.dispatch(clearAuth())
+      }
+      store.dispatch(spinnerHide())
+      store.dispatch(notificationAdd(alert))
+      store.dispatch(toasterAdd(alert))
+    }
+
     return Promise.reject(error)
   }
 )
@@ -89,14 +98,17 @@ const updateFilter = (qp) => {
 const newRequest = (method, url, queryParams, data, headers) => {
   // grab current state
   const auth = store.getState().entities.auth
-  const token = "Bearer " + (auth.authenticated ? auth.user.token : "")
+  if (auth.authenticated) {
+    const token = "Bearer " + (auth.authenticated ? auth.token : "")
+    headers = { ...headers, Authorization: token }
+  }
 
   return myAxios.request({
     method: method,
     url: "/api" + url,
     //url: "http://localhost:8080/api" + url,
     data: data,
-    headers: { ...getHeaders(), ...headers, Authorization: token },
+    headers: { ...getHeaders(), ...headers },
     params: updateFilter(queryParams),
   })
 }
@@ -110,6 +122,7 @@ export const api = {
   },
   auth: {
     login: (data) => newRequest(HTTP_VERBS.POST, "/user/login", {}, data),
+    profile: () => newRequest(HTTP_VERBS.GET, "/user/profile", {}, {}),
   },
   gateway: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/gateway", filter, {}),
