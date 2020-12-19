@@ -33,7 +33,6 @@ class List extends ListBase {
   }
 
   actions = [
-    { type: "edit", disabled: true },
     { type: "delete", onClick: this.onDeleteActionClick },
   ]
 

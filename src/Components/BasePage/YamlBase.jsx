@@ -18,7 +18,7 @@ class YamlBase extends React.Component {
   }
 
   onReloadClick = () => {
-    const { id } = this.props.match.params
+    let id = this.props.match && this.props.match.params ? this.props.match.params.id : null
     if (id) {
       this.props
         .apiGetRecord(id)
@@ -30,6 +30,8 @@ class YamlBase extends React.Component {
         .catch((_e) => {
           this.setState({ loading: false })
         })
+    } else {
+      this.setState({ loading: false, dataOriginal: null })
     }
   }
 
@@ -46,8 +48,12 @@ class YamlBase extends React.Component {
       const data = YAML.safeLoad(yamlString)
       this.props
         .apiSaveRecord(data)
-        .then((res) => {})
-        .catch((e) => {})
+        .then((_res) => {
+          if (this.props.onSave) {
+            this.props.onSave()
+          }
+        })
+        .catch((_e) => {})
     }
   }
 
@@ -62,7 +68,7 @@ class YamlBase extends React.Component {
       return <div>Loading</div>
     }
 
-    const yamlString = YAML.safeDump(dataOriginal)
+    const yamlString = dataOriginal ? YAML.safeDump(dataOriginal) : ""
 
     const options = this.props.options ? this.props.options : {}
 

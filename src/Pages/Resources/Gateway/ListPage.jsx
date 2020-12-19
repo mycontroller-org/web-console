@@ -55,7 +55,6 @@ class List extends ListBase {
     { type: "separator" },
     { type: "discover" },
     { type: "separator" },
-    { type: "edit", disabled: true },
     { type: "delete", onClick: this.onDeleteActionClick },
   ]
 
@@ -66,7 +65,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        //r(this.props.history, rMap.resources.gateway.add)
+        r(this.props.history, rMap.resources.gateway.add)
       },
     },
   ]

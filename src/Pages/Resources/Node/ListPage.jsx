@@ -9,13 +9,14 @@ import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
-  deleteAllFilter, deleteFilterCategory, deleteFilterValue, loading,
+  deleteAllFilter,
+  deleteFilterCategory,
+  deleteFilterValue,
+  loading,
   loadingFailed,
-
-
-
-
-  onSortBy, updateFilter, updateRecords
+  onSortBy,
+  updateFilter,
+  updateRecords
 } from "../../../store/entities/resources/node"
 
 class List extends ListBase {
@@ -45,7 +46,6 @@ class List extends ListBase {
     { type: "firmware_update" },
     { type: "reset" },
     { type: "separator" },
-    { type: "edit", disabled: true },
     {
       type: "delete",
       onClick: this.onDeleteActionClick,
@@ -59,7 +59,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        console.log("clicked details")
+        r(this.props.history, rMap.resources.node.add)
       },
     },
   ]

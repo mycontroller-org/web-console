@@ -132,6 +132,7 @@ export const api = {
     enable: (data) => newRequest(HTTP_VERBS.POST, "/gateway/enable", {}, data),
     disable: (data) => newRequest(HTTP_VERBS.POST, "/gateway/disable", {}, data),
     reload: (data) => newRequest(HTTP_VERBS.POST, "/gateway/reload", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/gateway", {}, data),
   },
   node: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/node", filter, {}),

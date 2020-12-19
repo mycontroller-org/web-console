@@ -263,11 +263,11 @@ class PageLayoutExpandableNav extends React.Component {
             <Brand className="mc-header-logo" src={logoMain} alt="Patternfly Logo" />
             <TextContent className="rb-logo-text">
               <Text component={TextVariants.h3}>
-                MYCONTROLLER.ORG
+                MyController.org
                 <div
                   style={{
                     marginTop: "-5px",
-                    fontSize: "12px",
+                    fontSize: "10px",
                     fontWeight: "100",
                   }}
                 >
