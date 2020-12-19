@@ -1,15 +1,16 @@
 import { TachometerAltIcon } from "@patternfly/react-icons"
 import React from "react"
 import Dashboard from "../Pages/Dashboard/Dashboard"
+import GatewayAddPage from "../Pages/Resources/Gateway/AddPage"
 // import DummyPage from "../Pages/DummyPage/DummyPage"
-import GatewayDetailPage from "../Pages/Resources/Gateway/Detail"
-import GatewayListPage from "../Pages/Resources/Gateway/List"
-import NodeDetailPage from "../Pages/Resources/Node/Detail"
-import NodeListPage from "../Pages/Resources/Node/List"
-import SensorDetailPage from "../Pages/Resources/Sensor/Detail"
-import SensorListPage from "../Pages/Resources/Sensor/List"
-import SensorFieldDetailPage from "../Pages/Resources/SensorField/Detail"
-import SensorFieldListPage from "../Pages/Resources/SensorField/List"
+import { default as GatewayDetailPage } from "../Pages/Resources/Gateway/DetailsPage"
+import GatewayListPage from "../Pages/Resources/Gateway/ListPage"
+import NodeDetailPage from "../Pages/Resources/Node/DetailsPage"
+import NodeListPage from "../Pages/Resources/Node/ListPage"
+import SensorDetailPage from "../Pages/Resources/Sensor/DetailsPage"
+import SensorListPage from "../Pages/Resources/Sensor/ListPage"
+import SensorFieldDetailPage from "../Pages/Resources/SensorField/DetailsPage"
+import SensorFieldListPage from "../Pages/Resources/SensorField/ListPage"
 import ProfilePage from "../Pages/Settings/Profile/Profile"
 //import TopologyPage from "../Pages/Topology/Topology"
 
@@ -21,6 +22,7 @@ const routeMap = {
       list: "/resources/gateway",
       detail: "/resources/gateway/list/:id",
       update: "/resources/gateway/update/:id",
+      add: "/resources/gateway/add",
     },
     node: {
       list: "/resources/node",
@@ -70,25 +72,25 @@ const routes = [
     children: [
       {
         id: "gateway",
-        title: "Gateway",
+        title: "Gateways",
         to: routeMap.resources.gateway.list,
         component: GatewayListPage,
       },
       {
         id: "node",
-        title: "Node",
+        title: "Nodes",
         to: routeMap.resources.node.list,
         component: NodeListPage,
       },
       {
         id: "sensor",
-        title: "Sensor",
+        title: "Sensors",
         to: routeMap.resources.sensor.list,
         component: SensorListPage,
       },
       {
         id: "field",
-        title: "Sensor Field",
+        title: "Sensor Fields",
         to: routeMap.resources.sensorField.list,
         component: SensorFieldListPage,
       },
@@ -134,6 +136,10 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.sensorField.detail,
     component: SensorFieldDetailPage,
+  },
+  {
+    to: routeMap.resources.gateway.add,
+    component: GatewayAddPage,
   },
 ]
 

@@ -1,23 +1,22 @@
-import React from "react"
-import PageTitle from "../PageTitle/PageTitle"
-import PageContent from "../PageContent/PageContent"
 import {
+  Card,
+  CardBody,
+  CardTitle,
   DescriptionList,
+  DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
-  DescriptionListDescription,
-  Card,
-  CardTitle,
-  CardBody,
-  Grid,
-  GridItem,
   Divider,
+  Grid,
+  GridItem
 } from "@patternfly/react-core"
-
-import "./DetailBase.scss"
 import PropTypes from "prop-types"
-import { LineChart } from "../Graphs/Graphs"
+import React from "react"
 import { RefreshButton } from "../Buttons/Buttons"
+import { LineChart } from "../Graphs/Graphs"
+import PageContent from "../PageContent/PageContent"
+import PageTitle from "../PageTitle/PageTitle"
+import "./DetailBase.scss"
 
 export default class DetailBase extends React.Component {
   state = {
@@ -102,6 +101,8 @@ export default class DetailBase extends React.Component {
         }}
       />
     )
+
+
 
     return (
       <>

@@ -8,9 +8,11 @@ import {
 import { ExclamationCircleIcon } from "@patternfly/react-icons"
 import React from "react"
 import { connect } from "react-redux"
+import logoBackground from "../Logo/mc-black-login-page.svg"
+import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { authSuccess } from "../store/entities/auth"
-import brandImg2 from "./logo-mycontroller.org_full.png"
+import "./Login.scss"
 
 class SimpleLoginPage extends React.Component {
   constructor(props) {
@@ -110,20 +112,13 @@ class SimpleLoginPage extends React.Component {
       />
     )
 
-    const images = {
-      lg: "/assets/images/pfbg_1200.jpg",
-      sm: "/assets/images/pfbg_768.jpg",
-      sm2x: "/assets/images/pfbg_768@2x.jpg",
-      xs: "/assets/images/pfbg_576.jpg",
-      xs2x: "/assets/images/pfbg_576@2x.jpg",
-    }
-
     return (
       <LoginPage
         footerListVariants="inline"
-        brandImgSrc={brandImg2}
-        brandImgAlt="MyController.org logo"
-        backgroundImgSrc={images}
+        brandImgSrc={displayLogo}
+        brandImgAlt="MyController.org"
+        className="mc-login"
+        backgroundImgSrc={logoBackground}
         backgroundImgAlt="Images"
         footerListItems={listItem}
         textContent="This is placeholder text only. Use this area to place any information or introductory message about your application that may be relevant to users."

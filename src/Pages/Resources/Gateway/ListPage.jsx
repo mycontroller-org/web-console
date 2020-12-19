@@ -1,23 +1,23 @@
+import { Button } from "@patternfly/react-core"
 import React from "react"
+import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
-import { api } from "../../../Service/Api"
 import { getStatus, getStatusBool } from "../../../Components/McIcons/McIcons"
-import { LastSeen } from "../../../Components/Time/Time"
-import PageTitle from "../../../Components/PageTitle/PageTitle"
 import PageContent from "../../../Components/PageContent/PageContent"
+import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { LastSeen } from "../../../Components/Time/Time"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
-  updateRecords,
+  deleteAllFilter,
+  deleteFilterCategory,
+  deleteFilterValue,
   loading,
   loadingFailed,
-  updateFilter,
-  deleteFilterValue,
-  deleteFilterCategory,
-  deleteAllFilter,
   onSortBy,
+  updateFilter,
+  updateRecords
 } from "../../../store/entities/resources/gateway"
-import { connect } from "react-redux"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { Button } from "@patternfly/react-core"
 
 class List extends ListBase {
   state = {
@@ -66,7 +66,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        console.log("clicked details")
+        //r(this.props.history, rMap.resources.gateway.add)
       },
     },
   ]
@@ -74,7 +74,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Gateway" />
+        <PageTitle title="Gateways" />
         <PageContent>{super.render()}</PageContent>
       </>
     )

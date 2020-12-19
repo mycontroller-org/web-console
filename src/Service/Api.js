@@ -1,10 +1,11 @@
 import axios from "axios"
 import qs from "qs"
-import store from "../store/configureStore"
 import { clearAuth } from "../store/entities/auth"
 import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 import { notificationAdd } from "../store/entities/notification"
 import { toasterAdd } from "../store/entities/toaster"
+//import store from "../store/configureStore"
+import { store } from "../store/persister"
 
 export const HTTP_CODES = {
   OK: 200,
@@ -135,7 +136,7 @@ export const api = {
   node: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/node", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/node/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/node/", {}, data),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/node", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/node", {}, data),
   },
   sensor: {

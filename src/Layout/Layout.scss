@@ -17,6 +17,24 @@ Limits the height of the header
   min-height: 48px !important;
 }
 
+.mc-header-logo {
+  max-height: 38px !important;
+  min-height: 38px !important;
+  margin-top: 1px;
+  margin-right: 4px;
+}
+
+.rb-logo-text {
+  margin-top: -3px;
+}
+.rb-logo-text, a:hover {
+  text-decoration: none;
+}
+
+.pf-c-page__header-brand-toggle {
+  margin-right: -10px;
+}
+
 /*
 Removes the top padding on left side menu
 */
@@ -37,12 +55,4 @@ Removes the gray color of bottom page
 */
 .pf-c-page__main {
   background-color: white !important;
-}
-
-/*
-Removes hover on text logo
-*/
-.rb-logo-text,
-a:hover {
-  text-decoration: none;
 }

@@ -1,8 +1,8 @@
-import React from "react"
-import { Table as PfTable, TableHeader, TableBody, TableVariant, sortable } from "@patternfly/react-table"
-
+import { Pagination, PaginationVariant, Title } from "@patternfly/react-core"
+import { sortable, Table as PfTable, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
 import PropTypes from "prop-types"
-import { Title, Pagination, PaginationVariant } from "@patternfly/react-core"
+import React from "react"
+
 
 const ITEMS_LIMIT = 10
 

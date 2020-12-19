@@ -1,22 +1,22 @@
-import React from "react"
-import ListBase from "../../../Components/BasePage/ListBase"
-import { api } from "../../../Service/Api"
-import { LastSeen } from "../../../Components/Time/Time"
-import PageTitle from "../../../Components/PageTitle/PageTitle"
-import PageContent from "../../../Components/PageContent/PageContent"
-import {
-  updateRecords,
-  loading,
-  loadingFailed,
-  updateFilter,
-  deleteFilterValue,
-  deleteFilterCategory,
-  deleteAllFilter,
-  onSortBy,
-} from "../../../store/entities/resources/sensor"
-import { connect } from "react-redux"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { Button } from "@patternfly/react-core"
+import React from "react"
+import { connect } from "react-redux"
+import ListBase from "../../../Components/BasePage/ListBase"
+import PageContent from "../../../Components/PageContent/PageContent"
+import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { LastSeen } from "../../../Components/Time/Time"
+import { METRIC_TYPES } from "../../../config/globalConfig"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import {
+  deleteAllFilter, deleteFilterCategory, deleteFilterValue, loading,
+  loadingFailed,
+
+
+
+
+  onSortBy, updateFilter, updateRecords
+} from "../../../store/entities/resources/sensorField"
 
 class List extends ListBase {
   state = {
@@ -52,7 +52,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Sensor" />
+        <PageTitle title="Sensor Fields" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -64,7 +64,12 @@ const tableColumns = [
   { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
   { title: "Node ID", fieldKey: "nodeId", sortable: true },
   { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
+  { title: "Field ID", fieldKey: "fieldId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
+  { title: "Metric Type", fieldKey: "metricType", sortable: true },
+  { title: "Unit", fieldKey: "unit", sortable: true },
+  { title: "Value", fieldKey: "payload.value", sortable: true },
+  { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -85,20 +90,25 @@ const toRowFuncImpl = (rawData, history) => {
         ),
       },
       rawData.nodeId,
+      rawData.sensorId,
       {
         title: (
           <Button
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.resources.sensor.detail, { id: rawData.id })
+              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
             }}
           >
-            {rawData.sensorId}
+            {rawData.fieldId}
           </Button>
         ),
       },
       rawData.name,
+      METRIC_TYPES[rawData.metricType],
+      rawData.unit,
+      String(rawData.payload.value),
+      String(rawData.previousPayload.value),
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,
@@ -110,28 +120,29 @@ const filtersDefinition = [
   { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
   { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
   { category: "sensorId", categoryName: "Sensor ID", fieldType: "input", dataType: "string" },
+  { category: "fieldId", categoryName: "Filed ID", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.sensor.list,
-  apiDeleteRecords: api.sensor.delete,
+  apiGetRecords: api.sensorField.list,
+  apiDeleteRecords: api.sensorField.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Sensor(s)",
+  resourceName: "Sensor Fields(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.resourceSensor.loading,
-  records: state.entities.resourceSensor.records,
-  pagination: state.entities.resourceSensor.pagination,
-  count: state.entities.resourceSensor.count,
-  lastUpdate: state.entities.resourceSensor.lastUpdate,
-  revision: state.entities.resourceSensor.revision,
-  filters: state.entities.resourceSensor.filters,
-  sortBy: state.entities.resourceSensor.sortBy,
+  loading: state.entities.resourceSensorField.loading,
+  records: state.entities.resourceSensorField.records,
+  pagination: state.entities.resourceSensorField.pagination,
+  count: state.entities.resourceSensorField.count,
+  lastUpdate: state.entities.resourceSensorField.lastUpdate,
+  revision: state.entities.resourceSensorField.revision,
+  filters: state.entities.resourceSensorField.filters,
+  sortBy: state.entities.resourceSensorField.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

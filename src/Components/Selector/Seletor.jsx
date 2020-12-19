@@ -1,12 +1,12 @@
-import React from "react"
 import { Divider, Dropdown, DropdownItem, DropdownToggle } from "@patternfly/react-core"
 import {
   CaretDownIcon,
-  OutlinedBookmarkIcon,
-  BookmarkIcon,
+
+
   MinusCircleIcon,
-  PlusCircleIcon,
+  PlusCircleIcon
 } from "@patternfly/react-icons"
+import React from "react"
 import "./Selector.scss"
 
 // Sample data
@@ -21,30 +21,12 @@ class Selector extends React.Component {
     items: [
       {
         id: "1",
-        text: "hello sssssssssssssssssssss",
-        bookmarked: false,
-        disabled: false,
-      },
-      {
-        id: "2",
-        text: "I am 2",
-        bookmarked: false,
-        disabled: false,
-      },
-      {
-        id: "3",
-        text: "I am 3",
-        bookmarked: false,
-        disabled: false,
-      },
-      {
-        id: "4",
-        text: "I am 4",
+        text: "Default",
         bookmarked: true,
         disabled: false,
       },
     ],
-    selected: { text: "123" },
+    selected: { text: "Default" },
     isOpen: false,
   }
 

@@ -1,5 +1,5 @@
-import React from "react"
 import Editor, { monaco } from "@monaco-editor/react"
+import React from "react"
 
 monaco
   .init()
@@ -38,19 +38,25 @@ const defaultOptions = {
   readOnly: true,
 }
 
-const editor = ({ language = "yaml", options = {}, data = "" }) => {
+const editor = ({
+  language = "yaml",
+  options = {},
+  height = "73vh",
+  data = "",
+  handleEditorDidMount = () => {},
+}) => {
   const finalOptions = {
     ...defaultOptions, // default options
     ...options, // supplied options
   }
   return (
     <Editor
-      height="73vh"
+      height={height}
       language={language}
       theme="console"
       value={data}
       options={finalOptions}
-      // editorDidMount={this.handleEditorDidMount}
+      editorDidMount={handleEditorDidMount}
     />
   )
 }

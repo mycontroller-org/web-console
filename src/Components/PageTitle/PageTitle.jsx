@@ -1,15 +1,19 @@
-import React from "react"
 import {
-  PageSection,
-  PageSectionVariants,
-  Text,
-  Title,
   Divider,
   Grid,
-  GridItem,
+  GridItem, PageSection,
+  PageSectionVariants,
+  Text,
+  Title
 } from "@patternfly/react-core"
+import React from "react"
 
-const PageTitle = ({ title, description, actions }) => {
+const PageTitle = ({ title, description, actions, hideDivider = false }) => {
+  const divider = hideDivider ? null : (
+    <GridItem span={12}>
+      <Divider component="hr" />
+    </GridItem>
+  )
   return (
     <PageSection variant={PageSectionVariants.light}>
       <Grid hasGutter={false}>
@@ -26,9 +30,7 @@ const PageTitle = ({ title, description, actions }) => {
         <GridItem span={6}>
           <div style={{ float: "right", marginBottom: "1px" }}>{actions}</div>
         </GridItem>
-        <GridItem span={12}>
-          <Divider component="hr" />
-        </GridItem>
+        {divider}
       </Grid>
     </PageSection>
   )

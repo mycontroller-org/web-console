@@ -1,23 +1,22 @@
-import React from "react"
-import ListBase from "../../../Components/BasePage/ListBase"
-import { api } from "../../../Service/Api"
-import { LastSeen } from "../../../Components/Time/Time"
-import PageTitle from "../../../Components/PageTitle/PageTitle"
-import PageContent from "../../../Components/PageContent/PageContent"
-import {
-  updateRecords,
-  loading,
-  loadingFailed,
-  updateFilter,
-  deleteFilterValue,
-  deleteFilterCategory,
-  deleteAllFilter,
-  onSortBy,
-} from "../../../store/entities/resources/sensorField"
-import { connect } from "react-redux"
-import { METRIC_TYPES } from "../../../config/globalConfig"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { Button } from "@patternfly/react-core"
+import React from "react"
+import { connect } from "react-redux"
+import ListBase from "../../../Components/BasePage/ListBase"
+import { getStatus } from "../../../Components/McIcons/McIcons"
+import PageContent from "../../../Components/PageContent/PageContent"
+import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { LastSeen } from "../../../Components/Time/Time"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import {
+  deleteAllFilter, deleteFilterCategory, deleteFilterValue, loading,
+  loadingFailed,
+
+
+
+
+  onSortBy, updateFilter, updateRecords
+} from "../../../store/entities/resources/node"
 
 class List extends ListBase {
   state = {
@@ -38,6 +37,21 @@ class List extends ListBase {
     { type: "delete", onClick: this.onDeleteActionClick },
   ]
 
+  actions = [
+    { type: "refresh_node_info" },
+    { type: "heartbeat_request" },
+    { type: "reboot", onClick: () => {} },
+    { type: "separator" },
+    { type: "firmware_update" },
+    { type: "reset" },
+    { type: "separator" },
+    { type: "edit", disabled: true },
+    {
+      type: "delete",
+      onClick: this.onDeleteActionClick,
+    },
+  ]
+
   toolbar = [
     { type: "refresh", group: "right1" },
     { type: "actions", group: "right1", actions: this.actions, disabled: false },
@@ -53,7 +67,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Sensor Field" />
+        <PageTitle title="Nodes" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -64,13 +78,10 @@ class List extends ListBase {
 const tableColumns = [
   { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
   { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
-  { title: "Field ID", fieldKey: "fieldId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Metric Type", fieldKey: "metricType", sortable: true },
-  { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Value", fieldKey: "payload.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
+  { title: "Version", fieldKey: "labels.version", sortable: true },
+  { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
+  { title: "Status", fieldKey: "state.status", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -90,26 +101,23 @@ const toRowFuncImpl = (rawData, history) => {
           </Button>
         ),
       },
-      rawData.nodeId,
-      rawData.sensorId,
       {
         title: (
           <Button
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
+              r(history, rMap.resources.node.detail, { id: rawData.id })
             }}
           >
-            {rawData.fieldId}
+            {rawData.nodeId}
           </Button>
         ),
       },
       rawData.name,
-      METRIC_TYPES[rawData.metricType],
-      rawData.unit,
-      String(rawData.payload.value),
-      String(rawData.previousPayload.value),
+      rawData.labels.version,
+      rawData.labels.library_version,
+      { title: getStatus(rawData.state.status) },
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,
@@ -120,30 +128,35 @@ const filtersDefinition = [
   { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
   { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
   { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
-  { category: "sensorId", categoryName: "Sensor ID", fieldType: "input", dataType: "string" },
-  { category: "fieldId", categoryName: "Filed ID", fieldType: "input", dataType: "string" },
+  { category: "labels.version", categoryName: "Version", fieldType: "input", dataType: "string" },
+  {
+    category: "labels.library_version",
+    categoryName: "Library Version",
+    fieldType: "input",
+    dataType: "string",
+  },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.sensorField.list,
-  apiDeleteRecords: api.sensorField.delete,
+  apiGetRecords: api.node.list,
+  apiDeleteRecords: api.node.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Sensor Fields(s)",
+  resourceName: "Node(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.resourceSensorField.loading,
-  records: state.entities.resourceSensorField.records,
-  pagination: state.entities.resourceSensorField.pagination,
-  count: state.entities.resourceSensorField.count,
-  lastUpdate: state.entities.resourceSensorField.lastUpdate,
-  revision: state.entities.resourceSensorField.revision,
-  filters: state.entities.resourceSensorField.filters,
-  sortBy: state.entities.resourceSensorField.sortBy,
+  loading: state.entities.resourceNode.loading,
+  records: state.entities.resourceNode.records,
+  pagination: state.entities.resourceNode.pagination,
+  count: state.entities.resourceNode.count,
+  lastUpdate: state.entities.resourceNode.lastUpdate,
+  revision: state.entities.resourceNode.revision,
+  filters: state.entities.resourceNode.filters,
+  sortBy: state.entities.resourceNode.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

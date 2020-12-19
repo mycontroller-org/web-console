@@ -1,25 +1,24 @@
-import React from "react"
-import { Responsive, WidthProvider } from "react-grid-layout"
-import "chartjs-plugin-colorschemes"
 // https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
-
 import {
   Card,
   CardBody,
   CardTitle,
-  Spinner,
-  PageSection,
-  PageSectionVariants,
-  Divider,
-  Switch,
+
+
+
+  Divider, PageSection,
+  PageSectionVariants, Spinner
 } from "@patternfly/react-core"
-
+import "chartjs-plugin-colorschemes"
+import React from "react"
+import { Responsive, WidthProvider } from "react-grid-layout"
 import PageContent from "../../Components/PageContent/PageContent"
-
-import "./Dashboard.scss"
 import Selector from "../../Components/Selector/Seletor"
 import SwitchPanel from "../../Components/Widgets/SwitchPanel/SwitchPanel"
 import { api } from "../../Service/Api"
+import "./Dashboard.scss"
+
+
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 

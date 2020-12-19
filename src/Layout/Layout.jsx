@@ -1,4 +1,5 @@
 import {
+  Brand,
   Dropdown,
   DropdownGroup,
   DropdownItem,
@@ -30,12 +31,12 @@ import { withRouter } from "react-router"
 import { Redirect, Route, Switch } from "react-router-dom"
 import Spinner from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
+import logoMain from "../Logo/mc-white.svg"
 import McAboutModel from "../Pages/McAboutModel/McAboutModel"
 import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Service/Routes"
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
 import { notificationDrawerToggle } from "../store/entities/notification"
-//import imgBrand from "./imgBrand.svg";
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
@@ -258,20 +259,23 @@ class PageLayoutExpandableNav extends React.Component {
       <PageHeader
         //logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
         logo={
-          <TextContent className="rb-logo-text">
-            <Text component={TextVariants.h3}>
-              MYCONTROLLER.ORG
-              <div
-                style={{
-                  marginTop: "-5px",
-                  fontSize: "12px",
-                  fontWeight: "100",
-                }}
-              >
-                The Open Source Controller
-              </div>
-            </Text>
-          </TextContent>
+          <>
+            <Brand className="mc-header-logo" src={logoMain} alt="Patternfly Logo" />
+            <TextContent className="rb-logo-text">
+              <Text component={TextVariants.h3}>
+                MYCONTROLLER.ORG
+                <div
+                  style={{
+                    marginTop: "-5px",
+                    fontSize: "12px",
+                    fontWeight: "100",
+                  }}
+                >
+                  The Open Source Controller
+                </div>
+              </Text>
+            </TextContent>
+          </>
         }
         headerTools={headerTools}
         //avatar={<Avatar src={imgAvatar} alt="Avatar image" />}

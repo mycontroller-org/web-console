@@ -1,5 +1,5 @@
-import React from "react"
 import { PageSection, PageSectionVariants } from "@patternfly/react-core"
+import React from "react"
 
 const PageContent = ({ children }) => {
   return (
