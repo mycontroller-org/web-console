@@ -71,10 +71,10 @@ export default class TabDetailsBase extends React.Component {
       <>
         <PageContent>
           {metrics}
-          <Grid hasGutter sm={12} md={12} lg={12} xl={12}>
+          <Grid sm={12} md={12} lg={12} xl={12}>
             {this.props.tableColumns ? this.getTable(data) : null}
           </Grid>
-          <Grid hasGutter sm={12} md={12} lg={12} xl={12}>
+          <Grid sm={12} md={12} lg={12} xl={12}>
             {content}
           </Grid>
         </PageContent>

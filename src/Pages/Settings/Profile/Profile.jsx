@@ -6,7 +6,7 @@ import { api } from "../../../Service/Api"
 import { updateUser } from "../../../store/entities/auth"
 
 class ProfilePage extends React.Component {
-  stage = {
+  state = {
     loading: true,
   }
   componentDidMount() {
