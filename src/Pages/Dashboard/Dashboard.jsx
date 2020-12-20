@@ -3,11 +3,10 @@ import {
   Card,
   CardBody,
   CardTitle,
-
-
-
-  Divider, PageSection,
-  PageSectionVariants, Spinner
+  Divider,
+  PageSection,
+  PageSectionVariants,
+  Spinner
 } from "@patternfly/react-core"
 import "chartjs-plugin-colorschemes"
 import React from "react"
@@ -17,8 +16,6 @@ import Selector from "../../Components/Selector/Seletor"
 import SwitchPanel from "../../Components/Widgets/SwitchPanel/SwitchPanel"
 import { api } from "../../Service/Api"
 import "./Dashboard.scss"
-
-
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 

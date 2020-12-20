@@ -29,7 +29,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { Redirect, Route, Switch } from "react-router-dom"
-import Spinner from "../Components/Spinner/Spinner"
+import { HeaderSpinner } from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
 import logoMain from "../Logo/mc-white.svg"
 import AboutPage from "../Pages/About/About"
@@ -208,7 +208,7 @@ class PageLayoutExpandableNav extends React.Component {
     const headerTools = (
       <PageHeaderTools>
         <PageHeaderToolsGroup key="spinner">
-          {this.props.showGlobalSpinner ? <Spinner size="lg" /> : null}
+          {this.props.showGlobalSpinner ? <HeaderSpinner size="lg" /> : null}
         </PageHeaderToolsGroup>
         <PageHeaderToolsGroup key="others">
           <PageHeaderToolsItem visibility={{ default: "visible" }} isSelected={this.props.isDrawerExpanded}>

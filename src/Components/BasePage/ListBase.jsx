@@ -1,16 +1,16 @@
-import React from "react"
-import { Table, TableHeader, TableBody, TableVariant, RowWrapper, sortable } from "@patternfly/react-table"
-import { Divider, Pagination, PaginationVariant, Flex, FlexItem } from "@patternfly/react-core"
-import McToolbar from "../McToolbar/McToolbar"
-import McSpinner from "../McSpinner/McSpinner"
-import DeleteDialog from "../Dialog/DeleteDialog"
-import PropTypes from "prop-types"
+import { Divider, Flex, FlexItem, Pagination, PaginationVariant } from "@patternfly/react-core"
+import { RowWrapper, sortable, Table, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
 import moment from "moment"
-import LastUpdate from "../LastUpdate/LastUpdate"
+import PropTypes from "prop-types"
+import React from "react"
 import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
-
-import "./ListBase.scss"
+import DeleteDialog from "../Dialog/DeleteDialog"
 import Filters from "../Filters/Filters"
+import LastUpdate from "../LastUpdate/LastUpdate"
+import McToolbar from "../McToolbar/McToolbar"
+import { Spinner } from "../Spinner/Spinner"
+import "./ListBase.scss"
+
 
 export default class ListPage extends React.Component {
   state = {
@@ -252,7 +252,7 @@ export default class ListPage extends React.Component {
     })
 
     if (this.props.loading) {
-      elements.push(<McSpinner key="spinner" />)
+      elements.push(<Spinner key="spinner" />)
     } else {
       elements.push(
         <McToolbar

@@ -6,14 +6,27 @@ import { api } from "../../../Service/Api"
 import { updateUser } from "../../../store/entities/auth"
 
 class ProfilePage extends React.Component {
+  stage = {
+    loading: true,
+  }
   componentDidMount() {
     // update profile
-    api.auth.profile().then((res) => {
-      const profile = { ...res.data }
-      this.props.updateUserDetail(profile)
-    })
+    api.auth
+      .profile()
+      .then((res) => {
+        const profile = { ...res.data }
+        this.props.updateUserDetail(profile)
+        this.setState({ loading: false })
+      })
+      .catch((_e) => {
+        this.setState({ loading: false })
+      })
   }
   render() {
+    if (this.state.loading) {
+      return <span>Loading</span>
+    }
+
     const data = <pre>{JSON.stringify(this.props.userDetail, "", 2)}</pre>
     return (
       <React.Fragment>
