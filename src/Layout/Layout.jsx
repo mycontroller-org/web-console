@@ -32,7 +32,7 @@ import { Redirect, Route, Switch } from "react-router-dom"
 import Spinner from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
 import logoMain from "../Logo/mc-white.svg"
-import McAboutModel from "../Pages/McAboutModel/McAboutModel"
+import AboutPage from "../Pages/About/About"
 import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Service/Routes"
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
@@ -289,7 +289,7 @@ class PageLayoutExpandableNav extends React.Component {
 
     return (
       <React.Fragment>
-        <McAboutModel />
+        <AboutPage />
         <Toaster />
         <Page
           onPageResize={() => {

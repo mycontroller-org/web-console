@@ -12,8 +12,8 @@ import { connect } from "react-redux"
 import brandImg from "../../Logo/mc-white-full.svg"
 import { api } from "../../Service/Api"
 import { aboutHide } from "../../store/entities/about"
-import "./McAboutModel.scss"
-class McAboutModal extends React.Component {
+import "./About.scss"
+class AboutPage extends React.Component {
   state = {
     backend: {},
     loading: true,
@@ -47,15 +47,13 @@ class McAboutModal extends React.Component {
           <Divider component="hr" />
           <TextList component="dl">
             <TextListItem component="dt">Branch</TextListItem>
-            <TextListItem component="dd">
-              {bk.version} ({bk.platform}, {bk.arch})
-            </TextListItem>
+            <TextListItem component="dd">{bk.version}</TextListItem>
             <TextListItem component="dt">Git Commit</TextListItem>
             <TextListItem component="dd">{bk.gitCommit}</TextListItem>
             <TextListItem component="dt">Build Date</TextListItem>
             <TextListItem component="dd">{bk.buildDate}</TextListItem>
             <TextListItem component="dt">GoLang Version</TextListItem>
-            <TextListItem component="dd">{bk.goLang}</TextListItem>
+            <TextListItem component="dd">{bk.goLang} ({bk.platform}, {bk.arch})</TextListItem>
           </TextList>
 
           <Text component={TextVariants.h2}>Web Console</Text>
@@ -84,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   hideAbout: () => dispatch(aboutHide()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(McAboutModal)
+export default connect(mapStateToProps, mapDispatchToProps)(AboutPage)

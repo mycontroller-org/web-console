@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import PageContent from "../PageContent/PageContent"
 import PageTitle from "../PageTitle/PageTitle"
-import "./DetailBase.scss"
+import "./DetailsBase.scss"
 
 // tabs structure
 // Tab {
@@ -12,7 +12,7 @@ import "./DetailBase.scss"
 //     key: "",
 // }
 
-class DetailRoot extends React.Component {
+class DetailsPage extends React.Component {
   state = {
     activeTabKey: "",
     tabs: [],
@@ -77,10 +77,10 @@ class DetailRoot extends React.Component {
   }
 }
 
-DetailRoot.propTypes = {
+DetailsPage.propTypes = {
   pageHeader: PropTypes.string,
   actions: PropTypes.array,
   tabs: PropTypes.array,
 }
 
-export default DetailRoot
+export default DetailsPage

@@ -3,15 +3,21 @@ import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap, Labels } from "../../../Components/Label/Label"
 import { api } from "../../../Service/Api"
 
-class TabDetails extends TabDetailsBase {
-  componentDidMount() {
-    this.loadDetail()
-  }
-
-  render() {
-    return super.render()
-  }
+const tabDetails = ({ resourceId, history }) => {
+  return (
+    <TabDetailsBase
+      resourceId={resourceId}
+      history={history}
+      apiGetRecord={api.sensorField.get}
+      getDetailsFunc={getDetailsFuncImpl}
+      showMetrics
+    />
+  )
 }
+
+export default tabDetails
+
+// helper functions
 
 const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
@@ -37,12 +43,3 @@ const getDetailsFuncImpl = (data) => {
     "list-2": fieldsList2,
   }
 }
-
-// supply required properties
-TabDetails.defaultProps = {
-  apiGetRecord: api.sensorField.get,
-  getDetailsFunc: getDetailsFuncImpl,
-  showMetrics: true,
-}
-
-export default TabDetails

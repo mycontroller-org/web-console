@@ -15,65 +15,34 @@ import React from "react"
 import Metrics from "../../Pages/Resources/SensorField/Metrics"
 import PageContent from "../PageContent/PageContent"
 import Table from "../Table/Table"
-import "./DetailBase.scss"
 
 export default class TabDetailsBase extends React.Component {
   state = {
     loading: true,
     data: {},
-    graphs: [],
-    graphsHeaders: [],
-    others: [],
   }
 
-  loadDetail() {
-    const { id } = this.props.match.params
-    if (id) {
+  componentDidMount() {
+    if (this.props.resourceId) {
       this.props
-        .apiGetRecord(id)
+        .apiGetRecord(this.props.resourceId)
         .then((res) => {
           this.setState({ data: res.data, loading: false })
         })
         .catch((_e) => {
           this.setState({ loading: false })
         })
+    } else {
+      this.setState({ loading: false })
     }
   }
 
-  wrapField = (key, value) => {
-    return (
-      <DescriptionListGroup key={key}>
-        <DescriptionListTerm>{key}</DescriptionListTerm>
-        <DescriptionListDescription>{value}</DescriptionListDescription>
-      </DescriptionListGroup>
-    )
-  }
-
-  wrapCard = (title, fieldsMap) => {
-    const content = []
-    const fieldMapKeys = Object.keys(fieldsMap)
-    fieldMapKeys.map((key) => {
-      const fieldsList = fieldsMap[key].map(({ key, value }) => this.wrapField(key, value))
-      content.push(
-        <DescriptionList key={key} isHorizontal={false}>
-          {fieldsList}
-        </DescriptionList>
-      )
-    })
-    return (
-      <GridItem key={title}>
-        <Card isFlat={false}>
-          <CardTitle>
-            {title} <Divider />
-          </CardTitle>
-          <CardBody>
-            <Grid hasGutter sm={12} md={12} lg={6} xl={6}>
-              {content}
-            </Grid>
-          </CardBody>
-        </Card>
-      </GridItem>
-    )
+  tableRowFuncCellWrapper = (rawData, _index, history) => {
+    const rowCells = this.props.getTableRowsFunc(rawData, _index, history)
+    return {
+      cells: rowCells,
+      rid: rawData.id,
+    }
   }
 
   getTable = (data) => {
@@ -82,7 +51,7 @@ export default class TabDetailsBase extends React.Component {
         title={this.props.tableTitle}
         apiGetRecords={this.props.apiListTablesRecord}
         tableColumns={this.props.tableColumns}
-        toRowFunc={this.props.getTableRowsFunc}
+        toRowFunc={this.tableRowFuncCellWrapper}
         history={this.props.history}
         filters={this.props.getTableFilterFunc(data)}
       />
@@ -96,7 +65,7 @@ export default class TabDetailsBase extends React.Component {
       return <div>Loading</div>
     }
 
-    const content = this.wrapCard("Details", this.props.getDetailsFunc(data))
+    const content = wrapCard("Details", this.props.getDetailsFunc(data))
     const metrics = this.props.showMetrics ? <Metrics data={data} /> : null
     return (
       <>
@@ -115,6 +84,7 @@ export default class TabDetailsBase extends React.Component {
 }
 
 TabDetailsBase.propTypes = {
+  resourceId: PropTypes.string,
   apiGetRecord: PropTypes.func,
   apiListTablesRecord: PropTypes.func,
   getTableFilterFunc: PropTypes.func,
@@ -123,4 +93,43 @@ TabDetailsBase.propTypes = {
   tableColumns: PropTypes.array,
   getDetailsFunc: PropTypes.func,
   showMetrics: PropTypes.bool,
+}
+
+// helper functions
+
+const wrapField = (key, value) => {
+  return (
+    <DescriptionListGroup key={key}>
+      <DescriptionListTerm>{key}</DescriptionListTerm>
+      <DescriptionListDescription>{value}</DescriptionListDescription>
+    </DescriptionListGroup>
+  )
+}
+
+const wrapCard = (title, fieldsMap) => {
+  const content = []
+  const fieldMapKeys = Object.keys(fieldsMap)
+  fieldMapKeys.map((key) => {
+    const fieldsList = fieldsMap[key].map(({ key, value }) => wrapField(key, value))
+    content.push(
+      <DescriptionList key={key} isHorizontal={false}>
+        {fieldsList}
+      </DescriptionList>
+    )
+  })
+
+  return (
+    <GridItem key={title}>
+      <Card isFlat={false}>
+        <CardTitle>
+          {title} <Divider />
+        </CardTitle>
+        <CardBody>
+          <Grid hasGutter sm={12} md={12} lg={6} xl={6}>
+            {content}
+          </Grid>
+        </CardBody>
+      </Card>
+    </GridItem>
+  )
 }

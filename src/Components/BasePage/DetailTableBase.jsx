@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
 import Table from "../Table/Table"
-import "./DetailBase.scss"
 
 export default class DetailTableBase extends React.Component {
   state = {

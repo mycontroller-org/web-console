@@ -1,19 +1,16 @@
 import React from "react"
-import DetailRootPage from "../../../Components/BasePage/DetailRoot"
-import YamlBase from "../../../Components/BasePage/YamlBase"
+import DetailRootPage from "../../../Components/BasePage/DetailsBase"
+import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 import { api } from "../../../Service/Api"
 import TabDetails from "./TabDetails"
 
 class GatewayDetailPage extends React.Component {
   render() {
-    const myTabs = [
-      // {
-      //   name: "Nodes",
-      //   content: <NodesList match={this.props.match} history={this.props.history} />,
-      // },
+    const { id } = this.props.match.params
+    const tabs = [
       {
         name: "Details",
-        content: <TabDetails match={this.props.match} history={this.props.history} />,
+        content: <TabDetails resourceId={id} history={this.props.history} />,
       },
       {
         name: "Edit",
@@ -22,16 +19,18 @@ class GatewayDetailPage extends React.Component {
       {
         name: "YAML",
         content: (
-          <YamlBase
+          <CodeEditor
+            resourceId={id}
+            language="yaml"
             apiGetRecord={api.gateway.get}
             apiSaveRecord={api.gateway.update}
-            match={this.props.match}
-            options={{ minimap: { enabled: true }, readOnly: false }}
+            minimapEnabled
+            onCancelFunc={() => {}}
           />
         ),
       },
     ]
-    return <DetailRootPage pageHeader="Gateway Details" tabs={myTabs} />
+    return <DetailRootPage pageHeader="Gateway Details" tabs={tabs} />
   }
 }
 

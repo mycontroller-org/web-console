@@ -1,5 +1,5 @@
 import React from "react"
-import YamlBase from "../../../Components/BasePage/YamlBase"
+import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
@@ -11,7 +11,7 @@ class AddPage extends React.Component {
       <>
         <PageTitle title="Add a Gateway" />
         <PageContent>
-          <YamlBase
+          <CodeEditor
             apiGetRecord={api.gateway.get}
             apiSaveRecord={api.gateway.update}
             match={this.props.match}

@@ -7,15 +7,25 @@ import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
 
-class TabDetails extends TabDetailsBase {
-  componentDidMount() {
-    this.loadDetail()
-  }
-
-  render() {
-    return super.render()
-  }
+const tabDetails = ({ resourceId, history }) => {
+  return (
+    <TabDetailsBase
+      resourceId={resourceId}
+      history={history}
+      apiGetRecord={api.node.get}
+      apiListTablesRecord={api.sensor.list}
+      tableTitle="Sensors"
+      getTableFilterFunc={getTableFilterFuncImpl}
+      tableColumns={tableColumns}
+      getTableRowsFunc={getTableRowsFuncImpl}
+      getDetailsFunc={getDetailsFuncImpl}
+    />
+  )
 }
+
+export default tabDetails
+
+// helper functions
 
 const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
@@ -45,47 +55,31 @@ const tableColumns = [
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {
-  return {
-    cells: [
-      {
-        title: (
-          <RouteLink
-            history={history}
-            path={rMap.resources.sensor.detail}
-            id={rawData.id}
-            text={rawData.sensorId}
-          />
-        ),
-      },
-      {
-        title: (
-          <RouteLink
-            history={history}
-            path={rMap.resources.sensor.detail}
-            id={rawData.id}
-            text={rawData.name}
-          />
-        ),
-      },
-      { title: <LastSeen date={rawData.lastSeen} /> },
-    ],
-    rid: rawData.id,
-  }
+  return [
+    {
+      title: (
+        <RouteLink
+          history={history}
+          path={rMap.resources.sensor.detail}
+          id={rawData.id}
+          text={rawData.sensorId}
+        />
+      ),
+    },
+    {
+      title: (
+        <RouteLink
+          history={history}
+          path={rMap.resources.sensor.detail}
+          id={rawData.id}
+          text={rawData.name}
+        />
+      ),
+    },
+    { title: <LastSeen date={rawData.lastSeen} /> },
+  ]
 }
 
 const getTableFilterFuncImpl = (data) => {
   return { gatewayId: data.gatewayId, nodeId: data.nodeId }
 }
-
-// supply required properties
-TabDetails.defaultProps = {
-  apiGetRecord: api.node.get,
-  apiListTablesRecord: api.sensor.list,
-  tableTitle: "Sensors",
-  getTableFilterFunc: getTableFilterFuncImpl,
-  tableColumns: tableColumns,
-  getTableRowsFunc: getTableRowsFuncImpl,
-  getDetailsFunc: getDetailsFuncImpl,
-}
-
-export default TabDetails

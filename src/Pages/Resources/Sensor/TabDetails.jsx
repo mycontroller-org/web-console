@@ -7,15 +7,25 @@ import { METRIC_TYPES } from "../../../config/globalConfig"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
 
-class TabDetails extends TabDetailsBase {
-  componentDidMount() {
-    this.loadDetail()
-  }
-
-  render() {
-    return super.render()
-  }
+const tabDetails = ({ resourceId, history }) => {
+  return (
+    <TabDetailsBase
+      resourceId={resourceId}
+      history={history}
+      apiGetRecord={api.sensor.get}
+      apiListTablesRecord={api.sensorField.list}
+      tableTitle="Sensor Fields"
+      getTableFilterFunc={getTableFilterFuncImpl}
+      tableColumns={tableColumns}
+      getTableRowsFunc={getTableRowsFuncImpl}
+      getDetailsFunc={getDetailsFuncImpl}
+    />
+  )
 }
+
+export default tabDetails
+
+// helper functions
 
 const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
@@ -48,42 +58,26 @@ const tableColumns = [
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {
-  return {
-    cells: [
-      {
-        title: (
-          <RouteLink
-            history={history}
-            path={rMap.resources.sensorField.detail}
-            id={rawData.id}
-            text={rawData.fieldId}
-          />
-        ),
-      },
-      rawData.name,
-      METRIC_TYPES[rawData.metricType],
-      rawData.unit,
-      String(rawData.payload.value),
-      String(rawData.previousPayload.value),
-      { title: <LastSeen date={rawData.lastSeen} /> },
-    ],
-    rid: rawData.id,
-  }
+  return [
+    {
+      title: (
+        <RouteLink
+          history={history}
+          path={rMap.resources.sensorField.detail}
+          id={rawData.id}
+          text={rawData.fieldId}
+        />
+      ),
+    },
+    rawData.name,
+    METRIC_TYPES[rawData.metricType],
+    rawData.unit,
+    String(rawData.payload.value),
+    String(rawData.previousPayload.value),
+    { title: <LastSeen date={rawData.lastSeen} /> },
+  ]
 }
 
 const getTableFilterFuncImpl = (data) => {
   return { gatewayId: data.gatewayId, nodeId: data.nodeId, sensorId: data.sensorId }
 }
-
-// supply required properties
-TabDetails.defaultProps = {
-  apiGetRecord: api.sensor.get,
-  apiListTablesRecord: api.sensorField.list,
-  tableTitle: "Sensor Fields",
-  getTableFilterFunc: getTableFilterFuncImpl,
-  tableColumns: tableColumns,
-  getTableRowsFunc: getTableRowsFuncImpl,
-  getDetailsFunc: getDetailsFuncImpl,
-}
-
-export default TabDetails
