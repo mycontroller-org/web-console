@@ -12,11 +12,14 @@ class AddPage extends React.Component {
         <PageTitle title="Add a Gateway" />
         <PageContent>
           <CodeEditor
+            language="yaml"
             apiGetRecord={api.gateway.get}
             apiSaveRecord={api.gateway.update}
-            match={this.props.match}
-            options={{ minimap: { enabled: true }, readOnly: false }}
+            minimapEnabled
             onSave={() => {
+              r(this.props.history, rMap.resources.gateway.list)
+            }}
+            onCancelFunc={() => {
               r(this.props.history, rMap.resources.gateway.list)
             }}
           />

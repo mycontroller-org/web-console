@@ -12,12 +12,15 @@ class AddPage extends React.Component {
         <PageTitle title="Add a Node" />
         <PageContent>
           <CodeEditor
+            language="yaml"
             apiGetRecord={api.node.get}
             apiSaveRecord={api.node.update}
-            match={this.props.match}
-            options={{ minimap: { enabled: true }, readOnly: false }}
+            minimapEnabled
             onSave={() => {
-              r(this.props.history, rMap.resources.gateway.list)
+              r(this.props.history, rMap.resources.node.list)
+            }}
+            onCancelFunc={() => {
+              r(this.props.history, rMap.resources.node.list)
             }}
           />
         </PageContent>

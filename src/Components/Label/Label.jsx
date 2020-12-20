@@ -1,8 +1,7 @@
+import { Flex, FlexItem, Label as PfLabel } from "@patternfly/react-core"
 import React from "react"
-import { Label as PfLabel } from "@patternfly/react-core"
-import "./Label.scss"
-import { FlexItem, Flex } from "@patternfly/react-core"
 import IFrame from "../IFrame/IFrame"
+import "./Label.scss"
 
 export const Label = ({ name, value, index = 0 }) => {
   return (
@@ -16,6 +15,9 @@ export const Label = ({ name, value, index = 0 }) => {
 }
 
 export const Labels = ({ data = {} }) => {
+  if (data === null) {
+    return <span>No labels</span>
+  }
   const names = Object.keys(data)
 
   if (names.length === 0) {
