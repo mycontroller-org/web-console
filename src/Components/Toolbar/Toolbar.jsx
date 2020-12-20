@@ -1,11 +1,11 @@
+import { Toolbar as PfToolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from "@patternfly/react-core"
 import React from "react"
-import { Toolbar, ToolbarContent, ToolbarItem, ToolbarGroup } from "@patternfly/react-core"
 import Actions from "../Actions/Actions"
 import { AddButton, RefreshButton } from "../Buttons/Buttons"
+import "./Toolbar.scss"
 
-import "./McToolbar.scss"
 
-const McToolbar = ({
+const Toolbar = ({
   rowsSelectionCount,
   items,
   groupAlignment = {},
@@ -66,7 +66,7 @@ const McToolbar = ({
   })
 
   return (
-    <Toolbar
+    <PfToolbar
       id="toolbar"
       key="toolbar"
       isExpanded={false}
@@ -77,8 +77,8 @@ const McToolbar = ({
         {filters}
         {finalItems}
       </ToolbarContent>
-    </Toolbar>
+    </PfToolbar>
   )
 }
 
-export default McToolbar
+export default Toolbar

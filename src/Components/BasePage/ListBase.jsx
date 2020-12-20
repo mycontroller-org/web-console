@@ -7,8 +7,8 @@ import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
 import DeleteDialog from "../Dialog/DeleteDialog"
 import Filters from "../Filters/Filters"
 import LastUpdate from "../LastUpdate/LastUpdate"
-import McToolbar from "../McToolbar/McToolbar"
 import { Spinner } from "../Spinner/Spinner"
+import Toolbar from "../Toolbar/Toolbar"
 import "./ListBase.scss"
 
 
@@ -255,7 +255,7 @@ export default class ListPage extends React.Component {
       elements.push(<Spinner key="spinner" />)
     } else {
       elements.push(
-        <McToolbar
+        <Toolbar
           key="tb1"
           rowsSelectionCount={this.getSelectedRowIDs().length}
           refreshFn={() => this.fetchRecords(this.props.pagination, this.state.filters)}
