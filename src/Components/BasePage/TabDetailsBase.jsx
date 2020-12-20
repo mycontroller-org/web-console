@@ -109,7 +109,7 @@ const wrapField = (key, value) => {
 const wrapCard = (title, fieldsMap) => {
   const content = []
   const fieldMapKeys = Object.keys(fieldsMap)
-  fieldMapKeys.map((key) => {
+  fieldMapKeys.forEach((key) => {
     const fieldsList = fieldsMap[key].map(({ key, value }) => wrapField(key, value))
     content.push(
       <DescriptionList key={key} isHorizontal={false}>

@@ -1,9 +1,9 @@
+import { Divider, Grid, GridItem, Switch as PfSwitch } from "@patternfly/react-core"
 import React from "react"
-import { Switch as PfSwitch, Grid, GridItem, Divider } from "@patternfly/react-core"
 import { api } from "../../../Service/Api"
 
 const SwitchPanel = ({ resources = [], onClickFunc = () => {} }) => {
-  if (resources.length == 0) {
+  if (resources.length === 0) {
     return <div>No resources found</div>
   }
 
