@@ -1,9 +1,8 @@
-import { Toolbar as PfToolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from "@patternfly/react-core"
+import { Flex, Toolbar as PfToolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from "@patternfly/react-core"
 import React from "react"
 import Actions from "../Actions/Actions"
 import { AddButton, RefreshButton } from "../Buttons/Buttons"
 import "./Toolbar.scss"
-
 
 const Toolbar = ({
   rowsSelectionCount,
@@ -60,7 +59,7 @@ const Toolbar = ({
     const alignment = groupAlignment[g] ? groupAlignment[g] : "alignLeft"
     return (
       <ToolbarGroup key={"tbg-items-" + index} alignment={{ default: alignment }}>
-        {tbItems[g]}
+        <Flex alignSelf>{tbItems[g]}</Flex>
       </ToolbarGroup>
     )
   })
