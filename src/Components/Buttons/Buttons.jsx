@@ -11,11 +11,15 @@ export const RefreshButton = ({ onClick }) => {
   return button(null, ButtonVariant.plain, SyncAltIcon, onClick)
 }
 
-const button = (text, variant, icon, onClickFn) => {
+export const LinkButton = ({ text, icon, onClick, isSmall = false }) => {
+  return button(text, ButtonVariant.link, icon, onClick, isSmall)
+}
+
+const button = (text, variant, icon, onClickFn, isSmall = false) => {
   const Icon = icon
   if (text === undefined || text === null || text === "") {
     return (
-      <Button isSmall={false} onClick={onClickFn} variant={variant}>
+      <Button isSmall={isSmall} onClick={onClickFn} variant={variant}>
         {icon ? <Icon /> : null}
       </Button>
     )

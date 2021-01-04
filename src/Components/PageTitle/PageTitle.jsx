@@ -1,10 +1,11 @@
 import {
   Divider,
   Grid,
-  GridItem, PageSection,
+  GridItem,
+  PageSection,
   PageSectionVariants,
   Text,
-  Title
+  Title,
 } from "@patternfly/react-core"
 import React from "react"
 
@@ -14,13 +15,21 @@ const PageTitle = ({ title, description, actions, hideDivider = false }) => {
       <Divider component="hr" />
     </GridItem>
   )
+
+  // if non string title passed, do not add heading style
+  const titleComponent =
+    typeof title === "string" ? (
+      <Title headingLevel="h2" size="xl">
+        {title}
+      </Title>
+    ) : (
+      title
+    )
   return (
     <PageSection variant={PageSectionVariants.light}>
       <Grid hasGutter={false}>
         <GridItem span={6}>
-          <Title headingLevel="h2" size="xl">
-            {title}
-          </Title>
+          {titleComponent}
           {description ? (
             <Text>
               <small>{description}</small>

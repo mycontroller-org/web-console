@@ -162,4 +162,10 @@ export const api = {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),
     getByKey: (key) => newRequest(HTTP_VERBS.GET, "/settings/" + key, {}, {}),
   },
+  dashboard: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/dashboard", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/dashboard/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/dashboard", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/dashboard", {}, data),
+  },
 }

@@ -80,7 +80,7 @@ class NotificationContainer extends React.Component {
       )
     }
     return (
-      <NotificationDrawer>
+      <NotificationDrawer >
         <NotificationDrawerHeader count={this.props.unreadCount} onClose={this.props.onNotificationClose}>
           <Dropdown
             onSelect={this.toggleOptions}

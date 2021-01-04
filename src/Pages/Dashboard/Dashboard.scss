@@ -23,7 +23,7 @@
   background: var(--pf-global--palette--blue-200);
 }
 
-#dashboard-card {
+.dashboard-card {
   position: relative;
   height: 100%;
   /*
@@ -34,28 +34,17 @@
   position: relative;
   width: 100% !important;
   overflow: auto !important;
-}
-
-#dashboard-card .dashboard-card-title {
-  /*
-  display: block;
-  background-color: #D5D5D5;
-  border-bottom: 0.1mm solid #D5D5D5;
-  color: #3A3A3A;
-  text-align: left;
-  padding-top: 5px;
-  padding-left: 15px;
-    max-height: 30px;
- color: #333;
-  */
-  padding: 7px 10px 0px 10px;
-  /*
-  font-size: 15px;
-  font-weight: 600;
-  */
- 
-}
-
-#dashboard-card .dashboard-card-body {
-  padding: 10px 10px;
+  .dashboard-card-title {
+    padding: 5px 0px 5px 10px;
+    background-color: #f0f0f0;
+    .dashboard-card-action {
+      margin-right: 7px;
+      :hover{
+        cursor: pointer;
+      }
+    }
+  }
+  .dashboard-card-body {
+    padding: 10px 10px;
+  }
 }

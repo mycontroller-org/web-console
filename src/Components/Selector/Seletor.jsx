@@ -1,13 +1,9 @@
 import { Divider, Dropdown, DropdownItem, DropdownToggle } from "@patternfly/react-core"
-import {
-  CaretDownIcon,
-
-
-  MinusCircleIcon,
-  PlusCircleIcon
-} from "@patternfly/react-icons"
+import { CaretDownIcon, MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons"
 import React from "react"
 import "./Selector.scss"
+
+import PropTypes from "prop-types"
 
 // Sample data
 // {
@@ -18,15 +14,6 @@ import "./Selector.scss"
 // }
 class Selector extends React.Component {
   state = {
-    items: [
-      {
-        id: "1",
-        text: "Default",
-        bookmarked: true,
-        disabled: false,
-      },
-    ],
-    selected: { text: "Default" },
     isOpen: false,
   }
 
@@ -40,11 +27,14 @@ class Selector extends React.Component {
 
   onSelect = (item) => {
     // do local update
-    this.setState({
-      isOpen: !this.state.isOpen,
-      selected: item,
-    })
+    // this.setState({
+    //   isOpen: !this.state.isOpen,
+    //   selected: item,
+    // })
     // notify to parent
+    if (this.props.onChange) {
+      this.props.onChange(item)
+    }
   }
 
   onBookmarkChange = (item) => {
@@ -66,17 +56,21 @@ class Selector extends React.Component {
   }
 
   render() {
+    const { items, selection, isDisabled, prefix } = this.props
+
     const elements = []
     // update marked and unmarked items
     const itemMarked = []
     const itemUnMarked = []
-    this.state.items.forEach((item) => {
-      if (item.bookmarked) {
-        itemMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
-      } else {
-        itemUnMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
-      }
-    })
+    if (items) {
+      items.forEach((item) => {
+        if (item.bookmarked) {
+          itemMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
+        } else {
+          itemUnMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
+        }
+      })
+    }
 
     // update all
     if (itemMarked.length > 0) {
@@ -87,19 +81,20 @@ class Selector extends React.Component {
     }
     elements.push(...itemUnMarked)
 
-    const title = this.props.prefix ? (
-      <span className="rb-selector-title">
-        {this.props.prefix}:
-      </span>
-    ) : null
+    const title = prefix ? <span className="rb-selector-title">{prefix}:</span> : null
     return (
       <Dropdown
         className="rb-selector"
         isPlain
         toggle={
-          <DropdownToggle id="selector-toggle-id" onToggle={this.onToggle} toggleIndicator={CaretDownIcon}>
+          <DropdownToggle
+            id="selector-toggle-id"
+            isDisabled={isDisabled}
+            onToggle={this.onToggle}
+            toggleIndicator={CaretDownIcon}
+          >
             {title}
-            <span>{this.state.selected.text}</span>
+            <span>{selection.text}</span>
           </DropdownToggle>
         }
         isOpen={this.state.isOpen}
@@ -108,6 +103,17 @@ class Selector extends React.Component {
     )
   }
 }
+
+Selector.propTypes = {
+  items: PropTypes.array,
+  selected: PropTypes.object,
+  onChange: PropTypes.func,
+  isDisabled: PropTypes.bool,
+}
+
+export default Selector
+
+// helper functions
 
 const getItem = (item, onSelectFn, onBookmarkChangeFn) => {
   const Icon = item.bookmarked ? MinusCircleIcon : PlusCircleIcon
@@ -122,5 +128,3 @@ const getItem = (item, onSelectFn, onBookmarkChangeFn) => {
     </DropdownItem>
   )
 }
-
-export default Selector

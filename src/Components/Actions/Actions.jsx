@@ -13,6 +13,7 @@ import {
   RebootingIcon,
   UploadIcon,
   SearchIcon,
+  AddCircleOIcon,
 } from "@patternfly/react-icons"
 import DeleteDialog from "../Dialog/DeleteDialog"
 
@@ -24,16 +25,18 @@ export default class Actions extends React.Component {
   onToggle = (isOpen) => {
     this.setState({ isOpen })
   }
-  onSelect = (event) => {
+  onSelect = (_event) => {
     this.setState({ isOpen: !this.state.isOpen })
   }
 
   render() {
     const { isOpen } = this.state
-    const { items, isDisabled, rowsSelectionCount } = this.props
+    const { items, isDisabled, rowsSelectionCount = 1 } = this.props
 
     const dropdownItems = items.map((item, index) => {
       switch (item.type) {
+        case "new":
+          return drawItem("new", "New", AddCircleOIcon, item.disabled, item.onClick)
         case "enable":
           return drawItem("enable", "Enable", CircleIcon, item.disabled, item.onClick)
         case "disable":
