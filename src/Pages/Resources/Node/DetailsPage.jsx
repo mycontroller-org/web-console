@@ -1,8 +1,7 @@
 import React from "react"
 import DetailRootPage from "../../../Components/BasePage/DetailsBase"
-import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
-import { api } from "../../../Service/Api"
 import TabDetails from "./TabDetails"
+import UpdatePage from "./UpdatePage"
 
 class NodeDetailPage extends React.Component {
   render() {
@@ -15,20 +14,7 @@ class NodeDetailPage extends React.Component {
       },
       {
         name: "Edit",
-        content: <span>Edit tab</span>,
-      },
-      {
-        name: "YAML",
-        content: (
-          <CodeEditor
-            resourceId={id}
-            language="yaml"
-            apiGetRecord={api.node.get}
-            apiSaveRecord={api.node.update}
-            minimapEnabled
-            onCancelFunc={() => {}}
-          />
-        ),
+        content: <UpdatePage match={this.props.match} history={this.props.history} />,
       },
     ]
     return <DetailRootPage pageHeader="Node Details" tabs={tabs} />

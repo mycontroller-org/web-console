@@ -1,0 +1,15 @@
+.mc-form {
+  --pf-c-form--GridGap: 0.6rem; // default: --pf-c-form--GridGap: var(--pf-global--gutter--md); // 1.5rem
+  .mc-form-group {
+    padding-bottom: 7px;
+  }
+  .mc-form-group-header {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  .mc-form-header-label {
+    font-size: var(--pf-global--FontSize--lg);
+    font-style: normal;
+    color: #000000a0;
+  }
+}

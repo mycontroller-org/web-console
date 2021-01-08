@@ -76,11 +76,13 @@ export const validate = (func, val, opts) => {
 }
 
 export const validateItem = (item) => {
-  const list = item.validator
-  for (let index = 0; index < list.length; index++) {
-    const valid = list[index]
-    const func = Object.keys(valid)[0]
-    if (!validate(func, item.value, valid[func])) {
+  if (!item.validator) {
+    return true
+  }
+  const funcs = Object.keys(item.validator)
+  for (let index = 0; index < funcs.length; index++) {
+    const func = funcs[index]
+    if (!validate(func, item.value, item.validator[func])) {
       return false
     }
   }

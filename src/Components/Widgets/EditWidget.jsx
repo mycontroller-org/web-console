@@ -1,81 +1,69 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { Form } from "../Form/Form"
 import { DataType, FieldType } from "../Form/Constants"
 import { WidgetType } from "./Constants"
 
-class EditWidget extends React.Component {
-  onChange = (item, data) => {
-    console.log("item", item, "data", data)
-  }
-
-  render() {
-    const { showEditWidget, widget, onCancel } = this.props
-    const items = [
-      {
-        label: "Title",
-        fieldId: "title",
-        fieldType: FieldType.text,
-        dataType: DataType.string,
-        value: widget.title,
-        isRequired: true,
-        helperText: "",
-        helperTextInvalid: "error",
-        validated: "default",
-      },
-      {
-        label: "Show Title",
-        fieldLabel: "",
-        fieldId: "showTitle",
-        fieldType: FieldType.checkbox,
-        dataType: DataType.boolean,
-        value: false,
-        isRequired: false,
-        helperText: "hello",
-        helperTextInvalid: "",
-        validated: "error",
-      },
-      {
-        label: "Is Static",
-        fieldLabel: "disable draggable and resizable feature",
-        fieldType: FieldType.checkbox,
-        dataType: DataType.boolean,
-        value: false,
-        isRequired: false,
-        helperText: "hello",
-        helperTextInvalid: "",
-        validated: "error",
-      },
-    ]
-    updateItems(widget, items)
-    return (
-      <Modal
-        title="Edit widget settings"
-        variant={ModalVariant.medium}
-        isOpen={showEditWidget}
-        onClose={onCancel}
-        actions={[
-          <Button key="confirm" variant="primary" onClick={onCancel}>
-            Update
-          </Button>,
-          <Button key="cancel" variant="link" onClick={onCancel}>
-            Cancel
-          </Button>,
-        ]}
-        onEscapePress={onCancel}
-      >
-        <Form items={items} isHorizontal onChange={this.onChange} />
-      </Modal>
-    )
-  }
-}
-
-EditWidget.prototypes = {
-  widget: PropTypes.object,
-  onUpdate: PropTypes.func,
-  onCancel: PropTypes.func,
-  showEditWidget: PropTypes.bool,
+const EditWidget = ({ showEditWidget, widget, onCancel, onChange, onSave }) => {
+  const items = [
+    {
+      label: "Title",
+      fieldId: "title",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: widget.title,
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "error",
+      validated: "default",
+    },
+    {
+      label: "Show Title",
+      fieldLabel: "",
+      fieldId: "showTitle",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: widget.showTitle,
+      isRequired: false,
+      helperText: "hello",
+      helperTextInvalid: "",
+      validated: "error",
+    },
+    {
+      label: "Is Static",
+      fieldLabel: "disable draggable and resizable feature",
+      fieldId: "static",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: widget.static,
+      isRequired: false,
+      helperText: "hello",
+      helperTextInvalid: "",
+      validated: "error",
+    },
+  ]
+  updateItems(widget, items)
+  return (
+    <Modal
+      key="edit-widget"
+      title="Edit widget settings"
+      variant={ModalVariant.medium}
+      position="top"
+      isOpen={showEditWidget}
+      onClose={onCancel}
+      actions={[
+        <Button key="confirm" variant="primary" onClick={onSave}>
+          Update
+        </Button>,
+        <Button key="cancel" variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>,
+      ]}
+      onEscapePress={onCancel}
+    >
+      <Form key="form" items={items} isHorizontal onChange={onChange} />
+    </Modal>
+  )
 }
 
 export default EditWidget
@@ -84,15 +72,19 @@ export default EditWidget
 
 const updateItems = (widget, items) => {
   const config = widget.config
-  console.log(widget)
+  //console.log(widget)
   switch (widget.type) {
     case WidgetType.SwitchPanel:
       items.push({
         label: "Labels",
-        fieldId: "labels",
-        fieldType: FieldType.labels,
+        fieldId: "config.labels",
+        fieldType: FieldType.Labels,
         value: config.labels,
         isRequired: false,
       })
+      break
+
+    default:
+      break
   }
 }

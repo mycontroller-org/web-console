@@ -1,14 +1,16 @@
 import { PageSection, PageSectionVariants } from "@patternfly/react-core"
 import React from "react"
 
-const PageContent = ({ children }) => {
+import "./PageContent.scss"
+
+const PageContent = ({ children, hasNoPaddingTop = false }) => {
+  const className = hasNoPaddingTop ? "has-no-padding-top" : ""
   return (
-    <PageSection
-      // style={{paddingTop: "0px"}}
-      variant={PageSectionVariants.light}
-    >
-      {children}
-    </PageSection>
+    <div className="mc-page-content">
+      <PageSection className={className} variant={PageSectionVariants.light}>
+        {children}
+      </PageSection>
+    </div>
   )
 }
 

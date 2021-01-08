@@ -12,11 +12,11 @@ const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
       onClose={onCloseFn}
       showClose={false}
       actions={[
-        <Button key="confirm" isSmall variant="danger" onClick={onOkFn}>
-          Delete
-        </Button>,
-        <Button key="cancel" isSmall variant="secondary" onClick={onCloseFn}>
+        <Button key="cancel" variant="secondary" onClick={onCloseFn}>
           Cancel
+        </Button>,
+        <Button key="confirm" variant="danger" onClick={onOkFn}>
+          Delete
         </Button>,
       ]}
     >

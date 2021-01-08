@@ -1,5 +1,5 @@
 // https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
-import { AddCircleOIcon, CheckIcon, CloseIcon, EditIcon, TrashAltIcon } from "@patternfly/react-icons"
+import { AddCircleOIcon, CheckIcon, CloseIcon, EditIcon } from "@patternfly/react-icons"
 import "chartjs-plugin-colorschemes"
 import React from "react"
 import { Responsive, WidthProvider } from "react-grid-layout"
@@ -13,6 +13,7 @@ import "./Dashboard.scss"
 import EditWidget from "../../Components/Widgets/EditWidget"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
 import Actions from "../../Components/Actions/Actions"
+import { updateRootObject } from "../../Components/Form/Functions"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -59,7 +60,7 @@ class Dashboard extends React.Component {
 
   onLayoutChange = (layouts) => {
     // console.log(JSON.stringify(layouts, " ", 2))
-    if (!layouts || layouts.length == 0) {
+    if (!layouts || layouts.length === 0) {
       return
     }
     const layout = layouts[0]
@@ -99,7 +100,6 @@ class Dashboard extends React.Component {
   onDeleteClick = () => {}
 
   onWidgetEdit = (config) => {
-    console.log(config)
     this.setState({ showEditWidget: true, targetWidget: config })
   }
 
@@ -107,6 +107,24 @@ class Dashboard extends React.Component {
 
   onWidgetEditHide = () => {
     this.setState({ showEditWidget: false })
+  }
+
+  onWidgetConfigChange = (item, data) => {
+    console.log("changing:", item, data)
+    this.setState((prevProps) => {
+      const widget = prevProps.targetWidget
+      updateRootObject(widget, item, data)
+      console.log("updated:", widget)
+      return { targetWidget: widget }
+    })
+  }
+
+  onWidgetConfigSave = () => {
+    // TODO add code to save
+    this.setState((prevState) => {
+      console.log("new config:", prevState.targetWidget)
+      return { showEditWidget: false }
+    })
   }
 
   render() {
@@ -190,13 +208,21 @@ class Dashboard extends React.Component {
         { type: "new", onClick: this.onNewDashboardClick },
         { type: "delete", onClick: this.onDeleteClick },
       ]
-      actions.push(<Actions items={actionItems} isDisabled={false} />)
+      actions.push(<Actions key="actions" items={actionItems} isDisabled={false} />)
     }
 
     return (
       <React.Fragment>
-        <EditWidget showEditWidget={showEditWidget} widget={targetWidget} onCancel={this.onWidgetEditHide} />
+        <EditWidget
+          key="edit-widget"
+          showEditWidget={showEditWidget}
+          widget={targetWidget}
+          onCancel={this.onWidgetEditHide}
+          onChange={this.onWidgetConfigChange}
+          onSave={this.onWidgetConfigSave}
+        />
         <PageTitle
+          key="page-title"
           title={
             <Selector
               prefix="Dashboard"
@@ -207,7 +233,7 @@ class Dashboard extends React.Component {
           }
           actions={actions}
         />
-        <PageContent>{pageContent}</PageContent>
+        <PageContent key="page-content">{pageContent}</PageContent>
       </React.Fragment>
     )
   }

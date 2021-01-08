@@ -55,7 +55,6 @@ class SwitchPanel extends React.Component {
       return <span>Loading</span>
     }
     const switches = resources.map((r, index) => {
-      console.log(r)
       return (
         <GridItem span={12} key={"label_" + index}>
           <span style={{ float: "left", fontWeight: r.isChecked ? "bold" : "normal" }}>{r.label}</span>

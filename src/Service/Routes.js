@@ -1,11 +1,11 @@
 import { TachometerAltIcon } from "@patternfly/react-icons"
 import React from "react"
 import Dashboard from "../Pages/Dashboard/Dashboard"
-import GatewayAddPage from "../Pages/Resources/Gateway/AddPageYaml"
+import GatewayUpdatePage from "../Pages/Resources/Gateway/UpdatePage"
 // import DummyPage from "../Pages/DummyPage/DummyPage"
 import { default as GatewayDetailPage } from "../Pages/Resources/Gateway/DetailsPage"
 import GatewayListPage from "../Pages/Resources/Gateway/ListPage"
-import NodeAddPage from "../Pages/Resources/Node/AddPageYaml"
+import NodeUpdatePage from "../Pages/Resources/Node/UpdatePage"
 import NodeDetailPage from "../Pages/Resources/Node/DetailsPage"
 import NodeListPage from "../Pages/Resources/Node/ListPage"
 import SensorDetailPage from "../Pages/Resources/Sensor/DetailsPage"
@@ -141,11 +141,11 @@ const hiddenRoutes = [
   },
   {
     to: routeMap.resources.gateway.add,
-    component: GatewayAddPage,
+    component: GatewayUpdatePage,
   },
   {
     to: routeMap.resources.node.add,
-    component: NodeAddPage,
+    component: NodeUpdatePage,
   },
 ]
 

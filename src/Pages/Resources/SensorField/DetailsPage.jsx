@@ -14,10 +14,6 @@ class NodeDetailPage extends React.Component {
         content: <TabDetails resourceId={id} history={this.props.history} />,
       },
       {
-        name: "Edit",
-        content: <span>Edit tab</span>,
-      },
-      {
         name: "YAML",
         content: (
           <CodeEditor

@@ -1,7 +1,6 @@
 import {
   Bullseye,
   Button,
-  Flex,
   Grid,
   GridItem,
   Split,
@@ -106,7 +105,7 @@ class LabelsForm extends React.Component {
     if (items.length === 0) {
       items.push(
         <Button variant="secondary" onClick={this.onAdd}>
-          Add
+          Add a label
         </Button>
       )
     }
@@ -118,7 +117,7 @@ class LabelsForm extends React.Component {
         </GridItem>
 
         <GridItem span={5}>
-          <Text component={TextVariants.h1}>Value</Text>
+          <Text component={TextVariants.h4}>Value</Text>
         </GridItem>
         <GridItem span={2}></GridItem>
 
