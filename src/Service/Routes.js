@@ -13,6 +13,7 @@ import SensorListPage from "../Pages/Resources/Sensor/ListPage"
 import SensorUpdatePage from "../Pages/Resources/Sensor/UpdatePage"
 import SensorFieldDetailPage from "../Pages/Resources/SensorField/DetailsPage"
 import SensorFieldListPage from "../Pages/Resources/SensorField/ListPage"
+import SensorFieldUpdatePage from "../Pages/Resources/SensorField/UpdatePage"
 import ProfilePage from "../Pages/Settings/Profile/Profile"
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
@@ -43,6 +44,7 @@ const routeMap = {
       list: "/resources/field",
       detail: "/resources/field/list/:id",
       update: "/resources/field/update/:id",
+      add: "/resources/field/add",
     },
   },
   settings: {
@@ -153,6 +155,10 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.sensor.add,
     component: SensorUpdatePage,
+  },
+  {
+    to: routeMap.resources.sensorField.add,
+    component: SensorFieldUpdatePage,
   },
 ]
 

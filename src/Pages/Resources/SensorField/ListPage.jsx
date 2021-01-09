@@ -43,7 +43,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        console.log("clicked details")
+        r(this.props.history, rMap.resources.sensorField.add)
       },
     },
   ]
