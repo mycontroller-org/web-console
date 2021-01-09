@@ -29,7 +29,7 @@ class UpdatePage extends React.Component {
         apiGetRecord={api.gateway.get}
         apiSaveRecord={api.gateway.update}
         minimapEnabled
-        onSave={() => {
+        onSaveRedirectFunc={() => {
           r(this.props.history, rMap.resources.gateway.list)
         }}
         onCancelFunc={() => {
@@ -200,6 +200,13 @@ const getFormItems = (rootObject) => {
               },
             },
             helperTextInvalid: "Invalid Broker URL.",
+          },
+          {
+            label: "Insecure Skip Verify",
+            fieldId: "provider.protocol.insecureSkipVerify",
+            fieldType: FieldType.Switch,
+            dataType: DataType.Boolean,
+            value: "",
           },
           {
             label: "Username",

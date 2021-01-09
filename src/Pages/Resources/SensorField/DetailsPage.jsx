@@ -3,6 +3,7 @@ import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import CodeEditor from "../../../Components/CodeEditor/CodeEditor"
 import { api } from "../../../Service/Api"
 import TabDetails from "./TabDetails"
+import UpdatePage from "./UpdatePage"
 
 class NodeDetailPage extends React.Component {
   render() {
@@ -14,17 +15,8 @@ class NodeDetailPage extends React.Component {
         content: <TabDetails resourceId={id} history={this.props.history} />,
       },
       {
-        name: "YAML",
-        content: (
-          <CodeEditor
-            resourceId={id}
-            language="yaml"
-            apiGetRecord={api.sensorField.get}
-            apiSaveRecord={api.sensorField.update}
-            minimapEnabled
-            onCancelFunc={() => {}}
-          />
-        ),
+        name: "Edit",
+        content: <UpdatePage match={this.props.match} history={this.props.history} />,
       },
     ]
     return <DetailRootPage pageHeader="Sensor Field Details" tabs={tabs} />

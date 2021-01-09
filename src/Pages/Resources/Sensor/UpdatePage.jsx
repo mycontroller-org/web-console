@@ -10,26 +10,13 @@ import objectPath from "object-path"
 
 class UpdatePage extends React.Component {
   state = {
-    loading: true,
-    gateways: [],
+    loading: false,
   }
 
-  componentDidMount() {
-    api.gateway
-      .list({})
-      .then((res) => {
-        const gateways = res.data.data.map((gw) => {
-          return { value: gw.id, label: gw.id, description: gw.name }
-        })
-        this.setState({ loading: false, gateways: gateways })
-      })
-      .catch((_e) => {
-        this.setState({ loading: false })
-      })
-  }
+  componentDidMount() {}
 
   render() {
-    const { loading, gateways } = this.state
+    const { loading } = this.state
 
     if (loading) {
       return <span>Loading...</span>
@@ -44,23 +31,23 @@ class UpdatePage extends React.Component {
         key="editor"
         resourceId={id}
         language="yaml"
-        apiGetRecord={api.node.get}
-        apiSaveRecord={api.node.update}
+        apiGetRecord={api.sensor.get}
+        apiSaveRecord={api.sensor.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          r(this.props.history, rMap.resources.sensor.list)
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          r(this.props.history, rMap.resources.sensor.list)
         }}
-        getFormItems={(rootObject) => getFormItems(rootObject, gateways)}
+        getFormItems={(rootObject) => getFormItems(rootObject)}
       />
     )
 
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Node" />
+          <PageTitle key="page-title" title="Add a Sensor" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -73,10 +60,11 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (rootObject, gateways) => {
+const getFormItems = (rootObject) => {
   // set ID, if not set
   const newID = uuidv4().toString()
   objectPath.set(rootObject, "id", newID, true)
+
   const items = [
     {
       label: "ID",
@@ -89,31 +77,49 @@ const getFormItems = (rootObject, gateways) => {
       helperText: "",
       helperTextInvalid: "",
       validated: "default",
-      options: gateways,
+      options: [],
       validator: { isNotEmpty: {} },
     },
     {
       label: "Gateway",
       fieldId: "gatewayId",
-      fieldType: FieldType.SelectTypeAhead,
+      fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperText: "",
-      helperTextInvalid: "",
-      validated: "default",
-      options: gateways,
       validator: { isNotEmpty: {} },
+      apiOptions: api.gateway.list,
     },
     {
       label: "Node ID",
       fieldId: "nodeId",
+      fieldType: FieldType.SelectTypeAheadAsync,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      isDisabled: !rootObject.gatewayId,
+      apiOptions: api.node.list,
+      optionValueKey: "nodeId",
+      getFiltersFunc: (value) => {
+        return [
+          { k: "gatewayId", o: "eq", v: rootObject.gatewayId },
+          { k: "nodeId", o: "regex", v: value },
+        ]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.name
+      },
+    },
+    {
+      label: "Sensor ID",
+      fieldId: "sensorId",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Node ID. isAlphanumeric, chars: min=1 and max=100",
+      helperTextInvalid: "Invalid Sensor ID. isAlphanumeric, chars: min=1 and max=100",
       validated: "default",
       validator: {},
     },

@@ -10,9 +10,11 @@ import NodeDetailPage from "../Pages/Resources/Node/DetailsPage"
 import NodeListPage from "../Pages/Resources/Node/ListPage"
 import SensorDetailPage from "../Pages/Resources/Sensor/DetailsPage"
 import SensorListPage from "../Pages/Resources/Sensor/ListPage"
+import SensorUpdatePage from "../Pages/Resources/Sensor/UpdatePage"
 import SensorFieldDetailPage from "../Pages/Resources/SensorField/DetailsPage"
 import SensorFieldListPage from "../Pages/Resources/SensorField/ListPage"
 import ProfilePage from "../Pages/Settings/Profile/Profile"
+// import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
 
 const routeMap = {
@@ -35,6 +37,7 @@ const routeMap = {
       list: "/resources/sensor",
       detail: "/resources/sensor/list/:id",
       update: "/resources/sensor/update/:id",
+      add: "/resources/sensor/add",
     },
     sensorField: {
       list: "/resources/field",
@@ -114,7 +117,7 @@ const routes = [
   //   id: "dummyPage",
   //   title: "Dummy Page",
   //   to: "/dummypage",
-  //   component: DummyPage,
+  //   component: dummyPage,
   // },
 ]
 
@@ -146,6 +149,10 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.node.add,
     component: NodeUpdatePage,
+  },
+  {
+    to: routeMap.resources.sensor.add,
+    component: SensorUpdatePage,
   },
 ]
 

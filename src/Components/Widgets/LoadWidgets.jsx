@@ -57,7 +57,7 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
     }
 
     let titleComponent = null
-    if (!item.hideTitle || editEnabled) {
+    if (item.showTitle || editEnabled) {
       titleComponent = (
         <CardTitle className="dashboard-card-title">
           <Flex>

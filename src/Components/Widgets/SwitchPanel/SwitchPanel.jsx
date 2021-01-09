@@ -27,7 +27,7 @@ class SwitchPanel extends React.Component {
     if (this.props.config && this.props.config.labels) {
       const keys = Object.keys(this.props.config.labels)
       keys.forEach((key) => {
-        filters.push({ k: key, v: this.props.config.labels[key] })
+        filters.push({ k: "labels." + key, v: this.props.config.labels[key] })
       })
     }
     api.sensorField

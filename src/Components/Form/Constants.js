@@ -23,5 +23,6 @@ export const FieldType = {
   Select: "select",
   SelectTypeAhead: "select_type_ahead",
   SelectTypeAheadMultiple: "select_type_ahead_multiple",
+  SelectTypeAheadAsync: "select_type_ahead_async",
   Switch: "switch",
 }

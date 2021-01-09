@@ -12,12 +12,63 @@ import { validate, validateItem } from "../../Util/Validator"
 class Editor extends React.Component {
   state = {
     loading: true,
-    update: false,
+    isReloadable: false,
     rootObject: {},
     formView: true,
     inValidItems: [],
   }
   editorRef = React.createRef()
+
+  handleEditorDidMount = (_valueGetter, editor) => {
+    this.editorRef.current = editor
+  }
+
+  componentDidMount() {
+    this.onReloadClick()
+  }
+
+  onReloadClick = () => {
+    if (this.props.resourceId) {
+      this.props
+        .apiGetRecord(this.props.resourceId)
+        .then((res) => {
+          const rootObject = res.data
+          this.updateStateWithRootObject(rootObject, true)
+        })
+        .catch((_e) => {
+          this.setState({ loading: false, isReloadable: true })
+        })
+    } else if (this.props.rootObject) {
+      this.updateStateWithRootObject(this.props.rootObject)
+    } else {
+      this.setState({ loading: false, rootObject: {}, isReloadable: false })
+    }
+  }
+
+  updateStateWithRootObject = (rootObject, isReloadable = false) => {
+    this.setState(
+      (prevState) => {
+        // validate fields
+        const { inValidItems } = prevState
+        const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
+        formItems.forEach((item) => {
+          updateInValidList(inValidItems, item, item.value)
+        })
+        return {
+          rootObject: rootObject,
+          inValidItems: inValidItems,
+          loading: false,
+          isReloadable: isReloadable,
+        }
+      },
+      () => {
+        if (this.editorRef.current) {
+          const codeString = toString(this.props.language, rootObject)
+          this.editorRef.current.setValue(codeString)
+        }
+      }
+    )
+  }
 
   onViewChange = () => {
     this.setState((prevState) => {
@@ -34,48 +85,15 @@ class Editor extends React.Component {
       const { rootObject, inValidItems } = prevState
       updateRootObject(rootObject, item, newValue)
       updateInValidList(inValidItems, item, newValue)
+      if (this.props.onChangeFunc) {
+        this.props.onChangeFunc(rootObject)
+      }
       return { rootObject: rootObject, inValidItems: inValidItems }
     })
   }
 
-  componentDidMount() {
-    this.onReloadClick()
-  }
-
-  onReloadClick = () => {
-    if (this.props.resourceId) {
-      this.props
-        .apiGetRecord(this.props.resourceId)
-        .then((res) => {
-          this.setState(
-            (prevState) => {
-              // validate fields
-              const rootObject = res.data
-              const { inValidItems } = prevState
-              const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
-              formItems.forEach((item) => {
-                updateInValidList(inValidItems, item, item.value)
-              })
-              return { rootObject: rootObject, inValidItems: inValidItems, loading: false, update: true }
-            },
-            () => {
-              if (this.editorRef.current) {
-                const codeString = toString(this.props.language, res.data)
-                this.editorRef.current.setValue(codeString)
-              }
-            }
-          )
-        })
-        .catch((_e) => {
-          this.setState({ loading: false, update: true })
-        })
-    } else {
-      this.setState({ loading: false, rootObject: {}, update: false })
-    }
-  }
-
   onSaveClick = () => {
-    if (this.props.apiSaveRecord) {
+    if (this.props.apiSaveRecord || this.props.onSaveFunc) {
       this.setState((prevState) => {
         const { formView, rootObject, inValidItems } = prevState
         let data = {}
@@ -93,21 +111,26 @@ class Editor extends React.Component {
           const codeString = this.editorRef.current.getValue()
           data = toObject(this.props.language, codeString)
         }
-        this.props
-          .apiSaveRecord(data)
-          .then((_res) => {
-            if (this.props.onSave) {
-              this.props.onSave()
-            }
-          })
-          .catch((_e) => {})
+        if (this.props.apiSaveRecord) {
+          this.props
+            .apiSaveRecord(data)
+            .then((_res) => {
+              this.callOnSaveRedirect()
+            })
+            .catch((_e) => {})
+        } else if (this.props.onSaveFunc) {
+          this.props.onSaveFunc(data)
+          this.callOnSaveRedirect()
+        }
       })
       return {}
     }
   }
 
-  handleEditorDidMount = (_valueGetter, editor) => {
-    this.editorRef.current = editor
+  callOnSaveRedirect = () => {
+    if (this.props.onSaveRedirectFunc) {
+      this.props.onSaveRedirectFunc()
+    }
   }
 
   getUpdatedFormItems = (rootObject, inValidItems) => {
@@ -121,10 +144,10 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { loading, rootObject, formView, update, inValidItems } = this.state
+    const { loading, rootObject, formView, isReloadable, inValidItems } = this.state
 
     if (loading) {
-      return <div>Loading</div>
+      return <div>Loading...</div>
     }
 
     const content = []
@@ -134,7 +157,13 @@ class Editor extends React.Component {
       const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
 
       content.push(
-        <Form key="form-view" isHorizontal withGrid items={formItems} onChange={this.onFormValueChange} />
+        <Form
+          key="form-view"
+          isHorizontal
+          isWidthLimited={this.props.isWidthLimited}
+          items={formItems}
+          onChange={this.onFormValueChange}
+        />
       )
     } else {
       const codeString = toString(this.props.language, rootObject)
@@ -173,7 +202,7 @@ class Editor extends React.Component {
       { text: "Save", variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
     ]
 
-    if (update) {
+    if (isReloadable) {
       actionButtons.push({
         text: "Reload",
         variant: "secondary",
@@ -232,12 +261,17 @@ Editor.propTypes = {
   resourceId: PropTypes.string,
   apiGetRecord: PropTypes.func,
   apiSaveRecord: PropTypes.func,
+  rootObject: PropTypes.object,
+  onChangeFunc: PropTypes.func,
+  onSaveFunc: PropTypes.func,
+  onSaveRedirectFunc: PropTypes.func, // on successful save called this redirect will be called
   onCancelFunc: PropTypes.func,
   language: PropTypes.string,
   minimapEnabled: PropTypes.bool,
   readOnly: PropTypes.bool,
   otherOptions: PropTypes.object,
   getFormItems: PropTypes.func,
+  isWidthLimited: PropTypes.bool,
 }
 
 export default Editor

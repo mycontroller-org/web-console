@@ -19,6 +19,9 @@ class LabelsForm extends React.Component {
   }
 
   updateLabels = () => {
+    if (!this.props.labels) {
+      return
+    }
     const keys = Object.keys(this.props.labels)
     const newLabels = keys.map((key) => {
       return { key, value: this.props.labels[key] }

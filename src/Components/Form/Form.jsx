@@ -13,6 +13,7 @@ import LabelsForm from "./LabelsForm"
 import { FieldType } from "./Constants"
 import "./Form.scss"
 import Select from "./Select"
+import AsyncSelect from "../Select/AsyncSelect"
 
 // item sample
 // const item = {
@@ -28,13 +29,7 @@ import Select from "./Select"
 //   validated: "", //success, warning, error, default
 // }
 
-export const Form = ({
-  isHorizontal = false,
-  withGrid = false,
-  isWidthLimited = false,
-  items = [],
-  onChange = () => {},
-}) => {
+export const Form = ({ isHorizontal = false, isWidthLimited = true, items = [], onChange = () => {} }) => {
   const formGroups = []
   items.forEach((item, index) => {
     const onChangeWithItem = (data) => {
@@ -49,11 +44,11 @@ export const Form = ({
   })
 
   const form = (
-    <PfForm className="mc-form" isHorizontal={isHorizontal} isWidthLimited={isWidthLimited}>
+    <PfForm className="mc-form" isHorizontal={isHorizontal} isWidthLimited={false}>
       <Grid>{formGroups}</Grid>
     </PfForm>
   )
-  if (withGrid) {
+  if (isWidthLimited) {
     return (
       <Grid lg={7} md={9} sm={12}>
         {form}
@@ -112,6 +107,19 @@ const getField = (item, onChange) => {
           onChange={onChange}
           selected={item.value}
           isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.SelectTypeAheadAsync:
+      return (
+        <AsyncSelect
+          isDisabled={item.isDisabled}
+          apiOptions={item.apiOptions}
+          getFiltersFunc={item.getFiltersFunc}
+          optionValueKey={item.optionValueKey}
+          getOptionsDescriptionFunc={item.getOptionsDescriptionFunc}
+          onSelectionFunc={onChange}
+          selected={item.value}
         />
       )
 

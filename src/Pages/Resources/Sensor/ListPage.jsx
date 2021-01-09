@@ -8,13 +8,14 @@ import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
-  deleteAllFilter, deleteFilterCategory, deleteFilterValue, loading,
+  deleteAllFilter,
+  deleteFilterCategory,
+  deleteFilterValue,
+  loading,
   loadingFailed,
-
-
-
-
-  onSortBy, updateFilter, updateRecords
+  onSortBy,
+  updateFilter,
+  updateRecords,
 } from "../../../store/entities/resources/sensor"
 
 class List extends ListBase {
@@ -31,9 +32,7 @@ class List extends ListBase {
     super.componentDidMount()
   }
 
-  actions = [
-    { type: "delete", onClick: this.onDeleteActionClick },
-  ]
+  actions = [{ type: "delete", onClick: this.onDeleteActionClick }]
 
   toolbar = [
     { type: "refresh", group: "right1" },
@@ -42,7 +41,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        console.log("clicked details")
+        r(this.props.history, rMap.resources.sensor.add)
       },
     },
   ]

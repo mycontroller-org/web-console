@@ -10,10 +10,9 @@ import Selector from "../../Components/Selector/Seletor"
 import { api } from "../../Service/Api"
 import { getRandomId } from "../../Util/Util"
 import "./Dashboard.scss"
-import EditWidget from "../../Components/Widgets/EditWidget"
+import EditWidget from "../../Components/Widgets/EditWidgetNew"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
 import Actions from "../../Components/Actions/Actions"
-import { updateRootObject } from "../../Components/Form/Functions"
 import { WidgetType } from "../../Components/Widgets/Constants"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
@@ -76,7 +75,10 @@ class Dashboard extends React.Component {
           const widget = widgets[index]
           widgets[index].layout = {
             ...widget.layout,
-            ...layout,
+            w: layout.w,
+            h: layout.h,
+            x: layout.x,
+            y: layout.y,
           }
           break
         }
@@ -115,21 +117,22 @@ class Dashboard extends React.Component {
     this.setState({ showEditWidget: false })
   }
 
-  onWidgetConfigChange = (item, data) => {
-    console.log("changing:", item, data)
-    this.setState((prevProps) => {
-      const widget = prevProps.targetWidget
-      updateRootObject(widget, item, data)
-      console.log("updated:", widget)
-      return { targetWidget: widget }
-    })
+  onWidgetConfigChange = (widgetConfig) => {
+    this.setState({ targetWidget: widgetConfig })
   }
 
-  onWidgetConfigSave = () => {
-    // TODO add code to save
+  onWidgetConfigSave = (widgetConfig) => {
     this.setState((prevState) => {
-      console.log("new config:", prevState.targetWidget)
-      return { showEditWidget: false }
+      const { dashboardOnEdit } = prevState
+      if (dashboardOnEdit.widgets) {
+        for (let index = 0; index < dashboardOnEdit.widgets.length; index++) {
+          const widget = dashboardOnEdit.widgets[index]
+          if (widget.id === widgetConfig.id) {
+            dashboardOnEdit.widgets[index] = widgetConfig
+          }
+        }
+      }
+      return { showEditWidget: false, targetWidget: widgetConfig, dashboardOnEdit: dashboardOnEdit }
     })
   }
 
@@ -168,8 +171,8 @@ class Dashboard extends React.Component {
           w: widget.layout.w,
           h: widget.layout.h,
           static: widget.static,
-          isDraggable: editEnabled,
-          isResizable: editEnabled,
+          isDraggable: editEnabled && !widget.static,
+          isResizable: editEnabled && !widget.static,
         })
       })
 
@@ -222,7 +225,7 @@ class Dashboard extends React.Component {
         <EditWidget
           key="edit-widget"
           showEditWidget={showEditWidget}
-          widget={targetWidget}
+          widgetConfig={targetWidget}
           onCancel={this.onWidgetEditHide}
           onChange={this.onWidgetConfigChange}
           onSave={this.onWidgetConfigSave}
