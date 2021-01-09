@@ -40,6 +40,43 @@ const isLengthArray = (val, opts) => {
   return false
 }
 
+const baudRates = [
+  50,
+  75,
+  110,
+  134,
+  150,
+  200,
+  300,
+  600,
+  1200,
+  1800,
+  2400,
+  4800,
+  9600,
+  19200,
+  38400,
+  57600,
+  115200,
+  230400,
+  460800,
+  500000,
+  576000,
+  921600,
+  1000000,
+  1152000,
+  1500000,
+  2000000,
+  2500000,
+  3000000,
+  3500000,
+  4000000,
+]
+const isBaudRate = (val) => {
+  const value = v.toInt(val)
+  return baudRates.includes(value)
+}
+
 export const validate = (func, val, opts) => {
   switch (func) {
     case "isEmail":
@@ -70,19 +107,23 @@ export const validate = (func, val, opts) => {
       return isDate(val)
     case "isLengthArray":
       return isLengthArray(val, opts)
+    case "isURL":
+      return v.isURL(val, opts)
+    case "isBaudRate":
+      return isBaudRate(val)
     default:
       return true
   }
 }
 
-export const validateItem = (item) => {
+export const validateItem = (item, value) => {
   if (!item.validator) {
     return true
   }
   const funcs = Object.keys(item.validator)
   for (let index = 0; index < funcs.length; index++) {
     const func = funcs[index]
-    if (!validate(func, item.value, item.validator[func])) {
+    if (!validate(func, value, item.validator[func])) {
       return false
     }
   }

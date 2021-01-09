@@ -11,18 +11,29 @@ import {
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
 import React from "react"
 import "./LabelsForm.scss"
+import _ from "lodash"
 
 class LabelsForm extends React.Component {
   state = {
     labels: [],
   }
 
-  componentDidMount() {
+  updateLabels = () => {
     const keys = Object.keys(this.props.labels)
     const newLabels = keys.map((key) => {
       return { key, value: this.props.labels[key] }
     })
     this.setState({ labels: newLabels })
+  }
+
+  componentDidMount() {
+    this.updateLabels()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(this.props.labels, prevProps.labels)) {
+      this.updateLabels()
+    }
   }
 
   callParentOnChange = (labels) => {

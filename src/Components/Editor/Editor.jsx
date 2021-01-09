@@ -1,4 +1,4 @@
-import { Divider, Flex, Radio, Stack, StackItem } from "@patternfly/react-core"
+import { Alert, Divider, Flex, Grid, Radio, Stack, StackItem } from "@patternfly/react-core"
 import YAML from "js-yaml"
 import PropTypes from "prop-types"
 import React from "react"
@@ -7,7 +7,7 @@ import { updateItems, updateRootObject } from "../Form/Functions"
 import CodeEditorBasic from "../CodeEditor/CodeEditorBasic"
 import { Form } from "../Form/Form"
 import "./Editor.scss"
-import { validateItem } from "../../Util/Validator"
+import { validate, validateItem } from "../../Util/Validator"
 
 class Editor extends React.Component {
   state = {
@@ -29,19 +29,11 @@ class Editor extends React.Component {
     })
   }
 
-  onFormValueChange = (item, data) => {
+  onFormValueChange = (item, newValue) => {
     this.setState((prevState) => {
-      const rootObject = prevState.rootObject
-      updateRootObject(rootObject, item, data)
-      const isValid = validateItem(item)
-      const inValidItems = prevState.inValidItems
-      if (isValid) {
-        if (inValidItems.indexOf(item.fieldId) !== -1) {
-          inValidItems.splice(inValidItems.indexOf(item.fieldId), 1)
-        }
-      } else if (inValidItems.indexOf(item.fieldId) === -1) {
-        inValidItems.push(item.fieldId)
-      }
+      const { rootObject, inValidItems } = prevState
+      updateRootObject(rootObject, item, newValue)
+      updateInValidList(inValidItems, item, newValue)
       return { rootObject: rootObject, inValidItems: inValidItems }
     })
   }
@@ -55,12 +47,24 @@ class Editor extends React.Component {
       this.props
         .apiGetRecord(this.props.resourceId)
         .then((res) => {
-          this.setState({ rootObject: res.data, loading: false, update: true }, () => {
-            if (this.editorRef.current) {
-              const codeString = toString(this.props.language, res.data)
-              this.editorRef.current.setValue(codeString)
+          this.setState(
+            (prevState) => {
+              // validate fields
+              const rootObject = res.data
+              const { inValidItems } = prevState
+              const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
+              formItems.forEach((item) => {
+                updateInValidList(inValidItems, item, item.value)
+              })
+              return { rootObject: rootObject, inValidItems: inValidItems, loading: false, update: true }
+            },
+            () => {
+              if (this.editorRef.current) {
+                const codeString = toString(this.props.language, res.data)
+                this.editorRef.current.setValue(codeString)
+              }
             }
-          })
+          )
         })
         .catch((_e) => {
           this.setState({ loading: false, update: true })
@@ -72,22 +76,33 @@ class Editor extends React.Component {
 
   onSaveClick = () => {
     if (this.props.apiSaveRecord) {
-      let data = {}
-      if (this.state.formView) {
-        data = this.state.rootObject
-      } else {
-        const codeString = this.editorRef.current.getValue()
-        data = toObject(this.props.language, codeString)
-      }
-
-      this.props
-        .apiSaveRecord(data)
-        .then((_res) => {
-          if (this.props.onSave) {
-            this.props.onSave()
+      this.setState((prevState) => {
+        const { formView, rootObject, inValidItems } = prevState
+        let data = {}
+        if (formView) {
+          // validate fields
+          const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
+          formItems.forEach((item) => {
+            updateInValidList(inValidItems, item, item.value)
+          })
+          if (inValidItems.length > 0) {
+            return { inValidItems: inValidItems }
           }
-        })
-        .catch((_e) => {})
+          data = rootObject
+        } else {
+          const codeString = this.editorRef.current.getValue()
+          data = toObject(this.props.language, codeString)
+        }
+        this.props
+          .apiSaveRecord(data)
+          .then((_res) => {
+            if (this.props.onSave) {
+              this.props.onSave()
+            }
+          })
+          .catch((_e) => {})
+      })
+      return {}
     }
   }
 
@@ -95,9 +110,18 @@ class Editor extends React.Component {
     this.editorRef.current = editor
   }
 
+  getUpdatedFormItems = (rootObject, inValidItems) => {
+    if (this.props.getFormItems) {
+      const formItems = this.props.getFormItems(rootObject)
+      updateItems(rootObject, formItems)
+      updateValidations(formItems, inValidItems) // update validations
+      return formItems
+    }
+    return []
+  }
+
   render() {
     const { loading, rootObject, formView, update, inValidItems } = this.state
-    const { getFormItems } = this.props
 
     if (loading) {
       return <div>Loading</div>
@@ -107,9 +131,8 @@ class Editor extends React.Component {
 
     if (formView) {
       // update items with root object
-      const formItems = getFormItems(rootObject)
-      updateItems(rootObject, formItems)
-      updateValidations(formItems, inValidItems) // update validations
+      const formItems = this.getUpdatedFormItems(rootObject, inValidItems)
+
       content.push(
         <Form key="form-view" isHorizontal withGrid items={formItems} onChange={this.onFormValueChange} />
       )
@@ -172,6 +195,15 @@ class Editor extends React.Component {
       ? []
       : [{ text: "Download", variant: "secondary", onClickFunc: () => {}, isDisabled: true }]
 
+    let errorMessage = null
+    if (formView && inValidItems.length > 0) {
+      errorMessage = (
+        <Grid lg={7} md={9} sm={12}>
+          <Alert variant="danger" isInline title="Check the error and/or mandatory(*) fields" />
+        </Grid>
+      )
+    }
+
     return (
       <div className="mc-editor">
         <Stack hasGutter>
@@ -186,6 +218,7 @@ class Editor extends React.Component {
             <Divider component="hr" />
           </StackItem>
           <StackItem>{content}</StackItem>
+          <StackItem>{errorMessage}</StackItem>
           <StackItem>
             <ActionBar leftBar={actionButtons} rightBar={rightBar} />
           </StackItem>
@@ -248,4 +281,29 @@ const updateValidations = (items, inValidItems) => {
       item.validated = "default"
     }
   })
+}
+
+const updateInValidList = (inValidItems, item, value) => {
+  const isValid = validateItem(item, value)
+  let makeInvalid = false
+
+  if (isValid) {
+    if (item.isRequired) {
+      const isEmpty = validate("isEmpty", value, {})
+      if (isEmpty) {
+        makeInvalid = true
+      }
+    }
+    if (inValidItems.indexOf(item.fieldId) !== -1 && !makeInvalid) {
+      inValidItems.splice(inValidItems.indexOf(item.fieldId), 1)
+    }
+  } else {
+    makeInvalid = true
+  }
+
+  if (makeInvalid) {
+    if (inValidItems.indexOf(item.fieldId) === -1) {
+      inValidItems.push(item.fieldId)
+    }
+  }
 }

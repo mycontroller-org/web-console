@@ -1,6 +1,7 @@
 import { Card, CardBody, CardTitle, Flex, FlexItem } from "@patternfly/react-core"
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
+import { WidgetType } from "./Constants"
 import SwitchPanel from "./SwitchPanel/SwitchPanel"
 
 const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick) => {
@@ -16,7 +17,7 @@ const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick) => {
     }
 
     switch (widget.type) {
-      case "widget_switches":
+      case WidgetType.SwitchPanel:
         item.content = <SwitchPanel config={widget.config} />
         break
       default:

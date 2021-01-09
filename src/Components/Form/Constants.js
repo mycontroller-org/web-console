@@ -2,6 +2,7 @@ export const DataType = {
   String: "string",
   Number: "number",
   Integer: "integer",
+  Float: "float",
   Boolean: "boolean",
   Object: "object",
   ArrayString: "array_string",

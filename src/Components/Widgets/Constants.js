@@ -1,1 +1,1 @@
-export const WidgetType = { SwitchPanel: "widget_switches" }
+export const WidgetType = { SwitchPanel: "widget_switch_panel" }

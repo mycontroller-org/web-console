@@ -112,13 +112,14 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: ProviderOptions,
+      validated: "error",
       value: "",
     },
   ]
 
   const providerType = objectPath.get(rootObject, "provider.type", "").toLowerCase()
   switch (providerType) {
-    case Provider.MySensor:
+    case Provider.MySensors:
       items.push(
         {
           label: "Internal Message Ack",
@@ -138,8 +139,10 @@ const getFormItems = (rootObject) => {
           label: "Retry Count",
           fieldId: "provider.retryCount",
           fieldType: FieldType.Text,
-          dataType: DataType.Number,
+          dataType: DataType.Integer,
           value: "",
+          validator: { isInt: { min: 0 } },
+          helperTextInvalid: "Invalid Retry count. int, min=0",
         },
         {
           label: "Timeout",
@@ -191,6 +194,12 @@ const getFormItems = (rootObject) => {
             fieldType: FieldType.Text,
             dataType: DataType.String,
             value: "",
+            validator: {
+              isURL: {
+                protocols: ["ws", "wss", "unix", "mqtt", "tcp", "ssl", "tls", "mqtts", "mqtt+ssl", "tcps"],
+              },
+            },
+            helperTextInvalid: "Invalid Broker URL.",
           },
           {
             label: "Username",
@@ -226,9 +235,14 @@ const getFormItems = (rootObject) => {
             label: "QoS",
             fieldId: "provider.protocol.qos",
             isRequired: true,
-            fieldType: FieldType.Text,
-            dataType: DataType.Number,
+            fieldType: FieldType.SelectTypeAhead,
+            dataType: DataType.Integer,
             value: "",
+            options: [
+              { value: "0", label: "At most once (0)" },
+              { value: "1", label: "At least once (1)" },
+              { value: "2", label: "Exactly once (2)" },
+            ],
           }
         )
         break
@@ -248,18 +262,10 @@ const getFormItems = (rootObject) => {
             fieldId: "provider.protocol.baudrate",
             isRequired: true,
             fieldType: FieldType.Text,
-            dataType: DataType.Number,
+            dataType: DataType.Integer,
             value: "",
-          },
-          {
-            label: "Message Splitter",
-            fieldId: "provider.protocol.messageSplitter",
-            fieldType: FieldType.SelectTypeAhead,
-            dataType: DataType.String,
-            options: [
-              { label: "End Of Line", value: "\n", description: "Split message on end of line char '\\n'" },
-            ],
-            value: "",
+            validator: { isBaudRate: {} },
+            helperTextInvalid: "Invalid Baud rate.",
           }
         )
         break
@@ -323,8 +329,10 @@ const getFormItems = (rootObject) => {
           label: "Maximum Backup",
           fieldId: "messageLogger.maxBackup",
           fieldType: FieldType.Text,
-          dataType: DataType.Number,
+          dataType: DataType.Integer,
           value: "",
+          validator: { isInt: { min: 0 } },
+          helperTextInvalid: "Invalid Maximum Backup. int, min=0",
         }
       )
       break

@@ -49,6 +49,9 @@ export const KeyValue = ({ name, value, index = 0 }) => {
 }
 
 export const KeyValueMap = ({ data = {} }) => {
+  if (data === undefined || data === null) {
+    return <span>No data</span>
+  }
   const names = Object.keys(data)
   if (names.length === 0) {
     return <span>No data</span>

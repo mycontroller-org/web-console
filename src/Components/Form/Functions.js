@@ -1,19 +1,24 @@
 import objectPath from "object-path"
 import { DataType, FieldType } from "./Constants"
+import v from "validator"
 
 export const updateRootObject = (rootObject, item, data) => {
   const value = getValue(item, data)
-  objectPath.set(rootObject, item.fieldId, value)
+  objectPath.set(rootObject, item.fieldId, value, false)
 }
 
 const getValue = (item, data) => {
-  switch (item.DataType) {
+  switch (item.dataType) {
     case DataType.String:
       return String(data)
     case DataType.Boolean:
       return Boolean(data)
     case DataType.Number:
       return Number(data)
+    case DataType.Integer:
+      return v.toInt(data)
+    case DataType.Float:
+      return v.toFloat(data)
     case DataType.ArrayString:
       return data.map((d) => {
         String(d)

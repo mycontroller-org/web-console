@@ -5,6 +5,8 @@ import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { v4 as uuidv4 } from "uuid"
+import objectPath from "object-path"
 
 class UpdatePage extends React.Component {
   state = {
@@ -17,7 +19,7 @@ class UpdatePage extends React.Component {
       .list({})
       .then((res) => {
         const gateways = res.data.data.map((gw) => {
-          return { value: gw.id, label: gw.name, description: gw.provider.type }
+          return { value: gw.id, label: gw.id, description: gw.name }
         })
         this.setState({ loading: false, gateways: gateways })
       })
@@ -71,8 +73,25 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (_rootObject, gateways) => {
+const getFormItems = (rootObject, gateways) => {
+  // set ID, if not set
+  const newID = uuidv4().toString()
+  objectPath.set(rootObject, "id", newID, true)
   const items = [
+    {
+      label: "ID",
+      fieldId: "id",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      isDisabled: true,
+      helperText: "",
+      helperTextInvalid: "",
+      validated: "default",
+      options: gateways,
+      validator: { isNotEmpty: {} },
+    },
     {
       label: "Gateway",
       fieldId: "gatewayId",

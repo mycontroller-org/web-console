@@ -2,13 +2,13 @@
 
 // Provider keeps supported providers list, this value will be used in backend
 export const Provider = {
-  MySensor: "mysensor",
+  MySensors: "mysensors",
   Tasmota: "tasmota",
 }
 
 // Providers options list
 export const ProviderOptions = [
-  { value: Provider.MySensor, label: "MySensor", description: "MySensor.org" },
+  { value: Provider.MySensors, label: "MySensors", description: "MySensors.org" },
   { value: Provider.Tasmota, label: "Tasmota", description: "tasmota.github.io" },
 ]
 
@@ -27,7 +27,7 @@ export const ProtocolOptions = [
 export const filterProtocolOptions = (providerType) => {
   const protocols = []
   switch (providerType) {
-    case Provider.MySensor:
+    case Provider.MySensors:
       protocols.push(Protocol.MQTT, Protocol.Serial)
       break
 

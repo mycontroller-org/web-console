@@ -77,11 +77,19 @@ const getField = (item, onChange) => {
           value={item.value}
           onChange={onChange}
           validated={item.validated}
+          isDisabled={item.isDisabled}
         />
       )
 
     case FieldType.Checkbox:
-      return <Checkbox label={item.fieldLabel} isChecked={item.value} onChange={onChange}></Checkbox>
+      return (
+        <Checkbox
+          isDisabled={item.isDisabled}
+          label={item.fieldLabel}
+          isChecked={item.value}
+          onChange={onChange}
+        ></Checkbox>
+      )
 
     case FieldType.Labels:
       return <LabelsForm labels={item.value} onChange={onChange} />
@@ -103,6 +111,7 @@ const getField = (item, onChange) => {
           options={item.options}
           onChange={onChange}
           selected={item.value}
+          isDisabled={item.isDisabled}
         />
       )
 
@@ -113,12 +122,19 @@ const getField = (item, onChange) => {
           options={item.options}
           onChange={onChange}
           selected={item.value}
+          isDisabled={item.isDisabled}
         />
       )
 
     case FieldType.Switch:
       return (
-        <Switch label={item.labelOn} labelOff={item.labelOff} isChecked={item.value} onChange={onChange} />
+        <Switch
+          isDisabled={item.isDisabled}
+          label={item.labelOn}
+          labelOff={item.labelOff}
+          isChecked={item.value}
+          onChange={onChange}
+        />
       )
 
     default:
@@ -139,6 +155,7 @@ const wrapWithFormGroup = (item, field, index) => {
       helperText={item.helperText}
       helperTextInvalid={item.helperTextInvalid}
       validated={item.validated}
+      disabled={item.isDisabled}
     >
       {field}
     </FormGroup>

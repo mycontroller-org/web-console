@@ -14,6 +14,7 @@ import EditWidget from "../../Components/Widgets/EditWidget"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
 import Actions from "../../Components/Actions/Actions"
 import { updateRootObject } from "../../Components/Form/Functions"
+import { WidgetType } from "../../Components/Widgets/Constants"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -65,7 +66,7 @@ class Dashboard extends React.Component {
     }
     const layout = layouts[0]
     this.setState((prevState) => {
-      const dashboardOnEdit = prevState.dashboardOnEdit
+      const { dashboardOnEdit } = prevState
       const widgets = dashboardOnEdit.widgets
       if (!widgets) {
         return {}
@@ -90,10 +91,15 @@ class Dashboard extends React.Component {
 
   onNewDashboardClick = () => {
     this.setState((prevState) => {
+      const { dashboards } = prevState
       const dashboard = getNewDashboard()
-      const dashboards = prevState.dashboards
       dashboards.push(dashboard)
-      return { selectionId: dashboard.id, dashboards: dashboards, editEnabled: true }
+      return {
+        selectionId: dashboard.id,
+        dashboards: dashboards,
+        dashboardOnEdit: dashboard,
+        editEnabled: true,
+      }
     })
   }
 
@@ -257,18 +263,19 @@ const getItemById = (items, id) => {
 
 // creates new default dashboard
 const getNewDashboard = () => {
+  const randomId = getRandomId()
   const dashboard = {
-    id: getRandomId(),
+    id: randomId,
     type: "desktop",
-    title: "new-dashboard",
+    title: "new-dashboard-" + randomId,
     bookmarked: false,
     labels: {},
     widgets: [
       {
         id: getRandomId(),
-        title: "Switches",
+        title: "Switch Panel",
         showTitle: true,
-        type: "widget_switches",
+        type: WidgetType.SwitchPanel,
         static: false,
         layout: {
           w: 20,
