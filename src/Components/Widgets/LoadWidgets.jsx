@@ -1,6 +1,7 @@
 import { Card, CardBody, CardTitle, Flex, FlexItem } from "@patternfly/react-core"
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
+import { cloneDeep } from "../../Util/Util"
 import { WidgetType } from "./Constants"
 import SwitchPanel from "./SwitchPanel/SwitchPanel"
 
@@ -42,14 +43,16 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
             color="#333"
             className="dashboard-card-action"
             onClick={() => {
-              onEditClick(item.config)
+              const widget = cloneDeep(item.config)
+              onEditClick(widget)
             }}
           />
           <CloseIcon
             color="#333"
             className="dashboard-card-action"
             onClick={() => {
-              onDeleteClick(item.config)
+              const widget = cloneDeep(item.config)
+              onDeleteClick(widget)
             }}
           />
         </FlexItem>

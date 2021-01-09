@@ -2,6 +2,7 @@ import { Divider, Grid, GridItem, Switch as PfSwitch } from "@patternfly/react-c
 import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
+import _ from "lodash"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -23,6 +24,16 @@ class SwitchPanel extends React.Component {
   }
 
   componentDidMount() {
+    this.updateComponents()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(this.props.config, prevProps.config)) {
+      this.updateComponents()
+    }
+  }
+
+  updateComponents = () => {
     const filters = [{ k: "metricType", v: "binary" }]
     if (this.props.config && this.props.config.labels) {
       const keys = Object.keys(this.props.config.labels)

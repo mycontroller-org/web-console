@@ -177,7 +177,14 @@ const getFormItems = (rootObject) => {
         label: "Transmit Pre Delay",
         fieldId: "provider.protocol.transmitPreDelay",
         fieldType: FieldType.Text,
-        dataType: DataType.Number,
+        dataType: DataType.String,
+        value: "",
+      },
+      {
+        label: "Reconnect Delay",
+        fieldId: "provider.protocol.reconnectDelay",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
         value: "",
       }
     )
