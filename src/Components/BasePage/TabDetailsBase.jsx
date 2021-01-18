@@ -13,6 +13,7 @@ import {
 import PropTypes from "prop-types"
 import React from "react"
 import Metrics from "../../Pages/Resources/SensorField/Metrics"
+import Loading from "../Loading/Loading"
 import PageContent from "../PageContent/PageContent"
 import Table from "../Table/Table"
 
@@ -62,7 +63,7 @@ export default class TabDetailsBase extends React.Component {
     const { data, loading } = this.state
 
     if (loading) {
-      return <div>Loading</div>
+      return <Loading />
     }
 
     const content = wrapCard("Details", this.props.getDetailsFunc(data))

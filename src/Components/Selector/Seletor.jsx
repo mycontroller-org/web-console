@@ -27,10 +27,10 @@ class Selector extends React.Component {
 
   onSelect = (item) => {
     // do local update
-    // this.setState({
-    //   isOpen: !this.state.isOpen,
-    //   selected: item,
-    // })
+    this.setState({
+      isOpen: !this.state.isOpen,
+      selected: item,
+    })
     // notify to parent
     if (this.props.onChange) {
       this.props.onChange(item)
@@ -81,11 +81,12 @@ class Selector extends React.Component {
     }
     elements.push(...itemUnMarked)
 
-    const title = prefix ? <span className="rb-selector-title">{prefix}:</span> : null
+    const title = prefix ? <span className="rb-selector-title">{prefix}:&nbsp;</span> : null
     return (
       <Dropdown
         className="rb-selector"
         isPlain
+        disabled={isDisabled}
         toggle={
           <DropdownToggle
             id="selector-toggle-id"

@@ -65,9 +65,9 @@ const getFormItems = (rootObject) => {
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid id. alphanumeric, chars: min=2 and max=100",
+      helperTextInvalid: "Invalid id. chars: min=2 and max=100",
       validated: "default",
-      validator: { isLength: { min: 2, max: 100 }, isAlphanumeric: {}, isNotEmpty: {} },
+      validator: { isLength: { min: 2, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
       label: "Name",
@@ -98,7 +98,8 @@ const getFormItems = (rootObject) => {
       fieldId: "labels",
       fieldType: FieldType.Labels,
       dataType: DataType.Object,
-      value: "",
+      value: {},
+      validator: { isLabel: {} },
     },
     {
       label: "Provider",

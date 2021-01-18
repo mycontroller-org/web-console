@@ -10,33 +10,54 @@ import Selector from "../../Components/Selector/Seletor"
 import { api } from "../../Service/Api"
 import { getRandomId } from "../../Util/Util"
 import "./Dashboard.scss"
-import EditWidget from "../../Components/Widgets/EditWidgetNew"
+import EditWidget from "../../Components/Widgets/EditWidget"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
 import Actions from "../../Components/Actions/Actions"
 import { WidgetType } from "../../Components/Widgets/Constants"
+import EditSettings from "./EditSettings"
+import DeleteDialog from "../../Components/Dialog/DeleteDialog"
+import EmptyState from "../../Components/EmptyState/EmptyState"
+import Loading from "../../Components/Loading/Loading"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 class Dashboard extends React.Component {
   state = {
-    loading: false,
+    loading: true,
     editEnabled: false,
     dashboards: [],
     selectionId: "",
     dashboardOnEdit: {},
+    showDeleteDialog: false,
     showEditWidget: false,
+    showEditSettings: false,
     targetWidget: {},
   }
 
-  componentDidMount() {
+  reloadDashboards = () => {
     api.dashboard
       .list({})
       .then((res) => {
-        this.setState({ dashboards: res.data.data, loading: false })
+        const dashboards = res.data.data
+        const selectionId = dashboards.length > 0 ? dashboards[0].id : ""
+        this.setState({
+          dashboards: res.data.data,
+          loading: false,
+          selectionId: selectionId,
+          dashboardOnEdit: {},
+          showDeleteDialog: false,
+          showEditWidget: false,
+          showEditSettings: false,
+          editEnabled: false,
+        })
       })
       .catch((_e) => {
         this.setState({ loading: false })
       })
+  }
+
+  componentDidMount() {
+    this.reloadDashboards()
   }
 
   onEditClick = () => {
@@ -46,8 +67,6 @@ class Dashboard extends React.Component {
       return { editEnabled: true, dashboardOnEdit: dashboard }
     })
   }
-
-  onAddWidgetClick = () => {}
 
   onSaveClick = () => {
     this.setState((prevState) => {
@@ -63,7 +82,6 @@ class Dashboard extends React.Component {
     if (!layouts || layouts.length === 0) {
       return
     }
-    const layout = layouts[0]
     this.setState((prevState) => {
       const { dashboardOnEdit } = prevState
       const widgets = dashboardOnEdit.widgets
@@ -71,8 +89,9 @@ class Dashboard extends React.Component {
         return {}
       }
       for (let index = 0; index < widgets.length; index++) {
-        if (widgets[index].id === layout.i) {
-          const widget = widgets[index]
+        const widget = widgets[index]
+        const layout = getItemById(layouts, widget.id, "i")
+        if (widget.id === layout.i) {
           widgets[index].layout = {
             ...widget.layout,
             w: layout.w,
@@ -80,7 +99,6 @@ class Dashboard extends React.Component {
             x: layout.x,
             y: layout.y,
           }
-          break
         }
       }
       return { dashboardOnEdit }
@@ -88,7 +106,7 @@ class Dashboard extends React.Component {
   }
 
   onCancelClick = () => {
-    this.setState({ editEnabled: false })
+    this.reloadDashboards()
   }
 
   onNewDashboardClick = () => {
@@ -105,13 +123,71 @@ class Dashboard extends React.Component {
     })
   }
 
-  onDeleteClick = () => {}
+  onDashboardChange = (item) => {
+    this.setState({ selectionId: item.id })
+  }
+
+  onDashboardDeleteClick = (dashboardId) => {
+    console.log(dashboardId)
+    api.dashboard
+      .delete([dashboardId])
+      .then((_res) => {
+        this.reloadDashboards()
+      })
+      .catch((_e) => {
+        // error
+      })
+  }
+
+  onDeleteClick = () => {
+    this.setState({ showDeleteDialog: true })
+  }
+
+  onDeleteCancel = () => {
+    this.setState({ showDeleteDialog: false })
+  }
+
+  onEditSettingsClick = () => {
+    this.setState({ showEditSettings: true })
+  }
+
+  onEditSettingsHide = () => {
+    this.setState({ showEditSettings: false })
+  }
+
+  onSettingsConfigChange = (dashboard) => {
+    this.setState({ dashboardOnEdit: dashboard })
+  }
+
+  onSettingsConfigSave = (dashboard) => {
+    this.setState({ showEditSettings: false, dashboardOnEdit: dashboard })
+  }
 
   onWidgetEdit = (config) => {
     this.setState({ showEditWidget: true, targetWidget: config })
   }
 
-  onWidgetDelete = (widget) => {}
+  onWidgetDelete = (widgetId) => {
+    this.setState((prevState) => {
+      const { dashboardOnEdit } = prevState
+      const { widgets } = dashboardOnEdit
+
+      const newWidgets = widgets.filter((w) => {
+        return w.id !== widgetId
+      })
+      dashboardOnEdit.widgets = newWidgets
+      return { dashboardOnEdit: dashboardOnEdit }
+    })
+  }
+
+  onAddWidgetClick = () => {
+    this.setState((prevState) => {
+      const { dashboardOnEdit } = prevState
+      const newWidget = getNewWidget()
+      dashboardOnEdit.widgets.push(newWidget)
+      return { dashboardOnEdit: dashboardOnEdit }
+    })
+  }
 
   onWidgetEditHide = () => {
     this.setState({ showEditWidget: false })
@@ -137,16 +213,34 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { loading, dashboards, selectionId, editEnabled, showEditWidget, targetWidget } = this.state
+    const {
+      loading,
+      dashboards,
+      selectionId,
+      editEnabled,
+      showEditWidget,
+      targetWidget,
+      showEditSettings,
+      dashboardOnEdit,
+      showDeleteDialog,
+    } = this.state
 
     const pageContent = []
     let title = ""
     const dashboardItems = []
 
     if (loading) {
-      pageContent.push(<span>Loading</span>)
+      pageContent.push(<Loading key="loading" />)
     } else if (dashboards.length === 0) {
-      pageContent.push(<span>No dashboards found. Create new</span>)
+      // pageContent.push(<span>No dashboards found. Create new</span>)
+      pageContent.push(
+        <EmptyState
+          key="empty-state"
+          title="No dashboards available"
+          message="There is no dashboard available to load."
+          primaryAction={{ text: "Create New", onClick: this.onNewDashboardClick }}
+        />
+      )
     } else {
       const dashboard = selectionId === "" ? dashboards[0] : getItemById(dashboards, selectionId)
 
@@ -170,6 +264,8 @@ class Dashboard extends React.Component {
           y: widget.layout.y,
           w: widget.layout.w,
           h: widget.layout.h,
+          minW: 5, // minimum width
+          minH: 5, // minimum height
           static: widget.static,
           isDraggable: editEnabled && !widget.static,
           isResizable: editEnabled && !widget.static,
@@ -180,7 +276,8 @@ class Dashboard extends React.Component {
         dashboard.widgets,
         editEnabled,
         this.onWidgetEdit,
-        this.onWidgetDelete
+        this.onWidgetDelete,
+        this.props.history
       )
 
       pageContent.push(
@@ -196,6 +293,7 @@ class Dashboard extends React.Component {
           containerPadding={[0, 0]}
           onLayoutChange={this.onLayoutChange}
           preventCollision={false}
+          resizeHandles={["se"]}
         >
           {widgetsLoaded}
         </ResponsiveGridLayout>
@@ -206,22 +304,38 @@ class Dashboard extends React.Component {
 
     if (editEnabled) {
       actions.push(
-        <LinkButton text="Title" icon={EditIcon} onClick={this.onEditClick} />,
-        <LinkButton text="Widget" icon={AddCircleOIcon} onClick={this.onAddWidgetClick} />,
-        <LinkButton text="Save" icon={CheckIcon} onClick={this.onSaveClick} />,
-        <LinkButton text="Cancel" icon={CloseIcon} onClick={this.onCancelClick} />
+        <LinkButton key="btn-settings" text="Settings" icon={EditIcon} onClick={this.onEditSettingsClick} />,
+        <LinkButton key="btn-widgets" text="Widget" icon={AddCircleOIcon} onClick={this.onAddWidgetClick} />,
+        <LinkButton key="btn-save" text="Save" icon={CheckIcon} onClick={this.onSaveClick} />,
+        <LinkButton key="btn-cancel" text="Cancel" icon={CloseIcon} onClick={this.onCancelClick} />
       )
     } else {
+      const disableButtons = dashboards.length === 0
       const actionItems = [
-        { type: "edit", onClick: this.onEditClick },
         { type: "new", onClick: this.onNewDashboardClick },
-        { type: "delete", onClick: this.onDeleteClick },
+        { type: "edit", onClick: this.onEditClick, disabled: disableButtons },
+        { type: "delete", onClick: this.onDeleteClick, disabled: disableButtons },
       ]
-      actions.push(<Actions key="actions" items={actionItems} isDisabled={false} />)
+      actions.push(<Actions key="actions" items={actionItems} isDisabled={loading} />)
     }
 
     return (
       <React.Fragment>
+        <DeleteDialog
+          key="delete-confirmation"
+          onCloseFn={this.onDeleteCancel}
+          onOkFn={() => this.onDashboardDeleteClick(selectionId)}
+          resourceName={title}
+          show={showDeleteDialog}
+        />
+        <EditSettings
+          key="edit-title"
+          showEditSettings={showEditSettings}
+          dashboard={dashboardOnEdit}
+          onCancel={this.onEditSettingsHide}
+          onChange={this.onSettingsConfigChange}
+          onSave={this.onSettingsConfigSave}
+        />
         <EditWidget
           key="edit-widget"
           showEditWidget={showEditWidget}
@@ -233,12 +347,15 @@ class Dashboard extends React.Component {
         <PageTitle
           key="page-title"
           title={
-            <Selector
-              prefix="Dashboard"
-              isDisabled={editEnabled}
-              items={dashboardItems}
-              selection={{ text: title }}
-            />
+            <div style={{ marginBottom: "5px" }}>
+              <Selector
+                prefix="Dashboard"
+                isDisabled={editEnabled || loading}
+                items={dashboardItems}
+                selection={{ text: title }}
+                onChange={this.onDashboardChange}
+              />
+            </div>
           }
           actions={actions}
         />
@@ -252,12 +369,9 @@ export default Dashboard
 
 // helper functions
 
-const getItemById = (items, id) => {
-  if (id === "") {
-    return items[0]
-  }
+const getItemById = (items, value, key = "id") => {
   for (let index = 0; index < items.length; index++) {
-    if (items[index].id === id) {
+    if (items[index][key] === value) {
       return items[index]
     }
   }
@@ -267,31 +381,33 @@ const getItemById = (items, id) => {
 // creates new default dashboard
 const getNewDashboard = () => {
   const randomId = getRandomId()
+  const widget = getNewWidget()
   const dashboard = {
     id: randomId,
     type: "desktop",
     title: "new-dashboard-" + randomId,
     bookmarked: false,
     labels: {},
-    widgets: [
-      {
-        id: getRandomId(),
-        title: "Switch Panel",
-        showTitle: true,
-        type: WidgetType.SwitchPanel,
-        static: false,
-        layout: {
-          w: 20,
-          h: 60,
-          x: 0,
-          y: 0,
-        },
-        config: {
-          labels: {},
-        },
-      },
-    ],
+    widgets: [widget],
   }
 
   return dashboard
+}
+
+const getNewWidget = () => {
+  const newWidget = {
+    id: getRandomId(),
+    title: "Empty Panel",
+    showTitle: true,
+    type: WidgetType.EmptyPanel,
+    static: false,
+    layout: {
+      w: 20,
+      h: 60,
+      x: 0,
+      y: 0,
+    },
+    config: {},
+  }
+  return newWidget
 }

@@ -1,0 +1,13 @@
+.mc-switch-panel {
+  .text {
+    float: left;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+      color: var(--pf-global--palette--blue-400);
+    }
+  }
+  .enabled {
+    font-weight: bold;
+  }
+}

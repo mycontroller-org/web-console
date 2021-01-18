@@ -119,9 +119,9 @@ const getFormItems = (rootObject) => {
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Sensor ID. isAlphanumeric, chars: min=1 and max=100",
+      helperTextInvalid: "Invalid Sensor ID. chars: min=1 and max=100",
       validated: "default",
-      validator: {},
+      validator: { isLength: { min: 1, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
       label: "Name",

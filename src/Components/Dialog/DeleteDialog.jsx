@@ -20,7 +20,9 @@ const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
         </Button>,
       ]}
     >
-      Are you sure you want to delete the selected {resourceName}?
+      Are you sure you want to delete the selected resource?
+      <br />
+      Resource name: {resourceName}
     </Modal>
   )
 }

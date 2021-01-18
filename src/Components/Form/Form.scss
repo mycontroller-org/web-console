@@ -13,3 +13,22 @@
     color: #000000a0;
   }
 }
+
+.mc-key-value-map-items {
+  grid-gap: 7px;
+  .btn-layout {
+    justify-content: left;
+  }
+  .icon-btn {
+    font-size: var(--pf-global--icon--FontSize--md);
+    :hover {
+      cursor: pointer;
+    }
+  }
+  .btn-remove {
+    color: var(--pf-global--danger-color--100);
+  }
+  .btn-add {
+    color: var(--pf-global--success-color--100);
+  }
+}

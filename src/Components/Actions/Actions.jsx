@@ -46,7 +46,7 @@ export default class Actions extends React.Component {
         case "discover":
           return drawItem("discover", "Discover", SearchIcon, item.disabled, item.onClick)
         case "edit":
-          return drawItem("edit", "Edit", EditIcon, rowsSelectionCount !== 1 && item.disabled, item.onClick)
+          return drawItem("edit", "Edit", EditIcon, rowsSelectionCount !== 1 || item.disabled, item.onClick)
         case "delete":
           return drawItem("delete", "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
         case "reboot":

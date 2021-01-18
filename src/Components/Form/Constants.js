@@ -19,6 +19,8 @@ export const FieldType = {
   Date: "data",
   Checkbox: "checkbox",
   Labels: "labels",
+  KeyValueMap: "key_value_map",
+  ThresholdsColor: "thresholds_color",
   Divider: "divider",
   Select: "select",
   SelectTypeAhead: "select_type_ahead",

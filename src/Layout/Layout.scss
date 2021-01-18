@@ -27,7 +27,8 @@ Limits the height of the header
 .rb-logo-text {
   margin-top: -3px;
 }
-.rb-logo-text, a:hover {
+.rb-logo-text,
+a:hover {
   text-decoration: none;
 }
 
@@ -55,4 +56,14 @@ Removes the gray color of bottom page
 */
 .pf-c-page__main {
   background-color: white !important;
+}
+
+.mc-hide-on-mobile-view {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .mc-hide-on-mobile-view {
+    display:block;
+  }
 }

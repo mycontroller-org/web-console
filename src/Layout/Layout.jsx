@@ -18,7 +18,7 @@ import {
   SkipToContent,
   Text,
   TextContent,
-  TextVariants
+  TextVariants,
 } from "@patternfly/react-core"
 // make sure you've installed @patternfly/patternfly
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
@@ -245,7 +245,7 @@ class PageLayoutExpandableNav extends React.Component {
               isOpen={this.state.isDropdownOpen}
               toggle={
                 <DropdownToggle onToggle={this.onDropdownToggle} icon={<UserIcon />}>
-                  {this.props.userDetail.fullName}
+                  <span className="mc-hide-on-mobile-view">{this.props.userDetail.fullName}</span>
                 </DropdownToggle>
               }
               dropdownItems={userDropdownItems}
@@ -260,8 +260,8 @@ class PageLayoutExpandableNav extends React.Component {
         //logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
         logo={
           <>
-            <Brand className="mc-header-logo" src={logoMain} alt="Patternfly Logo" />
-            <TextContent className="rb-logo-text">
+            <Brand className="mc-header-logo" src={logoMain} alt="MyController.org" />
+            <TextContent className="rb-logo-text mc-hide-on-mobile-view">
               <Text component={TextVariants.h3}>
                 MyController.org
                 <div

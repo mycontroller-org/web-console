@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
 import _ from "lodash"
+import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
+import "./SwitchPanel.scss"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -13,7 +15,7 @@ class Switch extends React.Component {
   }
 
   render() {
-    return <PfSwitch onChange={this.onChange} isChecked={this.state.isChecked} />
+    return <PfSwitch id={this.props.id} onChange={this.onChange} isChecked={this.state.isChecked} />
   }
 }
 
@@ -66,17 +68,25 @@ class SwitchPanel extends React.Component {
       return <span>Loading</span>
     }
     const switches = resources.map((r, index) => {
+      const className = r.isChecked ? "text enabled" : "text"
       return (
         <GridItem span={12} key={"label_" + index}>
-          <span style={{ float: "left", fontWeight: r.isChecked ? "bold" : "normal" }}>{r.label}</span>
+          <span
+            className={className}
+            onClick={() => {
+              rd(this.props.history, rMap.resources.sensorField.detail, { id: r.id })
+            }}
+          >
+            {r.label}
+          </span>
           <span style={{ float: "right" }}>
-            <Switch isChecked={r.isChecked} quickId={r.quickId} />
+            <Switch id={r.id} isChecked={r.isChecked} quickId={r.quickId} />
           </span>
           <Divider style={{ padding: "7px 0px" }} />
         </GridItem>
       )
     })
-    return <Grid>{switches}</Grid>
+    return <Grid className="mc-switch-panel">{switches}</Grid>
   }
 }
 

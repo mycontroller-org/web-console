@@ -42,6 +42,8 @@ export const updateItems = (rootObject, items) => {
   items.forEach((item) => {
     switch (item.fieldType) {
       case FieldType.Labels:
+      case FieldType.KeyValueMap:
+      case FieldType.ThresholdsColor:
         item.value = objectPath.get(rootObject, item.fieldId, {})
         break
 

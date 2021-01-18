@@ -41,7 +41,7 @@ const defaultOptions = {
 const editor = ({
   language = "yaml",
   options = {},
-  height = "73vh",
+  height = "71vh",
   data = "",
   handleEditorDidMount = () => {},
 }) => {

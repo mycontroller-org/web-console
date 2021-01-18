@@ -8,6 +8,8 @@ import CodeEditorBasic from "../CodeEditor/CodeEditorBasic"
 import { Form } from "../Form/Form"
 import "./Editor.scss"
 import { validate, validateItem } from "../../Util/Validator"
+import objectPath from "object-path"
+import Loading from "../Loading/Loading"
 
 class Editor extends React.Component {
   state = {
@@ -85,6 +87,13 @@ class Editor extends React.Component {
       const { rootObject, inValidItems } = prevState
       updateRootObject(rootObject, item, newValue)
       updateInValidList(inValidItems, item, newValue)
+      // update reset fields
+      if (item.resetFields) {
+        const fields = Object.keys(item.resetFields)
+        fields.forEach((field) => {
+          objectPath.set(rootObject, field, item.resetFields[field])
+        })
+      }
       if (this.props.onChangeFunc) {
         this.props.onChangeFunc(rootObject)
       }
@@ -145,9 +154,9 @@ class Editor extends React.Component {
 
   render() {
     const { loading, rootObject, formView, isReloadable, inValidItems } = this.state
-
+    const { isWidthLimited = true } = this.props
     if (loading) {
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     const content = []
@@ -160,7 +169,7 @@ class Editor extends React.Component {
         <Form
           key="form-view"
           isHorizontal
-          isWidthLimited={this.props.isWidthLimited}
+          isWidthLimited={isWidthLimited}
           items={formItems}
           onChange={this.onFormValueChange}
         />
@@ -226,11 +235,14 @@ class Editor extends React.Component {
 
     let errorMessage = null
     if (formView && inValidItems.length > 0) {
-      errorMessage = (
-        <Grid lg={7} md={9} sm={12}>
-          <Alert variant="danger" isInline title="Check the error and/or mandatory(*) fields" />
-        </Grid>
-      )
+      errorMessage = <Alert variant="danger" isInline title="Check the error and/or mandatory(*) fields" />
+      if (isWidthLimited) {
+        errorMessage = (
+          <Grid lg={7} md={9} sm={12}>
+            {errorMessage}
+          </Grid>
+        )
+      }
     }
 
     return (
@@ -246,7 +258,7 @@ class Editor extends React.Component {
             </Flex>
             <Divider component="hr" />
           </StackItem>
-          <StackItem>{content}</StackItem>
+          <StackItem isFilled>{content}</StackItem>
           <StackItem>{errorMessage}</StackItem>
           <StackItem>
             <ActionBar leftBar={actionButtons} rightBar={rightBar} />

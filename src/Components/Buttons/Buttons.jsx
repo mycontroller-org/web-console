@@ -45,3 +45,8 @@ export const RouteLink = ({ history, path, id, text }) => {
     </Button>
   )
 }
+
+export const IconButton = ({ icon, color = "#434343", onClick = () => {}, className = "" }) => {
+  const IconBtn = icon
+  return <IconBtn className={className} color={color} onClick={onClick} onTouchEnd={onClick} />
+}

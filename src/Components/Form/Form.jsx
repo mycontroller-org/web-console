@@ -9,11 +9,13 @@ import {
   TextInput,
 } from "@patternfly/react-core"
 import React from "react"
-import LabelsForm from "./LabelsForm"
+import KeyValueMapForm from "./KeyValueMapForm"
 import { FieldType } from "./Constants"
 import "./Form.scss"
 import Select from "./Select"
 import AsyncSelect from "../Select/AsyncSelect"
+import { validate } from "../../Util/Validator"
+import ThresholdsColorForm from "./ThresholdsColorForm"
 
 // item sample
 // const item = {
@@ -27,6 +29,7 @@ import AsyncSelect from "../Select/AsyncSelect"
 //   helperText: "",
 //   helperTextInvalid: "",
 //   validated: "", //success, warning, error, default
+//   resetFields: {},
 // }
 
 export const Form = ({ isHorizontal = false, isWidthLimited = true, items = [], onChange = () => {} }) => {
@@ -87,7 +90,29 @@ const getField = (item, onChange) => {
       )
 
     case FieldType.Labels:
-      return <LabelsForm labels={item.value} onChange={onChange} />
+      return (
+        <KeyValueMapForm
+          keyValueMap={item.value}
+          onChange={onChange}
+          validateKeyFunc={(key) => {
+            return validate("isLabelKey", key)
+          }}
+        />
+      )
+
+    case FieldType.KeyValueMap:
+      return (
+        <KeyValueMapForm
+          keyValueMap={item.value}
+          onChange={onChange}
+          validateKeyFunc={(key) => {
+            return validate("isKey", key)
+          }}
+        />
+      )
+
+    case FieldType.ThresholdsColor:
+      return <ThresholdsColorForm keyValueMap={item.value} onChange={onChange} />
 
     case FieldType.Divider:
       return (
@@ -137,6 +162,7 @@ const getField = (item, onChange) => {
     case FieldType.Switch:
       return (
         <Switch
+          id={item.fieldId}
           isDisabled={item.isDisabled}
           label={item.labelOn}
           labelOff={item.labelOff}

@@ -113,9 +113,9 @@ const getFormItems = (rootObject, gateways) => {
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Node ID. isAlphanumeric, chars: min=1 and max=100",
+      helperTextInvalid: "Invalid Node ID. chars: min=1 and max=100",
       validated: "default",
-      validator: {},
+      validator: { isLength: { min: 1, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
       label: "Name",

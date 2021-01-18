@@ -2,21 +2,6 @@ import v from "validator"
 import { t } from "typy"
 import { isDate } from "moment"
 
-export const isInDefaultValue = (item) => {
-  switch (item.type) {
-    case "text":
-    case "password":
-    case "textarea":
-    case "neccRate":
-    case "toolbar-select":
-      return item.value === ""
-    case "ahead-select":
-      return item.value.length !== 0
-    default:
-      return true
-  }
-}
-
 const isLengthDualList = (val, opts) => {
   if (t(opts, "min").isNumber && val.right.length < opts.min) {
     return false
@@ -72,45 +57,96 @@ const baudRates = [
   3500000,
   4000000,
 ]
+
 const isBaudRate = (val) => {
   const value = v.toInt(val)
   return baudRates.includes(value)
+}
+
+const isLabelKey = (val) => {
+  const regexIsLabelKey = /^[a-z0-9_/-]+$/
+  return regexIsLabelKey.test(val)
 }
 
 export const validate = (func, val, opts) => {
   switch (func) {
     case "isEmail":
       return v.isEmail(val, opts)
+
     case "isInt":
       return v.isInt(val, opts)
+
     case "isDecimal":
       return v.isDecimal(val, opts)
+
+    case "isFloat":
+      return v.isFloat(val, opts)
+
     case "isCurrency":
       if (parseFloat(val) === 0.0) {
         // workaround for currency should not be zero
         return false
       }
       return v.isCurrency(val, opts)
+
     case "isEmpty":
       return v.isEmpty(val, opts)
+
     case "isNotEmpty":
       return !v.isEmpty(val, opts)
+
     case "isAlphanumeric":
       return v.isAlphanumeric(val)
+
     case "isLength":
       return v.isLength(val, opts)
+
     case "isLengthDualList":
       return isLengthDualList(val, opts)
+
     case "isObject":
       return t(val).isObject
+
     case "isDate":
       return isDate(val)
+
     case "isLengthArray":
       return isLengthArray(val, opts)
+
     case "isURL":
       return v.isURL(val, opts)
+
     case "isBaudRate":
       return isBaudRate(val)
+
+    case "isLabel":
+      if (val === undefined || val === null) {
+        return false
+      }
+      const keys = Object.keys(val)
+      for (let index = 0; index < keys.length; index++) {
+        const key = keys[index]
+        const isValid = isLabelKey(key)
+        if (!isValid) {
+          return false
+        }
+        // if (val[key] === ""){
+        //   return false
+        // }
+      }
+      return true
+
+    case "isID":
+      const regexIsID = /^[a-zA-Z0-9_-]+$/
+      return regexIsID.test(val)
+
+    case "isLabelKey":
+      return isLabelKey(val)
+
+    case "isKey":
+      const regexIsKey = /^[a-z0-9_/-\\.]+$/
+      return regexIsKey.test(val)
+
     default:
       return true
   }

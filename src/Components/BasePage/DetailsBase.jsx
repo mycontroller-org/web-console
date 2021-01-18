@@ -30,7 +30,6 @@ class DetailsPage extends React.Component {
   }
 
   onTabClick = (_event, tabKey) => {
-    console.log(tabKey)
     this.setState({ activeTabKey: tabKey })
   }
 

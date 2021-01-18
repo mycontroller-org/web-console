@@ -2,7 +2,7 @@ import React from "react"
 import {
   Title,
   Button,
-  EmptyState,
+  EmptyState as PfEmptyState,
   EmptyStateIcon,
   EmptyStateBody,
   EmptyStateSecondaryActions,
@@ -18,17 +18,17 @@ const EmptyState = ({ title, message, primaryAction = {}, secondaryActions = [] 
     )
   })
   return (
-    <EmptyState>
+    <PfEmptyState>
       <EmptyStateIcon icon={CubesIcon} />
       <Title headingLevel="h4" size="lg">
         {title}
       </Title>
       <EmptyStateBody>{message}</EmptyStateBody>
       <Button variant="primary" onClick={primaryAction.onClick}>
-        primaryAction.text
+        {primaryAction.text}
       </Button>
       <EmptyStateSecondaryActions>{secActions}</EmptyStateSecondaryActions>
-    </EmptyState>
+    </PfEmptyState>
   )
 }
 

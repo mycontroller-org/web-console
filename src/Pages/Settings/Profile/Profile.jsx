@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import Loading from "../../../Components/Loading/Loading"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
@@ -24,7 +25,7 @@ class ProfilePage extends React.Component {
   }
   render() {
     if (this.state.loading) {
-      return <span>Loading</span>
+      return <Loading />
     }
 
     const data = <pre>{JSON.stringify(this.props.userDetail, "", 2)}</pre>
