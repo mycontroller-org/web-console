@@ -245,7 +245,7 @@ class PageLayoutExpandableNav extends React.Component {
               isOpen={this.state.isDropdownOpen}
               toggle={
                 <DropdownToggle onToggle={this.onDropdownToggle} icon={<UserIcon />}>
-                  <span className="mc-hide-on-mobile-view">{this.props.userDetail.fullName}</span>
+                  <span className="mc-mobile-view">{this.props.userDetail.fullName}</span>
                 </DropdownToggle>
               }
               dropdownItems={userDropdownItems}
@@ -261,7 +261,7 @@ class PageLayoutExpandableNav extends React.Component {
         logo={
           <>
             <Brand className="mc-header-logo" src={logoMain} alt="MyController.org" />
-            <TextContent className="rb-logo-text mc-hide-on-mobile-view">
+            <TextContent className="rb-logo-text mc-mobile-view">
               <Text component={TextVariants.h3}>
                 MyController.org
                 <div

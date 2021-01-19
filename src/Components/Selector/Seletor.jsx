@@ -1,4 +1,13 @@
-import { Divider, Dropdown, DropdownItem, DropdownToggle } from "@patternfly/react-core"
+import {
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  Level,
+  LevelItem,
+  Split,
+  SplitItem,
+} from "@patternfly/react-core"
 import { CaretDownIcon, MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons"
 import React from "react"
 import "./Selector.scss"
@@ -9,7 +18,8 @@ import PropTypes from "prop-types"
 // {
 //   id: "abc",
 //   text: "xyz",
-//   bookmarked: true,
+//   description: "xyz details",
+//   favorite: true,
 //   disabled: false,
 // }
 class Selector extends React.Component {
@@ -37,64 +47,52 @@ class Selector extends React.Component {
     }
   }
 
-  onBookmarkChange = (item) => {
-    this.setState((prevState) => {
-      const items = prevState.items
-      for (let index = 0; index < items.length; index++) {
-        if (item.id === items[index].id) {
-          items[index].bookmarked = !item.bookmarked
-          break
-        }
-      }
-      return { items: items }
-    })
-    // update to server
-  }
-
   componentDidMount() {
     // fetch from the given api
   }
 
   render() {
-    const { items, selection, isDisabled, prefix } = this.props
+    const { items, selection, disabled, prefix, onBookmarkAction } = this.props
 
     const elements = []
-    // update marked and unmarked items
-    const itemMarked = []
-    const itemUnMarked = []
+    // update favorite and other items
+    const itemsFavorite = []
+    const itemsOther = []
     if (items) {
       items.forEach((item) => {
-        if (item.bookmarked) {
-          itemMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
+        if (item.favorite) {
+          itemsFavorite.push(getItem(item, this.onSelect, onBookmarkAction))
         } else {
-          itemUnMarked.push(getItem(item, this.onSelect, this.onBookmarkChange))
+          itemsOther.push(getItem(item, this.onSelect, onBookmarkAction))
         }
       })
     }
 
     // update all
-    if (itemMarked.length > 0) {
-      elements.push(...itemMarked)
+    if (itemsFavorite.length > 0) {
+      elements.push(...itemsFavorite)
     }
-    if (itemMarked.length > 0 && itemUnMarked.length > 0) {
+    if (itemsFavorite.length > 0 && itemsOther.length > 0) {
       elements.push(<Divider key="divider" component="li" />)
     }
-    elements.push(...itemUnMarked)
+    elements.push(...itemsOther)
 
     const title = prefix ? <span className="rb-selector-title">{prefix}:&nbsp;</span> : null
+
+    const className = disabled ? "mc-selector disabled" : "mc-selector"
     return (
       <Dropdown
-        className="rb-selector"
+        className={className}
         isPlain
-        disabled={isDisabled}
+        disabled={disabled}
         toggle={
           <DropdownToggle
             id="selector-toggle-id"
-            isDisabled={isDisabled}
+            isDisabled={disabled}
             onToggle={this.onToggle}
             toggleIndicator={CaretDownIcon}
           >
-            {title}
+            <span className="mc-mobile-view">{title}</span>
             <span>{selection.text}</span>
           </DropdownToggle>
         }
@@ -109,6 +107,7 @@ Selector.propTypes = {
   items: PropTypes.array,
   selected: PropTypes.object,
   onChange: PropTypes.func,
+  onBookmarkAction: PropTypes.func,
   isDisabled: PropTypes.bool,
 }
 
@@ -117,15 +116,21 @@ export default Selector
 // helper functions
 
 const getItem = (item, onSelectFn, onBookmarkChangeFn) => {
-  const Icon = item.bookmarked ? MinusCircleIcon : PlusCircleIcon
+  const Icon = item.favorite ? MinusCircleIcon : PlusCircleIcon
   return (
-    <DropdownItem key={item.id} className="rb-selector-dropdown">
-      <div className="rb-selector-bookmark" onClick={() => onBookmarkChangeFn(item)}>
-        <Icon />
-      </div>
-      <div className="rb-selector-item" onClick={() => onSelectFn(item)}>
-        {item.text}
-      </div>
+    <DropdownItem key={item.id} className="mc-selector-dropdown" isDisabled={item.disabled}>
+      <Split style={{ width: "100%" }}>
+        <SplitItem>
+          <div className="mc-selector-favorite" onClick={() => onBookmarkChangeFn(item)}>
+            <Icon />
+          </div>
+        </SplitItem>
+        <SplitItem isFilled>
+          <div className="mc-selector-item" onClick={() => onSelectFn(item)}>
+            {item.text}
+          </div>
+        </SplitItem>
+      </Split>
     </DropdownItem>
   )
 }

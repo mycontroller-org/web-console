@@ -127,6 +127,25 @@ class Dashboard extends React.Component {
     this.setState({ selectionId: item.id })
   }
 
+  onDashboardBookmarkAction = (item) => {
+    //console.log(item)
+    this.setState((prevState) => {
+      const { dashboards } = prevState
+      for (let index = 0; index < dashboards.length; index++) {
+        const dashboard = dashboards[index]
+        if (item.id === dashboard.id) {
+          dashboards[index].favorite = !dashboard.favorite
+          // update to server
+          api.dashboard.update(dashboards[index]).then((_res) => {
+            // no action required on response
+          })
+          break
+        }
+      }
+      return { dashboards }
+    })
+  }
+
   onDashboardDeleteClick = (dashboardId) => {
     console.log(dashboardId)
     api.dashboard
@@ -211,7 +230,6 @@ class Dashboard extends React.Component {
       return { showEditWidget: false, targetWidget: widgetConfig, dashboardOnEdit: dashboardOnEdit }
     })
   }
-
   render() {
     const {
       loading,
@@ -251,7 +269,8 @@ class Dashboard extends React.Component {
         dashboardItems.push({
           id: d.id,
           text: d.title,
-          bookmarked: d.bookmarked,
+          description: d.description,
+          favorite: d.favorite,
           disabled: d.disabled,
         })
       })
@@ -350,10 +369,11 @@ class Dashboard extends React.Component {
             <div style={{ marginBottom: "5px" }}>
               <Selector
                 prefix="Dashboard"
-                isDisabled={editEnabled || loading}
+                disabled={editEnabled || loading || dashboardItems.length === 0}
                 items={dashboardItems}
                 selection={{ text: title }}
                 onChange={this.onDashboardChange}
+                onBookmarkAction={this.onDashboardBookmarkAction}
               />
             </div>
           }
@@ -397,13 +417,13 @@ const getNewDashboard = () => {
 const getNewWidget = () => {
   const newWidget = {
     id: getRandomId(),
-    title: "Empty Panel",
+    title: "Panel Title",
     showTitle: true,
     type: WidgetType.EmptyPanel,
     static: false,
     layout: {
       w: 20,
-      h: 60,
+      h: 30,
       x: 0,
       y: 0,
     },

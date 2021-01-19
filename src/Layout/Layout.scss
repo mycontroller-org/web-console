@@ -58,12 +58,9 @@ Removes the gray color of bottom page
   background-color: white !important;
 }
 
-.mc-hide-on-mobile-view {
-  display: none;
-}
-
-@media only screen and (min-width: 768px) {
-  .mc-hide-on-mobile-view {
-    display:block;
+/* hides some of the elements on mobile view */
+@media only screen and (max-width: 768px) {
+  .mc-mobile-view {
+    display: none;
   }
 }

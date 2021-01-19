@@ -66,8 +66,18 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
       }
       actionButtons.push(
         <FlexItem key="edit-mode-btns" align={{ default: "alignRight" }}>
-          <IconButton key="btn-edit" icon={CogIcon} className="dashboard-card-action" onClick={onEditClickFunc} />
-          <IconButton key="btn-close" icon={CloseIcon} className="dashboard-card-action" onClick={onDeleteClickFunc} />
+          <IconButton
+            key="btn-edit"
+            icon={CogIcon}
+            className="dashboard-card-action"
+            onClick={onEditClickFunc}
+          />
+          <IconButton
+            key="btn-close"
+            icon={CloseIcon}
+            className="dashboard-card-action"
+            onClick={onDeleteClickFunc}
+          />
         </FlexItem>
       )
     }
