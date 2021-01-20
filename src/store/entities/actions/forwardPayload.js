@@ -1,6 +1,6 @@
 import { getBase } from "../listPageBase"
 
-const slice = getBase("resourceSensor")
+const slice = getBase("actionForwardPayload")
 
 export default slice.reducer
 

@@ -77,7 +77,6 @@ const getFormItems = (rootObject) => {
       helperText: "",
       helperTextInvalid: "",
       validated: "default",
-      options: [],
       validator: { isNotEmpty: {} },
     },
     {
@@ -146,7 +145,7 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Labels,
       dataType: DataType.Object,
       value: "",
-    },
+    }
   ]
 
   return items

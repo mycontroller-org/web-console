@@ -1,4 +1,4 @@
-import { getBase } from "./base"
+import { getBase } from "../listPageBase"
 
 const slice = getBase("resourceSensorField")
 

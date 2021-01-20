@@ -7,42 +7,46 @@ import {
   Grid,
   GridItem,
   Level,
-  LevelItem
+  LevelItem,
 } from "@patternfly/react-core"
 import moment from "moment"
 import React from "react"
 import { RefreshButton } from "../../../Components/Buttons/Buttons"
 import { LineChart } from "../../../Components/Graphs/Graphs"
+import Loading from "../../../Components/Loading/Loading"
 import Select from "../../../Components/Select/Select"
 import { api } from "../../../Service/Api"
 
 const durationOptions = [
-  { value: "-1h", display: "Last 1 hour" },
-  { value: "-2h", display: "Last 2 hours" },
-  { value: "-3h", display: "Last 3 hours" },
-  { value: "-6h", display: "Last 6 hours" },
-  { value: "-12h", display: "Last 12 hours" },
-  { value: "-24h", display: "Last 24 hours" },
+  { value: "-1h",  window: "1m", display: "Last 1 hour" },
+  { value: "-2h",  window: "2m", display: "Last 2 hours" },
+  { value: "-3h",  window: "5m", display: "Last 3 hours" },
+  { value: "-6h",  window: "10m", display: "Last 6 hours" },
+  { value: "-12h", window: "10m", display: "Last 12 hours" },
+  { value: "-24h", window: "15m", display: "Last 24 hours" },
+  { value: "-48h", window: "30m", display: "Last 2 days" },
+  { value: "-168h", window: "1h", display: "Last 7 days" },
 ]
 
-const defaultDuration = "-1h"
+const defaultInterval = durationOptions[0].value
 
 class Metrics extends React.Component {
   state = {
     metrics: [],
     loading: true,
-    duration: defaultDuration,
+    interval: defaultInterval,
   }
 
   componentDidMount() {}
 
-  onChangeFunc = (duration) => {
+  onChangeFunc = (interval) => {
+    const duration = getDuration(interval)
     const data = this.props.data
     const queries = {
       global: {
         metricType: data.metricType,
-        start: duration,
-        window: "1m",
+        start: duration.value,
+        window: duration.window,
         functions: ["mean", "percentile_99"],
       },
       individual: [
@@ -112,7 +116,7 @@ class Metrics extends React.Component {
             metrics.push(binaryData)
           }
           // update metrics
-          this.setState({ metrics: metrics, duration: duration, loading: false })
+          this.setState({ metrics: metrics, interval: interval, loading: false })
         }
       })
       .catch((_e) => {
@@ -131,14 +135,14 @@ class Metrics extends React.Component {
     }
 
     const metricsToolbox = []
-    const { loading, metrics, duration } = this.state
+    const { loading, metrics, interval } = this.state
 
     if (showMetrics) {
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
           <Select
             key="range-selection"
-            defaultValue={duration}
+            defaultValue={interval}
             options={durationOptions}
             title=""
             onSelectionFunc={this.onChangeFunc}
@@ -150,8 +154,8 @@ class Metrics extends React.Component {
     const graphs = []
 
     if (loading) {
-      graphs.push(<span>Loading</span>)
-    } else {
+      graphs.push(<Loading key="loading" />)
+    } else  {
       metrics.forEach((m, index) => {
         //console.log(m)
         graphs.push(
@@ -169,10 +173,14 @@ class Metrics extends React.Component {
       })
     }
 
+    if (metrics.length == 0) {
+      graphs.push(<span key="no data">No data</span>)
+    }
+
     const refreshBtn = (
       <RefreshButton
         onClick={() => {
-          this.onChangeFunc(duration)
+          this.onChangeFunc(interval)
         }}
       />
     )
@@ -202,3 +210,15 @@ class Metrics extends React.Component {
 }
 
 export default Metrics
+
+
+// helper functions
+const getDuration = (interval) => {
+  for(let index=0;index<durationOptions.length;index++){
+    const duration = durationOptions[index]
+    if (interval === duration.value) {
+      return duration
+    }
+  }
+  return durationOptions[0]
+}

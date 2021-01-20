@@ -45,6 +45,9 @@ export const updateItems = (rootObject, items) => {
       case FieldType.KeyValueMap:
       case FieldType.ThresholdsColor:
         item.value = objectPath.get(rootObject, item.fieldId, {})
+        if (item.value === null) {
+          item.value = {}
+        }
         break
 
       case FieldType.Switch:

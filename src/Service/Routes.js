@@ -15,6 +15,9 @@ import SensorFieldDetailPage from "../Pages/Resources/SensorField/DetailsPage"
 import SensorFieldListPage from "../Pages/Resources/SensorField/ListPage"
 import SensorFieldUpdatePage from "../Pages/Resources/SensorField/UpdatePage"
 import ProfilePage from "../Pages/Settings/Profile/Profile"
+import ForwardPayloadListPage from "../Pages/Actions/ForwardPayload/ListPage"
+import ForwardPayloadUpdatePage from "../Pages/Actions/ForwardPayload/UpdatePage"
+import ForwardPayloadDetailPage from "../Pages/Actions/ForwardPayload/DetailsPage"
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
 
@@ -49,6 +52,14 @@ const routeMap = {
   },
   settings: {
     profile: "/settings/profile",
+  },
+  actions: {
+    forwardPayload: {
+      list: "/actions/forwardpayload",
+      detail: "/actions/forwardpayload/list/:id",
+      update: "/actions/forwardpayload/update/:id",
+      add: "/actions/forwardpayload/add",
+    },
   },
 }
 
@@ -100,6 +111,18 @@ const routes = [
         title: "Sensor Fields",
         to: routeMap.resources.sensorField.list,
         component: SensorFieldListPage,
+      },
+    ],
+  },
+  {
+    id: "actions",
+    title: "Actions",
+    children: [
+      {
+        id: "forwardpayload",
+        title: "Forward Payload",
+        to: routeMap.actions.forwardPayload.list,
+        component: ForwardPayloadListPage,
       },
     ],
   },
@@ -159,6 +182,14 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.sensorField.add,
     component: SensorFieldUpdatePage,
+  },
+  {
+    to: routeMap.actions.forwardPayload.add,
+    component: ForwardPayloadUpdatePage,
+  },
+  {
+    to: routeMap.actions.forwardPayload.detail,
+    component: ForwardPayloadDetailPage,
   },
 ]
 

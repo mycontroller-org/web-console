@@ -102,7 +102,9 @@ class UtilizationPanel extends React.Component {
     resourceApi({ filter: filters, limit: config.itemsLimit })
       .then((res) => {
         const resources = res.data.data.map((resource) => {
-          const name = config.resourceNameKey ? objectPath.get(resource, config.resourceNameKey, "") : ""
+          const name = config.resourceNameKey
+            ? objectPath.get(resource, config.resourceNameKey, "undefined")
+            : ""
           return {
             id: resource.id,
             name: name,

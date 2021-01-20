@@ -17,7 +17,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "Resource",
-      fieldId: "!labels",
+      fieldId: "!resource",
       fieldType: FieldType.Divider,
     },
     {

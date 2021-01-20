@@ -5,6 +5,7 @@ import { api } from "../../../Service/Api"
 import _ from "lodash"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import "./SwitchPanel.scss"
+import objectPath from "object-path"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -36,22 +37,23 @@ class SwitchPanel extends React.Component {
   }
 
   updateComponents = () => {
-    const filters = [{ k: "metricType", v: "binary" }]
-    if (this.props.config && this.props.config.labels) {
-      const keys = Object.keys(this.props.config.labels)
-      keys.forEach((key) => {
-        filters.push({ k: "labels." + key, v: this.props.config.labels[key] })
-      })
-    }
+    const { resourceSelectors, itemsLimit, resourceNameKey } = this.props.config
+    const selectorKeys = Object.keys(resourceSelectors)
+    const filters = selectorKeys.map((key) => {
+      return { k: key, v: resourceSelectors[key] }
+    })
+
     api.sensorField
-      .list({ filter: filters })
+      .list({ filter: filters, limit: itemsLimit })
       .then((res) => {
-        const resources = res.data.data.map((f) => {
+        const resources = res.data.data.map((field) => {
+          const label = objectPath.get(field, resourceNameKey, "undefined")
           return {
-            id: f.id,
-            label: f.name,
-            isChecked: f.payload.value,
-            quickId: "sf:" + f.gatewayId + "." + f.nodeId + "." + f.sensorId + "." + f.fieldId,
+            id: field.id,
+            label: label,
+            isChecked: field.payload.value,
+            quickId:
+              "sf:" + field.gatewayId + "." + field.nodeId + "." + field.sensorId + "." + field.fieldId,
           }
         })
         this.setState({ isLoading: false, resources })

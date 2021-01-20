@@ -168,4 +168,12 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/dashboard", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/dashboard", {}, data),
   },
+  forwardPayload: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/forwardpayload", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/forwardpayload/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/forwardpayload", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/forwardpayload", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/forwardpayload/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/forwardpayload/disable", {}, data),
+  },
 }
