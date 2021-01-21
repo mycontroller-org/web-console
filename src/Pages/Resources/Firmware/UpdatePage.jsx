@@ -7,11 +7,11 @@ import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
 import objectPath from "object-path"
+import Loading from "../../../Components/Loading/Loading"
 
 class UpdatePage extends React.Component {
   state = {
     loading: true,
-    gateways: [],
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class UpdatePage extends React.Component {
     const { loading, gateways } = this.state
 
     if (loading) {
-      return <span>Loading...</span>
+      return <Loading key="loading" />
     }
 
     const { id } = this.props.match.params
@@ -44,14 +44,14 @@ class UpdatePage extends React.Component {
         key="editor"
         resourceId={id}
         language="yaml"
-        apiGetRecord={api.node.get}
-        apiSaveRecord={api.node.update}
+        apiGetRecord={api.firmware.get}
+        apiSaveRecord={api.firmware.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          r(this.props.history, rMap.resources.firmware.list)
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          r(this.props.history, rMap.resources.firmware.list)
         }}
         getFormItems={(rootObject) => getFormItems(rootObject, gateways)}
       />
@@ -60,7 +60,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Node" />
+          <PageTitle key="page-title" title="Add a Firmware" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -93,31 +93,6 @@ const getFormItems = (rootObject, gateways) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Gateway",
-      fieldId: "gatewayId",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "",
-      validated: "default",
-      options: gateways,
-      validator: { isNotEmpty: {} },
-    },
-    {
-      label: "Node ID",
-      fieldId: "nodeId",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid Node ID. chars: min=1 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 1, max: 100 }, isID: {}, isNotEmpty: {} },
-    },
-    {
       label: "Name",
       fieldId: "name",
       fieldType: FieldType.Text,
@@ -130,20 +105,16 @@ const getFormItems = (rootObject, gateways) => {
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Assigned Firmware",
-      fieldId: "labels.assigned_firmware",
-      fieldType: FieldType.SelectTypeAheadAsync,
+      label: "Version",
+      fieldId: "version",
+      fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      isRequired: false,
-      apiOptions: api.firmware.list,
-      optionValueKey: "id",
-      getFiltersFunc: (value) => {
-        return [{ k: "name", o: "regex", v: value }]
-      },
-      getOptionsDescriptionFunc: (item) => {
-        return `${item.name}:${item.version}`
-      },
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid version",
+      validated: "default",
+      validator: { isNotEmpty: {}, isVersion: {} },
     },
     {
       label: "Labels",

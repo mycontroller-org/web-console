@@ -144,8 +144,12 @@ export const validate = (func, val, opts) => {
       return isLabelKey(val)
 
     case "isKey":
-      const regexIsKey = /^[a-z0-9_/-\\.]+$/
+      const regexIsKey = /^[a-z0-9\._\/-]+$/
       return regexIsKey.test(val)
+
+    case "isVersion":
+      const regexIsVersion = /^[a-z0-9\._-]+$/
+      return regexIsVersion.test(val)
 
     default:
       return true

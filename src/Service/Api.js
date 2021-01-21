@@ -176,4 +176,11 @@ export const api = {
     enable: (data) => newRequest(HTTP_VERBS.POST, "/forwardpayload/enable", {}, data),
     disable: (data) => newRequest(HTTP_VERBS.POST, "/forwardpayload/disable", {}, data),
   },
+  firmware: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/firmware", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/firmware/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/firmware", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/firmware", {}, data),
+    upload: (id, data, headers) => newRequest(HTTP_VERBS.POST, "/firmware/upload/" + id, {}, data, headers),
+  },
 }

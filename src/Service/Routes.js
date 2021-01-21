@@ -18,6 +18,10 @@ import ProfilePage from "../Pages/Settings/Profile/Profile"
 import ForwardPayloadListPage from "../Pages/Actions/ForwardPayload/ListPage"
 import ForwardPayloadUpdatePage from "../Pages/Actions/ForwardPayload/UpdatePage"
 import ForwardPayloadDetailPage from "../Pages/Actions/ForwardPayload/DetailsPage"
+import FirmwareListPage from "../Pages/Resources/Firmware/ListPage"
+import FirmwareUpdatePage from "../Pages/Resources/Firmware/UpdatePage"
+import FirmwareDetailPage from "../Pages/Resources/Firmware/DetailsPage"
+
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
 
@@ -48,6 +52,12 @@ const routeMap = {
       detail: "/resources/field/list/:id",
       update: "/resources/field/update/:id",
       add: "/resources/field/add",
+    },
+    firmware: {
+      list: "/resources/firmware",
+      detail: "/resources/firmware/list/:id",
+      update: "/resources/firmware/update/:id",
+      add: "/resources/firmware/add",
     },
   },
   settings: {
@@ -111,6 +121,12 @@ const routes = [
         title: "Sensor Fields",
         to: routeMap.resources.sensorField.list,
         component: SensorFieldListPage,
+      },
+      {
+        id: "firmware",
+        title: "Firmware",
+        to: routeMap.resources.firmware.list,
+        component: FirmwareListPage,
       },
     ],
   },
@@ -190,6 +206,14 @@ const hiddenRoutes = [
   {
     to: routeMap.actions.forwardPayload.detail,
     component: ForwardPayloadDetailPage,
+  },
+  {
+    to: routeMap.resources.firmware.add,
+    component: FirmwareUpdatePage,
+  },
+  {
+    to: routeMap.resources.firmware.detail,
+    component: FirmwareDetailPage,
   },
 ]
 

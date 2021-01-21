@@ -173,7 +173,7 @@ class Metrics extends React.Component {
       })
     }
 
-    if (metrics.length == 0) {
+    if (metrics.length === 0) {
       graphs.push(<span key="no data">No data</span>)
     }
 

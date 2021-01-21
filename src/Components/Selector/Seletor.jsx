@@ -3,8 +3,6 @@ import {
   Dropdown,
   DropdownItem,
   DropdownToggle,
-  Level,
-  LevelItem,
   Split,
   SplitItem,
 } from "@patternfly/react-core"
