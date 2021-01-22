@@ -3,6 +3,7 @@ import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
 import { cloneDeep } from "../../Util/Util"
 import { IconButton } from "../Buttons/Buttons"
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import { WidgetType } from "./Constants"
 import EmptyPanel from "./EmptyPanel/EmptyPanel"
 import LightPanel from "./LightPanel/LightPanel"
@@ -23,26 +24,9 @@ const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) 
 
     const widgetKey = widget.type + index
 
-    switch (widget.type) {
-      case WidgetType.EmptyPanel:
-        item.content = <EmptyPanel key={widgetKey} />
-        break
+    // load panel
+    item.content = <ErrorBoundary>{loadPanel(widget, history, widgetKey)}</ErrorBoundary>
 
-      case WidgetType.SwitchPanel:
-        item.content = <SwitchPanel key={widgetKey} config={widget.config} history={history} />
-        break
-
-      case WidgetType.LightPanel:
-        item.content = <LightPanel key={widgetKey} config={widget.config} history={history} />
-        break
-
-      case WidgetType.UtilizationPanel:
-        item.content = <UtilizationPanel key={widgetKey} config={widget.config} history={history} />
-        break
-
-      default:
-      // print on console
-    }
     items.push(item)
   })
   return cardWrapper(items, editEnabled, onEditClick, onDeleteClick)
@@ -51,6 +35,25 @@ const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) 
 export default LoadWidgets
 
 // helper functions
+
+const loadPanel = (widget, history, widgetKey) => {
+  switch (widget.type) {
+    case WidgetType.EmptyPanel:
+      return <EmptyPanel key={widgetKey} />
+
+    case WidgetType.SwitchPanel:
+      return <SwitchPanel key={widgetKey} config={widget.config} history={history} />
+
+    case WidgetType.LightPanel:
+      return <LightPanel key={widgetKey} config={widget.config} history={history} />
+
+    case WidgetType.UtilizationPanel:
+      return <UtilizationPanel key={widgetKey} config={widget.config} history={history} />
+
+    default:
+      return <span>Unknown widget type:{widget.type}</span>
+  }
+}
 
 const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
   return items.map((item) => {
@@ -100,7 +103,7 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
         <Card isHoverable={false} isCompact={true} className="dashboard-card">
           {titleComponent}
           <CardBody id="dashboard-card" className="dashboard-card-body">
-            {item.content}
+            <ErrorBoundary>{item.content}</ErrorBoundary>
           </CardBody>
         </Card>
       </div>

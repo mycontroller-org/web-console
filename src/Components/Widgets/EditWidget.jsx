@@ -6,6 +6,7 @@ import Editor from "../Editor/Editor"
 import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
 import { updateFormItemsSwitchPanel } from "./SwitchPanel/Edit"
 import { updateFormItemsLightPanel } from "./LightPanel/Edit"
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 
 const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }) => {
   return (
@@ -18,17 +19,19 @@ const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }
       onClose={onCancel}
       onEscapePress={onCancel}
     >
-      <Editor
-        key="editor"
-        language="yaml"
-        rootObject={widgetConfig}
-        onChangeFunc={onChange}
-        onSaveFunc={onSave}
-        minimapEnabled={false}
-        onCancelFunc={onCancel}
-        isWidthLimited={false}
-        getFormItems={getFormItems}
-      />
+      <ErrorBoundary>
+        <Editor
+          key="editor"
+          language="yaml"
+          rootObject={widgetConfig}
+          onChangeFunc={onChange}
+          onSaveFunc={onSave}
+          minimapEnabled={false}
+          onCancelFunc={onCancel}
+          isWidthLimited={false}
+          getFormItems={getFormItems}
+        />
+      </ErrorBoundary>
     </Modal>
   )
 }
@@ -39,7 +42,7 @@ export default EditWidget
 
 const getFormItems = (rootObject) => {
   const items = getPanelSettingsItems(rootObject)
-  
+
   switch (rootObject.type) {
     case WidgetType.SwitchPanel:
       updateFormItemsSwitchPanel(rootObject, items)
