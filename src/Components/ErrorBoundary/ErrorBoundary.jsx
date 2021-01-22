@@ -1,4 +1,4 @@
-import { Alert, Card, CardTitle, CardBody, Grid, Stack, GridItem, Divider } from "@patternfly/react-core"
+import { Alert, Card, CardTitle, CardBody, Grid, Stack, GridItem, Divider, ExpandableSection } from "@patternfly/react-core"
 import React from "react"
 import PageTitle from "../PageTitle/PageTitle"
 import "./ErrorBoundary.scss"
@@ -18,11 +18,11 @@ class ErrorBoundary extends React.Component {
 
   render() {
     const { error, errorInfo } = this.state
-    const { children, hasMargin } = this.props
+    const { children, hasMargin, hasOffset } = this.props
 
     if (error) {
       const margin = hasMargin ? { lg: 8, md: 10, sm: 12 } : {}
-      const offset = hasMargin ? { lgOffset: 2, mdOffset: 1 } : {}
+      const offset = hasOffset ? { lgOffset: 2, mdOffset: 1 } : {}
 
       const heading = "Oops! Something went wrong :("
       const title = hasMargin ? (
@@ -44,12 +44,14 @@ class ErrorBoundary extends React.Component {
               {title}
               <Stack hasGutter className="detail">
                 <Alert variant="danger" isInline title={error && error.toString()} />
-                <Card isFlat>
-                  <CardTitle>Component Stack Details:</CardTitle>
-                  <CardBody>
-                    <pre>{errorInfo.componentStack}</pre>
-                  </CardBody>
-                </Card>
+                <ExpandableSection toggleTextExpanded="Show Less" toggleTextCollapsed="Show More">
+                  <Card isFlat>
+                    <CardTitle>Component Stack Details:</CardTitle>
+                    <CardBody>
+                      <pre>{errorInfo && errorInfo.componentStack}</pre>
+                    </CardBody>
+                  </Card>
+                </ExpandableSection>
               </Stack>
             </GridItem>
           </Grid>

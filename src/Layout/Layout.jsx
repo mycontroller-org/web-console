@@ -29,6 +29,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { Redirect, Route, Switch } from "react-router-dom"
+import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
 import { HeaderSpinner } from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
 import logoMain from "../Logo/mc-white.svg"
@@ -303,7 +304,7 @@ class PageLayoutExpandableNav extends React.Component {
           notificationDrawer={notificationDrawer}
           isNotificationDrawerExpanded={this.props.isDrawerExpanded}
         >
-          {this.renderContent()}
+          <ErrorBoundary hasMargin>{this.renderContent()}</ErrorBoundary>
         </Page>
       </React.Fragment>
     )

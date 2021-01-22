@@ -7,7 +7,7 @@ import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
 class IndexPage extends React.Component {
   render() {
     const component = this.props.isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
-    return <ErrorBoundary hasMargin>{component}</ErrorBoundary>
+    return <ErrorBoundary hasMargin hasOffset>{component}</ErrorBoundary>
   }
 }
 
