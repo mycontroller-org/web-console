@@ -1,11 +1,19 @@
 import { ActionList, ActionListGroup, ActionListItem, Button, Level, LevelItem } from "@patternfly/react-core"
 import React from "react"
 
-const actionListItem = ({ variant, text, onClickFunc, isDisabled }) => {
+const actionListItem = ({ variant, text, onClickFunc, isDisabled, icon }) => {
+  let btnIcon = null
+  if (icon) {
+    const Icon = icon
+    btnIcon = <Icon style={{ marginRight: "5px" }} />
+  }
   return (
     <ActionListItem>
       <Button variant={variant} id={text} onClick={onClickFunc} isDisabled={isDisabled}>
-        {text}
+        <div>
+          {btnIcon}
+          {text}
+        </div>
       </Button>
     </ActionListItem>
   )

@@ -10,6 +10,7 @@ import "./Editor.scss"
 import { validate, validateItem } from "../../Util/Validator"
 import objectPath from "object-path"
 import Loading from "../Loading/Loading"
+import { DownloadIcon } from "@patternfly/react-icons"
 
 class Editor extends React.Component {
   state = {
@@ -136,6 +137,10 @@ class Editor extends React.Component {
     }
   }
 
+  onDownloadClick = () => {
+
+  }
+
   callOnSaveRedirect = () => {
     if (this.props.onSaveRedirectFunc) {
       this.props.onSaveRedirectFunc()
@@ -231,7 +236,15 @@ class Editor extends React.Component {
 
     const rightBar = formView
       ? []
-      : [{ text: "Download", variant: "secondary", onClickFunc: () => {}, isDisabled: true }]
+      : [
+          {
+            text: "Download",
+            icon: DownloadIcon,
+            variant: "secondary",
+            onClickFunc: this.onDownloadClick,
+            isDisabled: true,
+          },
+        ]
 
     let errorMessage = null
     if (formView && inValidItems.length > 0) {
