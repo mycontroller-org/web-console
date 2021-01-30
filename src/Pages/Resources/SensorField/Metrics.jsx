@@ -18,14 +18,14 @@ import Select from "../../../Components/Select/Select"
 import { api } from "../../../Service/Api"
 
 const durationOptions = [
-  { value: "-1h",  window: "1m", display: "Last 1 hour" },
-  { value: "-2h",  window: "2m", display: "Last 2 hours" },
-  { value: "-3h",  window: "5m", display: "Last 3 hours" },
-  { value: "-6h",  window: "10m", display: "Last 6 hours" },
-  { value: "-12h", window: "10m", display: "Last 12 hours" },
-  { value: "-24h", window: "15m", display: "Last 24 hours" },
-  { value: "-48h", window: "30m", display: "Last 2 days" },
-  { value: "-168h", window: "1h", display: "Last 7 days" },
+  { value: "-1h", window: "1m", tsFormat: "HH:mm", display: "Last 1 hour" },
+  { value: "-2h", window: "2m", tsFormat: "HH:mm", display: "Last 2 hours" },
+  { value: "-3h", window: "5m", tsFormat: "HH:mm", display: "Last 3 hours" },
+  { value: "-6h", window: "10m", tsFormat: "HH:mm", display: "Last 6 hours" },
+  { value: "-12h", window: "10m", tsFormat: "HH:mm", display: "Last 12 hours" },
+  { value: "-24h", window: "15m", tsFormat: "HH:mm", display: "Last 24 hours" },
+  { value: "-48h", window: "30m", tsFormat: "D,HH:mm", display: "Last 2 days" },
+  { value: "-168h", window: "1h", tsFormat: "D,HH:mm", display: "Last 7 days" },
 ]
 
 const defaultInterval = durationOptions[0].value
@@ -82,7 +82,7 @@ class Metrics extends React.Component {
               data: [],
             }
             metricsRaw.forEach((d) => {
-              const ts = moment(d.timestamp).format("HH:mm")
+              const ts = moment(d.timestamp).format(duration.tsFormat)
               // update data
               average.data.push({
                 x: ts,
@@ -155,7 +155,7 @@ class Metrics extends React.Component {
 
     if (loading) {
       graphs.push(<Loading key="loading" />)
-    } else  {
+    } else {
       metrics.forEach((m, index) => {
         //console.log(m)
         graphs.push(
@@ -211,10 +211,9 @@ class Metrics extends React.Component {
 
 export default Metrics
 
-
 // helper functions
 const getDuration = (interval) => {
-  for(let index=0;index<durationOptions.length;index++){
+  for (let index = 0; index < durationOptions.length; index++) {
     const duration = durationOptions[index]
     if (interval === duration.value) {
       return duration

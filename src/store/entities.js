@@ -1,6 +1,7 @@
 import { combineReducers } from "redux"
 import aboutReducer from "./entities/about"
 import authReducer from "./entities/auth"
+import dashboardReducer from "./entities/dashboard"
 import spinnerReducer from "./entities/globalSpinner"
 import notificationReducer from "./entities/notification"
 import resourceGatewayReducer from "./entities/resources/gateway"
@@ -16,6 +17,7 @@ export default combineReducers({
   toaster: toasterReducer,
   about: aboutReducer,
   auth: authReducer,
+  dashboard: dashboardReducer,
   spinner: spinnerReducer,
   resourceGateway: resourceGatewayReducer,
   resourceNode: resourceNodeReducer,

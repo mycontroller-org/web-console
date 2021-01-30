@@ -18,6 +18,8 @@ import EditSettings from "./EditSettings"
 import DeleteDialog from "../../Components/Dialog/DeleteDialog"
 import EmptyState from "../../Components/EmptyState/EmptyState"
 import Loading from "../../Components/Loading/Loading"
+import { connect } from "react-redux"
+import { updateSelectionId } from "../../store/entities/dashboard"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -26,7 +28,6 @@ class Dashboard extends React.Component {
     loading: true,
     editEnabled: false,
     dashboards: [],
-    selectionId: "",
     dashboardOnEdit: {},
     showDeleteDialog: false,
     showEditWidget: false,
@@ -39,11 +40,14 @@ class Dashboard extends React.Component {
       .list({})
       .then((res) => {
         const dashboards = res.data.data
-        const selectionId = dashboards.length > 0 ? dashboards[0].id : ""
+        let selectionId = this.props.selectionId
+        if (selectionId === "") {
+          selectionId = dashboards.length > 0 ? dashboards[0].id : ""
+          this.props.updateSelectionId(selectionId)
+        }
         this.setState({
           dashboards: res.data.data,
           loading: false,
-          selectionId: selectionId,
           dashboardOnEdit: {},
           showDeleteDialog: false,
           showEditWidget: false,
@@ -62,7 +66,8 @@ class Dashboard extends React.Component {
 
   onEditClick = () => {
     this.setState((prevState) => {
-      const { dashboards, selectionId } = prevState
+      const { dashboards } = prevState
+      const { selectionId } = this.props
       const dashboard = getItemById(dashboards, selectionId)
       return { editEnabled: true, dashboardOnEdit: dashboard }
     })
@@ -114,8 +119,8 @@ class Dashboard extends React.Component {
       const { dashboards } = prevState
       const dashboard = getNewDashboard()
       dashboards.push(dashboard)
+      this.props.updateSelectionId(dashboard.id)
       return {
-        selectionId: dashboard.id,
         dashboards: dashboards,
         dashboardOnEdit: dashboard,
         editEnabled: true,
@@ -124,7 +129,7 @@ class Dashboard extends React.Component {
   }
 
   onDashboardChange = (item) => {
-    this.setState({ selectionId: item.id })
+    this.props.updateSelectionId(item.id)
   }
 
   onDashboardBookmarkAction = (item) => {
@@ -234,7 +239,6 @@ class Dashboard extends React.Component {
     const {
       loading,
       dashboards,
-      selectionId,
       editEnabled,
       showEditWidget,
       targetWidget,
@@ -242,6 +246,8 @@ class Dashboard extends React.Component {
       dashboardOnEdit,
       showDeleteDialog,
     } = this.state
+
+    const { selectionId } = this.props
 
     const pageContent = []
     let title = ""
@@ -385,7 +391,15 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard
+const mapStateToProps = (state) => ({
+  selectionId: state.entities.dashboard.selectionId,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  updateSelectionId: (data) => dispatch(updateSelectionId(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 // helper functions
 
