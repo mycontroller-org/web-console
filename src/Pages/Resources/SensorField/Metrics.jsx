@@ -24,8 +24,9 @@ const durationOptions = [
   { value: "-6h", window: "10m", tsFormat: "HH:mm", display: "Last 6 hours" },
   { value: "-12h", window: "10m", tsFormat: "HH:mm", display: "Last 12 hours" },
   { value: "-24h", window: "15m", tsFormat: "HH:mm", display: "Last 24 hours" },
-  { value: "-48h", window: "30m", tsFormat: "D,HH:mm", display: "Last 2 days" },
-  { value: "-168h", window: "1h", tsFormat: "D,HH:mm", display: "Last 7 days" },
+  { value: "-48h", window: "15m", tsFormat: "D,HH:mm", display: "Last 2 days" },
+  { value: "-168h", window: "30m", tsFormat: "D,HH:mm", display: "Last 7 days" },
+  { value: "-720h", window: "1h", tsFormat: "D,HH:mm", display: "Last 30 days" },
 ]
 
 const defaultInterval = durationOptions[0].value
