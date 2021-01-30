@@ -58,10 +58,6 @@ class LightPanel extends React.Component {
               break
 
             case "hue":
-              const commaIndex = value.indexOf(",") // 239,100,3
-              if (commaIndex !== -1) {
-                value = value.substring(0, commaIndex)
-              }
               values[fieldName] = Number(value)
               break
 
@@ -100,6 +96,7 @@ class LightPanel extends React.Component {
   }
 
   onChange = (fieldName, newValue) => {
+    console.log(fieldName, newValue)
     const data = {}
     data[fieldName] = newValue
     this.setState((prevState) => {
@@ -203,7 +200,7 @@ class LightPanel extends React.Component {
             field={
               <HueSlider
                 onChange={(newHue) => {
-                  this.onChange("hue", newHue)
+                  this.onChange("hue", Math.round(newHue))
                 }}
                 hue={hue}
               />

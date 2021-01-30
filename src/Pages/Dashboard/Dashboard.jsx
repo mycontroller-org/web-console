@@ -41,6 +41,20 @@ class Dashboard extends React.Component {
       .then((res) => {
         const dashboards = res.data.data
         let selectionId = this.props.selectionId
+
+        // verify locally stored id available
+        if (selectionId !== "") {
+          let found = false
+          for (let index = 0; index < dashboards.length; index++) {
+            if (selectionId === dashboards[index].id) {
+              found = true
+              break
+            }
+          }
+          selectionId = ""
+        }
+
+        // if no id set set an id
         if (selectionId === "") {
           selectionId = dashboards.length > 0 ? dashboards[0].id : ""
           this.props.updateSelectionId(selectionId)
