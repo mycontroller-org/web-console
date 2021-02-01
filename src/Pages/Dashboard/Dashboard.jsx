@@ -51,7 +51,9 @@ class Dashboard extends React.Component {
               break
             }
           }
-          selectionId = ""
+          if (!found) {
+            selectionId = ""
+          }
         }
 
         // if no id set set an id
