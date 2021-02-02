@@ -7,7 +7,7 @@ const LastUpdate = ({ time }) => {
   const lastUpdate = moment(time)
   return (
     <span className="mc-last-update">
-      Last Update: <i>{lastUpdate.fromNow()} ({lastUpdate.format('MMM Do YYYY, HH:mm:ss')})</i>
+      Last Sync with server: <i>{lastUpdate.fromNow()} ({lastUpdate.format('MMM Do YYYY, HH:mm:ss')})</i>
     </span>
   )
 }
