@@ -157,6 +157,7 @@ export const api = {
   },
   action: {
     send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
+    nodeAction:(queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
   },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),

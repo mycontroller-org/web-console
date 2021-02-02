@@ -36,13 +36,13 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.withRefresh(api.forwardPayload.enable)
+        this.actionFuncWithRefresh(api.forwardPayload.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.withRefresh(api.forwardPayload.disable)
+        this.actionFuncWithRefresh(api.forwardPayload.disable)
       },
     },
     { type: "delete", onClick: this.onDeleteActionClick },

@@ -2,6 +2,7 @@ import { Button } from "@patternfly/react-core"
 import React from "react"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
+import { NodeRebootDialog, NodeResetDialog } from "../../../Components/Dialog/Dialog"
 import { getStatus } from "../../../Components/Icons/Icons"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
@@ -16,7 +17,7 @@ import {
   loadingFailed,
   onSortBy,
   updateFilter,
-  updateRecords
+  updateRecords,
 } from "../../../store/entities/resources/node"
 
 class List extends ListBase {
@@ -27,10 +28,24 @@ class List extends ListBase {
       page: 0,
     },
     rows: [],
+    showDialogReboot: false,
+    showDialogReset: false,
   }
 
   componentDidMount() {
     super.componentDidMount()
+  }
+
+  showRebootDialog = () => {
+    this.setState({ showDialogReboot: true, showDialogReset: false })
+  }
+
+  showResetDialog = () => {
+    this.setState({ showDialogReboot: false, showDialogReset: true })
+  }
+
+  hideDialog = () => {
+    this.setState({ showDialogReboot: false, showDialogReset: false })
   }
 
   actions = [
@@ -39,12 +54,33 @@ class List extends ListBase {
   ]
 
   actions = [
-    { type: "refresh_node_info" },
-    { type: "heartbeat_request" },
-    { type: "reboot", onClick: () => {} },
+    {
+      type: "refresh_node_info",
+      onClick: this.actionFunc((ids) => {
+        api.action.nodeAction({ action: "refresh_node_info", id: ids })
+      }),
+    },
+    {
+      type: "heartbeat_request",
+      onClick: this.actionFunc((ids) => {
+        api.action.nodeAction({ action: "heartbeat_request", id: ids })
+      }),
+    },
+    {
+      type: "reboot",
+      onClick: this.showRebootDialog,
+    },
     { type: "separator" },
-    { type: "firmware_update" },
-    { type: "reset" },
+    {
+      type: "firmware_update",
+      onClick: this.actionFunc((ids) => {
+        api.action.nodeAction({ action: "firmware_update", id: ids })
+      }),
+    },
+    {
+      type: "reset",
+      onClick: this.showResetDialog,
+    },
     { type: "separator" },
     {
       type: "delete",
@@ -65,10 +101,29 @@ class List extends ListBase {
   ]
 
   render() {
+    const { showDialogReboot, showDialogReset } = this.state
     return (
       <>
         <PageTitle title="Nodes" />
-        <PageContent>{super.render()}</PageContent>
+        <PageContent>
+          {super.render()}
+          <NodeRebootDialog
+            show={showDialogReboot}
+            onCloseFn={this.hideDialog}
+            onOkFn={this.actionFunc((ids) => {
+              api.action.nodeAction({ action: "reboot", id: ids })
+              this.hideDialog()
+            })}
+          />
+          <NodeResetDialog
+            show={showDialogReset}
+            onCloseFn={this.hideDialog}
+            onOkFn={this.actionFunc((ids) => {
+              api.action.nodeAction({ action: "reset", id: ids })
+              this.hideDialog()
+            })}
+          />
+        </PageContent>
       </>
     )
   }

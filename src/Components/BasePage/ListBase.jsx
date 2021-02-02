@@ -4,13 +4,12 @@ import moment from "moment"
 import PropTypes from "prop-types"
 import React from "react"
 import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
-import DeleteDialog from "../Dialog/DeleteDialog"
+import DeleteDialog from "../Dialog/Dialog"
 import Filters from "../Filters/Filters"
 import LastUpdate from "../LastUpdate/LastUpdate"
 import { Spinner } from "../Spinner/Spinner"
 import Toolbar from "../Toolbar/Toolbar"
 import "./ListBase.scss"
-
 
 export default class ListPage extends React.Component {
   state = {
@@ -146,12 +145,21 @@ export default class ListPage extends React.Component {
       })
   }
 
-  withRefresh = (actionFunc) => {
+  actionFuncWithRefresh = (actionFunc) => {
     if (actionFunc) {
       actionFunc(this.getSelectedRowIDs()).then((res) => {
         this.fetchRecords(this.props.pagination)
       })
     }
+  }
+
+  actionFunc = (actionFunc) => {
+    if (actionFunc) {
+      return () => {
+        actionFunc(this.getSelectedRowIDs())
+      }
+    }
+    return () => {}
   }
 
   onPerPage = (_e, perPage) => {
@@ -201,7 +209,7 @@ export default class ListPage extends React.Component {
 
   onDeleteActionOkClick = () => {
     this.setState({ showDeleteDialog: false }, () => {
-      this.withRefresh(this.props.apiDeleteRecords)
+      this.actionFuncWithRefresh(this.props.apiDeleteRecords)
     })
   }
 

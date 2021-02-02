@@ -15,7 +15,7 @@ import {
   SearchIcon,
   AddCircleOIcon,
 } from "@patternfly/react-icons"
-import DeleteDialog from "../Dialog/DeleteDialog"
+import DeleteDialog from "../Dialog/Dialog"
 
 export default class Actions extends React.Component {
   state = {
@@ -60,7 +60,7 @@ export default class Actions extends React.Component {
             item.onClick
           )
         case "refresh_node_info":
-          return drawItem("refresh_node_info", "Refresh", InfoAltIcon, item.disabled, item.onClick)
+          return drawItem("refresh_node_info", "Fetch Info", InfoAltIcon, item.disabled, item.onClick)
         case "firmware_update":
           return drawItem("firmware_update", "Firmware Update", UploadIcon, item.disabled, item.onClick)
         case "reset":

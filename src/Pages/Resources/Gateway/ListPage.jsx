@@ -37,19 +37,19 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.withRefresh(api.gateway.enable)
+        this.actionFuncWithRefresh(api.gateway.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.withRefresh(api.gateway.disable)
+        this.actionFuncWithRefresh(api.gateway.disable)
       },
     },
     {
       type: "reload",
       onClick: () => {
-        this.withRefresh(api.gateway.reload)
+        this.actionFuncWithRefresh(api.gateway.reload)
       },
     },
     { type: "separator" },
