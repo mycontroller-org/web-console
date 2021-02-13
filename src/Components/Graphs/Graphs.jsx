@@ -28,7 +28,9 @@ export const LineChart = ({ title = "Graph title", unit = "", interpolation = "n
             constrainToVisibleArea
             labels={({ datum }) => {
               if (datum.y || datum.y === 0) {
-                return `${datum.y} ${unit} at ${datum.x}`
+                // round decimal number
+                const yValue = datum.y % 1 === 0 ? datum.y : datum.y.toFixed(2)
+                return `${yValue} ${unit} at ${datum.x}`
               }
               return null
             }}

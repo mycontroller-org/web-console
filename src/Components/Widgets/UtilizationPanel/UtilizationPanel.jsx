@@ -7,6 +7,7 @@ import { ResourceType } from "../../../config/globalConfig"
 import objectPath from "object-path"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import "./UtilizationPanel.scss"
+import Loading from "../../Loading/Loading"
 
 const getInPercent = (maximumValue, value) => {
   return value > maximumValue ? 100 : (value / maximumValue) * 100
@@ -151,7 +152,7 @@ class UtilizationPanel extends React.Component {
     const { columnDisplay, resourceUnit, resourceType } = config
 
     if (loading) {
-      return <span>Loading...</span>
+      return <Loading />
     }
 
     if (resources.length === 0) {

@@ -6,6 +6,7 @@ import _ from "lodash"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import "./SwitchPanel.scss"
 import objectPath from "object-path"
+import Loading from "../../Loading/Loading"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -67,7 +68,7 @@ class SwitchPanel extends React.Component {
     const { isLoading, resources } = this.state
 
     if (isLoading) {
-      return <span>Loading</span>
+      return <Loading />
     }
     const switches = resources.map((r, index) => {
       const className = r.isChecked ? "text enabled" : "text"

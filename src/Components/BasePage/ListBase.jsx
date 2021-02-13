@@ -7,7 +7,7 @@ import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
 import DeleteDialog from "../Dialog/Dialog"
 import Filters from "../Filters/Filters"
 import LastUpdate from "../LastUpdate/LastUpdate"
-import { Spinner } from "../Spinner/Spinner"
+import Loading from "../Loading/Loading"
 import Toolbar from "../Toolbar/Toolbar"
 import "./ListBase.scss"
 
@@ -260,7 +260,7 @@ export default class ListPage extends React.Component {
     })
 
     if (this.props.loading) {
-      elements.push(<Spinner key="spinner" />)
+      elements.push(<Loading key="loading" />)
     } else {
       elements.push(
         <Toolbar

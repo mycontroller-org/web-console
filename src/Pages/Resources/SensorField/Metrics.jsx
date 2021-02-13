@@ -157,25 +157,25 @@ class Metrics extends React.Component {
     if (loading) {
       graphs.push(<Loading key="loading" />)
     } else {
-      metrics.forEach((m, index) => {
-        //console.log(m)
-        graphs.push(
-          <GridItem key={m.name + "_" + index}>
-            <LineChart
-              key={m.name}
-              title={m.name}
-              unit={m.unit}
-              data={m.data}
-              interpolation={m.interpolation}
-              type={m.type}
-            />
-          </GridItem>
-        )
-      })
-    }
-
-    if (metrics.length === 0) {
-      graphs.push(<span key="no data">No data</span>)
+      if (metrics.length === 0) {
+        graphs.push(<span key="no data">No data</span>)
+      } else {
+        metrics.forEach((m, index) => {
+          //console.log(m)
+          graphs.push(
+            <GridItem key={m.name + "_" + index}>
+              <LineChart
+                key={m.name}
+                title={m.name}
+                unit={m.unit}
+                data={m.data}
+                interpolation={m.interpolation}
+                type={m.type}
+              />
+            </GridItem>
+          )
+        })
+      }
     }
 
     const refreshBtn = (

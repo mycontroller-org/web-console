@@ -1,7 +1,7 @@
 import React from "react"
 
 const EmptyPanel = () => {
-  return <span>This is empty panel. Update me</span>
+  return <span>I am empty. Make me useful</span>
 }
 
 export default EmptyPanel
