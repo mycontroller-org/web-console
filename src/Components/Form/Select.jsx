@@ -36,7 +36,7 @@ class Select extends React.Component {
   }
 
   render() {
-    const { label, options, selected, isDisabled, isCreatable, variant } = this.props
+    const { label, options, selected, isDisabled, isCreatable, variant, disableClear, hideDescription } = this.props
     const { isOpen } = this.state
 
     // get label with value
@@ -47,7 +47,7 @@ class Select extends React.Component {
         isDisabled={option.disabled}
         key={index}
         value={option.label}
-        {...(option.description && { description: option.description })}
+        {...(!hideDescription && option.description && { description: option.description })}
       />
     ))
     return (
@@ -56,7 +56,7 @@ class Select extends React.Component {
         //typeAheadAriaLabel="Select a state"
         onToggle={this.onToggle}
         onSelect={this.onSelect}
-        onClear={this.clearSelection}
+        onClear={disableClear ? undefined : this.clearSelection}
         selections={selectionLabel}
         isOpen={isOpen}
         //aria-labelledby={titleId}

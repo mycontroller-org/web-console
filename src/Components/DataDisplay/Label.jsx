@@ -1,6 +1,7 @@
 import { Flex, FlexItem, Label as PfLabel } from "@patternfly/react-core"
 import React from "react"
 import IFrame from "../IFrame/IFrame"
+
 import "./Label.scss"
 
 export const Label = ({ name, value, index = 0 }) => {
@@ -43,7 +44,7 @@ export const KeyValue = ({ name, value, index = 0 }) => {
   }
   return (
     <div className="key-value-map" key={name + index}>
-      <span>{name}</span> {finalValue}
+      <span className="key">{name}</span> <span className="value">{finalValue}</span>
     </div>
   )
 }
@@ -60,7 +61,8 @@ export const KeyValueMap = ({ data = {} }) => {
   names.sort()
 
   const elements = names.map((name, index) => {
-    return <KeyValue key={index} name={name} value={data[name]} index={index} />
+    const value = typeof data[name] !== "object" ? data[name] : JSON.stringify(data[name],null," ")
+    return <KeyValue key={index} name={name} value={value} index={index} />
   })
   return elements
 }

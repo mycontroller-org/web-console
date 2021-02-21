@@ -21,7 +21,15 @@ import ForwardPayloadDetailPage from "../Pages/Actions/ForwardPayload/DetailsPag
 import FirmwareListPage from "../Pages/Resources/Firmware/ListPage"
 import FirmwareUpdatePage from "../Pages/Resources/Firmware/UpdatePage"
 import FirmwareDetailPage from "../Pages/Resources/Firmware/DetailsPage"
-
+import TaskListPage from "../Pages/Actions/Task/ListPage"
+import TaskUpdatePage from "../Pages/Actions/Task/UpdatePage"
+import TaskDetailPage from "../Pages/Actions/Task/DetailsPage"
+import HandlerListPage from "../Pages/Actions/Handler/ListPage"
+import HandlerUpdatePage from "../Pages/Actions/Handler/UpdatePage"
+import HandlerDetailPage from "../Pages/Actions/Handler/DetailsPage"
+import SchedulerListPage from "../Pages/Actions/Scheduler/ListPage"
+import SchedulerUpdatePage from "../Pages/Actions/Scheduler/UpdatePage"
+import SchedulerDetailPage from "../Pages/Actions/Scheduler/DetailsPage"
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
 
@@ -69,6 +77,24 @@ const routeMap = {
       detail: "/actions/forwardpayload/list/:id",
       update: "/actions/forwardpayload/update/:id",
       add: "/actions/forwardpayload/add",
+    },
+    task: {
+      list: "/actions/task",
+      detail: "/actions/task/list/:id",
+      update: "/actions/task/update/:id",
+      add: "/actions/task/add",
+    },
+    handler: {
+      list: "/actions/handler",
+      detail: "/actions/handler/list/:id",
+      update: "/actions/handler/update/:id",
+      add: "/actions/handler/add",
+    },
+    scheduler: {
+      list: "/actions/scheduler",
+      detail: "/actions/scheduler/list/:id",
+      update: "/actions/scheduler/update/:id",
+      add: "/actions/scheduler/add",
     },
   },
 }
@@ -134,6 +160,24 @@ const routes = [
     id: "actions",
     title: "Actions",
     children: [
+      {
+        id: "task",
+        title: "Tasks",
+        to: routeMap.actions.task.list,
+        component: TaskListPage,
+      },
+      {
+        id: "scheduler",
+        title: "Schedules",
+        to: routeMap.actions.scheduler.list,
+        component: SchedulerListPage,
+      },
+      {
+        id: "handler",
+        title: "Handlers",
+        to: routeMap.actions.handler.list,
+        component: HandlerListPage,
+      },
       {
         id: "forwardpayload",
         title: "Forward Payload",
@@ -214,6 +258,30 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.firmware.detail,
     component: FirmwareDetailPage,
+  },
+  {
+    to: routeMap.actions.task.add,
+    component: TaskUpdatePage,
+  },
+  {
+    to: routeMap.actions.task.detail,
+    component: TaskDetailPage,
+  },
+  {
+    to: routeMap.actions.handler.add,
+    component: HandlerUpdatePage,
+  },
+  {
+    to: routeMap.actions.handler.detail,
+    component: HandlerDetailPage,
+  },
+  {
+    to: routeMap.actions.scheduler.add,
+    component: SchedulerUpdatePage,
+  },
+  {
+    to: routeMap.actions.scheduler.detail,
+    component: SchedulerDetailPage,
   },
 ]
 

@@ -13,7 +13,7 @@ import {
   MessageLogger,
   MessageLoggerOptions,
   filterProtocolOptions,
-} from "../Constants"
+} from "../../Constants"
 
 class UpdatePage extends React.Component {
   render() {

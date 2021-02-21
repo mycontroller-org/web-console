@@ -11,28 +11,37 @@ const getValue = (item, data) => {
   switch (item.dataType) {
     case DataType.String:
       return String(data)
+
     case DataType.Boolean:
       return Boolean(data)
+
     case DataType.Number:
       return Number(data)
+
     case DataType.Integer:
       return v.toInt(data)
+
     case DataType.Float:
       return v.toFloat(data)
-    case DataType.ArrayString:
-      return data.map((d) => {
-        String(d)
-      })
+
+    // case DataType.ArrayString:
+    //   return data.map((d) => {
+    //     String(d)
+    //   })
+
     case DataType.ArrayNumber:
       return data.map((d) => {
         Number(d)
       })
+
     case DataType.ArrayBoolean:
       return data.map((d) => {
         Boolean(d)
       })
+
     case DataType.ArrayObject:
       return data
+
     default:
       return data
   }
@@ -43,10 +52,21 @@ export const updateItems = (rootObject, items) => {
     switch (item.fieldType) {
       case FieldType.Labels:
       case FieldType.KeyValueMap:
+      case FieldType.VariablesMap:
       case FieldType.ThresholdsColor:
+      case FieldType.DateRangePicker:
+      case FieldType.TimeRangePicker:
         item.value = objectPath.get(rootObject, item.fieldId, {})
         if (item.value === null) {
           item.value = {}
+        }
+        break
+
+      case FieldType.DynamicArray:
+      case FieldType.ConditionsArrayMap:
+        item.value = objectPath.get(rootObject, item.fieldId, [])
+        if (item.value === null) {
+          item.value = []
         }
         break
 

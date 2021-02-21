@@ -1,7 +1,7 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { RouteLink } from "../../../Components/Buttons/Buttons"
-import { KeyValueMap, Labels } from "../../../Components/Label/Label"
+import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { LastSeen } from "../../../Components/Time/Time"
 import { METRIC_TYPES } from "../../../config/globalConfig"
 import { api } from "../../../Service/Api"

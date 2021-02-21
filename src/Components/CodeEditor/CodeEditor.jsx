@@ -51,7 +51,7 @@ class CodeEditor extends React.Component {
     }
   }
 
-  handleEditorDidMount = (_valueGetter, editor) => {
+  handleOnMount = (editor, _monaco) => {
     this.editorRef.current = editor
   }
 
@@ -100,7 +100,7 @@ class CodeEditor extends React.Component {
             language={this.props.language}
             data={codeString}
             options={options}
-            handleEditorDidMount={this.handleEditorDidMount}
+            handleEditorOnMount={this.handleOnMount}
           />
         </StackItem>
         <StackItem>

@@ -2,13 +2,14 @@ import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { api } from "../../../Service/Api"
+import { DisplayTrue } from "../../../Components/DataDisplay/Miscellaneous"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
     <TabDetailsBase
       resourceId={resourceId}
       history={history}
-      apiGetRecord={api.firmware.get}
+      apiGetRecord={api.handler.get}
       getDetailsFunc={getDetailsFuncImpl}
     />
   )
@@ -23,17 +24,15 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Version", value: data.version })
-  fieldsList1.push({ key: "Last Modified", value: data.lastModifiedOn })
-
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "File Details", value: <KeyValueMap data={data.file} /> })
+  fieldsList1.push({ key: "Description", value: data.description })
+  fieldsList1.push({ key: "Enabled", value: <DisplayTrue data={data} field="enabled" /> })
+  fieldsList1.push({ key: "Labels", value: <Labels data={data.labels} /> })
+  fieldsList1.push({ key: "Type", value: data.type })
+  fieldsList1.push({ key: "State", value: <KeyValueMap data={data.state} /> })
+  fieldsList2.push({ key: "Spec", value: <KeyValueMap data={data.spec} /> })
 
   return {
     "list-1": fieldsList1,
     "list-2": fieldsList2,
   }
 }
-
-

@@ -1,7 +1,7 @@
-import Editor, { monaco } from "@monaco-editor/react"
+import Editor, { loader  } from "@monaco-editor/react"
 import React from "react"
 
-monaco
+loader
   .init()
   .then((monaco) => {
     monaco.editor.defineTheme("console", {
@@ -43,7 +43,7 @@ const editor = ({
   options = {},
   height = "71vh",
   data = "",
-  handleEditorDidMount = () => {},
+  handleEditorOnMount = () => {},
 }) => {
   const finalOptions = {
     ...defaultOptions, // default options
@@ -56,7 +56,7 @@ const editor = ({
       theme="console"
       value={data}
       options={finalOptions}
-      editorDidMount={handleEditorDidMount}
+      onMount={handleEditorOnMount}
     />
   )
 }

@@ -12,6 +12,10 @@ class AsyncSelect extends React.Component {
   }
 
   onFilter = (event) => {
+    if (!event) {
+      // TODO: remove this if block and fix event undefined issue
+      return
+    }
     const { apiOptions, optionValueKey } = this.props
     const valueKey = optionValueKey ? optionValueKey : "id"
     if (apiOptions) {

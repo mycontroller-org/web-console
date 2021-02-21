@@ -14,43 +14,32 @@ import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
 
-class KeyValueMapForm extends React.Component {
+class DynamicArrayForm extends React.Component {
   state = {
     items: [],
   }
 
   updateItems = () => {
-    const { keyValueMap } = this.props
-
-    if (!keyValueMap) {
+    const { valuesList } = this.props
+    if (!valuesList) {
       return
     }
 
+    let valuesReceived = [...valuesList]
+
     this.setState((prevState) => {
       const { items } = prevState
-      let keys = Object.keys(keyValueMap)
-
-      let isEqual = true
 
       for (let index = 0; index < items.length; index++) {
         const item = items[index]
-        if (keys.includes(item.key)) {
-          items[index].value = keyValueMap[item.key]
-          const keyIndex = keys.indexOf(item.key)
-          keys.splice(keyIndex, 1)
+        if (valuesReceived.includes(item)) {
+          const valueIndex = valuesReceived.indexOf(item)
+          valuesReceived.splice(valueIndex, 1)
         }
       }
 
-      if (keys.length !== 0) {
-        isEqual = false
-      }
-
-      if (!isEqual) {
-        keys = Object.keys(keyValueMap) // reload all the keys
-        const newItems = keys.map((key) => {
-          return { key, value: keyValueMap[key] }
-        })
-        return { items: newItems }
+      if (valuesReceived.length !== 0) {
+        return { items: valuesList }
       } else {
         return { items: items }
       }
@@ -62,7 +51,7 @@ class KeyValueMapForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props.keyValueMap, prevProps.keyValueMap)) {
+    if (!_.isEqual(this.props.valuesList, prevProps.valuesList)) {
       this.updateItems()
     }
   }
@@ -70,25 +59,14 @@ class KeyValueMapForm extends React.Component {
   callParentOnChange = (items) => {
     const { onChange } = this.props
     if (onChange) {
-      // convert to key values
-      const keyValueMap = {}
-      const keys = []
-      for (let index = 0; index < items.length; index++) {
-        const item = items[index]
-        const key = item.key
-        if (!keys.includes(key)) {
-          keyValueMap[item.key] = item.value
-        }
-        keys.push(key)
-      }
-      onChange(keyValueMap)
+      onChange(items)
     }
   }
 
-  onChange = (index, type, newValue) => {
+  onChange = (index, newValue) => {
     this.setState((prevState) => {
       const { items } = prevState
-      items[index][type] = newValue
+      items[index] = newValue
       this.callParentOnChange(items)
       return { items: items }
     })
@@ -106,37 +84,31 @@ class KeyValueMapForm extends React.Component {
   onAdd = () => {
     this.setState((prevState) => {
       const { items } = prevState
-      items.push({ key: "", value: "" })
+      items.push("")
       return { items: items }
     })
   }
 
   render() {
     const { items } = this.state
-    const { validateKeyFunc, validateValueFunc, keyLabel, valueLabel } = this.props
-    const keys = []
+    const { validateValueFunc, valueLabel } = this.props
+    const values = []
 
     const formItems = items.map((item, index) => {
-      let isValidKey = true
-      if (validateKeyFunc) {
-        isValidKey = validateKeyFunc(item.key)
-      }
-
       let isValidValue = true
       if (validateValueFunc) {
-        isValidValue = validateValueFunc(item.key)
+        isValidValue = validateValueFunc(item)
       }
+
+      // verify duplicate value
+      if (values.includes(item)) {
+        isValidValue = false
+      }
+
       const validatedValue = isValidValue ? "default" : "error"
 
-      // verify duplicate key
-      const isDuplicateKey = keys.includes(item.key)
-      if (isDuplicateKey) {
-        isValidKey = false
-      }
-      const validatedKey = isValidKey ? "default" : "error"
-
-      // add the key into local map for next iteration
-      keys.push(item.key)
+      // add the item into local map for next iteration
+      values.push(item)
 
       const addButton =
         items.length === index + 1 ? (
@@ -144,24 +116,13 @@ class KeyValueMapForm extends React.Component {
         ) : null
       return (
         <>
-          <GridItem span={5}>
-            <TextInput
-              id={"key_" + index}
-              value={item.key}
-              validated={validatedKey}
-              onChange={(newValue) => {
-                this.onChange(index, "key", newValue)
-              }}
-            />
-          </GridItem>
-
-          <GridItem span={5}>
+          <GridItem span={10}>
             <TextInput
               id={"value_" + index}
-              value={item.value}
+              value={item}
               validated={validatedValue}
               onChange={(newValue) => {
-                this.onChange(index, "value", newValue)
+                this.onChange(index, newValue)
               }}
             />
           </GridItem>
@@ -191,27 +152,20 @@ class KeyValueMapForm extends React.Component {
 
     return (
       <Grid className="mc-key-value-map-items">
-        <GridItem span={5}>
-          <Text component={TextVariants.h4}>{keyLabel ? keyLabel : "Key"}</Text>
-        </GridItem>
-
-        <GridItem span={5}>
-          <Text component={TextVariants.h4}>{valueLabel ? valueLabel : "Value"}</Text>
+        <GridItem span={10}>
+          <Text component={TextVariants.h4}>{valueLabel ? valueLabel : ""}</Text>
         </GridItem>
         <GridItem span={2}></GridItem>
-
         {formItems}
       </Grid>
     )
   }
 }
 
-KeyValueMapForm.propTypes = {
-  keyLabel: PropTypes.string,
+DynamicArrayForm.propTypes = {
   valueLabel: PropTypes.string,
-  keyValueMap: PropTypes.object,
-  validateKeyFunc: PropTypes.func,
+  valuesList: PropTypes.array,
   validateValueFunc: PropTypes.func,
 }
 
-export default KeyValueMapForm
+export default DynamicArrayForm

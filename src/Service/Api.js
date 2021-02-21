@@ -157,7 +157,7 @@ export const api = {
   },
   action: {
     send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
-    nodeAction:(queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
+    nodeAction: (queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
   },
   settings: {
     get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),
@@ -183,5 +183,30 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/firmware", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/firmware", {}, data),
     upload: (id, data, headers) => newRequest(HTTP_VERBS.POST, "/firmware/upload/" + id, {}, data, headers),
+  },
+  task: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/task", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/task/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/task", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/task", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/task/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/task/disable", {}, data),
+  },
+  handler: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/handler", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/handler/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/handler", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/handler/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/handler/disable", {}, data),
+    reload: (data) => newRequest(HTTP_VERBS.POST, "/handler/reload", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/handler", {}, data),
+  },
+  scheduler: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/scheduler", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/scheduler/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/scheduler", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/scheduler", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/disable", {}, data),
   },
 }

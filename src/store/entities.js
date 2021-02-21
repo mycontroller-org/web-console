@@ -10,6 +10,9 @@ import resourceSensorReducer from "./entities/resources/sensor"
 import resourceSensorFieldReducer from "./entities/resources/sensorField"
 import resourceFirmwareReducer from "./entities/resources/firmware"
 import actionForwardPayloadReducer from "./entities/actions/forwardPayload"
+import actionTaskReducer from "./entities/actions/task"
+import actionHandlerReducer from "./entities/actions/handler"
+import actionSchedulerReducer from "./entities/actions/scheduler"
 import toasterReducer from "./entities/toaster"
 
 export default combineReducers({
@@ -25,4 +28,7 @@ export default combineReducers({
   resourceSensorField: resourceSensorFieldReducer,
   resourceFirmware: resourceFirmwareReducer,
   actionForwardPayload: actionForwardPayloadReducer,
+  actionTask: actionTaskReducer,
+  actionHandler: actionHandlerReducer,
+  actionScheduler: actionSchedulerReducer,
 })

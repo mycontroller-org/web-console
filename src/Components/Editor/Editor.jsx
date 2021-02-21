@@ -22,7 +22,7 @@ class Editor extends React.Component {
   }
   editorRef = React.createRef()
 
-  handleEditorDidMount = (_valueGetter, editor) => {
+  handleEditorOnMount = (editor, _monaco) => {
     this.editorRef.current = editor
   }
 
@@ -201,7 +201,7 @@ class Editor extends React.Component {
           language={this.props.language}
           data={codeString}
           options={options}
-          handleEditorDidMount={this.handleEditorDidMount}
+          handleEditorOnMount={this.handleEditorOnMount}
         />
       )
     }
@@ -310,7 +310,7 @@ const toString = (language = "yaml", data = {}) => {
 
   switch (language) {
     case "yaml":
-      return YAML.safeDump(data)
+      return YAML.dump(data)
     case "json":
       return JSON.stringify(data)
     default:
@@ -324,7 +324,7 @@ const toObject = (language = "", data = "") => {
   }
   switch (language) {
     case "yaml":
-      return YAML.safeLoad(data)
+      return YAML.load(data)
     case "json":
       return JSON.parse(data)
     default:

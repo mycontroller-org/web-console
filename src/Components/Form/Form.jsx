@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  DatePicker,
   Divider,
   Form as PfForm,
   FormGroup,
@@ -7,6 +8,7 @@ import {
   SelectVariant,
   Switch,
   TextInput,
+  TimePicker,
 } from "@patternfly/react-core"
 import React from "react"
 import KeyValueMapForm from "./KeyValueMapForm"
@@ -16,6 +18,10 @@ import Select from "./Select"
 import AsyncSelect from "../Select/AsyncSelect"
 import { validate } from "../../Util/Validator"
 import ThresholdsColorForm from "./ThresholdsColorForm"
+import DynamicArrayForm from "./DynamicArrayForm"
+import ConditionArrayMapForm from "./ConditionArrayForm"
+import DateRangePicker from "./RangePicker/DateRangePicker"
+import TimeRangePicker from "./RangePicker/TimeRangePicker"
 
 // item sample
 // const item = {
@@ -93,10 +99,16 @@ const getField = (item, onChange) => {
       return (
         <KeyValueMapForm
           keyValueMap={item.value}
+          keyLabel={item.keyLabel}
+          valueLabel={item.valueLabel}
           onChange={onChange}
-          validateKeyFunc={(key) => {
-            return validate("isLabelKey", key)
-          }}
+          validateKeyFunc={
+            item.validateKeyFunc
+              ? item.validateKeyFunc
+              : (key) => {
+                  return validate("isLabelKey", key)
+                }
+          }
         />
       )
 
@@ -104,12 +116,114 @@ const getField = (item, onChange) => {
       return (
         <KeyValueMapForm
           keyValueMap={item.value}
+          keyLabel={item.keyLabel}
+          valueLabel={item.valueLabel}
           onChange={onChange}
-          validateKeyFunc={(key) => {
-            return validate("isKey", key)
-          }}
+          validateKeyFunc={
+            item.validateKeyFunc
+              ? item.validateKeyFunc
+              : (key) => {
+                  return validate("isKey", key)
+                }
+          }
         />
       )
+
+    case FieldType.VariablesMap:
+      return (
+        <KeyValueMapForm
+          keyValueMap={item.value}
+          keyLabel={item.keyLabel}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          validateKeyFunc={
+            item.validateKeyFunc
+              ? item.validateKeyFunc
+              : (key) => {
+                  return validate("isVariableKey", key)
+                }
+          }
+        />
+      )
+
+    case FieldType.ConditionsArrayMap:
+      return (
+        <ConditionArrayMapForm
+          conditionsArrayMap={item.value}
+          keyLabel={item.keyLabel}
+          conditionLabel={item.conditionLabel}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          validateKeyFunc={
+            item.validateKeyFunc
+              ? item.validateKeyFunc
+              : (key) => {
+                  return validate("isKey", key)
+                }
+          }
+        />
+      )
+
+    case FieldType.DynamicArray:
+      return (
+        <DynamicArrayForm
+          valuesList={item.value}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          validateValueFunc={
+            item.validateValueFunc
+              ? item.validateValueFunc
+              : (key) => {
+                  return validate("isID", key)
+                }
+          }
+        />
+      )
+
+    case FieldType.DatePicker:
+      return (
+        <DatePicker
+          key={item.fieldId}
+          value={item.value !== "" ? item.value : null}
+          onChange={onChange}
+          isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.DateRangePicker:
+      return (
+        <DateRangePicker
+          key={item.fieldId}
+          value={item.value !== "" ? item.value : {}}
+          onChange={onChange}
+          validated={item.validated}          
+          isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.TimePicker:
+      return (
+        <TimePicker
+          key={item.fieldId}
+          defaultTime={item.value}
+          onChange={onChange}
+          validated={item.validated}
+          isDisabled={item.isDisabled}
+          is24Hour
+        />
+      )
+
+      case FieldType.TimeRangePicker:
+        return (
+          <TimeRangePicker
+            key={item.fieldId}
+            value={item.value !== "" ? item.value : {}}
+            onChange={onChange}
+            validated={item.validated}
+            isDisabled={item.isDisabled}
+            is24Hour
+          />
+        )
 
     case FieldType.ThresholdsColor:
       return <ThresholdsColorForm keyValueMap={item.value} onChange={onChange} />
@@ -127,7 +241,7 @@ const getField = (item, onChange) => {
     case FieldType.SelectTypeAhead:
       return (
         <Select
-          variant={SelectVariant.typeahead}
+          variant={item.multi ? SelectVariant.typeaheadMulti : SelectVariant.typeahead}
           options={item.options}
           onChange={onChange}
           selected={item.value}

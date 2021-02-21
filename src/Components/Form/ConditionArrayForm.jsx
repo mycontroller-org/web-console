@@ -3,6 +3,7 @@ import {
   Button,
   Grid,
   GridItem,
+  SelectVariant,
   Split,
   Text,
   TextInput,
@@ -13,44 +14,37 @@ import React from "react"
 import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import Select from "./Select"
+import { Operator, OperatorOptions } from "./Constants"
 
-class KeyValueMapForm extends React.Component {
+class ConditionArrayMapForm extends React.Component {
   state = {
     items: [],
   }
 
   updateItems = () => {
-    const { keyValueMap } = this.props
+    const { conditionsArrayMap } = this.props
 
-    if (!keyValueMap) {
+    if (!conditionsArrayMap) {
       return
     }
 
     this.setState((prevState) => {
       const { items } = prevState
-      let keys = Object.keys(keyValueMap)
-
-      let isEqual = true
+      let variables = conditionsArrayMap.map((d) => {
+        return d.variable
+      })
 
       for (let index = 0; index < items.length; index++) {
         const item = items[index]
-        if (keys.includes(item.key)) {
-          items[index].value = keyValueMap[item.key]
-          const keyIndex = keys.indexOf(item.key)
-          keys.splice(keyIndex, 1)
+        if (variables.includes(item.variable)) {
+          const keyIndex = variables.indexOf(item.variable)
+          variables.splice(keyIndex, 1)
         }
       }
 
-      if (keys.length !== 0) {
-        isEqual = false
-      }
-
-      if (!isEqual) {
-        keys = Object.keys(keyValueMap) // reload all the keys
-        const newItems = keys.map((key) => {
-          return { key, value: keyValueMap[key] }
-        })
-        return { items: newItems }
+      if (variables !== 0) {
+        return { items: conditionsArrayMap }
       } else {
         return { items: items }
       }
@@ -62,7 +56,7 @@ class KeyValueMapForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props.keyValueMap, prevProps.keyValueMap)) {
+    if (!_.isEqual(this.props.variableValueMap, prevProps.variableValueMap)) {
       this.updateItems()
     }
   }
@@ -70,18 +64,22 @@ class KeyValueMapForm extends React.Component {
   callParentOnChange = (items) => {
     const { onChange } = this.props
     if (onChange) {
-      // convert to key values
-      const keyValueMap = {}
-      const keys = []
       for (let index = 0; index < items.length; index++) {
         const item = items[index]
-        const key = item.key
-        if (!keys.includes(key)) {
-          keyValueMap[item.key] = item.value
+        switch (item.operator) {
+          case Operator.In:
+          case Operator.NotIn:
+          case Operator.RangeIn:
+          case Operator.RangeNotIn:
+            if (!Array.isArray(item.value)) {
+              items[index].value = item.value.split(",")
+            }
+            break
+
+          default:
         }
-        keys.push(key)
       }
-      onChange(keyValueMap)
+      onChange(items)
     }
   }
 
@@ -106,37 +104,31 @@ class KeyValueMapForm extends React.Component {
   onAdd = () => {
     this.setState((prevState) => {
       const { items } = prevState
-      items.push({ key: "", value: "" })
+      items.push({ variable: "", operator: "", value: "" })
       return { items: items }
     })
   }
 
   render() {
     const { items } = this.state
-    const { validateKeyFunc, validateValueFunc, keyLabel, valueLabel } = this.props
-    const keys = []
+    const { validateKeyFunc, validateValueFunc, variableLabel, operatorLabel, valueLabel } = this.props
+    const variables = []
 
     const formItems = items.map((item, index) => {
       let isValidKey = true
       if (validateKeyFunc) {
-        isValidKey = validateKeyFunc(item.key)
+        isValidKey = validateKeyFunc(item.variable)
       }
 
       let isValidValue = true
       if (validateValueFunc) {
-        isValidValue = validateValueFunc(item.key)
+        isValidValue = validateValueFunc(item.variable)
       }
       const validatedValue = isValidValue ? "default" : "error"
-
-      // verify duplicate key
-      const isDuplicateKey = keys.includes(item.key)
-      if (isDuplicateKey) {
-        isValidKey = false
-      }
       const validatedKey = isValidKey ? "default" : "error"
 
       // add the key into local map for next iteration
-      keys.push(item.key)
+      variables.push(item.variable)
 
       const addButton =
         items.length === index + 1 ? (
@@ -144,18 +136,32 @@ class KeyValueMapForm extends React.Component {
         ) : null
       return (
         <>
-          <GridItem span={5}>
+          <GridItem span={4}>
             <TextInput
-              id={"key_" + index}
-              value={item.key}
+              id={"variable_" + index}
+              value={item.variable}
               validated={validatedKey}
               onChange={(newValue) => {
-                this.onChange(index, "key", newValue)
+                this.onChange(index, "variable", newValue)
               }}
             />
           </GridItem>
 
-          <GridItem span={5}>
+          <GridItem span={2}>
+            <Select
+              key={"operator_" + index}
+              disableClear={true}
+              hideDescription={true}
+              variant={SelectVariant.single}
+              options={OperatorOptions}
+              selected={item.operator}
+              onChange={(newValue) => {
+                this.onChange(index, "operator", newValue)
+              }}
+            />
+          </GridItem>
+
+          <GridItem span={4}>
             <TextInput
               id={"value_" + index}
               value={item.value}
@@ -191,11 +197,14 @@ class KeyValueMapForm extends React.Component {
 
     return (
       <Grid className="mc-key-value-map-items">
-        <GridItem span={5}>
-          <Text component={TextVariants.h4}>{keyLabel ? keyLabel : "Key"}</Text>
+        <GridItem span={4}>
+          <Text component={TextVariants.h4}>{variableLabel ? variableLabel : "Variable"}</Text>
+        </GridItem>
+        <GridItem span={2}>
+          <Text component={TextVariants.h4}>{operatorLabel ? operatorLabel : "Operator"}</Text>
         </GridItem>
 
-        <GridItem span={5}>
+        <GridItem span={4}>
           <Text component={TextVariants.h4}>{valueLabel ? valueLabel : "Value"}</Text>
         </GridItem>
         <GridItem span={2}></GridItem>
@@ -206,12 +215,13 @@ class KeyValueMapForm extends React.Component {
   }
 }
 
-KeyValueMapForm.propTypes = {
-  keyLabel: PropTypes.string,
+ConditionArrayMapForm.propTypes = {
+  variableLabel: PropTypes.string,
+  operatorLabel: PropTypes.string,
   valueLabel: PropTypes.string,
-  keyValueMap: PropTypes.object,
+  conditionsArrayMap: PropTypes.array,
   validateKeyFunc: PropTypes.func,
   validateValueFunc: PropTypes.func,
 }
 
-export default KeyValueMapForm
+export default ConditionArrayMapForm
