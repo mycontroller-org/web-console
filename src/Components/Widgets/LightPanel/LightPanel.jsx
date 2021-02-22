@@ -12,6 +12,7 @@ import Loading from "../../Loading/Loading"
 import HueSlider from "../../Color/HueSlider/HueSlider"
 import { LightType, RGBComponentType } from "./Constants"
 import { AdjustIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } from "@patternfly/react-icons"
+import { getValue } from "../../../Util/Util"
 
 const SliderWithTooltip = createSliderWithTooltip(Slider)
 
@@ -126,7 +127,7 @@ class LightPanel extends React.Component {
         iconTooltip="Power"
         field={
           <Switch
-            id={"rgb-panel-power-" + resources.power.id}
+            id={"rgb-panel-power-" + getValue(resources, "power.id", "id")}
             onChange={(newState) => this.onChange("power", newState)}
             isChecked={power}
           />
