@@ -78,13 +78,13 @@ export const DampeningOptions = [
 
 // Handler type values
 export const HandlerType = {
-  None: "none",
+  Noop: "noop",
   Email: "email",
 }
 
 // Handler type options
 export const HandlerTypeOptions = [
-  { value: HandlerType.None, label: "None", description: "Dummy handler" },
+  { value: HandlerType.Noop, label: "Noop", description: "No Operation Handler" },
   { value: HandlerType.Email, label: "Email", description: "Sends email" },
 ]
 

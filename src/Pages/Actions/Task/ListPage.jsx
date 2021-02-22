@@ -107,7 +107,7 @@ const toRowFuncImpl = (rawData, history) => {
       { title: <div className="align-center">{getStatusBool(rawData.autoDisable)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.triggerOnEvent)}</div> },
       { title: <LastSeen date={rawData.state.lastEvaluation} /> },
-      { title: <LastSeen date={rawData.state.lastEvaluation} /> },
+      { title: <LastSeen date={rawData.state.lastSuccess} /> },
       { title: rawData.state.message },
     ],
     rid: rawData.id,
