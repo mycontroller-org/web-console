@@ -105,8 +105,8 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "",
-      fieldId: "!labels_end",
+      label: "Execution Mode",
+      fieldId: "execution_mode",
       fieldType: FieldType.Divider,
     },
     {
@@ -254,14 +254,26 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Notify",
-      fieldId: "!notify",
+      label: "Parameters to Handler",
+      fieldId: "!parameters",
       fieldType: FieldType.Divider,
     },
     {
       label: "",
-      fieldId: "notify",
-      valueLabel: "Handler",
+      fieldId: "handlerParameters",
+      fieldType: FieldType.VariablesMap,
+      keyLabel: "Name",
+      dataType: DataType.Object,
+      value: {},
+    },
+    {
+      label: "Handlers",
+      fieldId: "!handlers",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "handlers",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
       value: [],

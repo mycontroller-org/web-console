@@ -30,9 +30,10 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "Ignore Duplicate", value: <DisplayTrue data={data} field="ignoreDuplicate" /> })
   fieldsList1.push({ key: "Auto Disable", value: <DisplayTrue data={data} field="autoDisable" /> })
   fieldsList1.push({ key: "Trigger On Event", value: <DisplayTrue data={data} field="triggerOnEvent" /> })
-  fieldsList1.push({ key: "Notify", value: data.notify })
+  fieldsList1.push({ key: "State", value: <KeyValueMap data={data.state} /> })
   fieldsList2.push({ key: "Variables", value: <KeyValueMap data={data.variables} /> })
-  fieldsList2.push({ key: "State", value: <KeyValueMap data={data.state} /> })
+  fieldsList2.push({ key: "Handler Parameters", value: <KeyValueMap data={data.handlerParameters} /> })
+  fieldsList2.push({ key: "Handlers", value: data.handlers })
 
   return {
     "list-1": fieldsList1,

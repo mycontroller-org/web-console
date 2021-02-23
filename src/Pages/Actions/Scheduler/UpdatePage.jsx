@@ -217,14 +217,26 @@ const getFormItems = (rootObject, id) => {
   // add notify handlers
   items.push(
     {
-      label: "Notify",
-      fieldId: "!notify",
+      label: "Parameters to Handler",
+      fieldId: "!parameters",
       fieldType: FieldType.Divider,
     },
     {
       label: "",
-      fieldId: "notify",
-      valueLabel: "Handler",
+      fieldId: "handlerParameters",
+      fieldType: FieldType.VariablesMap,
+      keyLabel: "Name",
+      dataType: DataType.Object,
+      value: {},
+    },
+    {
+      label: "Handlers",
+      fieldId: "!handlers",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "handlers",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
       value: [],

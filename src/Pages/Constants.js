@@ -80,14 +80,14 @@ export const DampeningOptions = [
 export const HandlerType = {
   Noop: "noop",
   Email: "email",
-  ResourceAction: "resource_action",
+  Resource: "resource",
 }
 
 // Handler type options
 export const HandlerTypeOptions = [
   { value: HandlerType.Noop, label: "Noop", description: "No Operation Handler" },
   { value: HandlerType.Email, label: "Email", description: "Sends email" },
-  { value: HandlerType.ResourceAction, label: "Resource Action", description: "Perform resource related actions" },
+  { value: HandlerType.Resource, label: "Resource", description: "Internal resource related actions" },
 ]
 
 // Schedule type values
