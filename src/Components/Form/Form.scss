@@ -21,14 +21,26 @@
   }
   .icon-btn {
     font-size: var(--pf-global--icon--FontSize--md);
-    :hover {
+    &:hover {
       cursor: pointer;
     }
   }
   .btn-remove {
-    color: var(--pf-global--danger-color--100);
+    color: #faa49e;
+    &:hover {
+      color: var(--pf-global--danger-color--100);
+    }
   }
   .btn-add {
-    color: var(--pf-global--success-color--100);
+    color: #99d392;
+    &:hover {
+      color: var(--pf-global--success-color--100);
+    }
+  }
+  .btn-split {
+    --pf-l-split--m-gutter--MarginRight: 8px;
+  }
+  .field-title{
+    color: #000000a0;
   }
 }

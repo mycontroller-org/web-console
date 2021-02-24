@@ -161,9 +161,10 @@ class ConditionArrayMapForm extends React.Component {
             />
           </GridItem>
 
-          <GridItem span={4}>
+          <GridItem span={5}>
             <TextInput
               id={"value_" + index}
+              key={"value_" + index}
               value={item.value}
               validated={validatedValue}
               onChange={(newValue) => {
@@ -171,9 +172,9 @@ class ConditionArrayMapForm extends React.Component {
               }}
             />
           </GridItem>
-          <GridItem span={2}>
+          <GridItem span={1}>
             <Bullseye className="btn-layout">
-              <Split hasGutter>
+              <Split hasGutter className="btn-split">
                 <MinusCircleIcon
                   key={"btn-remove-" + index}
                   onClick={() => this.onDelete(index)}
@@ -198,16 +199,22 @@ class ConditionArrayMapForm extends React.Component {
     return (
       <Grid className="mc-key-value-map-items">
         <GridItem span={4}>
-          <Text component={TextVariants.h4}>{variableLabel ? variableLabel : "Variable"}</Text>
+          <Text className="field-title" component={TextVariants.h4}>
+            {variableLabel ? variableLabel : "Variable"}
+          </Text>
         </GridItem>
         <GridItem span={2}>
-          <Text component={TextVariants.h4}>{operatorLabel ? operatorLabel : "Operator"}</Text>
+          <Text className="field-title" component={TextVariants.h4}>
+            {operatorLabel ? operatorLabel : "Operator"}
+          </Text>
         </GridItem>
 
-        <GridItem span={4}>
-          <Text component={TextVariants.h4}>{valueLabel ? valueLabel : "Value"}</Text>
+        <GridItem span={5}>
+          <Text className="field-title" component={TextVariants.h4}>
+            {valueLabel ? valueLabel : "Value"}
+          </Text>
         </GridItem>
-        <GridItem span={2}></GridItem>
+        <GridItem span={1}></GridItem>
 
         {formItems}
       </Grid>

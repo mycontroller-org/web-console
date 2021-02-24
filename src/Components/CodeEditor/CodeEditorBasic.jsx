@@ -1,25 +1,27 @@
-import Editor, { loader  } from "@monaco-editor/react"
+import Editor, { loader } from "@monaco-editor/react"
 import React from "react"
+
+const consoleTheme = {
+  base: "vs-dark",
+  inherit: true,
+  rules: [
+    { token: "number", foreground: "ace12e" },
+    { token: "type", foreground: "73bcf7" },
+    { token: "string", foreground: "f0ab00" },
+    { token: "keyword", foreground: "cbc0ff" },
+  ],
+  colors: {
+    "editor.background": "#151515",
+    "editorGutter.background": "#292e34",
+    "editorLineNumber.activeForeground": "#fff",
+    "editorLineNumber.foreground": "#f0f0f0",
+  },
+}
 
 loader
   .init()
   .then((monaco) => {
-    monaco.editor.defineTheme("console", {
-      base: "vs-dark",
-      inherit: true,
-      rules: [
-        { token: "number", foreground: "ace12e" },
-        { token: "type", foreground: "73bcf7" },
-        { token: "string", foreground: "f0ab00" },
-        { token: "keyword", foreground: "cbc0ff" },
-      ],
-      colors: {
-        "editor.background": "#151515",
-        "editorGutter.background": "#292e34",
-        "editorLineNumber.activeForeground": "#fff",
-        "editorLineNumber.foreground": "#f0f0f0",
-      },
-    })
+    monaco.editor.defineTheme("console", consoleTheme)
   })
   .catch((error) => console.error("An error occurred during initialization of Monaco: ", error))
 

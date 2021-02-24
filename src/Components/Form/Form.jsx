@@ -101,6 +101,7 @@ const getField = (item, onChange) => {
           keyValueMap={item.value}
           keyLabel={item.keyLabel}
           valueLabel={item.valueLabel}
+          actionSpan={item.actionSpan}
           onChange={onChange}
           validateKeyFunc={
             item.validateKeyFunc
@@ -119,6 +120,8 @@ const getField = (item, onChange) => {
           keyLabel={item.keyLabel}
           valueLabel={item.valueLabel}
           onChange={onChange}
+          actionSpan={item.actionSpan}
+          showUpdateButton={item.showUpdateButton}
           validateKeyFunc={
             item.validateKeyFunc
               ? item.validateKeyFunc
@@ -132,9 +135,13 @@ const getField = (item, onChange) => {
     case FieldType.VariablesMap:
       return (
         <KeyValueMapForm
+          key={item.fieldId}
           keyValueMap={item.value}
           keyLabel={item.keyLabel}
           valueLabel={item.valueLabel}
+          actionSpan={item.actionSpan}
+          showUpdateButton={item.showUpdateButton}
+          callerType={item.callerType}
           onChange={onChange}
           validateKeyFunc={
             item.validateKeyFunc
@@ -149,6 +156,7 @@ const getField = (item, onChange) => {
     case FieldType.ConditionsArrayMap:
       return (
         <ConditionArrayMapForm
+          key={item.fieldId}
           conditionsArrayMap={item.value}
           keyLabel={item.keyLabel}
           conditionLabel={item.conditionLabel}
@@ -167,6 +175,7 @@ const getField = (item, onChange) => {
     case FieldType.DynamicArray:
       return (
         <DynamicArrayForm
+          key={item.fieldId}
           valuesList={item.value}
           valueLabel={item.valueLabel}
           onChange={onChange}
@@ -196,7 +205,7 @@ const getField = (item, onChange) => {
           key={item.fieldId}
           value={item.value !== "" ? item.value : {}}
           onChange={onChange}
-          validated={item.validated}          
+          validated={item.validated}
           isDisabled={item.isDisabled}
         />
       )
@@ -213,17 +222,17 @@ const getField = (item, onChange) => {
         />
       )
 
-      case FieldType.TimeRangePicker:
-        return (
-          <TimeRangePicker
-            key={item.fieldId}
-            value={item.value !== "" ? item.value : {}}
-            onChange={onChange}
-            validated={item.validated}
-            isDisabled={item.isDisabled}
-            is24Hour
-          />
-        )
+    case FieldType.TimeRangePicker:
+      return (
+        <TimeRangePicker
+          key={item.fieldId}
+          value={item.value !== "" ? item.value : {}}
+          onChange={onChange}
+          validated={item.validated}
+          isDisabled={item.isDisabled}
+          is24Hour
+        />
+      )
 
     case FieldType.ThresholdsColor:
       return <ThresholdsColorForm keyValueMap={item.value} onChange={onChange} />
@@ -256,6 +265,7 @@ const getField = (item, onChange) => {
           apiOptions={item.apiOptions}
           getFiltersFunc={item.getFiltersFunc}
           optionValueKey={item.optionValueKey}
+          optionValueFunc={item.optionValueFunc}
           getOptionsDescriptionFunc={item.getOptionsDescriptionFunc}
           onSelectionFunc={onChange}
           selected={item.value}

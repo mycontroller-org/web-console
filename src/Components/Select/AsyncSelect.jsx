@@ -16,8 +16,8 @@ class AsyncSelect extends React.Component {
       // TODO: remove this if block and fix event undefined issue
       return
     }
-    const { apiOptions, optionValueKey } = this.props
-    const valueKey = optionValueKey ? optionValueKey : "id"
+    const { apiOptions, optionValueFunc } = this.props
+    const valueFunc = optionValueFunc ? optionValueFunc : this.getOptionValueFunc
     if (apiOptions) {
       this.setState({ loading: true }, () => {
         const filters = this.getFilters(event.target.value)
@@ -25,7 +25,7 @@ class AsyncSelect extends React.Component {
           .then((res) => {
             const items = res.data.data
             const options = items.map((item) => {
-              return { label: item[valueKey], description: this.getDescription(item) }
+              return { label: valueFunc(item), description: this.getDescription(item) }
             })
             this.setState({ options: options, loading: false })
           })
@@ -34,6 +34,12 @@ class AsyncSelect extends React.Component {
           })
       })
     }
+  }
+
+  getOptionValueFunc = (item) => {
+    const { optionValueKey } = this.props
+    const valueKey = optionValueKey ? optionValueKey : "id"
+    return item[valueKey]
   }
 
   getFilters = (value) => {
@@ -72,14 +78,20 @@ class AsyncSelect extends React.Component {
 
   render() {
     const { isOpen, options, loading } = this.state
-    const { isDisabled, selected } = this.props
+    const { isDisabled, selected, showSpinner = false } = this.props
     const selectOptions = options.map((option) => {
       return <SelectOption value={option.label} description={option.description} />
     })
-    const spinner = loading ? <Spinner size="lg" /> : null
+    const spinner =
+      loading && showSpinner ? (
+        <GridItem span={spinnerSpan}>
+          <Spinner size="lg" />{" "}
+        </GridItem>
+      ) : null
+    const spinnerSpan = showSpinner ? 1 : 0
     return (
       <Grid hasGutter>
-        <GridItem span={11}>
+        <GridItem span={12 - spinnerSpan}>
           <Select
             variant="typeahead"
             onToggle={this.onToggle}
@@ -93,7 +105,7 @@ class AsyncSelect extends React.Component {
             {selectOptions}
           </Select>
         </GridItem>
-        <GridItem span={1}> {spinner}</GridItem>
+        {spinner}
       </Grid>
     )
   }
@@ -102,10 +114,12 @@ AsyncSelect.propTypes = {
   apiOptions: PropTypes.func,
   getFiltersFunc: PropTypes.func,
   optionValueKey: PropTypes.string,
+  optionValueFunc: PropTypes.func,
   getOptionsDescriptionFunc: PropTypes.func,
   onSelectionFunc: PropTypes.func,
   isDisabled: PropTypes.bool,
   selected: PropTypes.string,
+  showSpinner: PropTypes.bool,
 }
 
 export default AsyncSelect

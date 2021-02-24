@@ -8,6 +8,7 @@ import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
 import { Dampening, DampeningOptions } from "../../Constants"
+import { CallerType } from "../../../Components/Form/ResourcePicker/Constants"
 
 class UpdatePage extends React.Component {
   render() {
@@ -223,6 +224,8 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.VariablesMap,
       keyLabel: "Variable Name",
       dataType: DataType.Object,
+      showUpdateButton: true,
+      callerType: CallerType.Variable,
       value: {},
     }
   )
@@ -263,6 +266,8 @@ const getFormItems = (rootObject, id) => {
       fieldId: "handlerParameters",
       fieldType: FieldType.VariablesMap,
       keyLabel: "Name",
+      showUpdateButton: true,
+      callerType: CallerType.Parameter,
       dataType: DataType.Object,
       value: {},
     },

@@ -7,15 +7,13 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
-  Dampening,
-  DampeningOptions,
-  HandlerType,
   WeekDayOptions,
   ScheduleFrequency,
   ScheduleFrequencyOptions,
   ScheduleType,
   ScheduleTypeOptions,
 } from "../../Constants"
+import { CallerType } from "../../../Components/Form/ResourcePicker/Constants"
 
 class UpdatePage extends React.Component {
   render() {
@@ -106,6 +104,8 @@ const getFormItems = (rootObject, id) => {
     {
       label: "",
       fieldId: "variables",
+      showUpdateButton: true,
+      callerType: CallerType.Variable,
       fieldType: FieldType.VariablesMap,
       keyLabel: "Variable Name",
       dataType: DataType.Object,
@@ -224,6 +224,8 @@ const getFormItems = (rootObject, id) => {
     {
       label: "",
       fieldId: "handlerParameters",
+      showUpdateButton: true,
+      callerType: CallerType.Parameter,
       fieldType: FieldType.VariablesMap,
       keyLabel: "Name",
       dataType: DataType.Object,

@@ -4,6 +4,7 @@ import {
   Grid,
   GridItem,
   Split,
+  SplitItem,
   Text,
   TextInput,
   TextVariants,
@@ -13,6 +14,7 @@ import React from "react"
 import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import ResourcePicker from "./ResourcePicker/ResourcePicker"
 
 class KeyValueMapForm extends React.Component {
   state = {
@@ -113,7 +115,15 @@ class KeyValueMapForm extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateKeyFunc, validateValueFunc, keyLabel, valueLabel } = this.props
+    const {
+      validateKeyFunc,
+      validateValueFunc,
+      keyLabel,
+      valueLabel,
+      actionSpan = 1,
+      showUpdateButton,
+      callerType,
+    } = this.props
     const keys = []
 
     const formItems = items.map((item, index) => {
@@ -142,11 +152,25 @@ class KeyValueMapForm extends React.Component {
         items.length === index + 1 ? (
           <AddCircleOIcon key={"add-btn" + index} onClick={this.onAdd} className="btn-add icon-btn" />
         ) : null
+
+      const updateButton = showUpdateButton ? (
+        <ResourcePicker
+          key={"picker_" + index}
+          value={item.value}
+          name={item.key}
+          id={"model_" + index}
+          callerType={callerType}
+          onChange={(newValue) => {
+            this.onChange(index, "value", newValue)
+          }}
+        />
+      ) : null
       return (
         <>
-          <GridItem span={5}>
+          <GridItem span={4}>
             <TextInput
-              id={"key_" + index}
+              id={"key_id_" + index}
+              key={"key_" + index}
               value={item.key}
               validated={validatedKey}
               onChange={(newValue) => {
@@ -155,19 +179,25 @@ class KeyValueMapForm extends React.Component {
             />
           </GridItem>
 
-          <GridItem span={5}>
-            <TextInput
-              id={"value_" + index}
-              value={item.value}
-              validated={validatedValue}
-              onChange={(newValue) => {
-                this.onChange(index, "value", newValue)
-              }}
-            />
+          <GridItem span={8 - actionSpan}>
+            <Split>
+              <SplitItem isFilled>
+                <TextInput
+                  id={"value_id_" + index}
+                  key={"value_" + index}
+                  value={item.value}
+                  validated={validatedValue}
+                  onChange={(newValue) => {
+                    this.onChange(index, "value", newValue)
+                  }}
+                />
+              </SplitItem>
+              <SplitItem>{updateButton}</SplitItem>
+            </Split>
           </GridItem>
-          <GridItem span={2}>
+          <GridItem span={actionSpan}>
             <Bullseye className="btn-layout">
-              <Split hasGutter>
+              <Split hasGutter className="btn-split">
                 <MinusCircleIcon
                   key={"btn-remove-" + index}
                   onClick={() => this.onDelete(index)}
@@ -191,15 +221,18 @@ class KeyValueMapForm extends React.Component {
 
     return (
       <Grid className="mc-key-value-map-items">
-        <GridItem span={5}>
-          <Text component={TextVariants.h4}>{keyLabel ? keyLabel : "Key"}</Text>
+        <GridItem span={4}>
+          <Text className="field-title" component={TextVariants.h4}>
+            {keyLabel ? keyLabel : "Key"}
+          </Text>
         </GridItem>
 
-        <GridItem span={5}>
-          <Text component={TextVariants.h4}>{valueLabel ? valueLabel : "Value"}</Text>
+        <GridItem span={8 - actionSpan}>
+          <Text className="field-title" component={TextVariants.h4}>
+            {valueLabel ? valueLabel : "Value"}
+          </Text>
         </GridItem>
-        <GridItem span={2}></GridItem>
-
+        <GridItem span={actionSpan}></GridItem>
         {formItems}
       </Grid>
     )
@@ -209,9 +242,12 @@ class KeyValueMapForm extends React.Component {
 KeyValueMapForm.propTypes = {
   keyLabel: PropTypes.string,
   valueLabel: PropTypes.string,
+  actionSpan: PropTypes.number,
   keyValueMap: PropTypes.object,
   validateKeyFunc: PropTypes.func,
   validateValueFunc: PropTypes.func,
+  showUpdateButton: PropTypes.bool,
+  callerType: PropTypes.string,
 }
 
 export default KeyValueMapForm

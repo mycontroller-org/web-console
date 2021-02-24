@@ -11,6 +11,7 @@ import { validate, validateItem } from "../../Util/Validator"
 import objectPath from "object-path"
 import Loading from "../Loading/Loading"
 import { DownloadIcon } from "@patternfly/react-icons"
+const { v4: uuidv4 } = require("uuid")
 
 class Editor extends React.Component {
   state = {
@@ -137,9 +138,7 @@ class Editor extends React.Component {
     }
   }
 
-  onDownloadClick = () => {
-
-  }
+  onDownloadClick = () => {}
 
   callOnSaveRedirect = () => {
     if (this.props.onSaveRedirectFunc) {
@@ -159,7 +158,7 @@ class Editor extends React.Component {
 
   render() {
     const { loading, rootObject, formView, isReloadable, inValidItems } = this.state
-    const { isWidthLimited = true } = this.props
+    const { saveButtonText, isWidthLimited = true, disableEditor = false } = this.props
     if (loading) {
       return <Loading />
     }
@@ -172,7 +171,7 @@ class Editor extends React.Component {
 
       content.push(
         <Form
-          key="form-view"
+          key={"form-view"}
           isHorizontal
           isWidthLimited={isWidthLimited}
           items={formItems}
@@ -196,7 +195,7 @@ class Editor extends React.Component {
 
       content.push(
         <CodeEditorBasic
-          key="code-editor"
+          key={"code-editor"}
           height={this.props.height}
           language={this.props.language}
           data={codeString}
@@ -212,8 +211,10 @@ class Editor extends React.Component {
       saveDisabled = true
     }
 
+    const saveText = saveButtonText ? saveButtonText : "Save"
+
     const actionButtons = [
-      { text: "Save", variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
+      { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
     ]
 
     if (isReloadable) {
@@ -266,8 +267,19 @@ class Editor extends React.Component {
               <span>
                 <strong>Configure via:</strong>
               </span>
-              <Radio isChecked={formView} onChange={this.onViewChange} label="Form View" id="form-view" />
-              <Radio isChecked={!formView} onChange={this.onViewChange} label="YAML View" id="yaml-view" />
+              <Radio
+                isChecked={formView}
+                onChange={this.onViewChange}
+                label="Form View"
+                id={"form_view_" + uuidv4()}
+              />
+              <Radio
+                isChecked={!formView}
+                isDisabled={disableEditor}
+                onChange={this.onViewChange}
+                label="YAML View"
+                id={"yaml_view_" + uuidv4()}
+              />
             </Flex>
             <Divider component="hr" />
           </StackItem>
@@ -297,6 +309,7 @@ Editor.propTypes = {
   otherOptions: PropTypes.object,
   getFormItems: PropTypes.func,
   isWidthLimited: PropTypes.bool,
+  saveButtonText: PropTypes.string,
 }
 
 export default Editor

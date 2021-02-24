@@ -114,11 +114,13 @@ class DynamicArrayForm extends React.Component {
         items.length === index + 1 ? (
           <AddCircleOIcon key={"add-btn" + index} onClick={this.onAdd} className="btn-add icon-btn" />
         ) : null
+
       return (
         <>
-          <GridItem span={10}>
+          <GridItem span={11}>
             <TextInput
               id={"value_" + index}
+              key={"value_" + index}
               value={item}
               validated={validatedValue}
               onChange={(newValue) => {
@@ -126,9 +128,9 @@ class DynamicArrayForm extends React.Component {
               }}
             />
           </GridItem>
-          <GridItem span={2}>
+          <GridItem span={1}>
             <Bullseye className="btn-layout">
-              <Split hasGutter>
+              <Split hasGutter className="btn-split">
                 <MinusCircleIcon
                   key={"btn-remove-" + index}
                   onClick={() => this.onDelete(index)}
@@ -152,10 +154,12 @@ class DynamicArrayForm extends React.Component {
 
     return (
       <Grid className="mc-key-value-map-items">
-        <GridItem span={10}>
-          <Text component={TextVariants.h4}>{valueLabel ? valueLabel : ""}</Text>
+        <GridItem span={11}>
+          <Text className="field-title" component={TextVariants.h4}>
+            {valueLabel ? valueLabel : ""}
+          </Text>
         </GridItem>
-        <GridItem span={2}></GridItem>
+        <GridItem span={1}></GridItem>
         {formItems}
       </Grid>
     )
