@@ -12,16 +12,23 @@ export const FieldKey = {
   ResourceSelector: "--selector",
 }
 
-export const ValueType = {
+export const FieldDataType = {
   TypeString: "string",
-  TypeResourceByQuickID: "resource_quick_id",
-  TypeResourceByLabels: "resource_labels",
+  TypeEmail: "email",
+  TypeTelegram: "telegram",
+  TypeWebhook: "webhook",
+  TypeSMS: "sms",
+  TypePushbullet: "pushbullet",
+  TypeResourceByQuickId: "resource_by_quick_id",
+  TypeResourceByLabels: "resource_by_labels",
 }
 
-export const ValueTypeOptions = [
-  { value: ValueType.TypeString, label: "String" },
-  { value: ValueType.TypeResourceByQuickID, label: "Resource By Quick ID" },
-  { value: ValueType.TypeResourceByLabels, label: "Resource By Labels" },
+export const FieldDataTypeOptions = [
+  { value: FieldDataType.TypeString, label: "String Data" },
+  { value: FieldDataType.TypeResourceByQuickId, label: "Resource Data By Quick ID" },
+  { value: FieldDataType.TypeResourceByLabels, label: "Resource Data By Labels" },
+  { value: FieldDataType.TypeWebhook, label: "Webhook Data" },
+  { value: FieldDataType.TypeEmail, label: "Email Data" },
 ]
 
 export const ResourceType = {

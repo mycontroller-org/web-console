@@ -5,7 +5,7 @@ import React from "react"
 import Editor from "../../Editor/Editor"
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../Constants"
-import { ValueType, ValueTypeOptions, ResourceTypeOptions, CallerType } from "./Constants"
+import { ResourceTypeOptions, CallerType, FieldDataType, FieldDataTypeOptions } from "./Constants"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,
@@ -14,6 +14,7 @@ import {
   getRootObject,
   updateValue,
 } from "./ResourceUtils"
+import { validate } from "../../../Util/Validator"
 import PropTypes from "prop-types"
 
 class ResourcePicker extends React.Component {
@@ -53,7 +54,7 @@ class ResourcePicker extends React.Component {
               language="yaml"
               rootObject={getRootObject(value)}
               onSaveFunc={(rootObject) => {
-                updateValue(rootObject, callerType, onChange, this.onClose)
+                updateValue(rootObject, onChange, this.onClose)
               }}
               onChangeFunc={() => {}}
               minimapEnabled={false}
@@ -80,10 +81,25 @@ ResourcePicker.propTypes = {
 export default ResourcePicker
 
 const getItems = (rootObject, callerType) => {
+  const FieldTypes = FieldDataTypeOptions.filter((t) => {
+    if (callerType === CallerType.Variable) {
+      switch (t.value) {
+        case FieldDataType.TypeString:
+        case FieldDataType.TypeResourceByLabels:
+        case FieldDataType.TypeResourceByQuickId:
+          return true
+        default:
+          return false
+      }
+    } else {
+      return true
+    }
+  })
+
   const items = [
     {
-      label: "Value Type",
-      fieldId: "valueType",
+      label: "Data Type",
+      fieldId: "type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
@@ -92,61 +108,90 @@ const getItems = (rootObject, callerType) => {
       helperText: "",
       helperTextInvalid: "Invalid type",
       validated: "default",
-      options: ValueTypeOptions,
+      options: FieldTypes,
       validator: { isNotEmpty: {} },
+      resetFields: { data: {}, string: "" },
     },
   ]
-  const valueType = objectPath.get(rootObject, "valueType", ValueType.TypeString)
+  const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
 
-  if (valueType === ValueType.TypeResourceByQuickID || valueType === ValueType.TypeResourceByLabels) {
-    items.push({
-      label: "Resource Type",
-      fieldId: "resourceType",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
-      options: ResourceTypeOptions,
-      validator: { isNotEmpty: {} },
-    })
-  }
-
-  switch (valueType) {
-    case ValueType.TypeResourceByQuickID:
-      const resourceType = objectPath.get(rootObject, "resourceType", "")
-      const resourceAPI = getResourceOptionsAPI(resourceType)
-      const resourceOptionValueFunc = getResourceOptionValueFunc(resourceType)
-      const resourceFilterFunc = getResourceFilterFunc(resourceType)
-      const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
-
-      items.push({
-        label: "Resource",
-        fieldId: "quickId",
-        apiOptions: resourceAPI,
-        optionValueFunc: resourceOptionValueFunc,
-        fieldType: FieldType.SelectTypeAheadAsync,
-        getFiltersFunc: resourceFilterFunc,
-        getOptionsDescriptionFunc: resourceDescriptionFunc,
-        dataType: DataType.String,
-        value: "",
-        isRequired: true,
-        isDisabled: false,
-        helperText: "",
-        helperTextInvalid: "Invalid type",
-        validated: "default",
-        options: [],
-        validator: { isNotEmpty: {} },
-      })
+  switch (dataType) {
+    case FieldDataType.TypeResourceByQuickId:
+    case FieldDataType.TypeResourceByLabels:
+      const resItems = getResourceDataItems(rootObject, dataType, callerType)
+      items.push(...resItems)
       break
 
-    case ValueType.TypeResourceByLabels:
+    case FieldDataType.TypeEmail:
+      const emailItems = getEmailDataItems(rootObject)
+      items.push(...emailItems)
+      break
+
+    default:
+      items.push({
+        label: "Value",
+        fieldId: "string",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+      })
+  }
+
+  return items
+}
+
+const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
+  const items = []
+  items.push({
+    label: "Resource Type",
+    fieldId: "data.resourceType",
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    value: "",
+    isRequired: true,
+    isDisabled: false,
+    helperText: "",
+    helperTextInvalid: "Invalid type",
+    validated: "default",
+    options: ResourceTypeOptions,
+    validator: { isNotEmpty: {} },
+  })
+
+  switch (dataType) {
+    case FieldDataType.TypeResourceByQuickId:
+      const resourceType = objectPath.get(rootObject, "data.resourceType", "")
+
+      if (resourceType !== "") {
+        const resourceAPI = getResourceOptionsAPI(resourceType)
+        const resourceOptionValueFunc = getResourceOptionValueFunc(resourceType)
+        const resourceFilterFunc = getResourceFilterFunc(resourceType)
+        const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
+        items.push({
+          label: "Resource",
+          fieldId: "data.quickId",
+          apiOptions: resourceAPI,
+          optionValueFunc: resourceOptionValueFunc,
+          fieldType: FieldType.SelectTypeAheadAsync,
+          getFiltersFunc: resourceFilterFunc,
+          getOptionsDescriptionFunc: resourceDescriptionFunc,
+          dataType: DataType.String,
+          value: "",
+          isRequired: true,
+          isDisabled: false,
+          helperText: "",
+          helperTextInvalid: "Invalid type",
+          validated: "default",
+          options: [],
+          validator: { isNotEmpty: {} },
+        })
+      }
+
+      break
+
+    case FieldDataType.TypeResourceByLabels:
       items.push({
         label: "Labels",
-        fieldId: "labels",
+        fieldId: "data.labels",
         fieldType: FieldType.Labels,
         dataType: DataType.Object,
         value: {},
@@ -154,42 +199,72 @@ const getItems = (rootObject, callerType) => {
       break
 
     default:
-      items.push({
-        label: "Value",
-        fieldId: "value",
-        fieldType: FieldType.Text,
-        dataType: DataType.String,
-        value: "",
-      })
+    // no change
   }
 
-  if (valueType === ValueType.TypeResourceByQuickID || valueType === ValueType.TypeResourceByLabels) {
-    if (callerType === CallerType.Parameter) {
-      items.push(
-        {
-          label: "Payload",
-          fieldId: "payload",
-          fieldType: FieldType.Text,
-          dataType: DataType.String,
-          value: "",
-        },
-        {
-          label: "Pre Delay",
-          fieldId: "preDelay",
-          fieldType: FieldType.Text,
-          dataType: DataType.String,
-          value: "",
-        }
-      )
-    } else if (callerType === CallerType.Variable) {
-      items.push({
-        label: "Selector",
-        fieldId: "selector",
+  if (callerType === CallerType.Parameter) {
+    items.push(
+      {
+        label: "Payload",
+        fieldId: "data.payload",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
-      })
-    }
+      },
+      {
+        label: "Pre Delay",
+        fieldId: "data.preDelay",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+      }
+    )
+  } else if (callerType === CallerType.Variable) {
+    items.push({
+      label: "Selector",
+      fieldId: "data.selector",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    })
   }
+  return items
+}
+
+const getEmailDataItems = (_rootObject) => {
+  const items = [
+    {
+      label: "From",
+      fieldId: "data.from",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      // validator: { isEmail: {} },
+    },
+    {
+      label: "To",
+      fieldId: "data.to",
+      fieldType: FieldType.DynamicArray,
+      dataType: DataType.ArrayString,
+      validateValueFunc: (key) => {
+        return validate("isEmail", key)
+      },
+      value: [],
+    },
+    {
+      label: "Subject",
+      fieldId: "data.subject",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+    {
+      label: "Body",
+      fieldId: "data.body",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+  ]
   return items
 }
