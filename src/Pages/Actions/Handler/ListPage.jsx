@@ -109,7 +109,7 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
   { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },

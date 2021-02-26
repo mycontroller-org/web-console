@@ -115,9 +115,22 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  {
+    category: "ignoreDuplicate",
+    categoryName: "Ignore Duplicate",
+    fieldType: "enabled",
+    dataType: "boolean",
+  },
+  { category: "autoDisable", categoryName: "Auto Disable", fieldType: "enabled", dataType: "boolean" },
+  {
+    category: "triggerOnEvent",
+    categoryName: "Trigger On Event",
+    fieldType: "enabled",
+    dataType: "boolean",
+  },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 

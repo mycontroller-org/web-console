@@ -80,9 +80,9 @@ const tableColumns = [
   { title: "ID", fieldKey: "id", sortable: true },
   { title: "Description", fieldKey: "description", sortable: true },
   { title: "Type", fieldKey: "type", sortable: true },
+  { title: "Executed Count", fieldKey: "state.executedCount", sortable: true },
   { title: "Last Run", fieldKey: "state.lastRun", sortable: true },
   { title: "Last Status", fieldKey: "state.lastStatus", sortable: true },
-  { title: "Executed Count", fieldKey: "state.executedCount", sortable: true },
   { title: "Message", fieldKey: "state.message", sortable: true },
 ]
 
@@ -105,9 +105,9 @@ const toRowFuncImpl = (rawData, history) => {
       },
       { title: rawData.description },
       { title: rawData.type },
+      { title: getValue(rawData, "state.executedCount") },
       { title: <LastSeen date={rawData.state.lastRun} /> },
       { title: <DisplaySuccess data={rawData} field="state.lastStatus" /> },
-      { title: getValue(rawData, "state.executedCount") },
       { title: getValue(rawData, "state.message") },
     ],
     rid: rawData.id,
@@ -115,9 +115,9 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
