@@ -12,7 +12,7 @@ import {
 } from "@patternfly/react-core"
 import React from "react"
 import KeyValueMapForm from "./KeyValueMapForm"
-import { FieldType } from "./Constants"
+import { DataType, FieldType } from "./Constants"
 import "./Form.scss"
 import Select from "./Select"
 import AsyncSelect from "../Select/AsyncSelect"
@@ -250,12 +250,13 @@ const getField = (item, onChange) => {
     case FieldType.SelectTypeAhead:
       return (
         <Select
-          variant={item.multi ? SelectVariant.typeaheadMulti : SelectVariant.typeahead}
+          variant={item.isMulti ? SelectVariant.typeaheadMulti : SelectVariant.typeahead}
           options={item.options}
           onChange={onChange}
           selected={item.value}
           isDisabled={item.isDisabled}
-          isMulti={item.multi}
+          isMulti={item.isMulti}
+          isArrayData={item.dataType === DataType.ArrayString}
         />
       )
 

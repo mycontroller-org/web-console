@@ -135,3 +135,21 @@ export const WeekDayOptions = [
   { value: "fri", label: "Friday" },
   { value: "sat", label: "Saturday" },
 ]
+
+// Resource event types
+export const ResourceEventType = {
+  Gateway: "gateway",
+  Node: "node",
+  Sensor: "sensor",
+  SensorFieldSet: "sensor_field.set",
+  SensorFieldRequest: "sensor_field.request",
+}
+
+// Resource event type options
+export const ResourceEventTypeOptions = [
+  { value: ResourceEventType.Gateway, label: "Gateway" },
+  { value: ResourceEventType.Node, label: "Node" },
+  { value: ResourceEventType.Sensor, label: "Sensor" },
+  { value: ResourceEventType.SensorFieldSet, label: "Sensor Field Set" },
+  { value: ResourceEventType.SensorFieldRequest, label: "Sensor Field Request" },
+]

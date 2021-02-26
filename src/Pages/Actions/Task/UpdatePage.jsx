@@ -7,7 +7,7 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
-import { Dampening, DampeningOptions } from "../../Constants"
+import { Dampening, DampeningOptions, ResourceEventTypeOptions } from "../../Constants"
 import { CallerType } from "../../../Components/Form/ResourcePicker/Constants"
 
 class UpdatePage extends React.Component {
@@ -129,8 +129,11 @@ const getFormItems = (rootObject, id) => {
       {
         label: "Resource Types",
         fieldId: "eventFilter.resourceTypes",
-        fieldType: FieldType.DynamicArray,
+        isRequired: false,
+        fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.ArrayString,
+        options: ResourceEventTypeOptions,
+        isMulti: true,
         value: [],
       },
       {

@@ -271,7 +271,7 @@ const updateSimpleJob = (rootObject, items = []) => {
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
         options: WeekDayOptions,
-        multi: true,
+        isMulti: true,
         value: "",
         validator: { isNotEmpty: {} },
       })

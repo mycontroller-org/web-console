@@ -1,5 +1,6 @@
-import { Select as PfSelect, SelectOption } from "@patternfly/react-core"
 import React from "react"
+import PropTypes from "prop-types"
+import { Select as PfSelect, SelectOption } from "@patternfly/react-core"
 
 class Select extends React.Component {
   state = {
@@ -13,7 +14,7 @@ class Select extends React.Component {
   }
 
   onSelect = (_event, selectionLabel, _isPlaceholder) => {
-    const { onChange, isMulti, options, selected } = this.props
+    const { onChange, isMulti, isArrayData, options, selected } = this.props
     const isOpen = isMulti ? true : false
     this.setState({ isOpen: isOpen }, () => {
       if (onChange) {
@@ -21,15 +22,16 @@ class Select extends React.Component {
         const selectionValue = getValueByLabel(options, selectionLabel)
         let finalValue = selectionValue
         if (isMulti) {
-          let all = selected.split(",")
-          if (all.includes(selectionValue)) {
-            all = all.filter((v) => v !== selectionValue)
+          let itemsSelected = isArrayData ? [...selected] : selected.split(",")
+          if (itemsSelected.includes(selectionValue)) {
+            itemsSelected = itemsSelected.filter((v) => v !== selectionValue)
           } else {
-            all.push(selectionValue)
+            itemsSelected.push(selectionValue)
           }
-          const uniqueValues = [...new Set(all)].filter((v) => v !== "")
-          finalValue = uniqueValues.join(",")
+          const uniqueValues = [...new Set(itemsSelected)].filter((v) => v !== "")
+          finalValue = isArrayData ? uniqueValues : uniqueValues.join(",")
         }
+        console.log("finalValue:", finalValue)
         onChange(finalValue)
       }
     })
@@ -38,10 +40,14 @@ class Select extends React.Component {
   onCreateOption = (_newValue) => {}
 
   clearSelection = () => {
-    const { onChange } = this.props
+    const { onChange, isArrayData } = this.props
     this.setState({ isOpen: false }, () => {
       if (onChange) {
-        onChange("")
+        if (isArrayData) {
+          onChange([])
+        } else {
+          onChange("")
+        }
       }
     })
   }
@@ -56,15 +62,23 @@ class Select extends React.Component {
       variant,
       disableClear,
       hideDescription,
+      isArrayData,
     } = this.props
     const { isOpen } = this.state
 
     // get label with value
     let selections = []
-    if (selected !== undefined && selected !== "") {
-      selections = selected.split(",").map((s) => {
-        return getLabelByValue(this.props.options, s)
+
+    if (isArrayData) {
+      selections = selected.map((s) => {
+        return getLabelByValue(options, s)
       })
+    } else {
+      if (selected !== undefined && selected !== "") {
+        selections = selected.split(",").map((s) => {
+          return getLabelByValue(options, s)
+        })
+      }
     }
 
     const selectOptions = options.map((option, index) => (
@@ -75,6 +89,9 @@ class Select extends React.Component {
         {...(!hideDescription && option.description && { description: option.description })}
       />
     ))
+
+    console.log("selections:", selections)
+
     return (
       <PfSelect
         variant={variant}
@@ -94,6 +111,16 @@ class Select extends React.Component {
       </PfSelect>
     )
   }
+}
+
+Select.propTypes = {
+  title: PropTypes.string,
+  options: PropTypes.array, // [{value: "abc", display:"ABC text", disabled: false}]
+  defaultValue: PropTypes.string,
+  onSelectionFunc: PropTypes.func,
+  disabled: PropTypes.bool,
+  isMulti: PropTypes.bool,
+  isArrayData: PropTypes.bool,
 }
 
 export default Select

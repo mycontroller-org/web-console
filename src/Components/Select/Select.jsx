@@ -44,11 +44,7 @@ class Select extends React.Component {
           isDisabled={this.props.disabled}
         >
           {this.props.options.map((option, index) => (
-            <SelectOption
-              isDisabled={option.disabled}
-              key={index}
-              value={option.value}
-            >
+            <SelectOption isDisabled={option.disabled} key={index} value={option.value}>
               {option.display}
             </SelectOption>
           ))}

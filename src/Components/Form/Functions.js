@@ -75,6 +75,14 @@ export const updateItems = (rootObject, items) => {
         item.value = objectPath.get(rootObject, item.fieldId, false)
         break
 
+      case FieldType.SelectTypeAhead:
+        if (item.dataType === DataType.ArrayString) {
+          item.value = objectPath.get(rootObject, item.fieldId, [])
+          if (item.value === null) {
+            item.value = []
+          }
+          break
+        }
       // case FieldType.Select:
       // case FieldType.SelectTypeAhead:
       //   item.value = String(objectPath.get(rootObject, item.fieldId, ""))
