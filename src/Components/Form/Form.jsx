@@ -255,6 +255,7 @@ const getField = (item, onChange) => {
           onChange={onChange}
           selected={item.value}
           isDisabled={item.isDisabled}
+          isMulti={item.multi}
         />
       )
 

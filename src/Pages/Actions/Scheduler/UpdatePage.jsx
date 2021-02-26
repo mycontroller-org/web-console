@@ -136,7 +136,7 @@ const getFormItems = (rootObject, id) => {
       isRequired: false,
       //helperTextInvalid: "Invalid date",
       validated: "default",
-     // validator: { isNotEmpty: {} },
+      // validator: { isNotEmpty: {} },
     },
     {
       label: "Validate Time Everyday",
@@ -257,7 +257,7 @@ const updateSimpleJob = (rootObject, items = []) => {
     dataType: DataType.String,
     options: ScheduleFrequencyOptions,
     value: "",
-    //resetFields: { spec: {} },
+    resetFields: { "spec.dayOfWeek": "" },
     validator: { isNotEmpty: {} },
   })
 
@@ -272,7 +272,7 @@ const updateSimpleJob = (rootObject, items = []) => {
         dataType: DataType.String,
         options: WeekDayOptions,
         multi: true,
-        value: [],
+        value: "",
         validator: { isNotEmpty: {} },
       })
       break

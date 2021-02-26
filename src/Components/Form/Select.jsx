@@ -13,34 +13,59 @@ class Select extends React.Component {
   }
 
   onSelect = (_event, selectionLabel, _isPlaceholder) => {
-    this.setState({ isOpen: false }, () => {
-      console.log("selected:", selectionLabel)
-      if (this.props.onChange) {
+    const { onChange, isMulti, options, selected } = this.props
+    const isOpen = isMulti ? true : false
+    this.setState({ isOpen: isOpen }, () => {
+      if (onChange) {
         // get value with label
-        const selectionValue = getValueByLabel(this.props.options, selectionLabel)
-        this.props.onChange(selectionValue)
+        const selectionValue = getValueByLabel(options, selectionLabel)
+        let finalValue = selectionValue
+        if (isMulti) {
+          let all = selected.split(",")
+          if (all.includes(selectionValue)) {
+            all = all.filter((v) => v !== selectionValue)
+          } else {
+            all.push(selectionValue)
+          }
+          const uniqueValues = [...new Set(all)].filter((v) => v !== "")
+          finalValue = uniqueValues.join(",")
+        }
+        onChange(finalValue)
       }
     })
   }
 
-  onCreateOption = (newValue) => {
-    // TODO:
-  }
+  onCreateOption = (_newValue) => {}
 
   clearSelection = () => {
+    const { onChange } = this.props
     this.setState({ isOpen: false }, () => {
-      if (this.props.onChange) {
-        this.props.onChange("")
+      if (onChange) {
+        onChange("")
       }
     })
   }
 
   render() {
-    const { label, options, selected, isDisabled, isCreatable, variant, disableClear, hideDescription } = this.props
+    const {
+      label,
+      options,
+      selected,
+      isDisabled,
+      isCreatable,
+      variant,
+      disableClear,
+      hideDescription,
+    } = this.props
     const { isOpen } = this.state
 
     // get label with value
-    const selectionLabel = getLabelByValue(this.props.options, selected)
+    let selections = []
+    if (selected !== undefined && selected !== "") {
+      selections = selected.split(",").map((s) => {
+        return getLabelByValue(this.props.options, s)
+      })
+    }
 
     const selectOptions = options.map((option, index) => (
       <SelectOption
@@ -57,7 +82,7 @@ class Select extends React.Component {
         onToggle={this.onToggle}
         onSelect={this.onSelect}
         onClear={disableClear ? undefined : this.clearSelection}
-        selections={selectionLabel}
+        selections={selections}
         isOpen={isOpen}
         //aria-labelledby={titleId}
         placeholderText={label}
