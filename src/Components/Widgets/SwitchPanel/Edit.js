@@ -1,12 +1,17 @@
 import objectPath from "object-path"
 import { DataType, FieldType } from "../../Form/Constants"
+import { ResourceType, ResourceTypeOptions } from "../../Form/ResourcePicker/Constants"
 
 // Switch Panel items
 export const updateFormItemsSwitchPanel = (rootObject, items) => {
   // add default filter at first time
-  const selectors = objectPath.get(rootObject, "config.resourceSelectors", undefined)
-  if (selectors === undefined) {
-    objectPath.set(rootObject, "config.resourceSelectors", { metricType: "binary" }, false)
+  objectPath.set(rootObject, "config.resourceType", ResourceType.SensorField, true)
+  const resourceType = objectPath.get(rootObject, "config.resourceType", ResourceType.SensorField)
+  if (resourceType === ResourceType.SensorField) {
+    const selectors = objectPath.get(rootObject, "config.resourceSelectors", undefined)
+    if (selectors === undefined) {
+      objectPath.set(rootObject, "config.resourceSelectors", { metricType: "binary" }, false)
+    }
   }
 
   items.push(
@@ -33,6 +38,21 @@ export const updateFormItemsSwitchPanel = (rootObject, items) => {
       helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
+    },
+    {
+      label: "Resource Type",
+      fieldId: "config.resourceType",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      isDisabled: false,
+      helperText: "",
+      helperTextInvalid: "Invalid type",
+      validated: "default",
+      options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Sensor),
+      validator: { isNotEmpty: {} },
+      resetFields: { "config.resourceSelectors": {} },
     },
     {
       label: "Selectors",

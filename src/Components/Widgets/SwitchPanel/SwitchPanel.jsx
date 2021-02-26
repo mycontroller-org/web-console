@@ -1,12 +1,12 @@
 import { Divider, Grid, GridItem, Switch as PfSwitch } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
-import { api } from "../../../Service/Api"
 import _ from "lodash"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import "./SwitchPanel.scss"
-import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
+import { getDetailPage, getField, getListAPI } from "./SwitchPanelUtils"
+import { api } from "../../../Service/Api"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -38,24 +38,18 @@ class SwitchPanel extends React.Component {
   }
 
   updateComponents = () => {
-    const { resourceSelectors, itemsLimit, resourceNameKey } = this.props.config
+    const { resourceSelectors, itemsLimit, resourceNameKey, resourceType } = this.props.config
     const selectorKeys = Object.keys(resourceSelectors)
     const filters = selectorKeys.map((key) => {
       return { k: key, v: resourceSelectors[key] }
     })
 
-    api.sensorField
-      .list({ filter: filters, limit: itemsLimit })
+    const listAPI = getListAPI(resourceType)
+
+    listAPI({ filter: filters, limit: itemsLimit })
       .then((res) => {
         const resources = res.data.data.map((field) => {
-          const label = objectPath.get(field, resourceNameKey, "undefined")
-          return {
-            id: field.id,
-            label: label,
-            isChecked: field.payload.value,
-            quickId:
-              "sf:" + field.gatewayId + "." + field.nodeId + "." + field.sensorId + "." + field.fieldId,
-          }
+          return getField(resourceType, field, resourceNameKey)
         })
         this.setState({ isLoading: false, resources })
       })
@@ -66,18 +60,20 @@ class SwitchPanel extends React.Component {
 
   render() {
     const { isLoading, resources } = this.state
+    const { resourceType } = this.props.config
 
     if (isLoading) {
       return <Loading />
     }
     const switches = resources.map((r, index) => {
       const className = r.isChecked ? "text enabled" : "text"
+      const detailPage = getDetailPage(resourceType)
       return (
         <GridItem span={12} key={"label_" + index}>
           <span
             className={className}
             onClick={() => {
-              rd(this.props.history, rMap.resources.sensorField.detail, { id: r.id })
+              rd(this.props.history, detailPage, { id: r.id })
             }}
           >
             {r.label}
