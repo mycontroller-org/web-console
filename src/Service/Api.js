@@ -124,6 +124,7 @@ export const api = {
   auth: {
     login: (data) => newRequest(HTTP_VERBS.POST, "/user/login", {}, data),
     profile: () => newRequest(HTTP_VERBS.GET, "/user/profile", {}, {}),
+    updateProfile: (data) => newRequest(HTTP_VERBS.POST, "/user/profile", {}, data),
   },
   gateway: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/gateway", filter, {}),
