@@ -41,7 +41,7 @@ class DetailsPage extends React.Component {
       const tabElements = []
       this.state.tabs.forEach((tab) => {
         tabElements.push(
-          <Tab key={tab.key} eventKey={tab.key} title={<TabTitleText>{tab.name}</TabTitleText>}></Tab>
+          <Tab key={tab.key} id={tab.key} eventKey={tab.key} title={<TabTitleText>{tab.name}</TabTitleText>}></Tab>
         )
         if (this.state.activeTabKey === tab.key) {
           tabContent = tab.content
