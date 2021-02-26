@@ -18,6 +18,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/actions/handler"
+import { LastSeen } from "../../../Components/Time/Time"
 
 class List extends ListBase {
   state = {
@@ -79,6 +80,7 @@ const tableColumns = [
   { title: "Description", fieldKey: "description", sortable: true },
   { title: "Type", fieldKey: "type", sortable: true },
   { title: "Status", fieldKey: "state.status", sortable: true },
+  { title: "Status At", fieldKey: "state.since", sortable: true },
   { title: "Message", fieldKey: "state.message", sortable: true },
 ]
 
@@ -102,6 +104,7 @@ const toRowFuncImpl = (rawData, history) => {
       { title: rawData.description },
       { title: rawData.type },
       { title: getValue(rawData, "state.status") },
+      { title: <LastSeen date={rawData.state.since} /> },
       { title: getValue(rawData, "state.message") },
     ],
     rid: rawData.id,
