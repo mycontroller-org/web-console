@@ -33,6 +33,8 @@ export const Labels = ({ data = {} }) => {
   return <Flex>{elements}</Flex>
 }
 
+const hideItems = ["password", "token"]
+
 export const KeyValue = ({ name, value, index = 0 }) => {
   let finalValue = ""
   switch (name) {
@@ -40,7 +42,7 @@ export const KeyValue = ({ name, value, index = 0 }) => {
       finalValue = <IFrame url={value} />
       break
     default:
-      finalValue = name === "password" ? "****" : value !== undefined ? String(value) : ""
+      finalValue = hideItems.includes(name) ? "******" : value !== undefined ? String(value) : ""
   }
   return (
     <div className="key-value-map" key={name + index}>

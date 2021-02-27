@@ -20,6 +20,7 @@ export const FieldDataTypeOptions = [
   { value: FieldDataType.TypeResourceByLabels, label: "Resource Data By Labels" },
   { value: FieldDataType.TypeWebhook, label: "Webhook Data" },
   { value: FieldDataType.TypeEmail, label: "Email Data" },
+  { value: FieldDataType.TypeTelegram, label: "Telegram Data" },
 ]
 
 export const ResourceType = {
@@ -47,4 +48,16 @@ export const ResourceTypeOptions = [
   { value: ResourceType.Task, label: "Task" },
   { value: ResourceType.Schedule, label: "Schedule" },
   { value: ResourceType.Handler, label: "Handler" },
+]
+
+export const TelegramParseMode = {
+  Text: "Text",
+  MarkdownV2: "MarkdownV2",
+  HTML: "HTML",
+}
+
+export const TelegramParseModeOptions = [
+  { value: TelegramParseMode.Text, label: "Text" },
+  { value: TelegramParseMode.MarkdownV2, label: "Markdown V2" },
+  { value: TelegramParseMode.HTML, label: "HTML" },
 ]

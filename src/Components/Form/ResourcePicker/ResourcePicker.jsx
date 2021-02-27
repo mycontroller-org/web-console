@@ -5,7 +5,13 @@ import React from "react"
 import Editor from "../../Editor/Editor"
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../Constants/Form"
-import { ResourceTypeOptions, CallerType, FieldDataType, FieldDataTypeOptions } from "../../../Constants/ResourcePicker"
+import {
+  ResourceTypeOptions,
+  CallerType,
+  FieldDataType,
+  FieldDataTypeOptions,
+  TelegramParseModeOptions,
+} from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,
@@ -125,6 +131,11 @@ const getItems = (rootObject, callerType) => {
     case FieldDataType.TypeEmail:
       const emailItems = getEmailDataItems(rootObject)
       items.push(...emailItems)
+      break
+
+    case FieldDataType.TypeTelegram:
+      const telegramItems = getTelegramDataItems(rootObject)
+      items.push(...telegramItems)
       break
 
     default:
@@ -264,6 +275,39 @@ const getEmailDataItems = (_rootObject) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+    },
+  ]
+  return items
+}
+
+const getTelegramDataItems = (_rootObject) => {
+  const items = [
+    {
+      label: "Text",
+      fieldId: "data.text",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      isRequired: true,
+      value: "",
+      helperText: "",
+      helperTextInvalid: "Enter a valid text",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Parse Mode",
+      fieldId: "data.parseMode",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: TelegramParseModeOptions,
+    },
+    {
+      label: "Chat IDs",
+      fieldId: "data.chatIds",
+      fieldType: FieldType.DynamicArray,
+      dataType: DataType.ArrayString,
+      value: [],
     },
   ]
   return items

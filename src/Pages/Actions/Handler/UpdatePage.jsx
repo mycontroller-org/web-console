@@ -176,6 +176,29 @@ const getFormItems = (rootObject, id) => {
       )
       break
 
+    case HandlerType.Telegram:
+      items.push(
+        {
+          label: "Token",
+          fieldId: "spec.token",
+          fieldType: FieldType.Text,
+          dataType: DataType.String,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a telegram token",
+          validated: "default",
+          validator: { isNotEmpty: {} },
+        },
+        {
+          label: "Chat IDs",
+          fieldId: "spec.chatIds",
+          fieldType: FieldType.DynamicArray,
+          dataType: DataType.ArrayString,
+          value: [],
+        }
+      )
+      break
+
     default:
   }
 
