@@ -1,5 +1,10 @@
-import { DataType, FieldType } from "../../Form/Constants"
-import { LightTypeOptions, RGBComponentType, RGBComponentOptions, LightType } from "../LightPanel/Constants"
+import { DataType, FieldType } from "../../../Constants/Form"
+import {
+  LightTypeOptions,
+  RGBComponentType,
+  RGBComponentOptions,
+  LightType,
+} from "../../../Constants/Widgets/LightPanel"
 import objectPath from "object-path"
 import { api } from "../../../Service/Api"
 

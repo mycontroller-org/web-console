@@ -1,6 +1,6 @@
 import objectPath from "object-path"
-import { DataType, FieldType } from "../../Form/Constants"
-import { ResourceType, ResourceTypeOptions } from "../../Form/ResourcePicker/Constants"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { ResourceType, ResourceTypeOptions } from "../../../Constants/ResourcePicker"
 
 // Switch Panel items
 export const updateFormItemsSwitchPanel = (rootObject, items) => {

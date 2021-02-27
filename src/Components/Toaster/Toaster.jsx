@@ -2,7 +2,7 @@ import React from "react"
 import { AlertGroup, Alert, AlertActionCloseButton } from "@patternfly/react-core"
 import { connect } from "react-redux"
 import { toasterRemove } from "../../store/entities/toaster"
-import { TOAST_ALERT_TIMEOUT } from "../../config/globalConfig"
+import { TOAST_ALERT_TIMEOUT } from "../../Constants/Common"
 
 class Toaster extends React.Component {
   render() {

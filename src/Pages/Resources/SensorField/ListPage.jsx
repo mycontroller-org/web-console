@@ -5,7 +5,7 @@ import ListBase from "../../../Components/BasePage/ListBase"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { LastSeen } from "../../../Components/Time/Time"
-import { METRIC_TYPES } from "../../../config/globalConfig"
+import { METRIC_TYPES } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {

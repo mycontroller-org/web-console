@@ -12,7 +12,7 @@ import {
 } from "@patternfly/react-core"
 import React from "react"
 import KeyValueMapForm from "./KeyValueMapForm"
-import { DataType, FieldType } from "./Constants"
+import { DataType, FieldType } from "../../Constants/Form"
 import "./Form.scss"
 import Select from "./Select"
 import AsyncSelect from "../Select/AsyncSelect"

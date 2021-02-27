@@ -1,6 +1,6 @@
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Components/Form/Constants"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 

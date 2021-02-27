@@ -3,7 +3,7 @@ import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { RouteLink } from "../../../Components/Buttons/Buttons"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { LastSeen } from "../../../Components/Time/Time"
-import { METRIC_TYPES } from "../../../config/globalConfig"
+import { METRIC_TYPES } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
 

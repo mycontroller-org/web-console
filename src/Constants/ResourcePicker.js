@@ -3,15 +3,6 @@ export const CallerType = {
   Parameter: "parameter",
 }
 
-export const FieldKey = {
-  TypeLabels: "--labels",
-  TypeQID: "--qid",
-  ResourceType: "--type",
-  ResourcePayload: "--payload",
-  ResourcePreDelay: "--preDelay",
-  ResourceSelector: "--selector",
-}
-
 export const FieldDataType = {
   TypeString: "string",
   TypeEmail: "email",

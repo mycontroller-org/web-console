@@ -15,7 +15,7 @@ import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
 import Select from "./Select"
-import { Operator, OperatorOptions } from "./Constants"
+import { Operator, OperatorOptions } from "../../Constants/Task"
 
 class ConditionArrayMapForm extends React.Component {
   state = {

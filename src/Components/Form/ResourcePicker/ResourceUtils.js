@@ -1,6 +1,6 @@
 import objectPath from "object-path"
 import { api } from "../../../Service/Api"
-import { ResourceType, CallerType, FieldDataType } from "./Constants"
+import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
   const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)

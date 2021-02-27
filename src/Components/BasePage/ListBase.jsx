@@ -3,7 +3,7 @@ import { RowWrapper, sortable, Table, TableBody, TableHeader, TableVariant } fro
 import moment from "moment"
 import PropTypes from "prop-types"
 import React from "react"
-import { DATA_CACHE_TIMEOUT } from "../../config/globalConfig"
+import { DATA_CACHE_TIMEOUT } from "../../Constants/Common"
 import DeleteDialog from "../Dialog/Dialog"
 import Filters from "../Filters/Filters"
 import LastUpdate from "../LastUpdate/LastUpdate"

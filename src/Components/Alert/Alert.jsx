@@ -1,6 +1,6 @@
 import React from "react"
 import { Alert } from "@patternfly/react-core"
-import { TOAST_ALERT_TIMEOUT } from "../../config/globalConfig"
+import { TOAST_ALERT_TIMEOUT } from "../../Constants/Common"
 
 export const AlertDanger = ({ text, timeout = TOAST_ALERT_TIMEOUT, description = "" }) => {
   return (

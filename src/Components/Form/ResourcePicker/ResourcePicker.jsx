@@ -4,8 +4,8 @@ import objectPath from "object-path"
 import React from "react"
 import Editor from "../../Editor/Editor"
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../Constants"
-import { ResourceTypeOptions, CallerType, FieldDataType, FieldDataTypeOptions } from "./Constants"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { ResourceTypeOptions, CallerType, FieldDataType, FieldDataTypeOptions } from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,

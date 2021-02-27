@@ -1,5 +1,5 @@
-import { ResourceTypeOptions } from "../../../config/globalConfig"
-import { DataType, FieldType } from "../../Form/Constants"
+import { ResourceTypeOptions } from "../../../Constants/Resource"
+import { DataType, FieldType } from "../../../Constants/Form"
 import objectPath from "object-path"
 
 // UtilizationPanel items

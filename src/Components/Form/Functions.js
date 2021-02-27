@@ -1,5 +1,5 @@
 import objectPath from "object-path"
-import { DataType, FieldType } from "./Constants"
+import { DataType, FieldType } from "../../Constants/Form"
 import v from "validator"
 
 export const updateRootObject = (rootObject, item, data) => {

@@ -1,5 +1,5 @@
 import { api } from "../../../Service/Api"
-import { ResourceType } from "../../Form/ResourcePicker/Constants"
+import { ResourceType } from "../../../Constants/ResourcePicker"
 import { routeMap as rMap } from "../../../Service/Routes"
 import objectPath from "object-path"
 

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { NOTIFICATION_LIMIT, ALERT_TYPE_ERROR } from "../../config/globalConfig"
+import { NOTIFICATION_LIMIT, ALERT_TYPE_ERROR } from "../../Constants/Common"
 
 let lastId = 0
 

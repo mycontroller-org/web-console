@@ -1,7 +1,7 @@
 import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Components/Form/Constants"
+import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
@@ -13,7 +13,7 @@ import {
   MessageLogger,
   MessageLoggerOptions,
   filterProtocolOptions,
-} from "../../Constants"
+} from "../../../Constants/Gateway"
 
 class UpdatePage extends React.Component {
   render() {
