@@ -7,7 +7,13 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
-import { Dampening, DampeningOptions, ResourceEventTypeOptions } from "../../Constants"
+import {
+  Dampening,
+  DampeningOptions,
+  ResourceEventTypeOptions,
+  EvaluationType,
+  EvaluationTypeOptions,
+} from "../../Constants"
 import { CallerType } from "../../../Components/Form/ResourcePicker/Constants"
 
 class UpdatePage extends React.Component {
@@ -146,7 +152,7 @@ const getFormItems = (rootObject, id) => {
     )
   } else {
     items.push({
-      label: "Execution Interval",
+      label: "Execution Interval (0h0m0s)",
       fieldId: "executionInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -233,29 +239,68 @@ const getFormItems = (rootObject, id) => {
     }
   )
 
-  if (rootObject.remoteCall) {
-  } else {
-    items.push(
-      {
-        label: "Rule",
-        fieldId: "!rule",
-        fieldType: FieldType.Divider,
-      },
-      {
-        label: "Match All",
-        fieldId: "rule.matchAll",
-        fieldType: FieldType.Switch,
-        dataType: DataType.Boolean,
-        value: false,
-      },
-      {
-        label: "Conditions",
-        fieldId: "rule.conditions",
-        fieldType: FieldType.ConditionsArrayMap,
-        dataType: DataType.ArrayObject,
-        value: [],
-      }
-    )
+  let evaluationType = objectPath.get(rootObject, "evaluationType", "")
+  if (evaluationType === "" || evaluationType === undefined) {
+    objectPath.set(rootObject, "evaluationType", EvaluationType.Rule, false)
+  }
+  evaluationType = objectPath.get(rootObject, "evaluationType", "")
+
+  items.push(
+    {
+      label: "Evaluation",
+      fieldId: "!evaluation",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Type",
+      fieldId: "evaluationType",
+      fieldType: FieldType.ToggleButtonGroup,
+      dataType: DataType.String,
+      options: EvaluationTypeOptions,
+      value: "",
+      resetFields: { evaluationConfig: { rule: {}, javascript: "", webhookApi: "" } },
+    }
+  )
+
+  switch (evaluationType) {
+    case EvaluationType.Rule:
+      items.push(
+        {
+          label: "Match All",
+          fieldId: "evaluationConfig.rule.matchAll",
+          fieldType: FieldType.Switch,
+          dataType: DataType.Boolean,
+          value: false,
+        },
+        {
+          label: "Conditions",
+          fieldId: "evaluationConfig.rule.conditions",
+          fieldType: FieldType.ConditionsArrayMap,
+          dataType: DataType.ArrayObject,
+          value: [],
+        }
+      )
+      break
+
+    case EvaluationType.Javascript:
+      break
+
+    case EvaluationType.Webhook:
+      items.push({
+        label: "Webhook API",
+        fieldId: "evaluationConfig.webhookApi",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "Invalid server URL",
+        validated: "default",
+        validator: { isNotEmpty: {}, isURL: {} },
+      })
+      break
+
+    default:
   }
 
   items.push(

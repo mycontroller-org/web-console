@@ -22,6 +22,7 @@ import DynamicArrayForm from "./DynamicArrayForm"
 import ConditionArrayMapForm from "./ConditionArrayForm"
 import DateRangePicker from "./RangePicker/DateRangePicker"
 import TimeRangePicker from "./RangePicker/TimeRangePicker"
+import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
 
 // item sample
 // const item = {
@@ -294,6 +295,16 @@ const getField = (item, onChange) => {
           labelOff={item.labelOff}
           isChecked={item.value}
           onChange={onChange}
+        />
+      )
+
+    case FieldType.ToggleButtonGroup:
+      return (
+        <ToggleButtonGroup
+          options={item.options}
+          onSelectionFunc={onChange}
+          selected={item.value}
+          isDisabled={item.isDisabled}
         />
       )
 

@@ -153,3 +153,17 @@ export const ResourceEventTypeOptions = [
   { value: ResourceEventType.SensorFieldSet, label: "Sensor Field Set" },
   { value: ResourceEventType.SensorFieldRequest, label: "Sensor Field Request" },
 ]
+
+// Evaluation Types
+export const EvaluationType = {
+  Rule: "rule",
+  Javascript: "javascript",
+  Webhook: "webhook",
+}
+
+// Evaluation type options
+export const EvaluationTypeOptions = [
+  { value: EvaluationType.Rule, label: "Rule" },
+  { value: EvaluationType.Javascript, label: "Javascript", disabled: true }, // this feature not impleted yet
+  { value: EvaluationType.Webhook, label: "Webhook", disabled: true }, // this feature not impleted yet
+]

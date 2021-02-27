@@ -34,6 +34,7 @@ export const FieldType = {
   DateRangePicker: "date_range_picker",
   TimePicker: "time_picker",
   TimeRangePicker: "time_range_picker",
+  ToggleButtonGroup: "toggle_button_group",
 }
 
 // Operator values

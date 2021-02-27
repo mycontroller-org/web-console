@@ -115,7 +115,7 @@ class Select extends React.Component {
 
 Select.propTypes = {
   title: PropTypes.string,
-  options: PropTypes.array, // [{value: "abc", display:"ABC text", disabled: false}]
+  options: PropTypes.array, // [{value: "abc", label:"ABC text", disabled: false}]
   defaultValue: PropTypes.string,
   onSelectionFunc: PropTypes.func,
   disabled: PropTypes.bool,
