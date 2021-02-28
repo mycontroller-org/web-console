@@ -52,12 +52,14 @@ export const ResourceTypeOptions = [
 
 export const TelegramParseMode = {
   Text: "Text",
+  Markdown: "Markdown",
   MarkdownV2: "MarkdownV2",
   HTML: "HTML",
 }
 
 export const TelegramParseModeOptions = [
   { value: TelegramParseMode.Text, label: "Text" },
+  { value: TelegramParseMode.Markdown, label: "Markdown" },
   { value: TelegramParseMode.MarkdownV2, label: "Markdown V2" },
   { value: TelegramParseMode.HTML, label: "HTML" },
 ]

@@ -1,4 +1,5 @@
 import objectPath from "object-path"
+import YAML from "js-yaml"
 import { api } from "../../../Service/Api"
 import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
 
@@ -8,7 +9,9 @@ export const updateValue = (rootObject = {}, onChange, onClose) => {
   let data = ""
   if (dataType !== FieldDataType.TypeString) {
     try {
-      const narrowedRootObject = { type: rootObject.type, data: rootObject.data }
+      const yamlString = YAML.dump(rootObject.data)
+      const base64String = btoa(yamlString)
+      const narrowedRootObject = { type: rootObject.type, data: base64String }
       data = JSON.stringify(narrowedRootObject)
     } catch (err) {
       data = err.toString()
@@ -25,7 +28,11 @@ export const updateValue = (rootObject = {}, onChange, onClose) => {
 
 export const getRootObject = (value = "") => {
   try {
-    return JSON.parse(value)
+    const rootData = JSON.parse(value)
+    const yamlString = atob(rootData.data)
+    const dataObject = YAML.load(yamlString)
+    rootData.data = dataObject
+    return rootData
   } catch (_err) {
     return { type: FieldDataType.TypeString, string: value }
   }
