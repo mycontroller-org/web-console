@@ -171,6 +171,7 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Select,
       dataType: DataType.String,
       options: DampeningOptions,
+      isDisabled: true, // Enable this when this feature is implemented
       value: "",
       resetFields: { "dampening.occurrences": 0, "dampening.evaluations": 0, "dampening.activeTime": "" },
     }
