@@ -171,6 +171,21 @@ const getFormItems = (rootObject) => {
       validated: "default",
       validator: { isLabel: {} },
     },
+    {
+      label: "Payload Formatter",
+      fieldId: "!payload_formatter",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "On Receive",
+      fieldId: "payloadFormatter.onReceive",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.String,
+      value: "",
+      saveButtonText: "Update",
+      minimapEnabled: false,
+      isRequired: false,
+    }
   ]
 
   return items

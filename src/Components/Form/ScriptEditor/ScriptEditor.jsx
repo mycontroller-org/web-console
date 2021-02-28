@@ -5,8 +5,6 @@ import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import PropTypes from "prop-types"
 import ActionBar from "../../ActionBar/ActionBar"
 import CodeEditorBasic from "../../CodeEditor/CodeEditorBasic"
-import Base64 from "base-64"
-import UTF8 from "utf8"
 
 class ScriptEditor extends React.Component {
   state = {
@@ -21,9 +19,7 @@ class ScriptEditor extends React.Component {
   onSaveClick = () => {
     if (this.props.onSaveFunc) {
       const codeString = this.editorRef.current.getValue()
-      const utf8Bytes = UTF8.encode(codeString)
-      const base64String = Base64.encode(utf8Bytes)
-      this.props.onSaveFunc(base64String)
+      this.props.onSaveFunc(codeString)
     }
     this.onClose()
   }
@@ -63,15 +59,12 @@ class ScriptEditor extends React.Component {
 
     const content = []
 
-    const utf8Bytes = Base64.decode(value)
-    const codeString = UTF8.decode(utf8Bytes)
-
     content.push(
       <CodeEditorBasic
         key={"code-editor"}
         // height={this.props.height}
         language={language}
-        data={codeString}
+        data={value}
         options={finalOptions}
         handleEditorOnMount={this.handleEditorOnMount}
       />
