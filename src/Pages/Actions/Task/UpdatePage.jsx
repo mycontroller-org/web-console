@@ -282,6 +282,20 @@ const getFormItems = (rootObject, id) => {
       break
 
     case EvaluationType.Javascript:
+      items.push({
+        label: "Script",
+        fieldId: "evaluationConfig.javascript",
+        fieldType: FieldType.ScriptEditor,
+        dataType: DataType.String,
+        value: "",
+        saveButtonText: "Update",
+        minimapEnabled: false,
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "script should not be empty",
+        validated: "default",
+        validator: { isNotEmpty: {} },
+      })
       break
 
     case EvaluationType.Webhook:

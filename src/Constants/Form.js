@@ -35,4 +35,5 @@ export const FieldType = {
   TimePicker: "time_picker",
   TimeRangePicker: "time_range_picker",
   ToggleButtonGroup: "toggle_button_group",
+  ScriptEditor: "script_editor",
 }

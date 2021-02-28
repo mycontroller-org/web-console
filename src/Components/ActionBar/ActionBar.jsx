@@ -19,7 +19,7 @@ const actionListItem = ({ variant, text, onClickFunc, isDisabled, icon }) => {
   )
 }
 
-const actionBar = ({ leftBar = [], rightBar = [] }) => {
+const ActionBar = ({ leftBar = [], rightBar = [] }) => {
   const leftActions = leftBar.map((action) => {
     return actionListItem(action)
   })
@@ -42,4 +42,4 @@ const actionBar = ({ leftBar = [], rightBar = [] }) => {
   )
 }
 
-export default actionBar
+export default ActionBar

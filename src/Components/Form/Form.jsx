@@ -23,6 +23,7 @@ import ConditionArrayMapForm from "./ConditionArrayForm"
 import DateRangePicker from "./RangePicker/DateRangePicker"
 import TimeRangePicker from "./RangePicker/TimeRangePicker"
 import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
+import ScriptEditor from "./ScriptEditor/ScriptEditor"
 
 // item sample
 // const item = {
@@ -304,6 +305,21 @@ const getField = (item, onChange) => {
           options={item.options}
           onSelectionFunc={onChange}
           selected={item.value}
+          isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.ScriptEditor:
+      return (
+        <ScriptEditor
+          name={item.label}
+          id={item.fieldId}
+          language={item.language}
+          minimapEnabled={item.minimapEnabled}
+          options={item.options}
+          onSaveFunc={onChange}
+          saveButtonText={item.saveButtonText}
+          value={item.value}
           isDisabled={item.isDisabled}
         />
       )
