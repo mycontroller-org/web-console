@@ -29,8 +29,6 @@ export const ScheduleType = {
   Simple: "simple",
   Sunrise: "sunrise",
   Sunset: "sunset",
-  Moonrise: "moonrise",
-  Moonset: "moonset",
 }
 
 // Schedule type options
@@ -40,6 +38,4 @@ export const ScheduleTypeOptions = [
   { value: ScheduleType.Simple, label: "Simple", description: "daily, weekly, monthly schedule" },
   { value: ScheduleType.Sunrise, label: "Sunrise", description: "On Sunrise time" },
   { value: ScheduleType.Sunset, label: "Sunset", description: "On Sunset time" },
-  { value: ScheduleType.Moonrise, label: "Moonrise", description: "On Moonrise time" },
-  { value: ScheduleType.Moonset, label: "Moonset", description: "On Moonset time" },
 ]
