@@ -12,6 +12,7 @@ export const FieldDataType = {
   TypePushbullet: "pushbullet",
   TypeResourceByQuickId: "resource_by_quick_id",
   TypeResourceByLabels: "resource_by_labels",
+  TypeExporter: "exporter",
 }
 
 export const FieldDataTypeOptions = [
@@ -21,6 +22,7 @@ export const FieldDataTypeOptions = [
   { value: FieldDataType.TypeWebhook, label: "Webhook Data" },
   { value: FieldDataType.TypeEmail, label: "Email Data" },
   { value: FieldDataType.TypeTelegram, label: "Telegram Data" },
+  { value: FieldDataType.TypeExporter, label: "Exporter Data" },
 ]
 
 export const ResourceType = {
@@ -62,4 +64,26 @@ export const TelegramParseModeOptions = [
   { value: TelegramParseMode.Markdown, label: "Markdown" },
   { value: TelegramParseMode.MarkdownV2, label: "Markdown V2" },
   { value: TelegramParseMode.HTML, label: "HTML" },
+]
+
+// Exporter type values
+export const ExporterType = {
+  Disk: "disk",
+}
+
+// Exporter type options
+export const ExporterTypeOptions = [
+  { value: ExporterType.Disk, label: "Disk", description: "Exports data to disk location" },
+]
+
+// Export type values
+export const ExportType = {
+  YAML: "yaml",
+  JSON: "json",
+}
+
+// Export type options
+export const ExportTypeOptions = [
+  { value: ExportType.YAML, label: "YAML" },
+  { value: ExportType.JSON, label: "JSON" },
 ]

@@ -7,6 +7,7 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { HandlerType, HandlerTypeOptions } from "../../../Constants/Handler"
+import { ExporterType, ExporterTypeOptions, ExportTypeOptions } from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {
   render() {
@@ -199,6 +200,60 @@ const getFormItems = (rootObject, id) => {
       )
       break
 
+    case HandlerType.Exporter:
+      const exporterItems = getExporterItems(rootObject)
+      items.push(...exporterItems)
+      break
+
+    default:
+  }
+
+  return items
+}
+
+const getExporterItems = (rootObject) => {
+  const items = []
+  items.push({
+    label: "Exporter Type",
+    fieldId: "spec.exporterType",
+    isRequired: true,
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    options: ExporterTypeOptions,
+    value: "",
+    resetFields: { "spec.spec": {} },
+    validator: { isNotEmpty: {} },
+  })
+
+  const exporterType = objectPath.get(rootObject, "spec.exporterType", "")
+
+  switch (exporterType) {
+    case ExporterType.Disk:
+      items.push(
+        {
+          label: "Export Type",
+          fieldId: "spec.spec.exportType",
+          fieldType: FieldType.SelectTypeAhead,
+          dataType: DataType.String,
+          options: ExportTypeOptions,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a telegram token",
+          validated: "default",
+          validator: { isNotEmpty: {} },
+        },
+        {
+          label: "Target Directory",
+          fieldId: "spec.spec.targetDirectory",
+          fieldType: FieldType.Text,
+          dataType: DataType.String,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a directory",
+          validated: "default",
+          validator: { isNotEmpty: {} },
+        }
+      )
     default:
   }
 

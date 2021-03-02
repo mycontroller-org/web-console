@@ -11,6 +11,9 @@ import {
   FieldDataType,
   FieldDataTypeOptions,
   TelegramParseModeOptions,
+  ExporterTypeOptions,
+  ExportTypeOptions,
+  ExporterType,
 } from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
@@ -136,6 +139,11 @@ const getItems = (rootObject, callerType) => {
     case FieldDataType.TypeTelegram:
       const telegramItems = getTelegramDataItems(rootObject)
       items.push(...telegramItems)
+      break
+
+    case FieldDataType.TypeExporter:
+      const exporterItems = getExporterItems(rootObject)
+      items.push(...exporterItems)
       break
 
     default:
@@ -310,5 +318,49 @@ const getTelegramDataItems = (_rootObject) => {
       value: [],
     },
   ]
+  return items
+}
+
+const getExporterItems = (rootObject) => {
+  const items = []
+  items.push({
+    label: "Exporter Type",
+    fieldId: "data.exporterType",
+    isRequired: true,
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    options: ExporterTypeOptions,
+    value: "",
+    resetFields: { "data.spec": {} },
+    validator: { isNotEmpty: {} },
+  })
+
+  const exporterType = objectPath.get(rootObject, "data.exporterType", "")
+  switch (exporterType) {
+    case ExporterType.Disk:
+      items.push(
+        {
+          label: "Export Type",
+          fieldId: "data.spec.exportType",
+          fieldType: FieldType.SelectTypeAhead,
+          dataType: DataType.String,
+          options: ExportTypeOptions,
+          value: "",
+          isRequired: false,
+        },
+        {
+          label: "Target Directory",
+          fieldId: "data.spec.targetDirectory",
+          fieldType: FieldType.Text,
+          dataType: DataType.String,
+          value: "",
+          isRequired: false,
+        }
+      )
+      break
+
+    default:
+  }
+
   return items
 }
