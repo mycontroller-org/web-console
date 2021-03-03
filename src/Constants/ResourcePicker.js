@@ -19,7 +19,7 @@ export const FieldDataTypeOptions = [
   { value: FieldDataType.TypeString, label: "String Data" },
   { value: FieldDataType.TypeResourceByQuickId, label: "Resource Data By Quick ID" },
   { value: FieldDataType.TypeResourceByLabels, label: "Resource Data By Labels" },
-  { value: FieldDataType.TypeWebhook, label: "Webhook Data" },
+  { value: FieldDataType.TypeWebhook, label: "Webhook Data", disable: true }, // not implemented yet
   { value: FieldDataType.TypeEmail, label: "Email Data" },
   { value: FieldDataType.TypeTelegram, label: "Telegram Data" },
   { value: FieldDataType.TypeExporter, label: "Exporter Data" },
@@ -85,5 +85,5 @@ export const ExportType = {
 // Export type options
 export const ExportTypeOptions = [
   { value: ExportType.YAML, label: "YAML" },
-  { value: ExportType.JSON, label: "JSON" },
+  { value: ExportType.JSON, label: "JSON", disable: true }, // on json export user password is not exported
 ]
