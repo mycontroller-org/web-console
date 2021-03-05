@@ -85,7 +85,8 @@ class List extends ListBase {
 const tableColumns = [
   { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
+  { title: "Description", fieldKey: "description", sortable: true },
+  { title: "Reconnect Delay", fieldKey: "reconnectDelay", sortable: true },
   { title: "Provider", fieldKey: "provider.type", sortable: true },
   { title: "Protocol", fieldKey: "provider.protocol.type", sortable: true },
   { title: <div className="align-center">Status</div>, fieldKey: "state.status", sortable: true },
@@ -110,7 +111,8 @@ const toRowFuncImpl = (rawData, history) => {
           </Button>
         ),
       },
-      { title: rawData.name },
+      { title: rawData.description },
+      { title: rawData.reconnectDelay },
       rawData.provider.type,
       rawData.provider.protocol.type,
       { title: getStatus(rawData.state.status) },
@@ -122,9 +124,9 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
+  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 

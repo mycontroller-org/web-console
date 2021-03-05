@@ -70,16 +70,12 @@ const getFormItems = (rootObject) => {
       validator: { isLength: { min: 2, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
-      label: "Name",
-      fieldId: "name",
+      label: "Description",
+      fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
+      isRequired: false,
     },
     {
       label: "Enabled",
@@ -87,6 +83,13 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+    },
+    {
+      label: "Reconnect Delay",
+      fieldId: "reconnectDelay",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
     },
     {
       label: "Labels",
@@ -177,13 +180,6 @@ const getFormItems = (rootObject) => {
       {
         label: "Transmit Pre Delay",
         fieldId: "provider.protocol.transmitPreDelay",
-        fieldType: FieldType.Text,
-        dataType: DataType.String,
-        value: "",
-      },
-      {
-        label: "Reconnect Delay",
-        fieldId: "provider.protocol.reconnectDelay",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
