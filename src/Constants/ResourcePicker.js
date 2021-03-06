@@ -40,6 +40,8 @@ export const ResourceType = {
   ScheduleShort: "sk",
   Handler: "handler",
   HandlerShort: "hd",
+  DataRepository: "data_repository",
+  DataRepositoryShort: "dr",
 }
 
 export const ResourceTypeOptions = [
@@ -50,6 +52,7 @@ export const ResourceTypeOptions = [
   { value: ResourceType.Task, label: "Task" },
   { value: ResourceType.Schedule, label: "Schedule" },
   { value: ResourceType.Handler, label: "Handler" },
+  { value: ResourceType.DataRepository, label: "Data Repository" },
 ]
 
 export const TelegramParseMode = {

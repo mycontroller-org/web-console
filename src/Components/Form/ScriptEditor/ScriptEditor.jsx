@@ -5,6 +5,7 @@ import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import PropTypes from "prop-types"
 import ActionBar from "../../ActionBar/ActionBar"
 import CodeEditorBasic from "../../CodeEditor/CodeEditorBasic"
+import { toObject, toString } from "../../../Util/Language"
 
 class ScriptEditor extends React.Component {
   state = {
@@ -17,9 +18,11 @@ class ScriptEditor extends React.Component {
   }
 
   onSaveClick = () => {
-    if (this.props.onSaveFunc) {
+    const { onSaveFunc, language } = this.props
+    if (onSaveFunc) {
       const codeString = this.editorRef.current.getValue()
-      this.props.onSaveFunc(codeString)
+      const formattedData = toObject(language, codeString)
+      onSaveFunc(formattedData)
     }
     this.onClose()
   }
@@ -39,6 +42,7 @@ class ScriptEditor extends React.Component {
       name,
       value,
       saveButtonText,
+      updateButtonText,
       language = "javascript",
       options,
       minimapEnabled,
@@ -59,12 +63,14 @@ class ScriptEditor extends React.Component {
 
     const content = []
 
+    const valueString = toString(language, value)
+
     content.push(
       <CodeEditorBasic
         key={"code-editor"}
         // height={this.props.height}
         language={language}
-        data={value}
+        data={valueString}
         options={finalOptions}
         handleEditorOnMount={this.handleEditorOnMount}
       />
@@ -73,6 +79,7 @@ class ScriptEditor extends React.Component {
     const errorMessage = ""
 
     const saveText = saveButtonText ? saveButtonText : "Save"
+    const updateBtnText = updateButtonText ? updateButtonText : "Update Script"
 
     const actionButtons = [
       { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: false },
@@ -85,31 +92,29 @@ class ScriptEditor extends React.Component {
     })
 
     return (
-      <>
+      <ErrorBoundary>
         <Button key={"edit-btn-" + id} variant="secondary" isBlock onClick={this.onOpen}>
-          Update Script &nbsp;
+          {updateBtnText} &nbsp;
           <EditIcon />
         </Button>
         <Modal
           key={"edit-script-data" + id}
           title={name}
-          variant={ModalVariant.medium}
+          variant={ModalVariant.large}
           position="top"
           isOpen={isOpen}
           onClose={this.onClose}
           onEscapePress={this.onClose}
         >
-          <ErrorBoundary>
-            <Stack hasGutter>
-              <StackItem isFilled>{content}</StackItem>
-              <StackItem>{errorMessage}</StackItem>
-              <StackItem>
-                <ActionBar leftBar={actionButtons} />
-              </StackItem>
-            </Stack>
-          </ErrorBoundary>
+          <Stack hasGutter>
+            <StackItem isFilled>{content}</StackItem>
+            <StackItem>{errorMessage}</StackItem>
+            <StackItem>
+              <ActionBar leftBar={actionButtons} />
+            </StackItem>
+          </Stack>
         </Modal>
-      </>
+      </ErrorBoundary>
     )
   }
 }
@@ -120,6 +125,7 @@ ScriptEditor.propTypes = {
   value: PropTypes.string,
   onSaveFunc: PropTypes.func,
   saveButtonText: PropTypes.string,
+  updateButtonText: PropTypes.string,
   language: PropTypes.string,
   minimapEnabled: PropTypes.bool,
   options: PropTypes.object,

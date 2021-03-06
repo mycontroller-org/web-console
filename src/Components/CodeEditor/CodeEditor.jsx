@@ -1,7 +1,7 @@
 import { Stack, StackItem } from "@patternfly/react-core"
-import YAML from "js-yaml"
 import PropTypes from "prop-types"
 import React from "react"
+import { toObject, toString } from "../../Util/Language"
 import ActionBar from "../ActionBar/ActionBar"
 import CodeEditorBasic from "./CodeEditorBasic"
 
@@ -123,33 +123,3 @@ CodeEditor.propTypes = {
 }
 
 export default CodeEditor
-
-// helper functions
-
-const toString = (language = "", data = {}) => {
-  if (data === undefined || data === "") {
-    return ""
-  }
-  switch (language) {
-    case "yaml":
-      return YAML.safeDump(data)
-    case "json":
-      return JSON.stringify(data)
-    default:
-      return Object.toString(data)
-  }
-}
-
-const toObject = (language = "", data = "") => {
-  if (data === undefined || data === "") {
-    return {}
-  }
-  switch (language) {
-    case "yaml":
-      return YAML.safeLoad(data)
-    case "json":
-      return JSON.parse(data)
-    default:
-      return { error: "language '" + language + "' not supported" }
-  }
-}

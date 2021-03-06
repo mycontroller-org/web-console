@@ -210,4 +210,10 @@ export const api = {
     enable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/enable", {}, data),
     disable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/disable", {}, data),
   },
+  dataRepository: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/datarepository", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/datarepository/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/datarepository", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/datarepository", {}, data),
+  },
 }

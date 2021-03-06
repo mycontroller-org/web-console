@@ -77,6 +77,10 @@ export const getResourceType = (quickId) => {
     case ResourceType.HandlerShort:
       return [ResourceType.Handler, id]
 
+    case ResourceType.DataRepository:
+    case ResourceType.DataRepositoryShort:
+      return [ResourceType.DataRepository, id]
+
     default:
       return ["", quickId]
   }
@@ -104,6 +108,9 @@ export const getResourceOptionsAPI = (resourceType) => {
 
     case ResourceType.Handler:
       return api.handler.list
+
+    case ResourceType.DataRepository:
+      return api.dataRepository.list
 
     default:
       return () => {}
@@ -146,6 +153,7 @@ export const getResourceFilterFunc = (resourceType) => {
     case ResourceType.Task:
     case ResourceType.Schedule:
     case ResourceType.Handler:
+    case ResourceType.DataRepository:
       return (value) => {
         return [{ k: "id", o: "regex", v: value }]
       }
@@ -172,6 +180,7 @@ export const getOptionsDescriptionFunc = (resourceType) => {
     case ResourceType.Task:
     case ResourceType.Schedule:
     case ResourceType.Handler:
+    case ResourceType.DataRepository:
       return (item) => {
         return item.description
       }

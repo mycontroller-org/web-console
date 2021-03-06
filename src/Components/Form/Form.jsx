@@ -319,6 +319,7 @@ const getField = (item, onChange) => {
           options={item.options}
           onSaveFunc={onChange}
           saveButtonText={item.saveButtonText}
+          updateButtonText={item.updateButtonText}
           value={item.value}
           isDisabled={item.isDisabled}
         />

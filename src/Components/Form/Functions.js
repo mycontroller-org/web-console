@@ -42,6 +42,9 @@ const getValue = (item, data) => {
     case DataType.ArrayObject:
       return data
 
+    case DataType.Object:
+      return data
+
     default:
       return data
   }
@@ -83,6 +86,17 @@ export const updateItems = (rootObject, items) => {
           }
           break
         }
+
+      case FieldType.ScriptEditor:
+        if (item.dataType === DataType.Object) {
+          item.value = objectPath.get(rootObject, item.fieldId, {})
+          if (item.value === null) {
+            item.value = {}
+          }
+          break
+        }
+
+
       // case FieldType.Select:
       // case FieldType.SelectTypeAhead:
       //   item.value = String(objectPath.get(rootObject, item.fieldId, ""))

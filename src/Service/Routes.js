@@ -21,6 +21,9 @@ import ForwardPayloadDetailPage from "../Pages/Actions/ForwardPayload/DetailsPag
 import FirmwareListPage from "../Pages/Resources/Firmware/ListPage"
 import FirmwareUpdatePage from "../Pages/Resources/Firmware/UpdatePage"
 import FirmwareDetailPage from "../Pages/Resources/Firmware/DetailsPage"
+import DataRepositoryListPage from "../Pages/Resources/DataRepository/ListPage"
+import DataRepositoryUpdatePage from "../Pages/Resources/DataRepository/UpdatePage"
+import DataRepositoryDetailPage from "../Pages/Resources/DataRepository/DetailsPage"
 import TaskListPage from "../Pages/Actions/Task/ListPage"
 import TaskUpdatePage from "../Pages/Actions/Task/UpdatePage"
 import TaskDetailPage from "../Pages/Actions/Task/DetailsPage"
@@ -66,6 +69,12 @@ const routeMap = {
       detail: "/resources/firmware/list/:id",
       update: "/resources/firmware/update/:id",
       add: "/resources/firmware/add",
+    },
+    dataRepository: {
+      list: "/resources/datarepository",
+      detail: "/resources/datarepository/list/:id",
+      update: "/resources/datarepository/update/:id",
+      add: "/resources/datarepository/add",
     },
   },
   settings: {
@@ -154,6 +163,12 @@ const routes = [
         to: routeMap.resources.firmware.list,
         component: FirmwareListPage,
       },
+      {
+        id: "dataRepository",
+        title: "Data Repository",
+        to: routeMap.resources.dataRepository.list,
+        component: DataRepositoryListPage,
+      },
     ],
   },
   {
@@ -216,72 +231,80 @@ const hiddenRoutes = [
     component: GatewayDetailPage,
   },
   {
-    to: routeMap.resources.node.detail,
-    component: NodeDetailPage,
-  },
-  {
-    to: routeMap.resources.sensor.detail,
-    component: SensorDetailPage,
-  },
-  {
-    to: routeMap.resources.sensorField.detail,
-    component: SensorFieldDetailPage,
-  },
-  {
     to: routeMap.resources.gateway.add,
     component: GatewayUpdatePage,
+  },
+  {
+    to: routeMap.resources.node.detail,
+    component: NodeDetailPage,
   },
   {
     to: routeMap.resources.node.add,
     component: NodeUpdatePage,
   },
   {
+    to: routeMap.resources.sensor.detail,
+    component: SensorDetailPage,
+  },
+  {
     to: routeMap.resources.sensor.add,
     component: SensorUpdatePage,
+  },
+  {
+    to: routeMap.resources.sensorField.detail,
+    component: SensorFieldDetailPage,
   },
   {
     to: routeMap.resources.sensorField.add,
     component: SensorFieldUpdatePage,
   },
   {
-    to: routeMap.actions.forwardPayload.add,
-    component: ForwardPayloadUpdatePage,
-  },
-  {
     to: routeMap.actions.forwardPayload.detail,
     component: ForwardPayloadDetailPage,
   },
   {
-    to: routeMap.resources.firmware.add,
-    component: FirmwareUpdatePage,
+    to: routeMap.actions.forwardPayload.add,
+    component: ForwardPayloadUpdatePage,
   },
   {
     to: routeMap.resources.firmware.detail,
     component: FirmwareDetailPage,
   },
   {
-    to: routeMap.actions.task.add,
-    component: TaskUpdatePage,
+    to: routeMap.resources.firmware.add,
+    component: FirmwareUpdatePage,
+  },
+  {
+    to: routeMap.resources.dataRepository.detail,
+    component: DataRepositoryDetailPage,
+  },
+  {
+    to: routeMap.resources.dataRepository.add,
+    component: DataRepositoryUpdatePage,
   },
   {
     to: routeMap.actions.task.detail,
     component: TaskDetailPage,
   },
   {
-    to: routeMap.actions.handler.add,
-    component: HandlerUpdatePage,
+    to: routeMap.actions.task.add,
+    component: TaskUpdatePage,
   },
   {
     to: routeMap.actions.handler.detail,
     component: HandlerDetailPage,
   },
   {
-    to: routeMap.actions.scheduler.add,
-    component: SchedulerUpdatePage,
+    to: routeMap.actions.handler.add,
+    component: HandlerUpdatePage,
   },
   {
     to: routeMap.actions.scheduler.detail,
     component: SchedulerDetailPage,
+  },
+  {
+    to: routeMap.actions.scheduler.add,
+    component: SchedulerUpdatePage,
   },
 ]
 

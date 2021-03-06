@@ -1,5 +1,4 @@
 import { Alert, Divider, Flex, Grid, Radio, Stack, StackItem } from "@patternfly/react-core"
-import YAML from "js-yaml"
 import PropTypes from "prop-types"
 import React from "react"
 import ActionBar from "../ActionBar/ActionBar"
@@ -11,6 +10,8 @@ import { validate, validateItem } from "../../Util/Validator"
 import objectPath from "object-path"
 import Loading from "../Loading/Loading"
 import { DownloadIcon } from "@patternfly/react-icons"
+import { toObject, toString } from "../../Util/Language"
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 const { v4: uuidv4 } = require("uuid")
 
 class Editor extends React.Component {
@@ -315,35 +316,6 @@ Editor.propTypes = {
 export default Editor
 
 // helper functions
-
-const toString = (language = "yaml", data = {}) => {
-  if (data === undefined || data === "" || Object.keys(data).length === 0) {
-    return ""
-  }
-
-  switch (language) {
-    case "yaml":
-      return YAML.dump(data)
-    case "json":
-      return JSON.stringify(data)
-    default:
-      return Object.toString(data)
-  }
-}
-
-const toObject = (language = "", data = "") => {
-  if (data === undefined || data === "") {
-    return {}
-  }
-  switch (language) {
-    case "yaml":
-      return YAML.load(data)
-    case "json":
-      return JSON.parse(data)
-    default:
-      return { error: "language '" + language + "' not supported" }
-  }
-}
 
 const updateValidations = (items, inValidItems) => {
   items.forEach((item) => {
