@@ -1,5 +1,6 @@
 import { ResourceTypeOptions } from "../../../Constants/Resource"
 import { DataType, FieldType } from "../../../Constants/Form"
+import { ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
 
 // UtilizationPanel items
@@ -7,14 +8,44 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   // set defaults:
   // ....
   // ....
+
   items.push(
     {
+      label: "Chart",
+      fieldId: "!chart",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Type",
+      fieldId: "config.chart.type",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: ChartTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Thickness",
+      fieldId: "config.chart.thickness",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Invalid value. allowed range: 1-99",
+      validated: "default",
+      validator: { isNotEmpty: {}, isInt: { gt: 0, lt: 100 } },
+    },
+    {
       label: "Column Display",
-      fieldId: "config.columnDisplay",
+      fieldId: "config.chart.columnDisplay",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
-    },
+    }
+  )
+
+  items.push(
     {
       label: "Resource",
       fieldId: "!resource",
@@ -22,7 +53,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "Type",
-      fieldId: "config.resourceType",
+      fieldId: "config.resource.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
@@ -32,17 +63,17 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "Display Name",
-      fieldId: "config.resourceDisplayName",
+      fieldId: "config.resource.displayName",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     }
   )
 
-  if (objectPath.get(rootObject, "config.resourceDisplayName", false)) {
+  if (objectPath.get(rootObject, "config.resource.displayName", false)) {
     items.push({
       label: "Name Key",
-      fieldId: "config.resourceNameKey",
+      fieldId: "config.resource.nameKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -57,7 +88,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   items.push(
     {
       label: "Value Key",
-      fieldId: "config.resourceValueKey",
+      fieldId: "config.resource.valueKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -68,8 +99,16 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
+      label: "Round Decimal",
+      fieldId: "config.resource.roundDecimal",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: false,
+    },
+    {
       label: "Maximum Value",
-      fieldId: "config.resourceMaximumValue",
+      fieldId: "config.resource.maximumValue",
       fieldType: FieldType.Text,
       dataType: DataType.Number,
       value: "",
@@ -81,7 +120,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "Unit",
-      fieldId: "config.resourceUnit",
+      fieldId: "config.resource.unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -89,13 +128,13 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "Limit",
-      fieldId: "config.itemsLimit",
+      fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Items limit.",
+      helperTextInvalid: "Invalid limit.",
       validated: "default",
       validator: { isInteger: {} },
     },
@@ -106,7 +145,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "",
-      fieldId: "config.resourceSelectors",
+      fieldId: "config.resource.selectors",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
@@ -118,7 +157,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     },
     {
       label: "",
-      fieldId: "config.thresholds",
+      fieldId: "config.chart.thresholds",
       fieldType: FieldType.ThresholdsColor,
       dataType: DataType.Object,
       value: "",

@@ -52,8 +52,8 @@ const tableColumns = [
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Metric Type", fieldKey: "metricType", sortable: true },
   { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Value", fieldKey: "payload.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
+  { title: "Value", fieldKey: "current.value", sortable: true },
+  { title: "Previous Value", fieldKey: "previous.value", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -72,8 +72,8 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
     rawData.name,
     METRIC_TYPES[rawData.metricType],
     rawData.unit,
-    String(rawData.payload.value),
-    String(rawData.previousPayload.value),
+    String(rawData.current.value),
+    String(rawData.previous.value),
     { title: <LastSeen date={rawData.lastSeen} /> },
   ]
 }

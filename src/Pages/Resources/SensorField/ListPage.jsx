@@ -9,13 +9,14 @@ import { METRIC_TYPES } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
-  deleteAllFilter, deleteFilterCategory, deleteFilterValue, loading,
+  deleteAllFilter,
+  deleteFilterCategory,
+  deleteFilterValue,
+  loading,
   loadingFailed,
-
-
-
-
-  onSortBy, updateFilter, updateRecords
+  onSortBy,
+  updateFilter,
+  updateRecords,
 } from "../../../store/entities/resources/sensorField"
 
 class List extends ListBase {
@@ -32,9 +33,7 @@ class List extends ListBase {
     super.componentDidMount()
   }
 
-  actions = [
-    { type: "delete", onClick: this.onDeleteActionClick },
-  ]
+  actions = [{ type: "delete", onClick: this.onDeleteActionClick }]
 
   toolbar = [
     { type: "refresh", group: "right1" },
@@ -67,8 +66,8 @@ const tableColumns = [
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Metric Type", fieldKey: "metricType", sortable: true },
   { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Value", fieldKey: "payload.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previousPayload.value", sortable: true },
+  { title: "Value", fieldKey: "current.value", sortable: true },
+  { title: "Previous Value", fieldKey: "previous.value", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -106,8 +105,8 @@ const toRowFuncImpl = (rawData, history) => {
       rawData.name,
       METRIC_TYPES[rawData.metricType],
       rawData.unit,
-      String(rawData.payload.value),
-      String(rawData.previousPayload.value),
+      String(rawData.current.value),
+      String(rawData.previous.value),
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,

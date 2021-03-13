@@ -455,7 +455,7 @@ const getNewWidget = () => {
       w: 20,
       h: 30,
       x: 0,
-      y: 0,
+      y: Infinity,
     },
     config: {},
   }

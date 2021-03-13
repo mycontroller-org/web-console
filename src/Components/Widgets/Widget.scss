@@ -1,0 +1,33 @@
+.dashboard-widget {
+  height: 100%;
+  /*
+    border: 0.1% solid #D5D5D5;
+    */
+  background-color: #ffffff;
+  border-radius: 0px;
+  position: relative;
+  width: 100% !important;
+  overflow: auto !important;
+  .dashboard-widget-body {
+    padding: 0px 0px;
+    .dashboard-widget-title-stick-top {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    .dashboard-widget-title {
+      padding: 5px 0px 5px 10px;
+      background-color: #f0f0f0;
+      .dashboard-widget-action {
+        margin-right: 7px;
+        :hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .dashboard-widget-content {
+      padding: 10px 10px;
+    }
+  }
+}

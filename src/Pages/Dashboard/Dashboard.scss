@@ -22,29 +22,3 @@
 .react-grid-item.react-grid-placeholder {
   background: var(--pf-global--palette--blue-200);
 }
-
-.dashboard-card {
-  position: relative;
-  height: 100%;
-  /*
-  border: 0.1% solid #D5D5D5;
-  */
-  background-color: #ffffff;
-  border-radius: 0px;
-  position: relative;
-  width: 100% !important;
-  overflow: auto !important;
-  .dashboard-card-title {
-    padding: 5px 0px 5px 10px;
-    background-color: #f0f0f0;
-    .dashboard-card-action {
-      margin-right: 7px;
-      :hover{
-        cursor: pointer;
-      }
-    }
-  }
-  .dashboard-card-body {
-    padding: 10px 10px;
-  }
-}

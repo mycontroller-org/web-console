@@ -2,26 +2,41 @@ import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
 import _ from "lodash"
-import { ChartDonutUtilization } from "@patternfly/react-charts"
+import { ChartDonutUtilization, ChartLabel } from "@patternfly/react-charts"
 import { ResourceType } from "../../../Constants/Resource"
 import objectPath from "object-path"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import "./UtilizationPanel.scss"
 import Loading from "../../Loading/Loading"
+import { getValue } from "../../../Util/Util"
+import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
+import v from "validator"
 
 const getInPercent = (maximumValue, value) => {
   return value > maximumValue ? 100 : (value / maximumValue) * 100
 }
 
-const DonutUtilization = ({
-  resource = {},
-  displayName = false,
-  maximumValue = 100,
-  thresholds = {},
-  unit = "",
-}) => {
+const DonutUtilization = ({ config = {}, resource = {} }) => {
+  const chartType = getValue(config, "chart.type", ChartType.SemiCircle)
+  const thresholds = getValue(config, "chart.thresholds", {})
+  const thickness = getValue(config, "chart.thickness", 10)
+  const maximumValue = getValue(config, "resource.maximumValue", 100)
+  const unit = getValue(config, "resource.unit", "")
+  const displayName = getValue(config, "resource.displayName", false)
+  const roundDecimal = getValue(config, "resource.roundDecimal", 2)
+
+  // update inner radius
+  const innerRadius = 100 - thickness
+
   const resourceName = resource.name !== "" ? resource.name : "1"
   const value = getInPercent(maximumValue, resource.value)
+
+  const displayValueFloat = parseFloat(resource.value)
+  let displayValue = resource.value
+
+  if (v.isFloat(String(displayValue), {})) {
+    displayValue = displayValueFloat.toFixed(roundDecimal)
+  }
 
   const keys = Object.keys(thresholds)
 
@@ -29,20 +44,65 @@ const DonutUtilization = ({
     return { value: getInPercent(maximumValue, Number(key)), color: thresholds[key] }
   })
 
-  return (
+  let titleComponent = <ChartLabel />
+  let subTitleComponent = <ChartLabel />
+  let startAngle = 0
+  let endAngle = 360
+  let isStandalone = true
+
+  if (chartType === ChartType.SemiCircle) {
+    titleComponent = <ChartLabel y={85} />
+    subTitleComponent = <ChartLabel y={105} />
+    startAngle = -90
+    endAngle = 90
+    isStandalone = false
+  }
+
+  const chart = (
     <ChartDonutUtilization
+      animate={true}
       // ariaDesc="Storage capacity"
-      // ariaTitle="Donut utilization chart example"
+      // ariaTitle="Donut utilization chart example"z
       constrainToVisibleArea={true}
       data={{ x: resourceName, y: value }}
-      labels={({ datum }) => (datum.x ? `${datum.x}: ${datum.y.toFixed(1)}%` : null)}
-      title={resource.value + unit}
+      labels={() => {}}
+      // labels={({ datum }) => (datum.x ? `${datum.x}: ${datum.y.toFixed(1)}%` : null)}
+      title={displayValue + unit}
+      titleComponent={titleComponent}
       subTitle={displayName ? resource.name : ""}
-      width={175}
-      height={175}
+      subTitleComponent={subTitleComponent}
+      width={230}
+      height={230}
+      startAngle={startAngle}
+      endAngle={endAngle}
+      innerRadius={innerRadius}
+      radius={100}
       thresholds={tunedThresholds}
+      standalone={isStandalone}
     />
   )
+
+  switch (chartType) {
+    case ChartType.SemiCircle:
+      return (
+        <svg
+          viewBox={"0 0 230 120"}
+          preserveAspectRatio="none"
+          height="120"
+          width="230"
+          role="img"
+          style={{ height: "100%", width: "100%" }}
+        >
+          {chart}
+        </svg>
+      )
+
+    case ChartType.FullCircle:
+      return chart
+
+    default:
+      return <span>Invalid chart type: {chartType}</span>
+  }
 }
 
 class UtilizationPanel extends React.Component {
@@ -70,15 +130,21 @@ class UtilizationPanel extends React.Component {
       return
     }
 
+    const resourceType = getValue(config, "resource.type", "")
+    const itemsLimit = getValue(config, "resource.limit", 1)
+    const resourceSelectors = getValue(config, "resource.selectors", {})
+    const resourceNameKey = getValue(config, "resource.nameKey", {})
+    const resourceValueKey = getValue(config, "resource.valueKey", {})
+
     const filters = []
-    if (config.resourceSelectors) {
-      const keys = Object.keys(config.resourceSelectors)
+    if (resourceSelectors) {
+      const keys = Object.keys(resourceSelectors)
       keys.forEach((key) => {
-        filters.push({ k: key, v: config.resourceSelectors[key] })
+        filters.push({ k: key, v: resourceSelectors[key] })
       })
     }
     let resourceApi = null
-    switch (config.resourceType) {
+    switch (resourceType) {
       case ResourceType.Gateway:
         resourceApi = api.gateway.list
         break
@@ -100,16 +166,14 @@ class UtilizationPanel extends React.Component {
         return
     }
 
-    resourceApi({ filter: filters, limit: config.itemsLimit })
+    resourceApi({ filter: filters, limit: itemsLimit })
       .then((res) => {
         const resources = res.data.data.map((resource) => {
-          const name = config.resourceNameKey
-            ? objectPath.get(resource, config.resourceNameKey, "undefined")
-            : ""
+          const name = resourceNameKey ? objectPath.get(resource, resourceNameKey, "undefined") : ""
           return {
             id: resource.id,
             name: name,
-            value: objectPath.get(resource, config.resourceValueKey, ""),
+            value: objectPath.get(resource, resourceValueKey, ""),
           }
         })
         this.setState({ loading: false, resources })
@@ -149,7 +213,8 @@ class UtilizationPanel extends React.Component {
   render() {
     const { loading, resources } = this.state
     const { config } = this.props
-    const { columnDisplay, resourceUnit, resourceType } = config
+    const columnDisplay = getValue(config, "chart.columnDisplay", false)
+    const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {
       return <Loading />
@@ -167,15 +232,7 @@ class UtilizationPanel extends React.Component {
           onClick={() => this.onClick(resourceType, resource.id)}
           style={{ height: "100%", width: "100%", cursor: "pointer" }}
         >
-          <DonutUtilization
-            className="on-edit"
-            key={"chart_" + index}
-            maximumValue={config.resourceMaximumValue}
-            displayName={config.resourceDisplayName}
-            thresholds={config.thresholds}
-            resource={resource}
-            unit={resourceUnit}
-          />
+          <DonutUtilization className="on-edit" key={"chart_" + index} config={config} resource={resource} />
         </div>
       )
     })

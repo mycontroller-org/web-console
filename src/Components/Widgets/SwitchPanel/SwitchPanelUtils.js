@@ -28,26 +28,19 @@ export const getField = (resourceType, resource, resourceNameKey) => {
     case ResourceType.Handler:
       return {
         id: resource.id,
+        type: resourceType,
         label: objectPath.get(resource, resourceNameKey, "undefined"),
         isChecked: resource.enabled,
-        quickId: resourceType + ":" + resource.id,
+        quickId: `${resourceType}:${resource.id}`,
       }
 
     case ResourceType.SensorField:
       return {
         id: resource.id,
+        type: resourceType,
         label: objectPath.get(resource, resourceNameKey, "undefined"),
-        isChecked: resource.payload.value,
-        quickId:
-          resourceType +
-          ":" +
-          resource.gatewayId +
-          "." +
-          resource.nodeId +
-          "." +
-          resource.sensorId +
-          "." +
-          resource.fieldId,
+        isChecked: resource.current.value,
+        quickId: `${resourceType}:${resource.gatewayId}.${resource.nodeId}.${resource.sensorId}.${resource.fieldId}`,
       }
 
     default:

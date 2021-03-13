@@ -9,6 +9,7 @@ import EmptyPanel from "./EmptyPanel/EmptyPanel"
 import LightPanel from "./LightPanel/LightPanel"
 import SwitchPanel from "./SwitchPanel/SwitchPanel"
 import UtilizationPanel from "./UtilizationPanel/UtilizationPanel"
+import "./Widget.scss"
 
 const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
   const items = []
@@ -72,13 +73,13 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
           <IconButton
             key="btn-edit"
             icon={CogIcon}
-            className="dashboard-card-action"
+            className="dashboard-widget-action"
             onClick={onEditClickFunc}
           />
           <IconButton
             key="btn-close"
             icon={CloseIcon}
-            className="dashboard-card-action"
+            className="dashboard-widget-action"
             onClick={onDeleteClickFunc}
           />
         </FlexItem>
@@ -86,9 +87,10 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
     }
 
     let titleComponent = null
+    const stickTitleOnTopClass = !item.showTitle ? "dashboard-widget-title-stick-top" : ""
     if (item.showTitle || editEnabled) {
       titleComponent = (
-        <CardTitle className="dashboard-card-title">
+        <CardTitle className={"dashboard-widget-title " + stickTitleOnTopClass}>
           <Flex>
             <FlexItem>
               <span style={{ color: "#434343" }}>{item.title}&nbsp;</span>
@@ -100,10 +102,10 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
     }
     return (
       <div key={item.key}>
-        <Card isHoverable={false} isCompact={true} className="dashboard-card">
-          {titleComponent}
-          <CardBody id="dashboard-card" className="dashboard-card-body">
-            {item.content}
+        <Card isHoverable={false} isCompact={true} className="dashboard-widget">
+          <CardBody id="dashboard-widget" className="dashboard-widget-body">
+            {titleComponent}
+            <div className="dashboard-widget-content">{item.content}</div>
           </CardBody>
         </Card>
       </div>
