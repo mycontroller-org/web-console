@@ -20,6 +20,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   const chartType = getValue(config, "chart.type", ChartType.SemiCircle)
   const thresholds = getValue(config, "chart.thresholds", {})
   const thickness = getValue(config, "chart.thickness", 10)
+  const cornerSmoothing = getValue(config, "chart.cornerSmoothing", 0)
   const maximumValue = getValue(config, "resource.maximumValue", 100)
   const unit = getValue(config, "resource.unit", "")
   const displayName = getValue(config, "resource.displayName", false)
@@ -50,12 +51,24 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   let endAngle = 360
   let isStandalone = true
 
-  if (chartType === ChartType.SemiCircle) {
-    titleComponent = <ChartLabel y={85} />
-    subTitleComponent = <ChartLabel y={105} />
-    startAngle = -90
-    endAngle = 90
-    isStandalone = false
+  switch (chartType) {
+    case ChartType.CircleSize50:
+      titleComponent = <ChartLabel y={85} />
+      subTitleComponent = <ChartLabel y={105} />
+      startAngle = -90
+      endAngle = 90
+      isStandalone = false
+      break
+
+    case ChartType.CircleSize75:
+      titleComponent = <ChartLabel y={100} />
+      subTitleComponent = <ChartLabel y={120} />
+      startAngle = -135
+      endAngle = 135
+      isStandalone = false
+      break
+
+    default:
   }
 
   const chart = (
@@ -73,6 +86,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       subTitleComponent={subTitleComponent}
       width={230}
       height={230}
+      cornerRadius={cornerSmoothing}
       startAngle={startAngle}
       endAngle={endAngle}
       innerRadius={innerRadius}
@@ -83,7 +97,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   )
 
   switch (chartType) {
-    case ChartType.SemiCircle:
+    case ChartType.CircleSize50:
       return (
         <svg
           viewBox={"0 0 230 120"}
@@ -97,7 +111,21 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
         </svg>
       )
 
-    case ChartType.FullCircle:
+    case ChartType.CircleSize75:
+      return (
+        <svg
+          viewBox={"0 0 230 190"}
+          preserveAspectRatio="none"
+          height="190"
+          width="230"
+          role="img"
+          style={{ height: "100%", width: "100%" }}
+        >
+          {chart}
+        </svg>
+      )
+
+    case ChartType.CircleSize100:
       return chart
 
     default:

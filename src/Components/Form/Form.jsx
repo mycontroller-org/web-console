@@ -24,6 +24,7 @@ import DateRangePicker from "./RangePicker/DateRangePicker"
 import TimeRangePicker from "./RangePicker/TimeRangePicker"
 import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
 import ScriptEditor from "./ScriptEditor/ScriptEditor"
+import SimpleSlider from "./Slider/Simple"
 
 // item sample
 // const item = {
@@ -321,6 +322,19 @@ const getField = (item, onChange) => {
           saveButtonText={item.saveButtonText}
           updateButtonText={item.updateButtonText}
           value={item.value}
+          isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.SliderSimple:
+      return (
+        <SimpleSlider
+          id={item.fieldId}
+          min={item.min}
+          max={item.max}
+          step={item.step}
+          value={item.value}
+          onChange={onChange}
           isDisabled={item.isDisabled}
         />
       )

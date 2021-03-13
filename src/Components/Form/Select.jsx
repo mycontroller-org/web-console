@@ -90,7 +90,7 @@ class Select extends React.Component {
       />
     ))
 
-    console.log("selections:", selections)
+   // console.log("selections:", selections)
 
     return (
       <PfSelect

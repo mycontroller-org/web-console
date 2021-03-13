@@ -6,8 +6,8 @@ import objectPath from "object-path"
 // UtilizationPanel items
 export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   // set defaults:
-  // ....
-  // ....
+  objectPath.set(rootObject, "config.chart.thickness", 20, true)
+  objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
 
   items.push(
     {
@@ -28,13 +28,22 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     {
       label: "Thickness",
       fieldId: "config.chart.thickness",
-      fieldType: FieldType.Text,
+      fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
       value: "",
-      isRequired: true,
-      helperTextInvalid: "Invalid value. allowed range: 1-99",
-      validated: "default",
-      validator: { isNotEmpty: {}, isInt: { gt: 0, lt: 100 } },
+      min: 1,
+      max: 99,
+      step: 1,
+    },
+    {
+      label: "Corner Smoothing",
+      fieldId: "config.chart.cornerSmoothing",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Integer,
+      value: "",
+      min: 0,
+      max: 100,
+      step: 1,
     },
     {
       label: "Column Display",
@@ -42,6 +51,18 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+    },
+    {
+      label: "Thresholds Color",
+      fieldId: "!thresholds",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "config.chart.thresholds",
+      fieldType: FieldType.ThresholdsColor,
+      dataType: DataType.Object,
+      value: "",
     }
   )
 
@@ -147,18 +168,6 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       label: "",
       fieldId: "config.resource.selectors",
       fieldType: FieldType.KeyValueMap,
-      dataType: DataType.Object,
-      value: "",
-    },
-    {
-      label: "Thresholds",
-      fieldId: "!thresholds",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "",
-      fieldId: "config.chart.thresholds",
-      fieldType: FieldType.ThresholdsColor,
       dataType: DataType.Object,
       value: "",
     }
