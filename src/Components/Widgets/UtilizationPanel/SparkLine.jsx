@@ -66,29 +66,31 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
 
   const minValue = metric.minValue - metric.minValue * 0.1
 
-  const metricsData =
-    metric.data.length === 0 ? (
-      <span className="no-metric-data">Metric data not available</span>
-    ) : (
-      <ChartGroup
-        standalone={true}
-        height={100}
-        width={400}
-        domainPadding={{ y: 9 }}
-        minDomain={{ y: minValue }}
-        containerComponent={
-          <ChartVoronoiContainer
-            labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
-            constrainToVisibleArea
-          />
-        }
-        padding={padding}
-        color={chartColor}
-        scale={{ x: "time", y: "linear" }}
-      >
-        {chart}
-      </ChartGroup>
-    )
+  const isMetricDataAvailable = metric.data.length > 0
+  const metricsData = isMetricDataAvailable ? (
+    <ChartGroup
+      standalone={true}
+      height={100}
+      width={400}
+      domainPadding={{ y: 9 }}
+      minDomain={{ y: minValue }}
+      containerComponent={
+        <ChartVoronoiContainer
+          labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
+          constrainToVisibleArea
+        />
+      }
+      padding={padding}
+      color={chartColor}
+      scale={{ x: "time", y: "linear" }}
+    >
+      {chart}
+    </ChartGroup>
+  ) : (
+    <span className="no-metric-data" style={{ color: chartColor }}>
+      Metric data not available
+    </span>
+  )
 
   return (
     <Stack className="mc-spark-chart" hasGutter={false}>
@@ -98,7 +100,9 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
       <StackItem>
         <span class="value">{displayValue}</span>
         <span className="value-unit">{unit}</span>
-        <span className="metric-function">[{capitalizeFirstLetter(metricFunction)}]</span>
+        <span className="metric-function" style={{ display: isMetricDataAvailable ? null : "none" }}>
+          [{capitalizeFirstLetter(metricFunction)}]
+        </span>
       </StackItem>
       <StackItem>{metricsData}</StackItem>
     </Stack>

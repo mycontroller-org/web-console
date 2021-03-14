@@ -10,17 +10,24 @@ import { api } from "../../../Service/Api"
 
 // Light Panel items
 export const updateFormItemsLightPanel = (rootObject, items) => {
-  items.push({
-    label: "Light Type",
-    fieldId: "config.lightType",
-    fieldType: FieldType.SelectTypeAhead,
-    dataType: DataType.String,
-    value: "",
-    options: LightTypeOptions,
-    isRequired: true,
-    validator: { isNotEmpty: {} },
-    resetFields: { "config.fieldIds": {}, "config.rgbComponent": "" },
-  })
+  items.push(
+    {
+      label: "Light",
+      fieldId: "!light",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Type",
+      fieldId: "config.lightType",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: LightTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      resetFields: { "config.fieldIds": {}, "config.rgbComponent": "" },
+    }
+  )
 
   const lightType = objectPath.get(rootObject, "config.lightType", "")
 

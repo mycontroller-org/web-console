@@ -49,7 +49,7 @@ class LightPanel extends React.Component {
         const values = {}
         const resources = {}
         res.data.data.forEach((field) => {
-          let value = objectPath.get(field, "payload.value", "")
+          let value = objectPath.get(field, "current.value", "")
 
           const fieldName = fieldIdNameMap[field.id]
           switch (fieldName) {
