@@ -100,7 +100,7 @@ class UtilizationPanel extends React.Component {
             global: {
               start: duration.value,
               window: duration.window,
-              functions: [metricFunction, "percentile_98"],
+              functions: [metricFunction],
             },
             individual: [], // add id and metric type
           }
@@ -239,7 +239,7 @@ class UtilizationPanel extends React.Component {
 
     const displayType = columnDisplay ? "grid" : "flex"
 
-    return <div style={{ display: displayType }} >{charts}</div>
+    return <div style={{ display: displayType }}>{charts}</div>
   }
 }
 
