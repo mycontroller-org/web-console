@@ -3,12 +3,30 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
-  &:hover {
-    //background-color: var(--pf-global--palette--blue-100);
-    border: solid 1px var(--pf-global--palette--blue-100);
-    border-radius: 2px;
-  }
+  // &:hover {
+  //   border: solid 1px var(--pf-global--palette--blue-100);
+  //   border-radius: 2px;
+  // }
   .utilization-chart {
     margin: 2px;
+  }
+}
+
+.mc-spark-chart {
+  .title {
+    color: var(--pf-global--palette--black-600);
+    font-size: 18px;
+  }
+  .value {
+    color: var(--pf-global--palette--black-800);
+    font-size: 56px;
+  }
+  .value-unit {
+    color: var(--pf-global--palette--black-600);
+    font-size: 18px;
+  }
+  .metric-function {
+    color: var(--pf-global--palette--black-400);
+    font-size: 14px;
   }
 }

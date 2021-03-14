@@ -25,3 +25,17 @@ export const splitWithTail = (str = "", separator, limit) => {
   }
   return result
 }
+
+export const getMetricDuration = (interval, options) => {
+  for (let index = 0; index < options.length; index++) {
+    const duration = options[index]
+    if (interval === duration.value) {
+      return duration
+    }
+  }
+  return options[0]
+}
+
+export const capitalizeFirstLetter = (value) => {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}

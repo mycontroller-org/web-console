@@ -2,141 +2,25 @@ import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
 import _ from "lodash"
-import { ChartDonutUtilization, ChartLabel } from "@patternfly/react-charts"
 import { ResourceType } from "../../../Constants/Resource"
 import objectPath from "object-path"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
-import "./UtilizationPanel.scss"
 import Loading from "../../Loading/Loading"
-import { getValue } from "../../../Util/Util"
+import { getMetricDuration, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
-import v from "validator"
+import DonutUtilization from "./DonutUtilization"
+import SparkLine from "./SparkLine"
+import moment from "moment"
+import { Duration, MetricFunctionType, UtilizationDurationOptions } from "../../../Constants/Metric"
 
-const getInPercent = (maximumValue, value) => {
-  return value > maximumValue ? 100 : (value / maximumValue) * 100
-}
-
-const DonutUtilization = ({ config = {}, resource = {} }) => {
-  const chartType = getValue(config, "chart.type", ChartType.SemiCircle)
-  const thresholds = getValue(config, "chart.thresholds", {})
-  const thickness = getValue(config, "chart.thickness", 10)
-  const cornerSmoothing = getValue(config, "chart.cornerSmoothing", 0)
-  const maximumValue = getValue(config, "resource.maximumValue", 100)
-  const unit = getValue(config, "resource.unit", "")
-  const displayName = getValue(config, "resource.displayName", false)
-  const roundDecimal = getValue(config, "resource.roundDecimal", 2)
-
-  // update inner radius
-  const innerRadius = 100 - thickness
-
-  const resourceName = resource.name !== "" ? resource.name : "1"
-  const value = getInPercent(maximumValue, resource.value)
-
-  const displayValueFloat = parseFloat(resource.value)
-  let displayValue = resource.value
-
-  if (v.isFloat(String(displayValue), {})) {
-    displayValue = displayValueFloat.toFixed(roundDecimal)
-  }
-
-  const keys = Object.keys(thresholds)
-
-  const tunedThresholds = keys.map((key) => {
-    return { value: getInPercent(maximumValue, Number(key)), color: thresholds[key] }
-  })
-
-  let titleComponent = <ChartLabel />
-  let subTitleComponent = <ChartLabel />
-  let startAngle = 0
-  let endAngle = 360
-  let isStandalone = true
-
-  switch (chartType) {
-    case ChartType.CircleSize50:
-      titleComponent = <ChartLabel y={85} />
-      subTitleComponent = <ChartLabel y={105} />
-      startAngle = -90
-      endAngle = 90
-      isStandalone = false
-      break
-
-    case ChartType.CircleSize75:
-      titleComponent = <ChartLabel y={100} />
-      subTitleComponent = <ChartLabel y={120} />
-      startAngle = -135
-      endAngle = 135
-      isStandalone = false
-      break
-
-    default:
-  }
-
-  const chart = (
-    <ChartDonutUtilization
-      animate={true}
-      // ariaDesc="Storage capacity"
-      // ariaTitle="Donut utilization chart example"z
-      constrainToVisibleArea={true}
-      data={{ x: resourceName, y: value }}
-      labels={() => {}}
-      // labels={({ datum }) => (datum.x ? `${datum.x}: ${datum.y.toFixed(1)}%` : null)}
-      title={displayValue + unit}
-      titleComponent={titleComponent}
-      subTitle={displayName ? resource.name : ""}
-      subTitleComponent={subTitleComponent}
-      width={230}
-      height={230}
-      cornerRadius={cornerSmoothing}
-      startAngle={startAngle}
-      endAngle={endAngle}
-      innerRadius={innerRadius}
-      radius={100}
-      thresholds={tunedThresholds}
-      standalone={isStandalone}
-    />
-  )
-
-  switch (chartType) {
-    case ChartType.CircleSize50:
-      return (
-        <svg
-          viewBox={"0 0 230 120"}
-          preserveAspectRatio="none"
-          height="120"
-          width="230"
-          role="img"
-          style={{ height: "100%", width: "100%" }}
-        >
-          {chart}
-        </svg>
-      )
-
-    case ChartType.CircleSize75:
-      return (
-        <svg
-          viewBox={"0 0 230 190"}
-          preserveAspectRatio="none"
-          height="190"
-          width="230"
-          role="img"
-          style={{ height: "100%", width: "100%" }}
-        >
-          {chart}
-        </svg>
-      )
-
-    case ChartType.CircleSize100:
-      return chart
-
-    default:
-      return <span>Invalid chart type: {chartType}</span>
-  }
-}
+import "./UtilizationPanel.scss"
+import { Stack, StackItem } from "@patternfly/react-core"
 
 class UtilizationPanel extends React.Component {
   state = {
     loading: true,
     resources: [],
+    metrics: {},
   }
 
   componentDidMount() {
@@ -163,6 +47,9 @@ class UtilizationPanel extends React.Component {
     const resourceSelectors = getValue(config, "resource.selectors", {})
     const resourceNameKey = getValue(config, "resource.nameKey", {})
     const resourceValueKey = getValue(config, "resource.valueKey", {})
+    const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
+    const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
+    const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
 
     const filters = []
     if (resourceSelectors) {
@@ -200,11 +87,68 @@ class UtilizationPanel extends React.Component {
           const name = resourceNameKey ? objectPath.get(resource, resourceNameKey, "undefined") : ""
           return {
             id: resource.id,
+            metricType: objectPath.get(resource, "metricType", ""),
             name: name,
             value: objectPath.get(resource, resourceValueKey, ""),
           }
         })
-        this.setState({ loading: false, resources })
+        // if it is spark chart, get metrics data
+        if (chartType.startsWith("spark")) {
+          const duration = getMetricDuration(chartDuration, UtilizationDurationOptions)
+
+          const metricQuery = {
+            global: {
+              start: duration.value,
+              window: duration.window,
+              functions: [metricFunction, "percentile_98"],
+            },
+            individual: [], // add id and metric type
+          }
+          // add id and metricType
+          resources.forEach((r) => {
+            if (r.metricType === "gauge_float" || r.metricType === "gauge") {
+              metricQuery.individual.push({
+                name: r.id,
+                metricType: r.metricType,
+                tags: { id: r.id },
+              })
+            }
+          })
+          if (metricQuery.individual.length > 0) {
+            api.metric
+              .fetch(metricQuery)
+              .then((metricRes) => {
+                // update metrics data
+                const keys = Object.keys(metricRes.data)
+                const metrics = {}
+                keys.forEach((key) => {
+                  const metricsRaw = metricRes.data[key]
+                  const data = []
+                  let minValue = Infinity
+                  metricsRaw.forEach((d) => {
+                    const ts = moment(d.timestamp).format(duration.tsFormat)
+                    // update data
+                    const yValue = d.metric[metricFunction]
+                    data.push({
+                      x: ts,
+                      y: yValue,
+                    })
+                    if (yValue && minValue > yValue) {
+                      minValue = yValue
+                    }
+                  })
+                  // update data into metrics object
+                  metrics[key] = { data: data, minValue: minValue }
+                })
+                this.setState({ loading: false, resources, metrics })
+              })
+              .catch((_e) => {
+                this.setState({ loading: false, resources })
+              })
+          }
+        } else {
+          this.setState({ loading: false, resources })
+        }
       })
       .catch((_e) => {
         this.setState({ loading: false })
@@ -239,9 +183,11 @@ class UtilizationPanel extends React.Component {
   }
 
   render() {
-    const { loading, resources } = this.state
+    const { loading, resources, metrics } = this.state
     const { config } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
+    const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
+
     const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {
@@ -253,6 +199,32 @@ class UtilizationPanel extends React.Component {
     }
 
     const charts = resources.map((resource, index) => {
+      let chart = null
+      switch (chartType) {
+        case ChartType.SparkLine:
+        case ChartType.SparkArea:
+        case ChartType.SparkBar:
+          chart = (
+            <SparkLine
+              className="on-edit"
+              key={"chart_" + index}
+              config={config}
+              resource={resource}
+              metric={metrics[resource.id]}
+            />
+          )
+          break
+
+        default:
+          chart = (
+            <DonutUtilization
+              className="on-edit"
+              key={"chart_" + index}
+              config={config}
+              resource={resource}
+            />
+          )
+      }
       return (
         <div
           className="mc-utilization-panel-item"
@@ -260,14 +232,14 @@ class UtilizationPanel extends React.Component {
           onClick={() => this.onClick(resourceType, resource.id)}
           style={{ height: "100%", width: "100%", cursor: "pointer" }}
         >
-          <DonutUtilization className="on-edit" key={"chart_" + index} config={config} resource={resource} />
+          {chart}
         </div>
       )
     })
 
     const displayType = columnDisplay ? "grid" : "flex"
 
-    return <div style={{ display: displayType }}>{charts}</div>
+    return <div style={{ display: displayType }} >{charts}</div>
   }
 }
 

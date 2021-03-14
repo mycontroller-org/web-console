@@ -1,15 +1,25 @@
 import { ResourceTypeOptions } from "../../../Constants/Resource"
 import { DataType, FieldType } from "../../../Constants/Form"
-import { ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
+import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
+import { getValue } from "../../../Util/Util"
+import {
+  InterpolationType,
+  InterpolationTypeLineOptions,
+  MetricFunctionTypeOptions,
+  UtilizationDurationOptions,
+} from "../../../Constants/Metric"
 
 // UtilizationPanel items
 export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
-  // set defaults:
-  objectPath.set(rootObject, "config.chart.thickness", 20, true)
-  objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
-
   items.push(
+    {
+      label: "Column Display",
+      fieldId: "config.chart.columnDisplay",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
     {
       label: "Chart",
       fieldId: "!chart",
@@ -24,47 +34,35 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       options: ChartTypeOptions,
       isRequired: true,
       validator: { isNotEmpty: {} },
-    },
-    {
-      label: "Thickness",
-      fieldId: "config.chart.thickness",
-      fieldType: FieldType.SliderSimple,
-      dataType: DataType.Integer,
-      value: "",
-      min: 1,
-      max: 99,
-      step: 1,
-    },
-    {
-      label: "Corner Smoothing",
-      fieldId: "config.chart.cornerSmoothing",
-      fieldType: FieldType.SliderSimple,
-      dataType: DataType.Integer,
-      value: "",
-      min: 0,
-      max: 100,
-      step: 1,
-    },
-    {
-      label: "Column Display",
-      fieldId: "config.chart.columnDisplay",
-      fieldType: FieldType.Switch,
-      dataType: DataType.Boolean,
-      value: false,
-    },
-    {
-      label: "Thresholds Color",
-      fieldId: "!thresholds",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "",
-      fieldId: "config.chart.thresholds",
-      fieldType: FieldType.ThresholdsColor,
-      dataType: DataType.Object,
-      value: "",
     }
   )
+
+  // update chart config items
+  const chartType = getValue(rootObject, "config.chart.type", "")
+
+  switch (chartType) {
+    case ChartType.CircleSize50:
+    case ChartType.CircleSize75:
+    case ChartType.CircleSize100:
+      // set defaults:
+      objectPath.set(rootObject, "config.chart.thickness", 20, true)
+      objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
+      const circleItems = getCircleItems(rootObject)
+      items.push(...circleItems)
+      break
+
+    case ChartType.SparkArea:
+    case ChartType.SparkLine:
+    case ChartType.SparkBar:
+      // set defaults:
+      objectPath.set(rootObject, "config.chart.thickness", 20, true)
+      objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
+      const sparkLineItems = getSparkLineItems(rootObject)
+      items.push(...sparkLineItems)
+      break
+
+    default:
+  }
 
   items.push(
     {
@@ -128,18 +126,6 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       isRequired: false,
     },
     {
-      label: "Maximum Value",
-      fieldId: "config.resource.maximumValue",
-      fieldType: FieldType.Text,
-      dataType: DataType.Number,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid Maximum Value.",
-      validated: "default",
-      validator: { isDecimal: { decimal_digits: 2 } },
-    },
-    {
       label: "Unit",
       fieldId: "config.resource.unit",
       fieldType: FieldType.Text,
@@ -172,4 +158,117 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       value: "",
     }
   )
+}
+
+const getCircleItems = (_rootObject) => {
+  return [
+    {
+      label: "Maximum Value",
+      fieldId: "config.chart.maximumValue",
+      fieldType: FieldType.Text,
+      dataType: DataType.Number,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Maximum Value.",
+      validated: "default",
+      validator: { isDecimal: { decimal_digits: 2 } },
+    },
+    {
+      label: "Thickness",
+      fieldId: "config.chart.thickness",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Integer,
+      value: "",
+      min: 1,
+      max: 99,
+      step: 1,
+    },
+    {
+      label: "Corner Smoothing",
+      fieldId: "config.chart.cornerSmoothing",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Integer,
+      value: "",
+      min: 0,
+      max: 100,
+      step: 1,
+    },
+    {
+      label: "Thresholds Color",
+      fieldId: "!thresholds",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "config.chart.thresholds",
+      fieldType: FieldType.ThresholdsColor,
+      dataType: DataType.Object,
+      value: "",
+    },
+  ]
+}
+
+const getSparkLineItems = (rootObject) => {
+  const items = [
+    {
+      label: "Duration",
+      fieldId: "config.chart.duration",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: UtilizationDurationOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Metric Function",
+      fieldId: "config.chart.metricFunction",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: MetricFunctionTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Color",
+      fieldId: "config.chart.color",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+  ]
+
+  const chartType = getValue(rootObject, "config.chart.type", "")
+
+  if (chartType === ChartType.SparkLine || chartType === ChartType.SparkArea) {
+    objectPath.set(rootObject, "config.chart.strokeWidth", 2, true)
+    objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Basis, true)
+
+    items.push(
+      {
+        label: "Stroke Width",
+        fieldId: "config.chart.strokeWidth",
+        fieldType: FieldType.SliderSimple,
+        dataType: DataType.Integer,
+        value: "",
+        min: 1,
+        max: 20,
+        step: 1,
+      },
+      {
+        label: "Interpolation",
+        fieldId: "config.chart.interpolation",
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.String,
+        value: "",
+        options: InterpolationTypeLineOptions,
+        isRequired: true,
+        validator: { isNotEmpty: {} },
+      }
+    )
+  }
+
+  return items
 }

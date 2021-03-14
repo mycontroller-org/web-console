@@ -105,7 +105,7 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
         <Card isHoverable={false} isCompact={true} className="dashboard-widget">
           <CardBody id="dashboard-widget" className="dashboard-widget-body">
             {titleComponent}
-            <div className="dashboard-widget-content">{item.content}</div>
+            <div className="dashboard-widget-content no-space">{item.content}</div>
           </CardBody>
         </Card>
       </div>

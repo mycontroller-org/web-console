@@ -1,13 +1,10 @@
 .dashboard-widget {
   height: 100%;
-  /*
-    border: 0.1% solid #D5D5D5;
-    */
+  width: 100%;
   background-color: #ffffff;
   border-radius: 0px;
   position: relative;
-  width: 100% !important;
-  overflow: auto !important;
+  overflow: auto;
   .dashboard-widget-body {
     padding: 0px 0px;
     .dashboard-widget-title-stick-top {
