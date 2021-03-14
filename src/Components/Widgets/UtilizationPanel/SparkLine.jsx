@@ -64,7 +64,31 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
     default:
   }
 
-  const minValue = metric.minValue < 1 ? metric.minValue : metric.minValue - 1
+  const minValue = metric.minValue - metric.minValue * 0.1
+
+  const metricsData =
+    metric.data.length === 0 ? (
+      <span className="no-metric-data">Metric data not available</span>
+    ) : (
+      <ChartGroup
+        standalone={true}
+        height={100}
+        width={400}
+        domainPadding={{ y: 9 }}
+        minDomain={{ y: minValue }}
+        containerComponent={
+          <ChartVoronoiContainer
+            labels={({ datum }) => `${datum.y ? datum.y.toFixed(roundDecimal) : null} at ${datum.x}`}
+            constrainToVisibleArea
+          />
+        }
+        padding={padding}
+        color={chartColor}
+        scale={{ x: "time", y: "linear" }}
+      >
+        {chart}
+      </ChartGroup>
+    )
 
   return (
     <Stack className="mc-spark-chart" hasGutter={false}>
@@ -74,30 +98,9 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
       <StackItem>
         <span class="value">{displayValue}</span>
         <span className="value-unit">{unit}</span>
+        <span className="metric-function">[{capitalizeFirstLetter(metricFunction)}]</span>
       </StackItem>
-      <StackItem>
-        <span className="metric-function">{capitalizeFirstLetter(metricFunction)}</span>
-      </StackItem>
-      <StackItem>
-        <ChartGroup
-          standalone={true}
-          height={100}
-          width={400}
-          domainPadding={{ y: 9 }}
-          minDomain={{ y: minValue }}
-          containerComponent={
-            <ChartVoronoiContainer
-              labels={({ datum }) => `${datum.y ? datum.y.toFixed(roundDecimal) : null} at ${datum.x}`}
-              constrainToVisibleArea
-            />
-          }
-          padding={padding}
-          color={chartColor}
-          scale={{ x: "time", y: "linear" }}
-        >
-          {chart}
-        </ChartGroup>
-      </StackItem>
+      <StackItem>{metricsData}</StackItem>
     </Stack>
   )
 }

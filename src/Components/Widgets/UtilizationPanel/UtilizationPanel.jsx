@@ -125,6 +125,7 @@ class UtilizationPanel extends React.Component {
                   const metricsRaw = metricRes.data[key]
                   const data = []
                   let minValue = Infinity
+                  let maxValue = -Number.MAX_VALUE * 2
                   metricsRaw.forEach((d) => {
                     const ts = moment(d.timestamp).format(duration.tsFormat)
                     // update data
@@ -133,12 +134,17 @@ class UtilizationPanel extends React.Component {
                       x: ts,
                       y: yValue,
                     })
-                    if (yValue && minValue > yValue) {
-                      minValue = yValue
+                    if (yValue) {
+                      if (minValue > yValue) {
+                        minValue = yValue
+                      }
+                      if (maxValue < yValue) {
+                        maxValue = yValue
+                      }
                     }
                   })
                   // update data into metrics object
-                  metrics[key] = { data: data, minValue: minValue }
+                  metrics[key] = { data: data, minValue: minValue, maxValue: maxValue }
                 })
                 this.setState({ loading: false, resources, metrics })
               })

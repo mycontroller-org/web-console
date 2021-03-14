@@ -15,7 +15,7 @@
 .mc-spark-chart {
   .title {
     color: var(--pf-global--palette--black-600);
-    font-size: 18px;
+    font-size: 19px;
   }
   .value {
     color: var(--pf-global--palette--black-800);
@@ -23,10 +23,15 @@
   }
   .value-unit {
     color: var(--pf-global--palette--black-600);
-    font-size: 18px;
+    font-size: 22px;
+    padding-right: 10px;
   }
   .metric-function {
     color: var(--pf-global--palette--black-400);
-    font-size: 14px;
+    font-size: 12px;
+  }
+  .no-metric-data {
+    color: var(--pf-global--palette--black-600);
+    font-size: 18px;
   }
 }
