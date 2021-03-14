@@ -1,4 +1,4 @@
-export const defaultColors = [
+export const ColorsSetBig = [
     // red, volcano, orange, gold, yellow, lime, green, cyan, blue, geekblue, purple, magenta
     '#ffccc7', '#ffd8bf', '#ffe7ba', '#fff1b8', '#ffffb8','#f4ffb8', '#d9f7be', '#b5f5ec', '#bae7ff','#d6e4ff', '#efdbff', '#ffd6e7',
     '#ffa39e', '#ffbb96', '#ffd591', '#ffe58f', '#fffb8f','#eaff8f', '#b7eb8f', '#87e8de', '#91d5ff','#adc6ff', '#d3adf7', '#ffadd2',

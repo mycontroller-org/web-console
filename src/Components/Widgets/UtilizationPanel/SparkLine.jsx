@@ -43,7 +43,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
           data={metric.data}
         />
       )
-      padding = { bottom: -4, left: -2, right: -2 }
+      padding = { bottom: -5, left: -2, right: -2 }
       break
 
     case ChartType.SparkLine:

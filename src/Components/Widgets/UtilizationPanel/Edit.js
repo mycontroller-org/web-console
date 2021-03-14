@@ -9,6 +9,7 @@ import {
   MetricFunctionTypeOptions,
   UtilizationDurationOptions,
 } from "../../../Constants/Metric"
+import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 
 // UtilizationPanel items
 export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
@@ -234,9 +235,10 @@ const getSparkLineItems = (rootObject) => {
     {
       label: "Color",
       fieldId: "config.chart.color",
-      fieldType: FieldType.Text,
+      fieldType: FieldType.ColorBox,
       dataType: DataType.String,
       value: "",
+      colors: ColorsSetBig,
     },
   ]
 

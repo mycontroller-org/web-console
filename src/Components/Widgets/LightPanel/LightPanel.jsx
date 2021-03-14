@@ -7,7 +7,7 @@ import "./LightPanel.scss"
 import { Grid, GridItem, Stack, Switch, Tooltip } from "@patternfly/react-core"
 import ColorBox from "../../Color/ColorBox/ColorBox"
 import objectPath from "object-path"
-import { defaultColors } from "../../../Constants/Widgets/Color"
+import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 import Loading from "../../Loading/Loading"
 import HueSlider from "../../Color/HueSlider/HueSlider"
 import { LightType, RGBComponentType } from "../../../Constants/Widgets/LightPanel"
@@ -186,7 +186,7 @@ class LightPanel extends React.Component {
             field={
               <ColorBox
                 onChange={(newColor) => this.onChange("rgb", newColor)}
-                colors={defaultColors}
+                colors={ColorsSetBig}
                 color={rgb}
               />
             }

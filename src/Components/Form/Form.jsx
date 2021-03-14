@@ -25,6 +25,7 @@ import TimeRangePicker from "./RangePicker/TimeRangePicker"
 import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
 import ScriptEditor from "./ScriptEditor/ScriptEditor"
 import SimpleSlider from "./Slider/Simple"
+import ColorBox from "../Color/ColorBox/ColorBox"
 
 // item sample
 // const item = {
@@ -239,6 +240,17 @@ const getField = (item, onChange) => {
 
     case FieldType.ThresholdsColor:
       return <ThresholdsColorForm keyValueMap={item.value} onChange={onChange} />
+
+    case FieldType.ColorBox:
+      return (
+        <ColorBox
+          key={item.fieldId}
+          colors={item.colors}
+          color={item.value}
+          onChange={onChange}
+          isDisabled={item.isDisabled}
+        />
+      )
 
     case FieldType.Divider:
       return (
