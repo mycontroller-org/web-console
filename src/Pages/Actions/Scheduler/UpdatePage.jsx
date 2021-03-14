@@ -97,21 +97,6 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Variables",
-      fieldId: "!variables",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "",
-      fieldId: "variables",
-      showUpdateButton: true,
-      callerType: CallerType.Variable,
-      fieldType: FieldType.VariablesMap,
-      keyLabel: "Variable Name",
-      dataType: DataType.Object,
-      value: {},
-    },
-    {
       label: "Validity",
       fieldId: "!validity",
       fieldType: FieldType.Divider,
@@ -217,6 +202,21 @@ const getFormItems = (rootObject, id) => {
   // add notify handlers
   items.push(
     {
+      label: "Load Variables",
+      fieldId: "!variables",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "variables",
+      showUpdateButton: true,
+      callerType: CallerType.Variable,
+      fieldType: FieldType.VariablesMap,
+      keyLabel: "Variable Name",
+      dataType: DataType.Object,
+      value: {},
+    },
+    {
       label: "Parameters to Handler",
       fieldId: "!parameters",
       fieldType: FieldType.Divider,
@@ -232,7 +232,7 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Handlers",
+      label: "Notify Handlers",
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
