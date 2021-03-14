@@ -78,7 +78,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
         minDomain={{ y: minValue }}
         containerComponent={
           <ChartVoronoiContainer
-            labels={({ datum }) => `${datum.y ? datum.y.toFixed(roundDecimal) : null} at ${datum.x}`}
+            labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
             constrainToVisibleArea
           />
         }
