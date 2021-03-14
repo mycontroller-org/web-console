@@ -73,7 +73,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       data={{ x: resourceName, y: value }}
       labels={() => {}}
       // labels={({ datum }) => (datum.x ? `${datum.x}: ${datum.y.toFixed(1)}%` : null)}
-      title={displayValue + unit}
+      title={`${displayValue}${unit}`}
       titleComponent={titleComponent}
       subTitle={displayName ? resource.name : ""}
       subTitleComponent={subTitleComponent}
