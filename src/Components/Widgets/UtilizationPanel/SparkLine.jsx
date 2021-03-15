@@ -30,67 +30,74 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
     displayValue = displayValueFloat.toFixed(roundDecimal)
   }
 
-  let chart = null
-  let padding = 0
+  const isMetricDataAvailable = getValue(metric, "data.length", 0)
 
-  switch (chartType) {
-    case ChartType.SparkArea:
-      chart = (
-        <ChartArea
-          style={{ data: { strokeWidth: strokeWidth } }}
-          interpolation={chartInterpolation}
-          animate={false}
-          data={metric.data}
-        />
-      )
-      padding = { bottom: -5, left: -2, right: -2 }
-      break
+  const metricsChart = null
 
-    case ChartType.SparkLine:
-      chart = (
-        <ChartLine
-          style={{ data: { strokeWidth: strokeWidth } }}
-          interpolation={chartInterpolation}
-          animate={false}
-          data={metric.data}
-        />
-      )
-      break
+  if (isMetricDataAvailable) {
+    let chart = null
+    let padding = 0
 
-    case ChartType.SparkBar:
-      chart = <ChartBar animate={false} data={metric.data} />
-      break
+    switch (chartType) {
+      case ChartType.SparkArea:
+        chart = (
+          <ChartArea
+            style={{ data: { strokeWidth: strokeWidth } }}
+            interpolation={chartInterpolation}
+            animate={false}
+            data={metric.data}
+          />
+        )
+        padding = { bottom: -5, left: -2, right: -2 }
+        break
 
-    default:
+      case ChartType.SparkLine:
+        chart = (
+          <ChartLine
+            style={{ data: { strokeWidth: strokeWidth } }}
+            interpolation={chartInterpolation}
+            animate={false}
+            data={metric.data}
+          />
+        )
+        break
+
+      case ChartType.SparkBar:
+        chart = <ChartBar animate={false} data={metric.data} />
+        break
+
+      default:
+    }
+
+    const minValue = metric.minValue - metric.minValue * 0.1
+
+    metricsChart = (
+      <ChartGroup
+        standalone={true}
+        height={100}
+        width={400}
+        domainPadding={{ y: 9 }}
+        minDomain={{ y: minValue }}
+        containerComponent={
+          <ChartVoronoiContainer
+            labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
+            constrainToVisibleArea
+          />
+        }
+        padding={padding}
+        color={chartColor}
+        scale={{ x: "time", y: "linear" }}
+      >
+        {chart}
+      </ChartGroup>
+    )
+  } else {
+    metricsChart = (
+      <span className="no-metric-data" style={{ color: chartColor }}>
+        Metric data not available
+      </span>
+    )
   }
-
-  const minValue = metric.minValue - metric.minValue * 0.1
-
-  const isMetricDataAvailable = metric.data.length > 0
-  const metricsData = isMetricDataAvailable ? (
-    <ChartGroup
-      standalone={true}
-      height={100}
-      width={400}
-      domainPadding={{ y: 9 }}
-      minDomain={{ y: minValue }}
-      containerComponent={
-        <ChartVoronoiContainer
-          labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
-          constrainToVisibleArea
-        />
-      }
-      padding={padding}
-      color={chartColor}
-      scale={{ x: "time", y: "linear" }}
-    >
-      {chart}
-    </ChartGroup>
-  ) : (
-    <span className="no-metric-data" style={{ color: chartColor }}>
-      Metric data not available
-    </span>
-  )
 
   return (
     <Stack className="mc-spark-chart" hasGutter={false}>
@@ -104,7 +111,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
           [{capitalizeFirstLetter(metricFunction)}]
         </span>
       </StackItem>
-      <StackItem>{metricsData}</StackItem>
+      <StackItem>{metricsChart}</StackItem>
     </Stack>
   )
 }
