@@ -11,8 +11,10 @@ import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 import Loading from "../../Loading/Loading"
 import HueSlider from "../../Color/HueSlider/HueSlider"
 import { LightType, RGBComponentType } from "../../../Constants/Widgets/LightPanel"
-import { AdjustIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } from "@patternfly/react-icons"
+import { AdjustIcon, ImageIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } from "@patternfly/react-icons"
 import { getValue } from "../../../Util/Util"
+import SimpleSlider from "../../Form/Slider/Simple"
+import { ResourceType } from "../../../Constants/ResourcePicker"
 
 const SliderWithTooltip = createSliderWithTooltip(Slider)
 
@@ -25,6 +27,7 @@ class LightPanel extends React.Component {
     colorTemperature: 350,
     rgb: "black",
     hue: 230,
+    saturation: 0,
   }
 
   updateComponents = () => {
@@ -62,6 +65,10 @@ class LightPanel extends React.Component {
               values[fieldName] = Number(value)
               break
 
+            case "saturation":
+              values[fieldName] = Number(value)
+              break
+
             case "rgb":
               if (!value.startsWith("#")) {
                 value = "#" + value
@@ -80,8 +87,7 @@ class LightPanel extends React.Component {
             id: field.id,
             label: field.name,
             value: value,
-            quickId:
-              "sf:" + field.gatewayId + "." + field.nodeId + "." + field.sensorId + "." + field.fieldId,
+            quickId: `${ResourceType.SensorField}:${field.gatewayId}.${field.nodeId}.${field.sensorId}.${field.fieldId}`,
           }
         })
         this.setState({ loading: false, resources, ...values })
@@ -101,7 +107,7 @@ class LightPanel extends React.Component {
     const data = {}
     data[fieldName] = newValue
     this.setState((prevState) => {
-      const field = objectPath.get(prevState, "resources." + fieldName, undefined)
+      const field = objectPath.get(prevState, `resources.${fieldName}`, undefined)
 
       if (field) {
         api.action.send({ resource: field.quickId, payload: newValue })
@@ -110,7 +116,7 @@ class LightPanel extends React.Component {
     })
   }
   render() {
-    const { power, dimmer, colorTemperature, rgb, hue, resources, loading } = this.state
+    const { power, dimmer, colorTemperature, rgb, hue, saturation, resources, loading } = this.state
     const { lightType, rgbComponent } = this.props.config
 
     if (loading) {
@@ -142,12 +148,13 @@ class LightPanel extends React.Component {
         Icon={AdjustIcon}
         iconTooltip="Brightness"
         field={
-          <SliderWithTooltip
+          <SimpleSlider
             className="slider-brightness"
-            defaultValue={dimmer}
-            handleStyle={{ borderColor: "gray" }}
-            trackStyle={{ backgroundColor: "#2b9af3" }}
-            onAfterChange={(newValue) => this.onChange("dimmer", newValue)}
+            id={"dimmer"}
+            onChange={(newValue) => {
+              this.onChange("dimmer", Math.round(newValue))
+            }}
+            value={dimmer}
           />
         }
       />
@@ -161,14 +168,15 @@ class LightPanel extends React.Component {
           Icon={TemperatureLowIcon}
           iconTooltip="Color Temperature"
           field={
-            <SliderWithTooltip
+            <SimpleSlider
               className="slider-color-temperature"
-              defaultValue={colorTemperature}
-              handleStyle={{ borderColor: "gray" }}
-              trackStyle={{ backgroundColor: "#2b9af3" }}
+              id={"colorTemperature"}
               min={153}
               max={500}
-              onAfterChange={(newValue) => this.onChange("colorTemperature", newValue)}
+              onChange={(newValue) => {
+                this.onChange("colorTemperature", Math.round(newValue))
+              }}
+              value={colorTemperature}
             />
           }
         />
@@ -209,6 +217,24 @@ class LightPanel extends React.Component {
           />
         )
       }
+
+      // add saturation slider
+      fieldItems.push(
+        <WrapItem
+          key="saturation"
+          Icon={ImageIcon}
+          iconTooltip="Saturation"
+          field={
+            <SimpleSlider
+              id={"saturation"}
+              onChange={(newSaturation) => {
+                this.onChange("saturation", Math.round(newSaturation))
+              }}
+              value={saturation}
+            />
+          }
+        />
+      )
     }
 
     return (

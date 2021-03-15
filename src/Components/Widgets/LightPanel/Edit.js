@@ -61,12 +61,8 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       validator: { isNotEmpty: {} },
       apiOptions: api.sensorField.list,
       optionValueKey: "id",
-      getFiltersFunc: (value) => {
-        return [{ k: "name", o: "regex", v: value }]
-      },
-      getOptionsDescriptionFunc: (item) => {
-        return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
-      },
+      getFiltersFunc: getFilters,
+      getOptionsDescriptionFunc: getOptionsDescription,
     },
     {
       label: "Dimmer",
@@ -78,12 +74,8 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       validator: { isNotEmpty: {} },
       apiOptions: api.sensorField.list,
       optionValueKey: "id",
-      getFiltersFunc: (value) => {
-        return [{ k: "name", o: "regex", v: value }]
-      },
-      getOptionsDescriptionFunc: (item) => {
-        return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
-      },
+      getFiltersFunc: getFilters,
+      getOptionsDescriptionFunc: getOptionsDescription,
     }
   )
 
@@ -99,16 +91,12 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       validator: { isNotEmpty: {} },
       apiOptions: api.sensorField.list,
       optionValueKey: "id",
-      getFiltersFunc: (value) => {
-        return [{ k: "name", o: "regex", v: value }]
-      },
-      getOptionsDescriptionFunc: (item) => {
-        return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
-      },
+      getFiltersFunc: getFilters,
+      getOptionsDescriptionFunc: getOptionsDescription,
     })
   }
 
-  if (lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
+  if (lightType === LightType.RGB || lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
     const rgbComponent = objectPath.get(rootObject, "config.rgbComponent", "")
     const label = rgbComponent === RGBComponentType.ColorPickerQuick ? "RGB" : "Hue"
     const fieldId =
@@ -125,13 +113,34 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
         validator: { isNotEmpty: {} },
         apiOptions: api.sensorField.list,
         optionValueKey: "id",
-        getFiltersFunc: (value) => {
-          return [{ k: "name", o: "regex", v: value }]
-        },
-        getOptionsDescriptionFunc: (item) => {
-          return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
-        },
+        getFiltersFunc: getFilters,
+        getOptionsDescriptionFunc: getOptionsDescription,
       })
     }
+
+    // add alpha component
+    items.push({
+      label: "Saturation",
+      fieldId: "config.fieldIds.saturation",
+      fieldType: FieldType.SelectTypeAheadAsync,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      apiOptions: api.sensorField.list,
+      optionValueKey: "id",
+      getFiltersFunc: getFilters,
+      getOptionsDescriptionFunc: getOptionsDescription,
+    })
   }
+}
+
+// helpers
+
+const getFilters = (value = "") => {
+  return [{ k: "name", o: "regex", v: value }]
+}
+
+const getOptionsDescription = (item = {}) => {
+  return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
 }

@@ -5,6 +5,7 @@ import "./Simple.scss"
 const SliderWithTooltip = createSliderWithTooltip(Slider)
 
 const SimpleSlider = ({
+  className = "",
   id = "",
   min = 0,
   max = 100,
@@ -15,7 +16,7 @@ const SimpleSlider = ({
 }) => {
   return (
     <Split className="mc-slider">
-      <SplitItem isFilled className="slider">
+      <SplitItem isFilled className={`slider ${className}`}>
         <SliderWithTooltip
           key={id}
           min={min}

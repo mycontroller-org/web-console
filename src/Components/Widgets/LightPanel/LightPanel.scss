@@ -3,15 +3,19 @@
     margin: 0px 5px 5px 10px;
     .slider-color-temperature {
       background-image: linear-gradient(to right, #eff, #f81);
-      padding-top: 10px;
-      padding-bottom: 13px;
+      margin-top: 1px;
+      margin-bottom: 0px;
+      padding-top: 5px;
+      padding-bottom: 5px;
       border-radius: 2px;
     }
     .slider-brightness {
-      border-radius: 2px;
-      padding-top: 10px;
-      padding-bottom: 13px;
       background-image: linear-gradient(to right, #000, #fff);
+      margin-top: 1px;
+      margin-bottom: 0px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-radius: 2px;
     }
   }
   .field {
