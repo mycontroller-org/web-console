@@ -226,6 +226,7 @@ class LightPanel extends React.Component {
           iconTooltip="Saturation"
           field={
             <SimpleSlider
+              className="slider-saturation"
               id={"saturation"}
               onChange={(newSaturation) => {
                 this.onChange("saturation", Math.round(newSaturation))
