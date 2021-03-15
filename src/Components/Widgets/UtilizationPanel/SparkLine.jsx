@@ -42,13 +42,23 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
       case ChartType.SparkArea:
         chart = (
           <ChartArea
-            style={{ data: { strokeWidth: strokeWidth } }}
+            style={{
+              data: {
+                fill: chartColor,
+                fillOpacity: 0.3,
+                stroke: chartColor,
+                strokeWidth: strokeWidth,
+              },
+              labels: {
+                fontSize: "12px",
+              },
+            }}
             interpolation={chartInterpolation}
             animate={false}
             data={metric.data}
           />
         )
-        padding = { bottom: -5, left: -2, right: -2 }
+        // padding = { bottom: -5, left: -2, right: -2 }
         break
 
       case ChartType.SparkLine:
