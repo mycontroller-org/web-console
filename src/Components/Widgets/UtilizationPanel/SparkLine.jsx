@@ -32,7 +32,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
 
   const isMetricDataAvailable = getValue(metric, "data.length", 0)
 
-  const metricsChart = null
+  let metricsChart = null
 
   if (isMetricDataAvailable) {
     let chart = null
