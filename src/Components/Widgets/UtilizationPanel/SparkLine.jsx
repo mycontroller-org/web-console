@@ -49,9 +49,6 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
                 stroke: chartColor,
                 strokeWidth: strokeWidth,
               },
-              labels: {
-                fontSize: "12px",
-              },
             }}
             interpolation={chartInterpolation}
             animate={false}
