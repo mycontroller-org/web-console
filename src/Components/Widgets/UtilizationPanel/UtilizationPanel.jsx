@@ -11,10 +11,14 @@ import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import DonutUtilization from "./DonutUtilization"
 import SparkLine from "./SparkLine"
 import moment from "moment"
-import { Duration, MetricFunctionType, UtilizationDurationOptions } from "../../../Constants/Metric"
+import {
+  Duration,
+  MetricFunctionType,
+  MetricType,
+  UtilizationDurationOptions,
+} from "../../../Constants/Metric"
 
 import "./UtilizationPanel.scss"
-import { Stack, StackItem } from "@patternfly/react-core"
 
 class UtilizationPanel extends React.Component {
   state = {
@@ -45,6 +49,7 @@ class UtilizationPanel extends React.Component {
     const resourceType = getValue(config, "resource.type", "")
     const itemsLimit = getValue(config, "resource.limit", 1)
     const resourceSelectors = getValue(config, "resource.selectors", {})
+    const displayName = getValue(config, "resource.displayName", false)
     const resourceNameKey = getValue(config, "resource.nameKey", {})
     const resourceValueKey = getValue(config, "resource.valueKey", {})
     const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
@@ -84,11 +89,15 @@ class UtilizationPanel extends React.Component {
     resourceApi({ filter: filters, limit: itemsLimit })
       .then((res) => {
         const resources = res.data.data.map((resource) => {
-          const name = resourceNameKey ? objectPath.get(resource, resourceNameKey, "undefined") : ""
+          const name = displayName
+            ? resourceNameKey
+              ? objectPath.get(resource, resourceNameKey, "undefined")
+              : ""
+            : ""
           return {
             id: resource.id,
-            metricType: objectPath.get(resource, "metricType", ""),
             name: name,
+            metricType: objectPath.get(resource, "metricType", ""),
             value: objectPath.get(resource, resourceValueKey, ""),
           }
         })
@@ -106,7 +115,12 @@ class UtilizationPanel extends React.Component {
           }
           // add id and metricType
           resources.forEach((r) => {
-            if (r.metricType === "gauge_float" || r.metricType === "gauge") {
+            // supports only for the below types
+            if (
+              r.metricType === MetricType.Gauge ||
+              r.metricType === MetricType.GaugeFloat ||
+              r.metricType === MetricType.Binary
+            ) {
               metricQuery.individual.push({
                 name: r.id,
                 metricType: r.metricType,
@@ -123,28 +137,8 @@ class UtilizationPanel extends React.Component {
                 const metrics = {}
                 keys.forEach((key) => {
                   const metricsRaw = metricRes.data[key]
-                  const data = []
-                  let minValue = Infinity
-                  let maxValue = -Number.MAX_VALUE * 2
-                  metricsRaw.forEach((d) => {
-                    const ts = moment(d.timestamp).format(duration.tsFormat)
-                    // update data
-                    const yValue = d.metric[metricFunction]
-                    data.push({
-                      x: ts,
-                      y: yValue,
-                    })
-                    if (yValue) {
-                      if (minValue > yValue) {
-                        minValue = yValue
-                      }
-                      if (maxValue < yValue) {
-                        maxValue = yValue
-                      }
-                    }
-                  })
                   // update data into metrics object
-                  metrics[key] = { data: data, minValue: minValue, maxValue: maxValue }
+                  metrics[key] = getMetrics(metricsRaw, duration.tsFormat, metricFunction)
                 })
                 this.setState({ loading: false, resources, metrics })
               })
@@ -265,3 +259,60 @@ UtilizationPanel.propTypes = {
 // }
 
 export default UtilizationPanel
+
+// helper functions
+
+const getMetrics = (metricsRaw = [], tsFormat, metricFunction) => {
+  if (metricsRaw.length == 0) {
+    return { data: [] }
+  }
+
+  const metricType = metricsRaw[0].metricType
+  switch (metricType) {
+    case MetricType.Binary:
+      return getBinaryMetrics(metricsRaw, tsFormat)
+
+    case MetricType.Gauge:
+    case MetricType.GaugeFloat:
+      return getGaugeMetrics(metricsRaw, tsFormat, metricFunction)
+
+    default:
+      return { data: [] }
+  }
+}
+
+const getBinaryMetrics = (metricsRaw = [], tsFormat) => {
+  const data = []
+  metricsRaw.forEach((d) => {
+    const ts = moment(d.timestamp).format(tsFormat)
+    data.push({
+      x: ts,
+      y: d.metric.value,
+    })
+  })
+  return { data: data }
+}
+
+const getGaugeMetrics = (metricsRaw = [], tsFormat, metricFunction) => {
+  const data = []
+  let minValue = Infinity
+  let maxValue = -Number.MAX_VALUE * 2
+  metricsRaw.forEach((d) => {
+    const ts = moment(d.timestamp).format(tsFormat)
+    // update data
+    const yValue = d.metric[metricFunction]
+    data.push({
+      x: ts,
+      y: yValue,
+    })
+    if (yValue) {
+      if (minValue > yValue) {
+        minValue = yValue
+      }
+      if (maxValue < yValue) {
+        maxValue = yValue
+      }
+    }
+  })
+  return { data: data, minValue: minValue, maxValue: maxValue }
+}

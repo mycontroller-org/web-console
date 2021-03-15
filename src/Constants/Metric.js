@@ -1,11 +1,22 @@
-export const METRIC_TYPES = {
-  none: "String",
-  counter: "Counter",
-  gauge: "Gauge",
-  gauge_float: "Gauge (Float)",
-  binary: "Binary",
-  geo: "GEO",
+export const MetricType = {
+  None: "none",
+  String: "string",
+  Binary: "binary",
+  Gauge: "gauge",
+  GaugeFloat: "gauge_float",
+  Counter: "counter",
+  GEO: "geo",
 }
+
+export const MetricTypeOptions = [
+  { value: MetricType.None, label: "None" },
+  { value: MetricType.String, label: "String" },
+  { value: MetricType.Binary, label: "Binary" },
+  { value: MetricType.Gauge, label: "Gauge" },
+  { value: MetricType.GaugeFloat, label: "Gauge Float" },
+  { value: MetricType.Counter, label: "Counter" },
+  { value: MetricType.GEO, label: "GEO" },
+]
 
 export const Duration = {
   LastHour: "-1h",
@@ -32,15 +43,15 @@ export const DurationOptions = [
 ]
 
 export const UtilizationDurationOptions = [
-  { value: Duration.LastHour, window: "5m", tsFormat: "HH:mm", label: "Last 1 hour" },
+  { value: Duration.LastHour, window: "3m", tsFormat: "HH:mm", label: "Last 1 hour" },
   { value: Duration.Last2Hours, window: "5m", tsFormat: "HH:mm", label: "Last 2 hours" },
   { value: Duration.Last3Hours, window: "10m", tsFormat: "HH:mm", label: "Last 3 hours" },
   { value: Duration.Last6Hours, window: "15m", tsFormat: "HH:mm", label: "Last 6 hours" },
-  { value: Duration.Last12ours, window: "20m", tsFormat: "HH:mm", label: "Last 12 hours" },
-  { value: Duration.Last24Hours, window: "30m", tsFormat: "HH:mm", label: "Last 24 hours" },
-  { value: Duration.Last2Days, window: "1h", tsFormat: "D,HH:mm", label: "Last 2 days" },
-  { value: Duration.Last7Days, window: "3h", tsFormat: "D,HH:mm", label: "Last 7 days" },
-  { value: Duration.Last30Days, window: "6h", tsFormat: "D,HH:mm", label: "Last 30 days" },
+  { value: Duration.Last12ours, window: "30m", tsFormat: "HH:mm", label: "Last 12 hours" },
+  { value: Duration.Last24Hours, window: "1h", tsFormat: "HH:mm", label: "Last 24 hours" },
+  { value: Duration.Last2Days, window: "2h", tsFormat: "D,HH:mm", label: "Last 2 days" },
+  { value: Duration.Last7Days, window: "6h", tsFormat: "D,HH:mm", label: "Last 7 days" },
+  { value: Duration.Last30Days, window: "24h", tsFormat: "D,HH:mm", label: "Last 30 days" },
 ]
 
 export const MetricFunctionType = {

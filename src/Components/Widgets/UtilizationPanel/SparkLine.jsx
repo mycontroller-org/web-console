@@ -11,7 +11,7 @@ import { capitalizeFirstLetter, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import { Stack, StackItem } from "@patternfly/react-core"
 import "./UtilizationPanel.scss"
-import { InterpolationType } from "../../../Constants/Metric"
+import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
 
 const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
@@ -76,7 +76,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
       default:
     }
 
-    const minValue = metric.minValue - metric.minValue * 0.1
+    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.1 : 0
 
     metricsChart = (
       <ChartGroup
@@ -87,7 +87,14 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
         minDomain={{ y: minValue }}
         containerComponent={
           <ChartVoronoiContainer
-            labels={({ datum }) => (datum.y ? `${datum.y.toFixed(roundDecimal)} at ${datum.x}` : null)}
+            labels={({ datum }) => {
+              if (datum.y || datum.y === 0) {
+                // round decimal number
+                const yValue = datum.y % 1 === 0 ? datum.y : datum.y.toFixed(roundDecimal)
+                return `${yValue} ${unit} at ${datum.x}`
+              }
+              return null
+            }}
             constrainToVisibleArea
           />
         }
@@ -106,17 +113,28 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
     )
   }
 
+  let unitText = unit
+  let metricFunctionText = ""
+  let displayValueText = displayValue
+
+  if (resource.metricType === MetricType.Binary) {
+    unitText = ""
+    displayValueText = displayValue ? "ON" : "OFF"
+  }
+
+  if (resource.metricType !== MetricType.Binary && isMetricDataAvailable) {
+    metricFunctionText = `[${capitalizeFirstLetter(metricFunction)}]`
+  }
+
   return (
     <Stack className="mc-spark-chart" hasGutter={false}>
       <StackItem>
         <span class="title">{resource.name}</span>
       </StackItem>
       <StackItem>
-        <span class="value">{displayValue}</span>
-        <span className="value-unit">{unit}</span>
-        <span className="metric-function" style={{ display: isMetricDataAvailable ? null : "none" }}>
-          [{capitalizeFirstLetter(metricFunction)}]
-        </span>
+        <span class="value">{displayValueText}</span>
+        <span className="value-unit">{unitText}</span>
+        <span className="metric-function">{metricFunctionText}</span>
       </StackItem>
       <StackItem>{metricsChart}</StackItem>
     </Stack>

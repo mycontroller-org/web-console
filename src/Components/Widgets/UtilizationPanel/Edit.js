@@ -245,7 +245,7 @@ const getSparkLineItems = (rootObject) => {
   const chartType = getValue(rootObject, "config.chart.type", "")
 
   if (chartType === ChartType.SparkLine || chartType === ChartType.SparkArea) {
-    objectPath.set(rootObject, "config.chart.strokeWidth", 2, true)
+    objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
     objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Basis, true)
 
     items.push(

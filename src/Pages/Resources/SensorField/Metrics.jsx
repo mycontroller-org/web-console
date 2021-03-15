@@ -15,6 +15,7 @@ import { RefreshButton } from "../../../Components/Buttons/Buttons"
 import { LineChart } from "../../../Components/Graphs/Graphs"
 import Loading from "../../../Components/Loading/Loading"
 import Select from "../../../Components/Select/Select"
+import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 
 const durationOptions = [
@@ -67,7 +68,7 @@ class Metrics extends React.Component {
         const metricsRaw = res.data["field_graph"]
         if (metricsRaw) {
           const metrics = []
-          if (data.metricType === "gauge_float" || data.metricType === "gauge") {
+          if (data.metricType === MetricType.Gauge || data.metricType === MetricType.GaugeFloat) {
             const average = {
               name: "Average",
               type: "area",
@@ -98,15 +99,15 @@ class Metrics extends React.Component {
             // update average and percentile
             metrics.push(average)
             metrics.push(percentile)
-          } else if (data.metricType === "binary") {
+          } else if (data.metricType === MetricType.Binary) {
             const binaryData = {
               name: data.name,
               type: "line",
-              interpolation: "stepAfter",
+              interpolation: InterpolationType.StepAfter,
               data: [],
             }
             metricsRaw.forEach((d) => {
-              const ts = moment(d.timestamp).format("HH:mm")
+              const ts = moment(d.timestamp).format(duration.tsFormat)
               // update data
               binaryData.data.push({
                 x: ts,
@@ -128,7 +129,9 @@ class Metrics extends React.Component {
   render() {
     const data = this.props.data
     const showMetrics =
-      data.metricType === "binary" || data.metricType === "gauge_float" || data.metricType === "gauge"
+      data.metricType === MetricType.Binary ||
+      data.metricType === MetricType.Gauge ||
+      data.metricType === MetricType.GaugeFloat
 
     if (!showMetrics) {
       // metrics data not available
