@@ -3,7 +3,7 @@ import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import TabDetails from "./TabDetails"
 import UpdatePage from "./UpdatePage"
 
-class ProfileDetailPage extends React.Component {
+class SettingsSystemPage extends React.Component {
   render() {
     const { id } = this.props.match.params
     const tabs = [
@@ -16,8 +16,8 @@ class ProfileDetailPage extends React.Component {
         content: <UpdatePage match={this.props.match} history={this.props.history} />,
       },
     ]
-    return <DetailRootPage pageHeader="Profile" tabs={tabs} />
+    return <DetailRootPage pageHeader="System" tabs={tabs} />
   }
 }
 
-export default ProfileDetailPage
+export default SettingsSystemPage

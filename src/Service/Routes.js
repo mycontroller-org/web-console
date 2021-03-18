@@ -33,6 +33,8 @@ import HandlerDetailPage from "../Pages/Actions/Handler/DetailsPage"
 import SchedulerListPage from "../Pages/Actions/Scheduler/ListPage"
 import SchedulerUpdatePage from "../Pages/Actions/Scheduler/UpdatePage"
 import SchedulerDetailPage from "../Pages/Actions/Scheduler/DetailsPage"
+import SettingsSystemPage from "../Pages/Settings/System/DetailsPage"
+
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
 
@@ -79,6 +81,7 @@ const routeMap = {
   },
   settings: {
     profile: "/settings/profile",
+    system: "/settings/system",
   },
   actions: {
     forwardPayload: {
@@ -211,14 +214,14 @@ const routes = [
         to: routeMap.settings.profile,
         component: ProfilePage,
       },
+      {
+        id: "system",
+        title: "System",
+        to: routeMap.settings.system,
+        component: SettingsSystemPage,
+      },
     ],
   },
-  // {
-  //   id: "dummyPage",
-  //   title: "Dummy Page",
-  //   to: "/dummypage",
-  //   component: dummyPage,
-  // },
 ]
 
 const hiddenRoutes = [

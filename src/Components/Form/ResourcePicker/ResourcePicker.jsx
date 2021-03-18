@@ -280,7 +280,7 @@ const getEmailDataItems = (_rootObject) => {
     {
       label: "Body",
       fieldId: "data.body",
-      fieldType: FieldType.Text,
+      fieldType: FieldType.TextArea,
       dataType: DataType.String,
       value: "",
     },
@@ -291,16 +291,11 @@ const getEmailDataItems = (_rootObject) => {
 const getTelegramDataItems = (_rootObject) => {
   const items = [
     {
-      label: "Text",
-      fieldId: "data.text",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      isRequired: true,
-      value: "",
-      helperText: "",
-      helperTextInvalid: "Enter a valid text",
-      validated: "default",
-      validator: { isNotEmpty: {} },
+      label: "Chat IDs",
+      fieldId: "data.chatIds",
+      fieldType: FieldType.DynamicArray,
+      dataType: DataType.ArrayString,
+      value: [],
     },
     {
       label: "Parse Mode",
@@ -311,11 +306,16 @@ const getTelegramDataItems = (_rootObject) => {
       options: TelegramParseModeOptions,
     },
     {
-      label: "Chat IDs",
-      fieldId: "data.chatIds",
-      fieldType: FieldType.DynamicArray,
-      dataType: DataType.ArrayString,
-      value: [],
+      label: "Text",
+      fieldId: "data.text",
+      fieldType: FieldType.TextArea,
+      dataType: DataType.String,
+      isRequired: true,
+      value: "",
+      helperText: "",
+      helperTextInvalid: "Enter a valid text",
+      validated: "default",
+      validator: { isNotEmpty: {} },
     },
   ]
   return items

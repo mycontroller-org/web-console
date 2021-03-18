@@ -11,7 +11,7 @@ class UpdatePage extends React.Component {
     const editor = (
       <Editor
         key="editor"
-        resourceId={id ? id : "profile"}
+        resourceId={id ? id : "none"}
         language="yaml"
         apiGetRecord={api.auth.profile}
         apiSaveRecord={api.auth.updateProfile}

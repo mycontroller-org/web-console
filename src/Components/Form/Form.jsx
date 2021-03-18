@@ -7,6 +7,7 @@ import {
   Grid,
   SelectVariant,
   Switch,
+  TextArea,
   TextInput,
   TimePicker,
 } from "@patternfly/react-core"
@@ -77,7 +78,6 @@ const getField = (item, onChange) => {
   switch (item.fieldType) {
     case FieldType.Text:
     case FieldType.Password:
-    case FieldType.textArea:
       return (
         <TextInput
           id={item.fieldId}
@@ -86,6 +86,20 @@ const getField = (item, onChange) => {
           onChange={onChange}
           validated={item.validated}
           isDisabled={item.isDisabled}
+        />
+      )
+
+    case FieldType.TextArea:
+      return (
+        <TextArea
+          id={item.fieldId}
+          type={item.fieldType}
+          value={item.value}
+          onChange={onChange}
+          validated={item.validated}
+          isDisabled={item.isDisabled}
+          resizeOrientation={"vertical"}
+          rows={item.rows ? item.rows : 5}
         />
       )
 

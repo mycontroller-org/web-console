@@ -13,6 +13,7 @@ export const DataType = {
 
 export const FieldType = {
   Text: "text",
+  TextArea: "text_area",
   Password: "password",
   Email: "email",
   Number: "number",

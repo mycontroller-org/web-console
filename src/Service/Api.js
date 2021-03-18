@@ -160,10 +160,6 @@ export const api = {
     send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
     nodeAction: (queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
   },
-  settings: {
-    get: (filter) => newRequest(HTTP_VERBS.GET, "/settings", filter, {}),
-    getByKey: (key) => newRequest(HTTP_VERBS.GET, "/settings/" + key, {}, {}),
-  },
   dashboard: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/dashboard", filter, {}),
     get: (id) => newRequest(HTTP_VERBS.GET, "/dashboard/" + id, {}, {}),
@@ -215,5 +211,10 @@ export const api = {
     get: (id) => newRequest(HTTP_VERBS.GET, "/datarepository/" + id, {}, {}),
     update: (data) => newRequest(HTTP_VERBS.POST, "/datarepository", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/datarepository", {}, data),
+  },
+  settings: {
+    getSystem: () => newRequest(HTTP_VERBS.GET, "/settings/system", {}, {}),
+    updateSystem: (data) => newRequest(HTTP_VERBS.POST, "/settings/system", {}, data),
+    getJobs: () => newRequest(HTTP_VERBS.GET, "/settings/jobs", {}, {}),
   },
 }

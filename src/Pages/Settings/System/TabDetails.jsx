@@ -1,6 +1,6 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
-import { Labels } from "../../../Components/DataDisplay/Label"
+import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { api } from "../../../Service/Api"
 
 const tabDetails = ({ resourceId, history }) => {
@@ -8,7 +8,7 @@ const tabDetails = ({ resourceId, history }) => {
     <TabDetailsBase
       resourceId={resourceId ? resourceId : "none"}
       history={history}
-      apiGetRecord={api.auth.profile}
+      apiGetRecord={api.settings.getSystem}
       getDetailsFunc={getDetailsFuncImpl}
     />
   )
@@ -22,12 +22,8 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Username", value: data.username })
-  fieldsList1.push({ key: "Email", value: data.email })
-  fieldsList1.push({ key: "Full Name", value: data.fullName })
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "Last Modified", value: data.lastModifiedOn })
+  fieldsList1.push({ key: "GEO Location", value: <KeyValueMap data={data.spec.geoLocation} /> })
+  fieldsList2.push({ key: "Login", value: <KeyValueMap data={data.spec.login} /> })
 
   return {
     "list-1": fieldsList1,
