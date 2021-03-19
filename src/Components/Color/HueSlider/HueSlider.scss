@@ -1,3 +1,9 @@
 .mc-hue-slider {
-  width: auto !important;
+  .slider {
+    width: auto !important;
+  }
+  .badge {
+    min-width: 37px;
+    margin-left: 12px;
+  }
 }

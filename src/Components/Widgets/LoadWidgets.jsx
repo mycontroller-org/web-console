@@ -1,4 +1,4 @@
-import { Card, CardBody, CardTitle, Flex, FlexItem } from "@patternfly/react-core"
+import { Card, CardBody, CardTitle, Flex, FlexItem, Split, SplitItem } from "@patternfly/react-core"
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
 import { cloneDeep } from "../../Util/Util"
@@ -86,17 +86,18 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
       )
     }
 
+    // &nbsp;
     let titleComponent = null
     const stickTitleOnTopClass = !item.showTitle ? "dashboard-widget-title-stick-top" : ""
     if (item.showTitle || editEnabled) {
       titleComponent = (
         <CardTitle className={"dashboard-widget-title " + stickTitleOnTopClass}>
-          <Flex>
-            <FlexItem>
-              <span style={{ color: "#434343" }}>{item.title}&nbsp;</span>
-            </FlexItem>
-            {actionButtons}
-          </Flex>
+          <Split>
+            <SplitItem isFilled className="dashboard-widget-title-text">
+              <span style={{ color: "#434343" }}>{item.title}</span>
+            </SplitItem>
+            <SplitItem>{actionButtons}</SplitItem>
+          </Split>
         </CardTitle>
       )
     }

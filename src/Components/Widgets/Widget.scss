@@ -1,7 +1,7 @@
 .dashboard-widget {
   height: 100%;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 0px;
   position: relative;
   overflow: auto;
@@ -12,19 +12,37 @@
       top: 0;
       width: 100%;
       z-index: 100;
+      opacity: 0.3;
+      .dashboard-widget-title-text {
+        opacity: 0;
+      }
+      &:hover {
+        opacity: 1;
+        .dashboard-widget-title-text {
+          opacity: 1;
+        }
+      }
     }
     .dashboard-widget-title {
       padding: 5px 0px 5px 10px;
       background-color: #f0f0f0;
-      .dashboard-widget-action {
-        margin-right: 7px;
-        :hover {
-          cursor: pointer;
-        }
+    }
+    .dashboard-widget-action {
+      margin-left: 3px;
+      margin-right: 7px;
+      &:hover {
+        cursor: pointer;
       }
     }
     .dashboard-widget-content {
       padding: 10px 10px;
     }
+  }
+}
+
+/* hides some of the elements on mobile view */
+@media only screen and (max-width: 768px) {
+  .dashboard-widget-title-text {
+    display: none;
   }
 }
