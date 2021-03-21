@@ -177,15 +177,17 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "On Receive",
+      label: "On Receive Formatter",
       fieldId: "payloadFormatter.onReceive",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.String,
       value: "",
       saveButtonText: "Update",
-      minimapEnabled: false,
+      updateButtonText: "Update Script",
+      language: "javascript",
+      minimapEnabled: true,
       isRequired: false,
-    }
+    },
   ]
 
   return items
