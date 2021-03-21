@@ -35,7 +35,7 @@ class UpdatePage extends React.Component {
         onCancelFunc={() => {
           r(this.props.history, rMap.resources.gateway.list)
         }}
-        getFormItems={getFormItems}
+        getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />
     )
 
@@ -55,7 +55,7 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (rootObject) => {
+const getFormItems = (rootObject, id) => {
   const items = [
     {
       label: "ID",
@@ -64,6 +64,7 @@ const getFormItems = (rootObject) => {
       dataType: DataType.String,
       value: "",
       isRequired: true,
+      isDisabled: id ? true : false,
       helperText: "",
       helperTextInvalid: "Invalid id. chars: min=2 and max=100",
       validated: "default",

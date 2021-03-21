@@ -74,9 +74,9 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "ID", fieldKey: "id", sortable: true },
   { title: "Description", fieldKey: "description", sortable: true },
+  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "Ignore Duplicate", fieldKey: "ignoreDuplicate", sortable: true },
   { title: "Auto Disable", fieldKey: "autoDisable", sortable: true },
   { title: "Trigger On Event", fieldKey: "triggerOnEvent", sortable: true },
@@ -88,7 +88,6 @@ const tableColumns = [
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
       {
         title: (
           <Button
@@ -103,6 +102,7 @@ const toRowFuncImpl = (rawData, history) => {
         ),
       },
       { title: rawData.description },
+      { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.ignoreDuplicate)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.autoDisable)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.triggerOnEvent)}</div> },
