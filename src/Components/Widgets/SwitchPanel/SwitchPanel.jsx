@@ -68,6 +68,7 @@ class SwitchPanel extends React.Component {
     const switches = resources.map((r, index) => {
       const className = r.isChecked ? "text enabled" : "text"
       const detailPage = getDetailPage(resourceType)
+      const divider = resources.length > 1 ? <Divider style={{ padding: "7px 0px" }} /> : null
       return (
         <GridItem span={12} key={"label_" + index}>
           <span
@@ -81,7 +82,7 @@ class SwitchPanel extends React.Component {
           <span style={{ float: "right" }}>
             <Switch id={r.id} isChecked={r.isChecked} quickId={r.quickId} />
           </span>
-          <Divider style={{ padding: "7px 0px" }} />
+          {divider}
         </GridItem>
       )
     })
