@@ -169,7 +169,19 @@ const toRowFuncImpl = (rawData, history) => {
           </Button>
         ),
       },
-      rawData.name,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.node.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.name}
+          </Button>
+        ),
+      },
       rawData.labels.version,
       rawData.labels.library_version,
       { title: getStatus(rawData.state.status) },

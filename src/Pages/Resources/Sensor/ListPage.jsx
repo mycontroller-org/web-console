@@ -95,7 +95,19 @@ const toRowFuncImpl = (rawData, history) => {
           </Button>
         ),
       },
-      rawData.name,
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.sensor.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.name}
+          </Button>
+        ),
+      },
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,
