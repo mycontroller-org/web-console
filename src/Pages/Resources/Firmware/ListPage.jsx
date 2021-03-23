@@ -49,7 +49,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Firmware" />
+        <PageTitle title="Firmwares" />
         <PageContent>{super.render()}</PageContent>
       </>
     )

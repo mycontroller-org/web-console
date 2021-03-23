@@ -162,7 +162,7 @@ const routes = [
       },
       {
         id: "firmware",
-        title: "Firmware",
+        title: "Firmwares",
         to: routeMap.resources.firmware.list,
         component: FirmwareListPage,
       },
