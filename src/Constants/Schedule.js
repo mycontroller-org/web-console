@@ -39,3 +39,17 @@ export const ScheduleTypeOptions = [
   { value: ScheduleType.Sunrise, label: "Sunrise", description: "On Sunrise time" },
   { value: ScheduleType.Sunset, label: "Sunset", description: "On Sunset time" },
 ]
+
+// CustomVariable Types
+export const CustomVariableType = {
+  None: "none",
+  Javascript: "javascript",
+  Webhook: "webhook",
+}
+
+// CustomVariable type options
+export const CustomVariableTypeOptions = [
+  { value: CustomVariableType.None, label: "None" },
+  { value: CustomVariableType.Javascript, label: "Javascript" },
+  { value: CustomVariableType.Webhook, label: "Webhook", disabled: true }, // this feature not implemented yet
+]

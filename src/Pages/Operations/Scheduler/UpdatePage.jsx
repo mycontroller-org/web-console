@@ -14,6 +14,7 @@ import {
   ScheduleTypeOptions,
 } from "../../../Constants/Schedule"
 import { CallerType } from "../../../Constants/ResourcePicker"
+import { CustomVariableType, CustomVariableTypeOptions } from "../../../Constants/Schedule"
 
 class UpdatePage extends React.Component {
   render() {
@@ -215,7 +216,14 @@ const getFormItems = (rootObject, id) => {
       keyLabel: "Variable Name",
       dataType: DataType.Object,
       value: {},
-    },
+    }
+  )
+
+  // load custom variables
+  const customVariableItems = loadCustomVariablesItems(rootObject)
+  items.push(...customVariableItems)
+
+  items.push(
     {
       label: "Parameters to Handler",
       fieldId: "!parameters",
@@ -334,4 +342,73 @@ const updateSimpleJob = (rootObject, items = []) => {
       validator: { isNotEmpty: {} },
     })
   }
+}
+
+const loadCustomVariablesItems = (rootObject) => {
+  let customVariableType = objectPath.get(rootObject, "customVariableType", "")
+  if (customVariableType === "" || customVariableType === undefined) {
+    objectPath.set(rootObject, "customVariableType", CustomVariableType.None, false)
+  }
+  customVariableType = objectPath.get(rootObject, "customVariableType", CustomVariableType.None)
+
+  const items = [
+    {
+      label: "Load Custom Variables",
+      fieldId: "!custom_variables",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Type",
+      fieldId: "customVariableType",
+      fieldType: FieldType.ToggleButtonGroup,
+      dataType: DataType.String,
+      options: CustomVariableTypeOptions,
+      value: "",
+      resetFields: { customVariableConfig: { javascript: "", webhookApi: "" } },
+    },
+  ]
+
+  switch (customVariableType) {
+    case CustomVariableType.None:
+      // no action needed
+      break
+
+    case CustomVariableType.Javascript:
+      items.push({
+        label: "Script",
+        fieldId: "customVariableConfig.javascript",
+        fieldType: FieldType.ScriptEditor,
+        dataType: DataType.String,
+        value: "",
+        saveButtonText: "Update",
+        updateButtonText: "Update Script",
+        language: "javascript",
+        minimapEnabled: true,
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "script should not be empty",
+        validated: "default",
+        validator: { isNotEmpty: {} },
+      })
+      break
+
+    case CustomVariableType.Webhook:
+      items.push({
+        label: "Webhook API",
+        fieldId: "customVariableConfig.webhookApi",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "Invalid server URL",
+        validated: "default",
+        validator: { isNotEmpty: {}, isURL: {} },
+      })
+      break
+
+    default:
+  }
+
+  return items
 }
