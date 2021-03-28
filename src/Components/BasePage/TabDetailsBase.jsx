@@ -12,7 +12,7 @@ import {
 } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
-import Metrics from "../../Pages/Resources/SensorField/Metrics"
+import Metrics from "../../Pages/Resources/Field/Metrics"
 import Loading from "../Loading/Loading"
 import PageContent from "../PageContent/PageContent"
 import Table from "../Table/Table"

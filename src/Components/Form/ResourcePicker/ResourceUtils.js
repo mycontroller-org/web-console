@@ -57,13 +57,13 @@ export const getResourceType = (quickId) => {
     case ResourceType.NodeShort:
       return [ResourceType.Node, id]
 
-    case ResourceType.Sensor:
-    case ResourceType.SensorShort:
-      return [ResourceType.Sensor, id]
+    case ResourceType.Source:
+    case ResourceType.SourceShort:
+      return [ResourceType.Source, id]
 
-    case ResourceType.SensorField:
-    case ResourceType.SensorFieldShort:
-      return [ResourceType.SensorField, id]
+    case ResourceType.Field:
+    case ResourceType.FieldShort:
+      return [ResourceType.Field, id]
 
     case ResourceType.Task:
     case ResourceType.TaskShort:
@@ -94,11 +94,11 @@ export const getResourceOptionsAPI = (resourceType) => {
     case ResourceType.Node:
       return api.node.list
 
-    case ResourceType.Sensor:
-      return api.sensor.list
+    case ResourceType.Source:
+      return api.source.list
 
-    case ResourceType.SensorField:
-      return api.sensorField.list
+    case ResourceType.Field:
+      return api.field.list
 
     case ResourceType.Task:
       return api.task.list
@@ -132,14 +132,14 @@ export const getResourceOptionValueFunc = (resourceType) => {
         return item.gatewayId + "." + item.nodeId
       }
 
-    case ResourceType.Sensor:
+    case ResourceType.Source:
       return (item) => {
-        return item.gatewayId + "." + item.nodeId + "." + item.sensorId
+        return item.gatewayId + "." + item.nodeId + "." + item.sourceId
       }
 
-    case ResourceType.SensorField:
+    case ResourceType.Field:
       return (item) => {
-        return item.gatewayId + "." + item.nodeId + "." + item.sensorId + "." + item.fieldId
+        return item.gatewayId + "." + item.nodeId + "." + item.sourceId + "." + item.fieldId
       }
 
     default:
@@ -159,8 +159,8 @@ export const getResourceFilterFunc = (resourceType) => {
       }
 
     case ResourceType.Node:
-    case ResourceType.Sensor:
-    case ResourceType.SensorField:
+    case ResourceType.Source:
+    case ResourceType.Field:
       return (value) => {
         return [{ k: "name", o: "regex", v: value }]
       }
@@ -186,8 +186,8 @@ export const getOptionsDescriptionFunc = (resourceType) => {
       }
 
     case ResourceType.Node:
-    case ResourceType.Sensor:
-    case ResourceType.SensorField:
+    case ResourceType.Source:
+    case ResourceType.Field:
       return (item) => {
         return item.name
       }

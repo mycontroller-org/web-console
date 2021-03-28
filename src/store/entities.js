@@ -6,14 +6,14 @@ import spinnerReducer from "./entities/globalSpinner"
 import notificationReducer from "./entities/notification"
 import resourceGatewayReducer from "./entities/resources/gateway"
 import resourceNodeReducer from "./entities/resources/node"
-import resourceSensorReducer from "./entities/resources/sensor"
-import resourceSensorFieldReducer from "./entities/resources/sensorField"
+import resourceSourceReducer from "./entities/resources/source"
+import resourceFieldReducer from "./entities/resources/field"
 import resourceFirmwareReducer from "./entities/resources/firmware"
 import resourceDataRepositoryReducer from "./entities/resources/dataRepository"
-import actionForwardPayloadReducer from "./entities/actions/forwardPayload"
-import actionTaskReducer from "./entities/actions/task"
-import actionHandlerReducer from "./entities/actions/handler"
-import actionSchedulerReducer from "./entities/actions/scheduler"
+import operationForwardPayloadReducer from "./entities/operations/forwardPayload"
+import operationTaskReducer from "./entities/operations/task"
+import operationHandlerReducer from "./entities/operations/handler"
+import operationSchedulerReducer from "./entities/operations/scheduler"
 import toasterReducer from "./entities/toaster"
 
 export default combineReducers({
@@ -25,12 +25,12 @@ export default combineReducers({
   spinner: spinnerReducer,
   resourceGateway: resourceGatewayReducer,
   resourceNode: resourceNodeReducer,
-  resourceSensor: resourceSensorReducer,
-  resourceSensorField: resourceSensorFieldReducer,
+  resourceSource: resourceSourceReducer,
+  resourceField: resourceFieldReducer,
   resourceFirmware: resourceFirmwareReducer,
   resourceDataRepository: resourceDataRepositoryReducer,
-  actionForwardPayload: actionForwardPayloadReducer,
-  actionTask: actionTaskReducer,
-  actionHandler: actionHandlerReducer,
-  actionScheduler: actionSchedulerReducer,
+  operationForwardPayload: operationForwardPayloadReducer,
+  operationTask: operationTaskReducer,
+  operationHandler: operationHandlerReducer,
+  operationScheduler: operationSchedulerReducer,
 })

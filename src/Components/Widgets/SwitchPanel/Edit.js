@@ -5,9 +5,9 @@ import { ResourceType, ResourceTypeOptions } from "../../../Constants/ResourcePi
 // Switch Panel items
 export const updateFormItemsSwitchPanel = (rootObject, items) => {
   // add default filter at first time
-  objectPath.set(rootObject, "config.resourceType", ResourceType.SensorField, true)
-  const resourceType = objectPath.get(rootObject, "config.resourceType", ResourceType.SensorField)
-  if (resourceType === ResourceType.SensorField) {
+  objectPath.set(rootObject, "config.resourceType", ResourceType.Field, true)
+  const resourceType = objectPath.get(rootObject, "config.resourceType", ResourceType.Field)
+  if (resourceType === ResourceType.Field) {
     const selectors = objectPath.get(rootObject, "config.resourceSelectors", undefined)
     if (selectors === undefined) {
       objectPath.set(rootObject, "config.resourceSelectors", { metricType: "binary" }, false)
@@ -50,7 +50,7 @@ export const updateFormItemsSwitchPanel = (rootObject, items) => {
       helperText: "",
       helperTextInvalid: "Invalid type",
       validated: "default",
-      options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Sensor),
+      options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Source),
       validator: { isNotEmpty: {} },
       resetFields: { "config.resourceSelectors": {} },
     },

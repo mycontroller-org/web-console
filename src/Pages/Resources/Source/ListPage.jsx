@@ -16,7 +16,7 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/resources/sensorField"
+} from "../../../store/entities/resources/source"
 
 class List extends ListBase {
   state = {
@@ -41,7 +41,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.resources.sensorField.add)
+        r(this.props.history, rMap.resources.source.add)
       },
     },
   ]
@@ -49,7 +49,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Sensor Fields" />
+        <PageTitle title="Sources" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -60,13 +60,8 @@ class List extends ListBase {
 const tableColumns = [
   { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
   { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
-  { title: "Field ID", fieldKey: "fieldId", sortable: true },
+  { title: "Source ID", fieldKey: "sourceId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Metric Type", fieldKey: "metricType", sortable: true },
-  { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Value", fieldKey: "current.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previous.value", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -87,25 +82,32 @@ const toRowFuncImpl = (rawData, history) => {
         ),
       },
       rawData.nodeId,
-      rawData.sensorId,
       {
         title: (
           <Button
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.resources.sensorField.detail, { id: rawData.id })
+              r(history, rMap.resources.source.detail, { id: rawData.id })
             }}
           >
-            {rawData.fieldId}
+            {rawData.sourceId}
           </Button>
         ),
       },
-      rawData.name,
-      rawData.metricType,
-      rawData.unit,
-      String(rawData.current.value),
-      String(rawData.previous.value),
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={(_e) => {
+              r(history, rMap.resources.source.detail, { id: rawData.id })
+            }}
+          >
+            {rawData.name}
+          </Button>
+        ),
+      },
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,
@@ -116,30 +118,29 @@ const filtersDefinition = [
   { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
   { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
   { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
-  { category: "sensorId", categoryName: "Sensor ID", fieldType: "input", dataType: "string" },
-  { category: "fieldId", categoryName: "Filed ID", fieldType: "input", dataType: "string" },
+  { category: "sourceId", categoryName: "Source ID", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.sensorField.list,
-  apiDeleteRecords: api.sensorField.delete,
+  apiGetRecords: api.source.list,
+  apiDeleteRecords: api.source.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Sensor Fields(s)",
+  resourceName: "Source(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.resourceSensorField.loading,
-  records: state.entities.resourceSensorField.records,
-  pagination: state.entities.resourceSensorField.pagination,
-  count: state.entities.resourceSensorField.count,
-  lastUpdate: state.entities.resourceSensorField.lastUpdate,
-  revision: state.entities.resourceSensorField.revision,
-  filters: state.entities.resourceSensorField.filters,
-  sortBy: state.entities.resourceSensorField.sortBy,
+  loading: state.entities.resourceSource.loading,
+  records: state.entities.resourceSource.records,
+  pagination: state.entities.resourceSource.pagination,
+  count: state.entities.resourceSource.count,
+  lastUpdate: state.entities.resourceSource.lastUpdate,
+  revision: state.entities.resourceSource.revision,
+  filters: state.entities.resourceSource.filters,
+  sortBy: state.entities.resourceSource.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -17,8 +17,9 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/actions/handler"
+} from "../../../store/entities/operations/scheduler"
 import { LastSeen } from "../../../Components/Time/Time"
+import { DisplaySuccess } from "../../../Components/DataDisplay/Miscellaneous"
 
 class List extends ListBase {
   state = {
@@ -38,13 +39,13 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.handler.enable)
+        this.actionFuncWithRefresh(api.scheduler.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.handler.disable)
+        this.actionFuncWithRefresh(api.scheduler.disable)
       },
     },
     { type: "delete", onClick: this.onDeleteActionClick },
@@ -57,7 +58,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.actions.handler.add)
+        r(this.props.history, rMap.operations.scheduler.add)
       },
     },
   ]
@@ -65,7 +66,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Handlers" />
+        <PageTitle title="Schedules" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -79,8 +80,9 @@ const tableColumns = [
   { title: "Description", fieldKey: "description", sortable: true },
   { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "Type", fieldKey: "type", sortable: true },
-  { title: "Status", fieldKey: "state.status", sortable: true },
-  { title: "Status At", fieldKey: "state.since", sortable: true },
+  { title: "Executed Count", fieldKey: "state.executedCount", sortable: true },
+  { title: "Last Run", fieldKey: "state.lastRun", sortable: true },
+  { title: "Last Status", fieldKey: "state.lastStatus", sortable: true },
   { title: "Message", fieldKey: "state.message", sortable: true },
 ]
 
@@ -93,7 +95,7 @@ const toRowFuncImpl = (rawData, history) => {
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.actions.handler.detail, { id: rawData.id })
+              r(history, rMap.operations.scheduler.detail, { id: rawData.id })
             }}
           >
             {rawData.id}
@@ -103,8 +105,9 @@ const toRowFuncImpl = (rawData, history) => {
       { title: rawData.description },
       { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
       { title: rawData.type },
-      { title: getValue(rawData, "state.status") },
-      { title: <LastSeen date={rawData.state.since} /> },
+      { title: getValue(rawData, "state.executedCount") },
+      { title: <LastSeen date={rawData.state.lastRun} /> },
+      { title: <DisplaySuccess data={rawData} field="state.lastStatus" /> },
       { title: getValue(rawData, "state.message") },
     ],
     rid: rawData.id,
@@ -113,30 +116,30 @@ const toRowFuncImpl = (rawData, history) => {
 
 const filtersDefinition = [
   { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.handler.list,
-  apiDeleteRecords: api.handler.delete,
+  apiGetRecords: api.scheduler.list,
+  apiDeleteRecords: api.scheduler.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Handler(s)",
+  resourceName: "Schedule(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.actionHandler.loading,
-  records: state.entities.actionHandler.records,
-  pagination: state.entities.actionHandler.pagination,
-  count: state.entities.actionHandler.count,
-  lastUpdate: state.entities.actionHandler.lastUpdate,
-  revision: state.entities.actionHandler.revision,
-  filters: state.entities.actionHandler.filters,
-  sortBy: state.entities.actionHandler.sortBy,
+  loading: state.entities.operationScheduler.loading,
+  records: state.entities.operationScheduler.records,
+  pagination: state.entities.operationScheduler.pagination,
+  count: state.entities.operationScheduler.count,
+  lastUpdate: state.entities.operationScheduler.lastUpdate,
+  revision: state.entities.operationScheduler.revision,
+  filters: state.entities.operationScheduler.filters,
+  sortBy: state.entities.operationScheduler.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

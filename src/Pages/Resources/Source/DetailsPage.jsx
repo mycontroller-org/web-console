@@ -3,7 +3,7 @@ import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import TabDetails from "./TabDetails"
 import UpdatePage from "./UpdatePage"
 
-class NodeDetailPage extends React.Component {
+class SourceDetailPage extends React.Component {
   render() {
     const { id } = this.props.match.params
 
@@ -17,8 +17,8 @@ class NodeDetailPage extends React.Component {
         content: <UpdatePage match={this.props.match} history={this.props.history} />,
       },
     ]
-    return <DetailRootPage pageHeader="Sensor Field Details" tabs={tabs} />
+    return <DetailRootPage pageHeader="Source Details" tabs={tabs} />
   }
 }
 
-export default NodeDetailPage
+export default SourceDetailPage

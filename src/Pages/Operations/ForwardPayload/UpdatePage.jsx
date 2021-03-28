@@ -7,6 +7,7 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
+import {ResourceType} from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {
   render() {
@@ -23,10 +24,10 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.forwardPayload.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.actions.forwardPayload.list)
+          r(this.props.history, rMap.operations.forwardPayload.list)
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.actions.forwardPayload.list)
+          r(this.props.history, rMap.operations.forwardPayload.list)
         }}
         getFormItems={getFormItems}
       />
@@ -109,33 +110,33 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "Source ID",
-      fieldId: "sourceId",
+      label: "Source Field",
+      fieldId: "srcFieldId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
-      optionValueKey: "id",
+      apiOptions: api.field.list,
       getFiltersFunc: (value) => {
         return [{ k: "fieldId", o: "regex", v: value }]
       },
+      optionValueFunc: getResourceOptionValueFunc,
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
-      label: "Target ID",
-      fieldId: "targetId",
+      label: "Destination Field",
+      fieldId: "dstFieldId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
-      optionValueKey: "id",
+      apiOptions: api.field.list,
       getFiltersFunc: (value) => {
         return [{ k: "fieldId", o: "regex", v: value }]
       },
+      optionValueFunc: getResourceOptionValueFunc,
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
   ]
@@ -145,5 +146,10 @@ const getFormItems = (rootObject) => {
 
 // get display field name
 const getOptionsDescriptionFuncImpl = (item) => {
-  return `${item.gatewayId} > ${item.nodeId} > ${item.sensorId} > ${item.fieldId} (${item.name})`
+  return item.name
+}
+
+
+const getResourceOptionValueFunc = (item) => {
+  return `${ResourceType.Field}:${item.gatewayId}.${item.nodeId}.${item.sourceId}.${item.fieldId}`
 }

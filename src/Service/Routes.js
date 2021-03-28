@@ -8,31 +8,31 @@ import GatewayListPage from "../Pages/Resources/Gateway/ListPage"
 import NodeUpdatePage from "../Pages/Resources/Node/UpdatePage"
 import NodeDetailPage from "../Pages/Resources/Node/DetailsPage"
 import NodeListPage from "../Pages/Resources/Node/ListPage"
-import SensorDetailPage from "../Pages/Resources/Sensor/DetailsPage"
-import SensorListPage from "../Pages/Resources/Sensor/ListPage"
-import SensorUpdatePage from "../Pages/Resources/Sensor/UpdatePage"
-import SensorFieldDetailPage from "../Pages/Resources/SensorField/DetailsPage"
-import SensorFieldListPage from "../Pages/Resources/SensorField/ListPage"
-import SensorFieldUpdatePage from "../Pages/Resources/SensorField/UpdatePage"
+import SourceDetailPage from "../Pages/Resources/Source/DetailsPage"
+import SourceListPage from "../Pages/Resources/Source/ListPage"
+import SourceUpdatePage from "../Pages/Resources/Source/UpdatePage"
+import FieldDetailPage from "../Pages/Resources/Field/DetailsPage"
+import FieldListPage from "../Pages/Resources/Field/ListPage"
+import FieldUpdatePage from "../Pages/Resources/Field/UpdatePage"
 import ProfilePage from "../Pages/Settings/Profile/DetailsPage"
-import ForwardPayloadListPage from "../Pages/Actions/ForwardPayload/ListPage"
-import ForwardPayloadUpdatePage from "../Pages/Actions/ForwardPayload/UpdatePage"
-import ForwardPayloadDetailPage from "../Pages/Actions/ForwardPayload/DetailsPage"
+import ForwardPayloadListPage from "../Pages/Operations/ForwardPayload/ListPage"
+import ForwardPayloadUpdatePage from "../Pages/Operations/ForwardPayload/UpdatePage"
+import ForwardPayloadDetailPage from "../Pages/Operations/ForwardPayload/DetailsPage"
 import FirmwareListPage from "../Pages/Resources/Firmware/ListPage"
 import FirmwareUpdatePage from "../Pages/Resources/Firmware/UpdatePage"
 import FirmwareDetailPage from "../Pages/Resources/Firmware/DetailsPage"
 import DataRepositoryListPage from "../Pages/Resources/DataRepository/ListPage"
 import DataRepositoryUpdatePage from "../Pages/Resources/DataRepository/UpdatePage"
 import DataRepositoryDetailPage from "../Pages/Resources/DataRepository/DetailsPage"
-import TaskListPage from "../Pages/Actions/Task/ListPage"
-import TaskUpdatePage from "../Pages/Actions/Task/UpdatePage"
-import TaskDetailPage from "../Pages/Actions/Task/DetailsPage"
-import HandlerListPage from "../Pages/Actions/Handler/ListPage"
-import HandlerUpdatePage from "../Pages/Actions/Handler/UpdatePage"
-import HandlerDetailPage from "../Pages/Actions/Handler/DetailsPage"
-import SchedulerListPage from "../Pages/Actions/Scheduler/ListPage"
-import SchedulerUpdatePage from "../Pages/Actions/Scheduler/UpdatePage"
-import SchedulerDetailPage from "../Pages/Actions/Scheduler/DetailsPage"
+import TaskListPage from "../Pages/Operations/Task/ListPage"
+import TaskUpdatePage from "../Pages/Operations/Task/UpdatePage"
+import TaskDetailPage from "../Pages/Operations/Task/DetailsPage"
+import HandlerListPage from "../Pages/Operations/Handler/ListPage"
+import HandlerUpdatePage from "../Pages/Operations/Handler/UpdatePage"
+import HandlerDetailPage from "../Pages/Operations/Handler/DetailsPage"
+import SchedulerListPage from "../Pages/Operations/Scheduler/ListPage"
+import SchedulerUpdatePage from "../Pages/Operations/Scheduler/UpdatePage"
+import SchedulerDetailPage from "../Pages/Operations/Scheduler/DetailsPage"
 import SettingsSystemPage from "../Pages/Settings/System/DetailsPage"
 
 // import dummyPage from "../Pages/DummyPage/DummyPage"
@@ -54,13 +54,13 @@ const routeMap = {
       update: "/resources/node/update/:id",
       add: "/resources/node/add",
     },
-    sensor: {
-      list: "/resources/sensor",
-      detail: "/resources/sensor/list/:id",
-      update: "/resources/sensor/update/:id",
-      add: "/resources/sensor/add",
+    source: {
+      list: "/resources/source",
+      detail: "/resources/source/list/:id",
+      update: "/resources/source/update/:id",
+      add: "/resources/source/add",
     },
-    sensorField: {
+    field: {
       list: "/resources/field",
       detail: "/resources/field/list/:id",
       update: "/resources/field/update/:id",
@@ -83,30 +83,30 @@ const routeMap = {
     profile: "/settings/profile",
     system: "/settings/system",
   },
-  actions: {
+  operations: {
     forwardPayload: {
-      list: "/actions/forwardpayload",
-      detail: "/actions/forwardpayload/list/:id",
-      update: "/actions/forwardpayload/update/:id",
-      add: "/actions/forwardpayload/add",
+      list: "/operations/forwardpayload",
+      detail: "/operations/forwardpayload/list/:id",
+      update: "/operations/forwardpayload/update/:id",
+      add: "/operations/forwardpayload/add",
     },
     task: {
-      list: "/actions/task",
-      detail: "/actions/task/list/:id",
-      update: "/actions/task/update/:id",
-      add: "/actions/task/add",
+      list: "/operations/task",
+      detail: "/operations/task/list/:id",
+      update: "/operations/task/update/:id",
+      add: "/operations/task/add",
     },
     handler: {
-      list: "/actions/handler",
-      detail: "/actions/handler/list/:id",
-      update: "/actions/handler/update/:id",
-      add: "/actions/handler/add",
+      list: "/operations/handler",
+      detail: "/operations/handler/list/:id",
+      update: "/operations/handler/update/:id",
+      add: "/operations/handler/add",
     },
     scheduler: {
-      list: "/actions/scheduler",
-      detail: "/actions/scheduler/list/:id",
-      update: "/actions/scheduler/update/:id",
-      add: "/actions/scheduler/add",
+      list: "/operations/scheduler",
+      detail: "/operations/scheduler/list/:id",
+      update: "/operations/scheduler/update/:id",
+      add: "/operations/scheduler/add",
     },
   },
 }
@@ -149,16 +149,20 @@ const routes = [
         component: NodeListPage,
       },
       {
-        id: "sensor",
-        title: "Sensors",
-        to: routeMap.resources.sensor.list,
-        component: SensorListPage,
+        id: "source",
+        title: "Sources",
+        to: routeMap.resources.source.list,
+        component: SourceListPage,
       },
       {
         id: "field",
-        title: "Sensor Fields",
-        to: routeMap.resources.sensorField.list,
-        component: SensorFieldListPage,
+        title: "Fields",
+        to: routeMap.resources.field.list,
+        component: FieldListPage,
+      },
+      {
+        id: "seperator_1",
+        isSeparator: true,
       },
       {
         id: "firmware",
@@ -175,31 +179,31 @@ const routes = [
     ],
   },
   {
-    id: "actions",
-    title: "Actions",
+    id: "operations",
+    title: "Operations",
     children: [
       {
         id: "task",
         title: "Tasks",
-        to: routeMap.actions.task.list,
+        to: routeMap.operations.task.list,
         component: TaskListPage,
       },
       {
         id: "scheduler",
         title: "Schedules",
-        to: routeMap.actions.scheduler.list,
+        to: routeMap.operations.scheduler.list,
         component: SchedulerListPage,
       },
       {
         id: "handler",
         title: "Handlers",
-        to: routeMap.actions.handler.list,
+        to: routeMap.operations.handler.list,
         component: HandlerListPage,
       },
       {
         id: "forwardpayload",
         title: "Forward Payload",
-        to: routeMap.actions.forwardPayload.list,
+        to: routeMap.operations.forwardPayload.list,
         component: ForwardPayloadListPage,
       },
     ],
@@ -246,27 +250,27 @@ const hiddenRoutes = [
     component: NodeUpdatePage,
   },
   {
-    to: routeMap.resources.sensor.detail,
-    component: SensorDetailPage,
+    to: routeMap.resources.source.detail,
+    component: SourceDetailPage,
   },
   {
-    to: routeMap.resources.sensor.add,
-    component: SensorUpdatePage,
+    to: routeMap.resources.source.add,
+    component: SourceUpdatePage,
   },
   {
-    to: routeMap.resources.sensorField.detail,
-    component: SensorFieldDetailPage,
+    to: routeMap.resources.field.detail,
+    component: FieldDetailPage,
   },
   {
-    to: routeMap.resources.sensorField.add,
-    component: SensorFieldUpdatePage,
+    to: routeMap.resources.field.add,
+    component: FieldUpdatePage,
   },
   {
-    to: routeMap.actions.forwardPayload.detail,
+    to: routeMap.operations.forwardPayload.detail,
     component: ForwardPayloadDetailPage,
   },
   {
-    to: routeMap.actions.forwardPayload.add,
+    to: routeMap.operations.forwardPayload.add,
     component: ForwardPayloadUpdatePage,
   },
   {
@@ -286,27 +290,27 @@ const hiddenRoutes = [
     component: DataRepositoryUpdatePage,
   },
   {
-    to: routeMap.actions.task.detail,
+    to: routeMap.operations.task.detail,
     component: TaskDetailPage,
   },
   {
-    to: routeMap.actions.task.add,
+    to: routeMap.operations.task.add,
     component: TaskUpdatePage,
   },
   {
-    to: routeMap.actions.handler.detail,
+    to: routeMap.operations.handler.detail,
     component: HandlerDetailPage,
   },
   {
-    to: routeMap.actions.handler.add,
+    to: routeMap.operations.handler.add,
     component: HandlerUpdatePage,
   },
   {
-    to: routeMap.actions.scheduler.detail,
+    to: routeMap.operations.scheduler.detail,
     component: SchedulerDetailPage,
   },
   {
-    to: routeMap.actions.scheduler.add,
+    to: routeMap.operations.scheduler.add,
     component: SchedulerUpdatePage,
   },
 ]

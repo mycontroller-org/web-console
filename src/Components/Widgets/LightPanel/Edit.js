@@ -59,7 +59,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
+      apiOptions: api.field.list,
       optionValueKey: "id",
       getFiltersFunc: getFilters,
       getOptionsDescriptionFunc: getOptionsDescription,
@@ -72,7 +72,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
+      apiOptions: api.field.list,
       optionValueKey: "id",
       getFiltersFunc: getFilters,
       getOptionsDescriptionFunc: getOptionsDescription,
@@ -89,7 +89,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
+      apiOptions: api.field.list,
       optionValueKey: "id",
       getFiltersFunc: getFilters,
       getOptionsDescriptionFunc: getOptionsDescription,
@@ -111,7 +111,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
         value: "",
         isRequired: true,
         validator: { isNotEmpty: {} },
-        apiOptions: api.sensorField.list,
+        apiOptions: api.field.list,
         optionValueKey: "id",
         getFiltersFunc: getFilters,
         getOptionsDescriptionFunc: getOptionsDescription,
@@ -127,7 +127,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-      apiOptions: api.sensorField.list,
+      apiOptions: api.field.list,
       optionValueKey: "id",
       getFiltersFunc: getFilters,
       getOptionsDescriptionFunc: getOptionsDescription,
@@ -142,5 +142,5 @@ const getFilters = (value = "") => {
 }
 
 const getOptionsDescription = (item = {}) => {
-  return item.nodeId + " >> " + item.sensorId + " >> " + item.fieldId + " >> " + item.name
+  return item.nodeId + " >> " + item.sourceId + " >> " + item.fieldId + " >> " + item.name
 }

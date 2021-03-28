@@ -3,6 +3,7 @@ import Editor from "../../../Components/Editor/Editor"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   render() {
@@ -33,8 +34,18 @@ class UpdatePage extends React.Component {
 export default UpdatePage
 
 // support functions
+const getFormItems = (rootObject) => {
+  const newPassword = getValue(rootObject, "newPassword", "")
+  const confirmPassword = getValue(rootObject, "confirmPassword", "")
 
-const getFormItems = (_rootObject) => {
+  let passwordValidator = null
+  let isNewPasswordRequired = false
+
+  if (newPassword !== "" || confirmPassword !== "") {
+    isNewPasswordRequired = true
+    passwordValidator = { isLength: { min: 3, max: 100 }, isNotEmpty: {} }
+  }
+
   const items = [
     {
       label: "ID",
@@ -82,12 +93,39 @@ const getFormItems = (_rootObject) => {
       validator: { isLength: { min: 3, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Password",
-      fieldId: "password",
+      label: "Current Password",
+      fieldId: "currentPassword",
       fieldType: FieldType.Password,
       dataType: DataType.String,
-      isRequired: false,
+      isRequired: true,
       value: "",
+      helperText: "",
+      helperTextInvalid: "Enter your current password",
+      validated: "default",
+    },
+    {
+      label: "New Password",
+      fieldId: "newPassword",
+      fieldType: FieldType.Password,
+      dataType: DataType.String,
+      isRequired: isNewPasswordRequired,
+      value: "",
+      helperText: "",
+      helperTextInvalid: "Invalid password. chars: min=3, max=100",
+      validated: "default",
+      validator: passwordValidator,
+    },
+    {
+      label: "Confirm Password",
+      fieldId: "confirmPassword",
+      fieldType: FieldType.Password,
+      dataType: DataType.String,
+      isRequired: isNewPasswordRequired,
+      value: "",
+      helperText: "",
+      helperTextInvalid: "Invalid password. chars: min=3, max=100",
+      validated: "default",
+      validator: passwordValidator,
     },
     {
       label: "Labels",

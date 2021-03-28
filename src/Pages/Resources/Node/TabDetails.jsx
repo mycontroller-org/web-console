@@ -13,8 +13,8 @@ const tabDetails = ({ resourceId, history }) => {
       resourceId={resourceId}
       history={history}
       apiGetRecord={api.node.get}
-      apiListTablesRecord={api.sensor.list}
-      tableTitle="Sensors"
+      apiListTablesRecord={api.source.list}
+      tableTitle="Sources"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
@@ -49,7 +49,7 @@ const getDetailsFuncImpl = (data) => {
 
 // Properties definition
 const tableColumns = [
-  { title: "Sensor ID", fieldKey: "sensorId", sortable: true },
+  { title: "Source ID", fieldKey: "sourceId", sortable: true },
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
@@ -60,9 +60,9 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
       title: (
         <RouteLink
           history={history}
-          path={rMap.resources.sensor.detail}
+          path={rMap.resources.source.detail}
           id={rawData.id}
-          text={rawData.sensorId}
+          text={rawData.sourceId}
         />
       ),
     },
@@ -70,7 +70,7 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
       title: (
         <RouteLink
           history={history}
-          path={rMap.resources.sensor.detail}
+          path={rMap.resources.source.detail}
           id={rawData.id}
           text={rawData.name}
         />

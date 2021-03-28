@@ -7,6 +7,7 @@ import {
   Nav,
   NavExpandable,
   NavItem,
+  NavItemSeparator,
   NavList,
   NotificationBadge,
   Page,
@@ -96,9 +97,11 @@ class PageLayoutExpandableNav extends React.Component {
     routes.forEach((item) => {
       if (item.children && item.children.length > 0) {
         item.children.forEach((sItem) => {
-          allRoutes.push(<Route key={sItem.to} exact path={sItem.to} component={sItem.component} />)
+          if (!sItem.isSeparator) {
+            allRoutes.push(<Route key={sItem.to} exact path={sItem.to} component={sItem.component} />)
+          }
         })
-      } else {
+      } else if (!item.isSeparator) {
         allRoutes.push(<Route key={item.to} exact path={item.to} component={item.component} />)
       }
     })
@@ -139,11 +142,21 @@ class PageLayoutExpandableNav extends React.Component {
 
     const getSubMenu = (sm) => {
       const sMenus = sm.map((m) => {
-        return (
-          <NavItem key={m.id} itemId={m.id} to={m.to} isActive={menuSelection === m.id} preventDefault={true}>
-            {m.title}
-          </NavItem>
-        )
+        if (m.isSeparator) {
+          return <NavItemSeparator key={m.id} />
+        } else {
+          return (
+            <NavItem
+              key={m.id}
+              itemId={m.id}
+              to={m.to}
+              isActive={menuSelection === m.id}
+              preventDefault={true}
+            >
+              {m.title}
+            </NavItem>
+          )
+        }
       })
       return sMenus
     }

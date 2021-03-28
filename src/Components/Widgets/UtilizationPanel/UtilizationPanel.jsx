@@ -73,12 +73,12 @@ class UtilizationPanel extends React.Component {
         resourceApi = api.node.list
         break
 
-      case ResourceType.Sensor:
-        resourceApi = api.sensor.list
+      case ResourceType.Source:
+        resourceApi = api.source.list
         break
 
-      case ResourceType.SensorField:
-        resourceApi = api.sensorField.list
+      case ResourceType.Field:
+        resourceApi = api.field.list
         break
 
       default:
@@ -167,12 +167,12 @@ class UtilizationPanel extends React.Component {
         route = rMap.resources.node.detail
         break
 
-      case ResourceType.Sensor:
-        route = rMap.resources.sensor.detail
+      case ResourceType.Source:
+        route = rMap.resources.source.detail
         break
 
-      case ResourceType.SensorField:
-        route = rMap.resources.sensorField.detail
+      case ResourceType.Field:
+        route = rMap.resources.field.detail
         break
 
       default:

@@ -30,10 +30,10 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.task.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.actions.task.list)
+          r(this.props.history, rMap.operations.task.list)
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.actions.task.list)
+          r(this.props.history, rMap.operations.task.list)
         }}
         getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />

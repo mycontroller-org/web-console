@@ -31,14 +31,14 @@ class UpdatePage extends React.Component {
         key="editor"
         resourceId={id}
         language="yaml"
-        apiGetRecord={api.sensor.get}
-        apiSaveRecord={api.sensor.update}
+        apiGetRecord={api.field.get}
+        apiSaveRecord={api.field.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.sensor.list)
+          r(this.props.history, rMap.resources.field.list)
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.sensor.list)
+          r(this.props.history, rMap.resources.field.list)
         }}
         getFormItems={(rootObject) => getFormItems(rootObject)}
       />
@@ -47,7 +47,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Sensor" />
+          <PageTitle key="page-title" title="Add a Field" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -77,6 +77,7 @@ const getFormItems = (rootObject) => {
       helperText: "",
       helperTextInvalid: "",
       validated: "default",
+      options: [],
       validator: { isNotEmpty: {} },
     },
     {
@@ -111,16 +112,38 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Sensor ID",
-      fieldId: "sensorId",
+      label: "Source ID",
+      fieldId: "sourceId",
+      fieldType: FieldType.SelectTypeAheadAsync,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      isDisabled: !rootObject.nodeId || !rootObject.gatewayId,
+      apiOptions: api.source.list,
+      optionValueKey: "sourceId",
+      getFiltersFunc: (value) => {
+        return [
+          { k: "gatewayId", o: "eq", v: rootObject.gatewayId },
+          { k: "nodeId", o: "eq", v: rootObject.nodeId },
+          { k: "sourceId", o: "regex", v: value },
+        ]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.name
+      },
+    },
+    {
+      label: "Field ID",
+      fieldId: "fieldId",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Sensor ID. chars: min=1 and max=100",
+      helperTextInvalid: "Invalid Field ID. chars: min=1 and max=100",
       validated: "default",
-      validator: { isLength: { min: 1, max: 100 }, isID: {}, isNotEmpty: {} },
+      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
       label: "Name",
@@ -144,8 +167,27 @@ const getFormItems = (rootObject) => {
       fieldId: "labels",
       fieldType: FieldType.Labels,
       dataType: DataType.Object,
+      value: {},
+      validated: "default",
+      validator: { isLabel: {} },
+    },
+    {
+      label: "Value Formatter",
+      fieldId: "!value_formatter",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "On Receive Formatter",
+      fieldId: "formatter.onReceive",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.String,
       value: "",
-    }
+      saveButtonText: "Update",
+      updateButtonText: "Update Script",
+      language: "javascript",
+      minimapEnabled: true,
+      isRequired: false,
+    },
   ]
 
   return items

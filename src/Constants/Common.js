@@ -8,4 +8,4 @@ export const ALERT_TYPE_SUCCESS = "success"
 export const ALERT_TYPE_WARN = "warning"
 export const ALERT_TYPE_ERROR = "danger"
 
-export const DATA_CACHE_TIMEOUT = 30 // in seconds
+export const DATA_CACHE_TIMEOUT = 0 // in seconds, data cache in list tables. 0 - disabled

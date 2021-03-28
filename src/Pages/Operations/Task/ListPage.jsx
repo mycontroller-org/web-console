@@ -16,7 +16,8 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/actions/forwardPayload"
+} from "../../../store/entities/operations/task"
+import { LastSeen } from "../../../Components/Time/Time"
 
 class List extends ListBase {
   state = {
@@ -36,13 +37,13 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.forwardPayload.enable)
+        this.actionFuncWithRefresh(api.task.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.forwardPayload.disable)
+        this.actionFuncWithRefresh(api.task.disable)
       },
     },
     { type: "delete", onClick: this.onDeleteActionClick },
@@ -55,7 +56,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.actions.forwardPayload.add)
+        r(this.props.history, rMap.operations.task.add)
       },
     },
   ]
@@ -63,7 +64,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Forward Payload" />
+        <PageTitle title="Tasks" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -73,11 +74,15 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "Name", fieldKey: "name", sortable: true },
+  { title: "ID", fieldKey: "id", sortable: true },
   { title: "Description", fieldKey: "description", sortable: true },
   { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
-  { title: "Source ID", fieldKey: "sourceId", sortable: true },
-  { title: "Target ID", fieldKey: "targetId", sortable: true },
+  { title: "Ignore Duplicate", fieldKey: "ignoreDuplicate", sortable: true },
+  { title: "Auto Disable", fieldKey: "autoDisable", sortable: true },
+  { title: "Trigger On Event", fieldKey: "triggerOnEvent", sortable: true },
+  { title: "Last Evaluation", fieldKey: "state.lastEvaluation", sortable: true },
+  { title: "Last Success", fieldKey: "state.lastSuccess", sortable: true },
+  { title: "Message", fieldKey: "state.message", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -89,72 +94,65 @@ const toRowFuncImpl = (rawData, history) => {
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.actions.forwardPayload.detail, { id: rawData.id })
+              r(history, rMap.operations.task.detail, { id: rawData.id })
             }}
           >
-            {rawData.name}
+            {rawData.id}
           </Button>
         ),
       },
       { title: rawData.description },
       { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
-      {
-        title: (
-          <Button
-            variant="link"
-            isInline
-            onClick={(_e) => {
-              r(history, rMap.resources.sensorField.detail, { id: rawData.sourceId })
-            }}
-          >
-            {rawData.sourceId}
-          </Button>
-        ),
-      },
-      {
-        title: (
-          <Button
-            variant="link"
-            isInline
-            onClick={(_e) => {
-              r(history, rMap.resources.sensorField.detail, { id: rawData.targetId })
-            }}
-          >
-            {rawData.targetId}
-          </Button>
-        ),
-      },
+      { title: <div className="align-center">{getStatusBool(rawData.ignoreDuplicate)}</div> },
+      { title: <div className="align-center">{getStatusBool(rawData.autoDisable)}</div> },
+      { title: <div className="align-center">{getStatusBool(rawData.triggerOnEvent)}</div> },
+      { title: <LastSeen date={rawData.state.lastEvaluation} /> },
+      { title: <LastSeen date={rawData.state.lastSuccess} /> },
+      { title: rawData.state.message },
     ],
     rid: rawData.id,
   }
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  {
+    category: "ignoreDuplicate",
+    categoryName: "Ignore Duplicate",
+    fieldType: "enabled",
+    dataType: "boolean",
+  },
+  { category: "autoDisable", categoryName: "Auto Disable", fieldType: "enabled", dataType: "boolean" },
+  {
+    category: "triggerOnEvent",
+    categoryName: "Trigger On Event",
+    fieldType: "enabled",
+    dataType: "boolean",
+  },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.forwardPayload.list,
-  apiDeleteRecords: api.forwardPayload.delete,
+  apiGetRecords: api.task.list,
+  apiDeleteRecords: api.task.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Forward Payload(s)",
+  resourceName: "Task(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.actionForwardPayload.loading,
-  records: state.entities.actionForwardPayload.records,
-  pagination: state.entities.actionForwardPayload.pagination,
-  count: state.entities.actionForwardPayload.count,
-  lastUpdate: state.entities.actionForwardPayload.lastUpdate,
-  revision: state.entities.actionForwardPayload.revision,
-  filters: state.entities.actionForwardPayload.filters,
-  sortBy: state.entities.actionForwardPayload.sortBy,
+  loading: state.entities.operationTask.loading,
+  records: state.entities.operationTask.records,
+  pagination: state.entities.operationTask.pagination,
+  count: state.entities.operationTask.count,
+  lastUpdate: state.entities.operationTask.lastUpdate,
+  revision: state.entities.operationTask.revision,
+  filters: state.entities.operationTask.filters,
+  sortBy: state.entities.operationTask.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

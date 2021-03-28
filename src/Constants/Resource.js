@@ -2,14 +2,14 @@
 export const ResourceType = {
   Gateway: "gateway",
   Node: "node",
-  Sensor: "senor",
-  SensorField: "senorField",
+  Source: "source",
+  Field: "field",
 }
 
 // Resource type options list
 export const ResourceTypeOptions = [
   { value: ResourceType.Gateway, label: "Gateway" },
   { value: ResourceType.Node, label: "Node" },
-  { value: ResourceType.Sensor, label: "Sensor" },
-  { value: ResourceType.SensorField, label: "Sensor Field" },
+  { value: ResourceType.Source, label: "Source" },
+  { value: ResourceType.Field, label: "Field" },
 ]

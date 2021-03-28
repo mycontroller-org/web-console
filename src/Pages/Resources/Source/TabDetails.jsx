@@ -11,9 +11,9 @@ const tabDetails = ({ resourceId, history }) => {
     <TabDetailsBase
       resourceId={resourceId}
       history={history}
-      apiGetRecord={api.sensor.get}
-      apiListTablesRecord={api.sensorField.list}
-      tableTitle="Sensor Fields"
+      apiGetRecord={api.source.get}
+      apiListTablesRecord={api.field.list}
+      tableTitle="Fields"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
@@ -33,7 +33,7 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "ID", value: data.id })
   fieldsList1.push({ key: "Gateway ID", value: data.gatewayId })
   fieldsList1.push({ key: "Node ID", value: data.nodeId })
-  fieldsList1.push({ key: "Sensor ID", value: data.sensorId })
+  fieldsList1.push({ key: "Source ID", value: data.sourceId })
   fieldsList1.push({ key: "Name", value: data.name })
   fieldsList1.push({ key: "Last Seen", value: data.lastSeen })
   fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
@@ -62,13 +62,22 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
       title: (
         <RouteLink
           history={history}
-          path={rMap.resources.sensorField.detail}
+          path={rMap.resources.field.detail}
           id={rawData.id}
           text={rawData.fieldId}
         />
       ),
     },
-    rawData.name,
+    {
+      title: (
+        <RouteLink
+          history={history}
+          path={rMap.resources.field.detail}
+          id={rawData.id}
+          text={rawData.name}
+        />
+      ),
+    },
     rawData.metricType,
     rawData.unit,
     String(rawData.current.value),
@@ -78,5 +87,5 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
 }
 
 const getTableFilterFuncImpl = (data) => {
-  return { gatewayId: data.gatewayId, nodeId: data.nodeId, sensorId: data.sensorId }
+  return { gatewayId: data.gatewayId, nodeId: data.nodeId, sourceId: data.sourceId }
 }

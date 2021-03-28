@@ -16,8 +16,7 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/actions/task"
-import { LastSeen } from "../../../Components/Time/Time"
+} from "../../../store/entities/operations/forwardPayload"
 
 class List extends ListBase {
   state = {
@@ -37,13 +36,13 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.task.enable)
+        this.actionFuncWithRefresh(api.forwardPayload.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.task.disable)
+        this.actionFuncWithRefresh(api.forwardPayload.disable)
       },
     },
     { type: "delete", onClick: this.onDeleteActionClick },
@@ -56,7 +55,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.actions.task.add)
+        r(this.props.history, rMap.operations.forwardPayload.add)
       },
     },
   ]
@@ -64,7 +63,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Tasks" />
+        <PageTitle title="Forward Payload" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -74,15 +73,11 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
+  { title: "Name", fieldKey: "name", sortable: true },
   { title: "Description", fieldKey: "description", sortable: true },
   { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
-  { title: "Ignore Duplicate", fieldKey: "ignoreDuplicate", sortable: true },
-  { title: "Auto Disable", fieldKey: "autoDisable", sortable: true },
-  { title: "Trigger On Event", fieldKey: "triggerOnEvent", sortable: true },
-  { title: "Last Evaluation", fieldKey: "state.lastEvaluation", sortable: true },
-  { title: "Last Success", fieldKey: "state.lastSuccess", sortable: true },
-  { title: "Message", fieldKey: "state.message", sortable: true },
+  { title: "Source Field", fieldKey: "srcFieldId", sortable: true },
+  { title: "Destination Field", fieldKey: "dstFieldId", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -94,65 +89,50 @@ const toRowFuncImpl = (rawData, history) => {
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.actions.task.detail, { id: rawData.id })
+              r(history, rMap.operations.forwardPayload.detail, { id: rawData.id })
             }}
           >
-            {rawData.id}
+            {rawData.name}
           </Button>
         ),
       },
       { title: rawData.description },
       { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
-      { title: <div className="align-center">{getStatusBool(rawData.ignoreDuplicate)}</div> },
-      { title: <div className="align-center">{getStatusBool(rawData.autoDisable)}</div> },
-      { title: <div className="align-center">{getStatusBool(rawData.triggerOnEvent)}</div> },
-      { title: <LastSeen date={rawData.state.lastEvaluation} /> },
-      { title: <LastSeen date={rawData.state.lastSuccess} /> },
-      { title: rawData.state.message },
+      rawData.srcFieldId,
+      rawData.dstFieldId,
     ],
     rid: rawData.id,
   }
 }
 
 const filtersDefinition = [
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
+  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
   { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
-  {
-    category: "ignoreDuplicate",
-    categoryName: "Ignore Duplicate",
-    fieldType: "enabled",
-    dataType: "boolean",
-  },
-  { category: "autoDisable", categoryName: "Auto Disable", fieldType: "enabled", dataType: "boolean" },
-  {
-    category: "triggerOnEvent",
-    categoryName: "Trigger On Event",
-    fieldType: "enabled",
-    dataType: "boolean",
-  },
+  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "srcFieldId", categoryName: "Source Field", fieldType: "input", dataType: "string" },
+  { category: "dstFieldId", categoryName: "Destination Field", fieldType: "input", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.task.list,
-  apiDeleteRecords: api.task.delete,
+  apiGetRecords: api.forwardPayload.list,
+  apiDeleteRecords: api.forwardPayload.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Task(s)",
+  resourceName: "Forward Payload(s)",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.actionTask.loading,
-  records: state.entities.actionTask.records,
-  pagination: state.entities.actionTask.pagination,
-  count: state.entities.actionTask.count,
-  lastUpdate: state.entities.actionTask.lastUpdate,
-  revision: state.entities.actionTask.revision,
-  filters: state.entities.actionTask.filters,
-  sortBy: state.entities.actionTask.sortBy,
+  loading: state.entities.operationForwardPayload.loading,
+  records: state.entities.operationForwardPayload.records,
+  pagination: state.entities.operationForwardPayload.pagination,
+  count: state.entities.operationForwardPayload.count,
+  lastUpdate: state.entities.operationForwardPayload.lastUpdate,
+  revision: state.entities.operationForwardPayload.revision,
+  filters: state.entities.operationForwardPayload.filters,
+  sortBy: state.entities.operationForwardPayload.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

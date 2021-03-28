@@ -45,7 +45,7 @@ class LightPanel extends React.Component {
     })
     const filters = [{ k: "id", o: "in", v: ids }]
 
-    api.sensorField
+    api.field
       .list({ filter: filters })
       .then((res) => {
         // values
@@ -87,7 +87,7 @@ class LightPanel extends React.Component {
             id: field.id,
             label: field.name,
             value: value,
-            quickId: `${ResourceType.SensorField}:${field.gatewayId}.${field.nodeId}.${field.sensorId}.${field.fieldId}`,
+            quickId: `${ResourceType.Field}:${field.gatewayId}.${field.nodeId}.${field.sourceId}.${field.fieldId}`,
           }
         })
         this.setState({ loading: false, resources, ...values })

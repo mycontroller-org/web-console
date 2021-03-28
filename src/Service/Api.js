@@ -141,17 +141,17 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/node", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/node", {}, data),
   },
-  sensor: {
-    list: (filter) => newRequest(HTTP_VERBS.GET, "/sensor", filter, {}),
-    get: (id) => newRequest(HTTP_VERBS.GET, "/sensor/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/sensor", {}, data),
-    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensor", {}, data),
+  source: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/source", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/source/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/source", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/source", {}, data),
   },
-  sensorField: {
-    list: (filter) => newRequest(HTTP_VERBS.GET, "/sensorfield", filter, {}),
-    get: (id) => newRequest(HTTP_VERBS.GET, "/sensorfield/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/sensorfield", {}, data),
-    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/sensorfield", {}, data),
+  field: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/field", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/field/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/field", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/field", {}, data),
   },
   metric: {
     fetch: (queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries),

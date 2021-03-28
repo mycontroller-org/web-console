@@ -18,18 +18,18 @@ export const DampeningOptions = [
 export const ResourceEventType = {
   Gateway: "gateway",
   Node: "node",
-  Sensor: "sensor",
-  SensorFieldSet: "sensor_field.set",
-  SensorFieldRequest: "sensor_field.request",
+  Source: "source",
+  FieldSet: "field.set",
+  FieldRequest: "field.request",
 }
 
 // Resource event type options
 export const ResourceEventTypeOptions = [
   { value: ResourceEventType.Gateway, label: "Gateway" },
   { value: ResourceEventType.Node, label: "Node" },
-  { value: ResourceEventType.Sensor, label: "Sensor" },
-  { value: ResourceEventType.SensorFieldSet, label: "Sensor Field Set" },
-  { value: ResourceEventType.SensorFieldRequest, label: "Sensor Field Request" },
+  { value: ResourceEventType.Source, label: "Source" },
+  { value: ResourceEventType.FieldSet, label: "Field Set" },
+  { value: ResourceEventType.FieldRequest, label: "Field Request" },
 ]
 
 // Operator values

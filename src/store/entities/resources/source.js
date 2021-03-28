@@ -1,6 +1,6 @@
 import { getBase } from "../listPageBase"
 
-const slice = getBase("resourceSensorField")
+const slice = getBase("resourceSource")
 
 export default slice.reducer
 

@@ -95,6 +95,9 @@ export const validate = (func, val, opts) => {
     case "isNotEmpty":
       return !v.isEmpty(val, opts)
 
+    case "isEqual":
+      return val === opts.value
+
     case "isAlphanumeric":
       return v.isAlphanumeric(val)
 
