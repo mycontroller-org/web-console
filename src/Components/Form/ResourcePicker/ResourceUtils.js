@@ -7,6 +7,7 @@ import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
   const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
+  const isDisabled = objectPath.get(rootObject, "disabled", "")
 
   let data = ""
   if (dataType !== FieldDataType.TypeString) {
@@ -14,7 +15,7 @@ export const updateValue = (rootObject = {}, onChange, onClose) => {
       const yamlString = YAML.dump(rootObject.data)
       const utf8Bytes = UTF8.encode(yamlString)
       const base64String = Base64.encode(utf8Bytes)
-      const narrowedRootObject = { type: rootObject.type, data: base64String }
+      const narrowedRootObject = { type: dataType, disabled: isDisabled, data: base64String }
       data = JSON.stringify(narrowedRootObject)
     } catch (err) {
       data = err.toString()

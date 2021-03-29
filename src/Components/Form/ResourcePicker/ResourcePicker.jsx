@@ -105,23 +105,36 @@ const getItems = (rootObject, callerType) => {
     }
   })
 
-  const items = [
-    {
-      label: "Data Type",
-      fieldId: "type",
-      fieldType: FieldType.SelectTypeAhead,
+  const items = []
+
+  if (callerType === CallerType.Parameter) {
+    items.push({
+      label: "Disabled",
+      fieldId: "disabled",
+      fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      isRequired: true,
+      isRequired: false,
       isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
-      options: FieldTypes,
-      validator: { isNotEmpty: {} },
-      resetFields: { data: {}, string: "" },
-    },
-  ]
+    })
+  }
+
+  items.push({
+    label: "Data Type",
+    fieldId: "type",
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    value: "",
+    isRequired: true,
+    isDisabled: false,
+    helperText: "",
+    helperTextInvalid: "Invalid type",
+    validated: "default",
+    options: FieldTypes,
+    validator: { isNotEmpty: {} },
+    resetFields: { data: {}, string: "" },
+  })
+
   const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
 
   switch (dataType) {

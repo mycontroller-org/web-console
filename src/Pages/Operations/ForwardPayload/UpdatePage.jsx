@@ -119,7 +119,7 @@ const getFormItems = (rootObject) => {
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
       getFiltersFunc: (value) => {
-        return [{ k: "fieldId", o: "regex", v: value }]
+        return [{ k: "name", o: "regex", v: value }]
       },
       optionValueFunc: getResourceOptionValueFunc,
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
@@ -134,7 +134,7 @@ const getFormItems = (rootObject) => {
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
       getFiltersFunc: (value) => {
-        return [{ k: "fieldId", o: "regex", v: value }]
+        return [{ k: "name", o: "regex", v: value }]
       },
       optionValueFunc: getResourceOptionValueFunc,
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
