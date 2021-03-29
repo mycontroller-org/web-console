@@ -63,6 +63,7 @@ class Select extends React.Component {
       disableClear,
       hideDescription,
       isArrayData,
+      direction = "",
     } = this.props
     const { isOpen } = this.state
 
@@ -90,7 +91,7 @@ class Select extends React.Component {
       />
     ))
 
-   // console.log("selections:", selections)
+    // console.log("selections:", selections)
 
     return (
       <PfSelect
@@ -105,6 +106,7 @@ class Select extends React.Component {
         placeholderText={label}
         isDisabled={isDisabled}
         isCreatable={isCreatable}
+        direction={direction}
         //onCreateOption={(hasOnCreateOption && this.onCreateOption) || undefined}
       >
         {selectOptions}
@@ -121,6 +123,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   isMulti: PropTypes.bool,
   isArrayData: PropTypes.bool,
+  direction: PropTypes.string,
 }
 
 export default Select

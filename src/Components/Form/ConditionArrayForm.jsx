@@ -111,7 +111,14 @@ class ConditionArrayMapForm extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateKeyFunc, validateValueFunc, variableLabel, operatorLabel, valueLabel } = this.props
+    const {
+      validateKeyFunc,
+      validateValueFunc,
+      variableLabel,
+      operatorLabel,
+      valueLabel,
+      direction = "",
+    } = this.props
     const variables = []
 
     const formItems = items.map((item, index) => {
@@ -155,6 +162,7 @@ class ConditionArrayMapForm extends React.Component {
               variant={SelectVariant.single}
               options={OperatorOptions}
               selected={item.operator}
+              direction={direction}
               onChange={(newValue) => {
                 this.onChange(index, "operator", newValue)
               }}
@@ -229,6 +237,7 @@ ConditionArrayMapForm.propTypes = {
   conditionsArrayMap: PropTypes.array,
   validateKeyFunc: PropTypes.func,
   validateValueFunc: PropTypes.func,
+  direction: PropTypes.string,
 }
 
 export default ConditionArrayMapForm

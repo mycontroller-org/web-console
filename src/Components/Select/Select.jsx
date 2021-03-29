@@ -29,9 +29,10 @@ class Select extends React.Component {
   }
 
   render() {
+    const { title, disabled, options, direction = "up" } = this.props
     return (
       <div>
-        <span id="select-title">{this.props.title}</span>
+        <span id="select-title">{title}</span>
         <PfSelect
           variant={SelectVariant.single}
           placeholderText="Select an option"
@@ -41,9 +42,10 @@ class Select extends React.Component {
           selections={this.state.selected}
           isOpen={this.state.isOpen}
           //aria-labelledby={titleId}
-          isDisabled={this.props.disabled}
+          isDisabled={disabled}
+          direction={direction}
         >
-          {this.props.options.map((option, index) => (
+          {options.map((option, index) => (
             <SelectOption isDisabled={option.disabled} key={index} value={option.value}>
               {option.display}
             </SelectOption>

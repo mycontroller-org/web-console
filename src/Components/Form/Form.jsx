@@ -178,6 +178,7 @@ const getField = (item, onChange) => {
           conditionsArrayMap={item.value}
           keyLabel={item.keyLabel}
           conditionLabel={item.conditionLabel}
+          direction={item.direction}
           valueLabel={item.valueLabel}
           onChange={onChange}
           validateKeyFunc={

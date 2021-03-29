@@ -277,6 +277,7 @@ const getFormItems = (rootObject, id) => {
           fieldId: "evaluationConfig.rule.conditions",
           fieldType: FieldType.ConditionsArrayMap,
           dataType: DataType.ArrayObject,
+          direction: "up",
           value: [],
         }
       )
