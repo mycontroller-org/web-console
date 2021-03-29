@@ -156,6 +156,11 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "execution interval can not be empty",
+      validated: "default",
+      validator: { isNotEmpty: {} },
     })
   }
 
