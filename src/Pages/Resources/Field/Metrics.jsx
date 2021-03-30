@@ -11,45 +11,64 @@ import {
 } from "@patternfly/react-core"
 import moment from "moment"
 import React from "react"
+import { connect } from "react-redux"
 import { RefreshButton } from "../../../Components/Buttons/Buttons"
 import { LineChart } from "../../../Components/Graphs/Graphs"
 import Loading from "../../../Components/Loading/Loading"
 import Select from "../../../Components/Select/Select"
-import { InterpolationType, MetricType } from "../../../Constants/Metric"
+import {
+  AggregationInterval,
+  AggregationIntervalOptions,
+  Duration,
+  DurationOptions,
+  getRecommendedInterval,
+  InterpolationType,
+  InterpolationTypeLineOptions,
+  MetricFunctionType,
+  MetricFunctionTypeOptions,
+  MetricType,
+} from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
+import { getItem } from "../../../Util/Util"
+import { updateMetricConfigGauge, updateMetricConfigBinary } from "../../../store/entities/resources/field"
 
-const durationOptions = [
-  { value: "-1h", window: "1m", tsFormat: "HH:mm", display: "Last 1 hour" },
-  { value: "-2h", window: "2m", tsFormat: "HH:mm", display: "Last 2 hours" },
-  { value: "-3h", window: "5m", tsFormat: "HH:mm", display: "Last 3 hours" },
-  { value: "-6h", window: "10m", tsFormat: "HH:mm", display: "Last 6 hours" },
-  { value: "-12h", window: "10m", tsFormat: "HH:mm", display: "Last 12 hours" },
-  { value: "-24h", window: "15m", tsFormat: "HH:mm", display: "Last 24 hours" },
-  { value: "-48h", window: "15m", tsFormat: "D,HH:mm", display: "Last 2 days" },
-  { value: "-168h", window: "30m", tsFormat: "D,HH:mm", display: "Last 7 days" },
-  { value: "-720h", window: "1h", tsFormat: "D,HH:mm", display: "Last 30 days" },
-]
-
-const defaultInterval = durationOptions[0].value
+const defaultDuration = Duration.LastHour
+const defaultInterval = AggregationInterval.Minute_1
+const defaultMetricFunction = MetricFunctionType.Mean
+const defaultInterpolationType = InterpolationType.Natural
 
 class Metrics extends React.Component {
   state = {
     metrics: [],
     loading: true,
+    metricFn: defaultMetricFunction,
+    duration: defaultDuration,
     interval: defaultInterval,
+    interpolationType: defaultInterpolationType,
+    minValue: 0,
   }
 
   componentDidMount() {}
 
-  onChangeFunc = (interval) => {
-    const duration = getDuration(interval)
+  onChangeFunc = (gaugeConfig, binaryConfig) => {
     const data = this.props.data
+
+    let durationValue = ""
+    if (data.metricType === MetricType.Gauge || data.metricType === MetricType.GaugeFloat) {
+      durationValue = gaugeConfig.duration
+    } else if (data.metricType === MetricType.Binary) {
+      durationValue = binaryConfig.duration
+    }
+
+    const duration = getItem(durationValue, DurationOptions)
+    const metricFunction = getItem(gaugeConfig.func, MetricFunctionTypeOptions)
+
     const queries = {
       global: {
         metricType: data.metricType,
         start: duration.value,
-        window: duration.window,
-        functions: ["mean", "percentile_99"],
+        window: gaugeConfig.interval,
+        functions: [metricFunction.value], // for binary data, this value will be ignored
       },
       individual: [
         {
@@ -61,6 +80,7 @@ class Metrics extends React.Component {
 
     // unit
     const unit = data.unit === "none" ? "" : data.unit
+    let minValue = Infinity
 
     api.metric
       .fetch(queries)
@@ -69,36 +89,32 @@ class Metrics extends React.Component {
         if (metricsRaw) {
           const metrics = []
           if (data.metricType === MetricType.Gauge || data.metricType === MetricType.GaugeFloat) {
-            const average = {
-              name: "Average",
+            const metricConfig = {
+              name: metricFunction.label,
               type: "area",
               unit: unit,
-              interpolation: "natural",
+              interpolation: gaugeConfig.interpolationType,
               data: [],
             }
-            const percentile = {
-              name: "99th Percentile",
-              type: "area",
-              interpolation: "natural",
-              unit: unit,
-              data: [],
-            }
+
             metricsRaw.forEach((d) => {
               const ts = moment(d.timestamp).format(duration.tsFormat)
               // update data
-              average.data.push({
+              const value = d.metric[metricFunction.value]
+              if (value !== undefined && value !== null && value < minValue) {
+                minValue = value
+              }
+              metricConfig.data.push({
                 x: ts,
-                y: d.metric.mean,
-              })
-              percentile.data.push({
-                x: ts,
-                y: d.metric.percentile_99,
+                y: value,
               })
             })
 
-            // update average and percentile
-            metrics.push(average)
-            metrics.push(percentile)
+            // update gauge data
+            metrics.push(metricConfig)
+
+            // update into redux
+            this.props.updateMetricConfigGauge(gaugeConfig)
           } else if (data.metricType === MetricType.Binary) {
             const binaryData = {
               name: data.name,
@@ -107,18 +123,36 @@ class Metrics extends React.Component {
               data: [],
             }
             metricsRaw.forEach((d) => {
-              const ts = moment(d.timestamp).format(duration.tsFormat)
+              const ts = moment(d.timestamp).format(duration.tsFormat + ":ss") // include seconds
               // update data
               binaryData.data.push({
                 x: ts,
                 y: d.metric.value,
               })
             })
+
+            // add last data again into current timestamp to show till now
+            if (binaryData.data.length > 0) {
+              const data = binaryData.data[binaryData.data.length - 1]
+              binaryData.data.push({
+                x: moment().format(duration.tsFormat + ":ss"), // include seconds
+                y: data.y,
+              })
+            }
+
             // update binaryData
             metrics.push(binaryData)
+
+            // update in to redux
+            this.props.updateMetricConfigBinary(binaryConfig)
           }
+
           // update metrics
-          this.setState({ metrics: metrics, interval: interval, loading: false })
+          this.setState({
+            metrics: metrics,
+            minValue: minValue,
+            loading: false,
+          })
         }
       })
       .catch((_e) => {
@@ -127,31 +161,79 @@ class Metrics extends React.Component {
   }
 
   render() {
-    const data = this.props.data
+    const { metricType } = this.props.data
     const showMetrics =
-      data.metricType === MetricType.Binary ||
-      data.metricType === MetricType.Gauge ||
-      data.metricType === MetricType.GaugeFloat
+      metricType === MetricType.Binary ||
+      metricType === MetricType.Gauge ||
+      metricType === MetricType.GaugeFloat
 
     if (!showMetrics) {
       // metrics data not available
       return null
     }
 
-    const metricsToolbox = []
-    const { loading, metrics, interval } = this.state
+    const isBinaryMetric = metricType === MetricType.Binary
 
-    if (showMetrics) {
+    const metricsToolbox = []
+    const { loading, metrics, minValue } = this.state
+    const gaugeConfig = this.props.metricConfigGauge
+    const binaryConfig = this.props.metricConfigBinary
+
+    if (isBinaryMetric) {
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
           <Select
-            key="range-selection"
-            defaultValue={interval}
-            options={durationOptions}
+            key="duration-selection"
+            defaultValue={binaryConfig.duration}
+            options={DurationOptions}
             title=""
-            onSelectionFunc={this.onChangeFunc}
+            onSelectionFunc={(newDuration) => {
+              this.onChangeFunc(gaugeConfig, { ...binaryConfig, duration: newDuration })
+            }}
           />
         </div>
+      )
+    } else {
+      metricsToolbox.push(
+        <div style={{ marginBottom: "5px" }}>
+          <Select
+            key="function-selection"
+            defaultValue={gaugeConfig.func}
+            options={MetricFunctionTypeOptions}
+            title=""
+            onSelectionFunc={(newMetricFn) => {
+              this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
+            }}
+          />
+        </div>,
+        <Select
+          key="duration-selection"
+          defaultValue={gaugeConfig.duration}
+          options={DurationOptions}
+          title=""
+          onSelectionFunc={(newDuration) => {
+            const newInterval = getRecommendedInterval(newDuration)
+            this.onChangeFunc({ ...gaugeConfig, duration: newDuration, interval: newInterval }, binaryConfig)
+          }}
+        />,
+        <Select
+          key="interval-selection"
+          defaultValue={gaugeConfig.interval}
+          options={AggregationIntervalOptions}
+          title=""
+          onSelectionFunc={(newInterval) => {
+            this.onChangeFunc({ ...gaugeConfig, interval: newInterval }, binaryConfig)
+          }}
+        />,
+        <Select
+          key="interpolation-selection"
+          defaultValue={gaugeConfig.interpolationType}
+          options={InterpolationTypeLineOptions}
+          title=""
+          onSelectionFunc={(newInterpolationType) => {
+            this.onChangeFunc({ ...gaugeConfig, interpolationType: newInterpolationType }, binaryConfig)
+          }}
+        />
       )
     }
 
@@ -163,8 +245,38 @@ class Metrics extends React.Component {
       if (metrics.length === 0) {
         graphs.push(<span key="no data">No data</span>)
       } else {
+        // calculate width of the chart
+        // nav size: 290
+        const { windowSize, isNavOpen } = this.props.globalSettings
+
+        let calculatedWidth = windowSize.width - 400 // 300 - extra width on both side of the chart
+        let tickCountX = 3
+
+        if (calculatedWidth < 800) {
+          calculatedWidth = windowSize.width
+        } else {
+          // remove nav width
+          if (isNavOpen) {
+            calculatedWidth = calculatedWidth - 290
+          }
+          if (calculatedWidth > 1500) {
+            tickCountX = 9
+          } else if (calculatedWidth > 1200) {
+            tickCountX = 7
+          } else if (calculatedWidth > 1000) {
+            tickCountX = 5
+          } else if (calculatedWidth > 800) {
+            tickCountX = 4
+          }
+        }
+
+        // update minimum value
+        let updateMinValue = isBinaryMetric ? 0 : minValue
+        if (!isBinaryMetric && minValue !== undefined) {
+          updateMinValue = minValue * 0.98 // add minimum value as 98% of original min value
+        }
+
         metrics.forEach((m, index) => {
-          //console.log(m)
           graphs.push(
             <GridItem key={m.name + "_" + index}>
               <LineChart
@@ -174,6 +286,10 @@ class Metrics extends React.Component {
                 data={m.data}
                 interpolation={m.interpolation}
                 type={m.type}
+                height={180}
+                width={calculatedWidth}
+                tickCountX={tickCountX}
+                minDomainY={updateMinValue}
               />
             </GridItem>
           )
@@ -184,7 +300,7 @@ class Metrics extends React.Component {
     const refreshBtn = (
       <RefreshButton
         onClick={() => {
-          this.onChangeFunc(interval)
+          this.onChangeFunc(gaugeConfig, binaryConfig)
         }}
       />
     )
@@ -204,7 +320,7 @@ class Metrics extends React.Component {
           <Divider />
         </CardTitle>
         <CardBody>
-          <Grid hasGutter sm={12} md={12} lg={6} xl={4}>
+          <Grid hasGutter sm={12} md={12} lg={12} xl={12}>
             {graphs}
           </Grid>
         </CardBody>
@@ -213,15 +329,15 @@ class Metrics extends React.Component {
   }
 }
 
-export default Metrics
+const mapStateToProps = (state) => ({
+  globalSettings: state.entities.globalSettings,
+  metricConfigBinary: state.entities.resourceField.metricConfig.binary,
+  metricConfigGauge: state.entities.resourceField.metricConfig.gauge,
+})
 
-// helper functions
-const getDuration = (interval) => {
-  for (let index = 0; index < durationOptions.length; index++) {
-    const duration = durationOptions[index]
-    if (interval === duration.value) {
-      return duration
-    }
-  }
-  return durationOptions[0]
-}
+const mapDispatchToProps = (dispatch) => ({
+  updateMetricConfigBinary: (data) => dispatch(updateMetricConfigBinary(data)),
+  updateMetricConfigGauge: (data) => dispatch(updateMetricConfigGauge(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Metrics)

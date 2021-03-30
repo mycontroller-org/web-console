@@ -94,7 +94,14 @@ class Editor extends React.Component {
       if (item.resetFields) {
         const fields = Object.keys(item.resetFields)
         fields.forEach((field) => {
-          objectPath.set(rootObject, field, item.resetFields[field])
+          const input = item.resetFields[field]
+          let value = ""
+          if (typeof input === "function") {
+            value = input(rootObject, newValue)
+          } else {
+            value = input
+          }
+          objectPath.set(rootObject, field, value)
         })
       }
       if (this.props.onChangeFunc) {

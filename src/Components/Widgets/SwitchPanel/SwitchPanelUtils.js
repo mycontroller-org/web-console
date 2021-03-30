@@ -52,7 +52,7 @@ export const getDetailPage = (resourceType) => {
   switch (resourceType) {
     case ResourceType.Gateway:
       return rMap.resources.gateway.detail
-    case ResourceType.SourceField:
+    case ResourceType.Field:
       return rMap.resources.field.detail
     case ResourceType.Task:
       return rMap.operations.task.detail

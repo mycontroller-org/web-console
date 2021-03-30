@@ -5,7 +5,6 @@ import PropTypes from "prop-types"
 class Select extends React.Component {
   state = {
     isOpen: false,
-    selected: this.props.defaultValue,
   }
 
   onChange = (selection) => {
@@ -21,7 +20,7 @@ class Select extends React.Component {
   }
 
   onSelect = (_event, selection) => {
-    this.setState({ selected: selection, isOpen: false }, this.onChange(selection))
+    this.setState({ isOpen: false }, this.onChange(selection))
   }
 
   onToggle = (isOpen) => {
@@ -29,7 +28,7 @@ class Select extends React.Component {
   }
 
   render() {
-    const { title, disabled, options, direction = "up" } = this.props
+    const { title, disabled, options, direction = "", defaultValue } = this.props
     return (
       <div>
         <span id="select-title">{title}</span>
@@ -39,7 +38,7 @@ class Select extends React.Component {
           //aria-label="Select Input with descriptions"
           onToggle={this.onToggle}
           onSelect={this.onSelect}
-          selections={this.state.selected}
+          selections={defaultValue}
           isOpen={this.state.isOpen}
           //aria-labelledby={titleId}
           isDisabled={disabled}
@@ -47,7 +46,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <SelectOption isDisabled={option.disabled} key={index} value={option.value}>
-              {option.display}
+              {option.label}
             </SelectOption>
           ))}
         </PfSelect>

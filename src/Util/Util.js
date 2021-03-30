@@ -26,11 +26,11 @@ export const splitWithTail = (str = "", separator, limit) => {
   return result
 }
 
-export const getMetricDuration = (interval, options) => {
+export const getItem = (value, options) => {
   for (let index = 0; index < options.length; index++) {
-    const duration = options[index]
-    if (interval === duration.value) {
-      return duration
+    const item = options[index]
+    if (value === item.value) {
+      return item
     }
   }
   return options[0]

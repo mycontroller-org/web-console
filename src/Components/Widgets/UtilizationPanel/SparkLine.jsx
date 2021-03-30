@@ -129,10 +129,10 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
   return (
     <Stack className="mc-spark-chart" hasGutter={false}>
       <StackItem>
-        <span class="title">{resource.name}</span>
+        <span className="title">{resource.name}</span>
       </StackItem>
       <StackItem>
-        <span class="value">{displayValueText}</span>
+        <span className="value">{displayValueText}</span>
         <span className="value-unit">{unitText}</span>
         <span className="metric-function">{metricFunctionText}</span>
       </StackItem>

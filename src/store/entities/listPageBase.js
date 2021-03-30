@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { AggregationInterval, Duration, InterpolationType, MetricFunctionType } from "../../Constants/Metric"
 
 export const getBase = (name) => {
   return createSlice({
@@ -18,6 +19,17 @@ export const getBase = (name) => {
         // index: 0,
         // field: "",
         // direction: "asc",
+      },
+      metricConfig: {
+        gauge: {
+          func: MetricFunctionType.Mean,
+          interpolationType: InterpolationType.Natural,
+          duration: Duration.LastHour,
+          interval: AggregationInterval.Minute_1,
+        },
+        binary: {
+          duration: Duration.Last2Hours,
+        },
       },
     },
     reducers: {
@@ -83,6 +95,16 @@ export const getBase = (name) => {
         const { index, field, direction } = action.payload
         state.sortBy = { index, field, direction }
         state.revision++
+      },
+
+      updateMetricConfigGauge: (state, action) => {
+        const { func, interpolationType, duration, interval } = action.payload
+        state.metricConfig.gauge = { func, interpolationType, duration, interval }
+      },
+
+      updateMetricConfigBinary: (state, action) => {
+        const { duration } = action.payload
+        state.metricConfig.binary = { duration }
       },
     },
   })

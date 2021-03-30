@@ -2,12 +2,14 @@ import { ResourceTypeOptions } from "../../../Constants/Resource"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
-import { getValue } from "../../../Util/Util"
+import { getItem, getValue } from "../../../Util/Util"
 import {
+  AggregationIntervalOptions,
+  DurationOptions,
+  getRecommendedInterval,
   InterpolationType,
   InterpolationTypeLineOptions,
   MetricFunctionTypeOptions,
-  UtilizationDurationOptions,
 } from "../../../Constants/Metric"
 import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 
@@ -218,7 +220,22 @@ const getSparkLineItems = (rootObject) => {
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
-      options: UtilizationDurationOptions,
+      options: DurationOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      resetFields: {
+        "config.chart.interval": (ro) => {
+          return getRecommendedInterval(getValue(ro, "config.chart.duration", ""))
+        },
+      },
+    },
+    {
+      label: "Interval",
+      fieldId: "config.chart.interval",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: AggregationIntervalOptions,
       isRequired: true,
       validator: { isNotEmpty: {} },
     },

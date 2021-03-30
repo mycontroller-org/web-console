@@ -16,7 +16,17 @@ import "./Graphs.scss"
 
 const theme = getCustomTheme(ChartThemeColor.blue, ChartThemeVariant.light, areaTheme)
 
-export const LineChart = ({ title = "Graph title", unit = "", interpolation = "natural", data = [] }) => {
+export const LineChart = ({
+  title = "Graph title",
+  unit = "",
+  interpolation = "natural",
+  data = [],
+  tickCountX = 2,
+  tickCountY = 3,
+  height = 200,
+  width = 600,
+  minDomainY = 0,
+}) => {
   return (
     <div>
       <h5 className="graph-title">{title}</h5>
@@ -38,7 +48,8 @@ export const LineChart = ({ title = "Graph title", unit = "", interpolation = "n
         }
         animate={false}
         theme={theme}
-        height={180}
+        height={height}
+        width={width}
         // padding={{
         //   bottom: 45, // Adjusted to accommodate legend
         //   left: 75,
@@ -47,14 +58,14 @@ export const LineChart = ({ title = "Graph title", unit = "", interpolation = "n
         // }}
         domainPadding={{ y: 20 }}
         scale={{ x: "time", y: "linear" }}
-        //minDomain={{ y: 0 }}
+        minDomain={{ y: minDomainY }}
         //themeColor={ChartThemeColor.default}
       >
-        <ChartAxis tickCount={5} />
+        <ChartAxis tickCount={tickCountX} />
         <ChartAxis
           dependentAxis
           showGrid
-          tickCount={3}
+          tickCount={tickCountY}
           tickFormat={(tick) => {
             if (tick) {
               return `${tick} ${unit}`

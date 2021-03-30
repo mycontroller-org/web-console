@@ -6,7 +6,7 @@ import { ResourceType } from "../../../Constants/Resource"
 import objectPath from "object-path"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import Loading from "../../Loading/Loading"
-import { getMetricDuration, getValue } from "../../../Util/Util"
+import { getItem, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import DonutUtilization from "./DonutUtilization"
 import SparkLine from "./SparkLine"
@@ -15,7 +15,9 @@ import {
   Duration,
   MetricFunctionType,
   MetricType,
-  UtilizationDurationOptions,
+  DurationOptions,
+  AggregationInterval,
+  getRecommendedInterval,
 } from "../../../Constants/Metric"
 
 import "./UtilizationPanel.scss"
@@ -53,7 +55,10 @@ class UtilizationPanel extends React.Component {
     const resourceNameKey = getValue(config, "resource.nameKey", {})
     const resourceValueKey = getValue(config, "resource.valueKey", {})
     const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
+
     const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
+    const chartInterval = getValue(config, "chart.interval", getRecommendedInterval(chartDuration))
+
     const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
 
     const filters = []
@@ -103,12 +108,12 @@ class UtilizationPanel extends React.Component {
         })
         // if it is spark chart, get metrics data
         if (chartType.startsWith("spark")) {
-          const duration = getMetricDuration(chartDuration, UtilizationDurationOptions)
+          const duration = getItem(chartDuration, DurationOptions)
 
           const metricQuery = {
             global: {
               start: duration.value,
-              window: duration.window,
+              window: chartInterval,
               functions: [metricFunction],
             },
             individual: [], // add id and metric type

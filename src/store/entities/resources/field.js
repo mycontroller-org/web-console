@@ -13,4 +13,6 @@ export const {
   deleteFilterCategory,
   deleteAllFilter,
   onSortBy,
+  updateMetricConfigGauge,
+  updateMetricConfigBinary,
 } = slice.actions
