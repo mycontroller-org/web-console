@@ -43,6 +43,7 @@ import { updateNavState } from "../store/entities/globalSettings"
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
+import { wsConnect, wsDisconnect } from "../Service/Websocket"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -50,6 +51,14 @@ class PageLayoutExpandableNav extends React.Component {
     isKebabDropdownOpen: false,
     activeGroup: "grp-1",
     activeItem: "grp-1_itm-1",
+  }
+
+  componentDidMount() {
+    wsConnect()
+  }
+
+  componentWillUnmount() {
+    wsDisconnect()
   }
 
   onDropdownToggle = (isDropdownOpen) => {

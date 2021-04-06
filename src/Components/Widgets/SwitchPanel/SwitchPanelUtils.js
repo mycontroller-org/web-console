@@ -1,5 +1,5 @@
 import { api } from "../../../Service/Api"
-import { ResourceType } from "../../../Constants/ResourcePicker"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { routeMap as rMap } from "../../../Service/Routes"
 import objectPath from "object-path"
 
@@ -31,7 +31,7 @@ export const getField = (resourceType, resource, resourceNameKey) => {
         type: resourceType,
         label: objectPath.get(resource, resourceNameKey, "undefined"),
         isChecked: resource.enabled,
-        quickId: `${resourceType}:${resource.id}`,
+        quickId: getQuickId(resourceType, resource),
       }
 
     case ResourceType.Field:
@@ -40,7 +40,7 @@ export const getField = (resourceType, resource, resourceNameKey) => {
         type: resourceType,
         label: objectPath.get(resource, resourceNameKey, "undefined"),
         isChecked: resource.current.value,
-        quickId: `${resourceType}:${resource.gatewayId}.${resource.nodeId}.${resource.sourceId}.${resource.fieldId}`,
+        quickId: getQuickId(resourceType, resource),
       }
 
     default:

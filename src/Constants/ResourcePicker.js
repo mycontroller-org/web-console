@@ -27,21 +27,13 @@ export const FieldDataTypeOptions = [
 
 export const ResourceType = {
   Gateway: "gateway",
-  GatewayShort: "gw",
   Node: "node",
-  NodeShort: "nd",
   Source: "source",
-  SourceShort: "sn",
   Field: "field",
-  FieldShort: "sf",
   Task: "task",
-  TaskShort: "tk",
   Schedule: "schedule",
-  ScheduleShort: "sk",
   Handler: "handler",
-  HandlerShort: "hd",
   DataRepository: "data_repository",
-  DataRepositoryShort: "dr",
 }
 
 export const ResourceTypeOptions = [
@@ -54,6 +46,29 @@ export const ResourceTypeOptions = [
   { value: ResourceType.Handler, label: "Handler" },
   { value: ResourceType.DataRepository, label: "Data Repository" },
 ]
+
+export const getQuickId = (resourceType = "", resource = {}) => {
+  switch (resourceType) {
+    case ResourceType.Gateway:
+    case ResourceType.Task:
+    case ResourceType.Schedule:
+    case ResourceType.Handler:
+    case ResourceType.DataRepository:
+      return `${resourceType}:${resource.id}`
+
+    case ResourceType.Node:
+      return `${resourceType}:${resource.gatewayId}.${resource.nodeId}`
+
+    case ResourceType.Source:
+      return `${resourceType}:${resource.gatewayId}.${resource.nodeId}.${resource.sourceId}`
+
+    case ResourceType.Field:
+      return `${resourceType}:${resource.gatewayId}.${resource.nodeId}.${resource.sourceId}.${resource.fieldId}`
+
+    default:
+      return `unknown resource type:${resourceType}`
+  }
+}
 
 export const TelegramParseMode = {
   Text: "Text",

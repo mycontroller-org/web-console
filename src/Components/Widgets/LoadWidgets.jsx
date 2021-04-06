@@ -40,16 +40,18 @@ export default LoadWidgets
 const loadPanel = (widget, history, widgetKey) => {
   switch (widget.type) {
     case WidgetType.EmptyPanel:
-      return <EmptyPanel key={widgetKey} />
+      return <EmptyPanel widgetId={widget.id} key={widgetKey} />
 
     case WidgetType.SwitchPanel:
-      return <SwitchPanel key={widgetKey} config={widget.config} history={history} />
+      return <SwitchPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
 
     case WidgetType.LightPanel:
-      return <LightPanel key={widgetKey} config={widget.config} history={history} />
+      return <LightPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
 
     case WidgetType.UtilizationPanel:
-      return <UtilizationPanel key={widgetKey} config={widget.config} history={history} />
+      return (
+        <UtilizationPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
+      )
 
     default:
       return <span>Unknown widget type:{widget.type}</span>

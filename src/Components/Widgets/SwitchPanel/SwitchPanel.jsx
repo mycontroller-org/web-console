@@ -1,12 +1,18 @@
 import { Divider, Grid, GridItem, Switch as PfSwitch } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
+import { connect } from "react-redux"
 import _ from "lodash"
-import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
+import { redirect as rd } from "../../../Service/Routes"
 import "./SwitchPanel.scss"
 import Loading from "../../Loading/Loading"
 import { getDetailPage, getField, getListAPI } from "./SwitchPanelUtils"
 import { api } from "../../../Service/Api"
+import { loadData, unloadData } from "../../../store/entities/websocket"
+import { getValue } from "../../../Util/Util"
+import { getQuickId } from "../../../Constants/ResourcePicker"
+
+const wsKey = "dashboard_switch_panel"
 
 class Switch extends React.Component {
   state = { isChecked: this.props.isChecked }
@@ -17,14 +23,22 @@ class Switch extends React.Component {
   }
 
   render() {
-    return <PfSwitch id={this.props.id} onChange={this.onChange} isChecked={this.state.isChecked} />
+    return <PfSwitch id={this.props.id} onChange={this.onChange} isChecked={this.props.isChecked} />
   }
 }
 
 class SwitchPanel extends React.Component {
   state = {
     isLoading: true,
-    resources: [],
+    //    resources: [],
+  }
+
+  getWsKey = () => {
+    return `${wsKey}_${this.props.widgetId}`
+  }
+
+  componentWillUnmount() {
+    this.props.unloadData({ key: this.getWsKey() })
   }
 
   componentDidMount() {
@@ -38,7 +52,7 @@ class SwitchPanel extends React.Component {
   }
 
   updateComponents = () => {
-    const { resourceSelectors, itemsLimit, resourceNameKey, resourceType } = this.props.config
+    const { resourceSelectors, itemsLimit, resourceType } = this.props.config
     const selectorKeys = Object.keys(resourceSelectors)
     const filters = selectorKeys.map((key) => {
       return { k: key, v: resourceSelectors[key] }
@@ -48,9 +62,13 @@ class SwitchPanel extends React.Component {
 
     listAPI({ filter: filters, limit: itemsLimit })
       .then((res) => {
-        const resources = res.data.data.map((field) => {
-          return getField(resourceType, field, resourceNameKey)
+        const resources = {}
+        res.data.data.forEach((item) => {
+          // return getField(resourceType, field, resourceNameKey)
+          const quickId = getQuickId(resourceType, item)
+          resources[quickId] = item
         })
+        this.props.loadData({ key: this.getWsKey(), resources: resources })
         this.setState({ isLoading: false, resources })
       })
       .catch((_e) => {
@@ -59,12 +77,21 @@ class SwitchPanel extends React.Component {
   }
 
   render() {
-    const { isLoading, resources } = this.state
-    const { resourceType } = this.props.config
+    const { isLoading } = this.state
+    const { resourceType, resourceNameKey } = this.props.config
 
     if (isLoading) {
       return <Loading />
     }
+
+    // console.log("wsData:", this.props.wsData)
+    const resourcesRaw = getValue(this.props.wsData, this.getWsKey(), {})
+    const resources = []
+    Object.keys(resourcesRaw).forEach((id) => {
+      const field = resourcesRaw[id]
+      resources.push(getField(resourceType, field, resourceNameKey))
+    })
+
     const switches = resources.map((r, index) => {
       const className = r.isChecked ? "text enabled" : "text"
       const detailPage = getDetailPage(resourceType)
@@ -94,4 +121,13 @@ SwitchPanel.propTypes = {
   config: PropTypes.object,
 }
 
-export default SwitchPanel
+const mapStateToProps = (state) => ({
+  wsData: state.entities.websocket.data,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData: (data) => dispatch(loadData(data)),
+  unloadData: (data) => dispatch(unloadData(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SwitchPanel)

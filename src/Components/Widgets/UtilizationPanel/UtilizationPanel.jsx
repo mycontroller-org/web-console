@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
 import _ from "lodash"
-import { ResourceType } from "../../../Constants/Resource"
+import { connect } from "react-redux"
 import objectPath from "object-path"
 import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import Loading from "../../Loading/Loading"
@@ -16,17 +16,28 @@ import {
   MetricFunctionType,
   MetricType,
   DurationOptions,
-  AggregationInterval,
   getRecommendedInterval,
 } from "../../../Constants/Metric"
 
 import "./UtilizationPanel.scss"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
+import { loadData, unloadData } from "../../../store/entities/websocket"
+
+const wsKey = "dashboard_utilization_panel"
 
 class UtilizationPanel extends React.Component {
   state = {
     loading: true,
     resources: [],
     metrics: {},
+  }
+
+  getWsKey = () => {
+    return `${wsKey}_${this.props.widgetId}`
+  }
+
+  componentWillUnmount() {
+    this.props.unloadData({ key: this.getWsKey() })
   }
 
   componentDidMount() {
@@ -50,10 +61,10 @@ class UtilizationPanel extends React.Component {
 
     const resourceType = getValue(config, "resource.type", "")
     const itemsLimit = getValue(config, "resource.limit", 1)
-    const resourceSelectors = getValue(config, "resource.selectors", {})
+    const resourceSelectors = getValue(config, "resource.selectors", "undefined")
     const displayName = getValue(config, "resource.displayName", false)
-    const resourceNameKey = getValue(config, "resource.nameKey", {})
-    const resourceValueKey = getValue(config, "resource.valueKey", {})
+    const resourceNameKey = getValue(config, "resource.nameKey", "undefined")
+    const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
     const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
 
     const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
@@ -93,19 +104,28 @@ class UtilizationPanel extends React.Component {
 
     resourceApi({ filter: filters, limit: itemsLimit })
       .then((res) => {
+        const resourcesRaw = {}
         const resources = res.data.data.map((resource) => {
           const name = displayName
             ? resourceNameKey
               ? objectPath.get(resource, resourceNameKey, "undefined")
               : ""
             : ""
+
+          const quickId = getQuickId(resourceType, resource)
+          resourcesRaw[quickId] = resource
           return {
             id: resource.id,
+            quickId: quickId,
             name: name,
             metricType: objectPath.get(resource, "metricType", ""),
             value: objectPath.get(resource, resourceValueKey, ""),
           }
         })
+
+        // push raw resources into redux
+        this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
+
         // if it is spark chart, get metrics data
         if (chartType.startsWith("spark")) {
           const duration = getItem(chartDuration, DurationOptions)
@@ -192,7 +212,7 @@ class UtilizationPanel extends React.Component {
     const { config } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
-
+    const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
     const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {
@@ -202,6 +222,18 @@ class UtilizationPanel extends React.Component {
     if (resources.length === 0) {
       return <span>No data available</span>
     }
+
+    // update resource value
+    const resourcesRaw = getValue(this.props.wsData, this.getWsKey(), {})
+    Object.keys(resourcesRaw).forEach((qId) => {
+      const res = resourcesRaw[qId]
+      for (let index = 0; index < resources.length; index++) {
+        const resource = resources[index]
+        if (resource.quickId === qId) {
+          resources[index].value = objectPath.get(res, resourceValueKey, "")
+        }
+      }
+    })
 
     const charts = resources.map((resource, index) => {
       let chart = null
@@ -263,7 +295,16 @@ UtilizationPanel.propTypes = {
 //   columnGrid: false,
 // }
 
-export default UtilizationPanel
+const mapStateToProps = (state) => ({
+  wsData: state.entities.websocket.data,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData: (data) => dispatch(loadData(data)),
+  unloadData: (data) => dispatch(unloadData(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UtilizationPanel)
 
 // helper functions
 

@@ -217,4 +217,7 @@ export const api = {
     updateSystem: (data) => newRequest(HTTP_VERBS.POST, "/settings/system", {}, data),
     getJobs: () => newRequest(HTTP_VERBS.GET, "/settings/jobs", {}, {}),
   },
+  websocket: {
+    get: () => newRequest(HTTP_VERBS.GET, "/ws", {}, {}),
+  },
 }
