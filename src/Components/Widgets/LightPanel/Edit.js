@@ -7,6 +7,7 @@ import {
 } from "../../../Constants/Widgets/LightPanel"
 import objectPath from "object-path"
 import { api } from "../../../Service/Api"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 
 // Light Panel items
 export const updateFormItemsLightPanel = (rootObject, items) => {
@@ -60,9 +61,9 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
-      optionValueKey: "id",
-      getFiltersFunc: getFilters,
-      getOptionsDescriptionFunc: getOptionsDescription,
+      getFiltersFunc: getFiltersFunc,
+      optionValueFunc: getResourceOptionValueFunc,
+      getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
       label: "Dimmer",
@@ -73,9 +74,9 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
-      optionValueKey: "id",
-      getFiltersFunc: getFilters,
-      getOptionsDescriptionFunc: getOptionsDescription,
+      getFiltersFunc: getFiltersFunc,
+      optionValueFunc: getResourceOptionValueFunc,
+      getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     }
   )
 
@@ -90,9 +91,9 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
-      optionValueKey: "id",
-      getFiltersFunc: getFilters,
-      getOptionsDescriptionFunc: getOptionsDescription,
+      getFiltersFunc: getFiltersFunc,
+      optionValueFunc: getResourceOptionValueFunc,
+      getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     })
   }
 
@@ -112,9 +113,9 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
         isRequired: true,
         validator: { isNotEmpty: {} },
         apiOptions: api.field.list,
-        optionValueKey: "id",
-        getFiltersFunc: getFilters,
-        getOptionsDescriptionFunc: getOptionsDescription,
+        getFiltersFunc: getFiltersFunc,
+        optionValueFunc: getResourceOptionValueFunc,
+        getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
       })
     }
 
@@ -128,19 +129,23 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
-      optionValueKey: "id",
-      getFiltersFunc: getFilters,
-      getOptionsDescriptionFunc: getOptionsDescription,
+      getFiltersFunc: getFiltersFunc,
+      optionValueFunc: getResourceOptionValueFunc,
+      getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     })
   }
 }
 
-// helpers
+// helper functions
 
-const getFilters = (value = "") => {
+const getFiltersFunc = (value) => {
   return [{ k: "name", o: "regex", v: value }]
 }
 
-const getOptionsDescription = (item = {}) => {
-  return item.nodeId + " >> " + item.sourceId + " >> " + item.fieldId + " >> " + item.name
+const getOptionsDescriptionFuncImpl = (item) => {
+  return item.name
+}
+
+const getResourceOptionValueFunc = (item) => {
+  return getQuickId(ResourceType.Field, item)
 }

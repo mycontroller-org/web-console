@@ -217,6 +217,9 @@ export const api = {
     updateSystem: (data) => newRequest(HTTP_VERBS.POST, "/settings/system", {}, data),
     getJobs: () => newRequest(HTTP_VERBS.GET, "/settings/jobs", {}, {}),
   },
+  quickId: {
+    getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
+  },
   websocket: {
     get: () => newRequest(HTTP_VERBS.GET, "/ws", {}, {}),
   },

@@ -15,113 +15,134 @@ import { AdjustIcon, ImageIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } 
 import { getValue } from "../../../Util/Util"
 import SimpleSlider from "../../Form/Slider/Simple"
 import { ResourceType } from "../../../Constants/ResourcePicker"
+import { loadData, unloadData } from "../../../store/entities/websocket"
+import { connect } from "react-redux"
 
 const SliderWithTooltip = createSliderWithTooltip(Slider)
+
+const wsKey = "dashboard_light_panel"
 
 class LightPanel extends React.Component {
   state = {
     loading: true,
-    resources: {},
-    power: false,
-    dimmer: 0,
-    colorTemperature: 350,
-    rgb: "black",
-    hue: 230,
-    saturation: 0,
+    quickIdNameMap: {},
+    nameQuickIdMap: {},
+  }
+
+  getWsKey = () => {
+    return `${wsKey}_${this.props.widgetId}`
   }
 
   updateComponents = () => {
     const { fieldIds } = this.props.config
     const fieldIdKeys = Object.keys(fieldIds)
-    const fieldIdNameMap = {}
-    const ids = []
+    const quickIdNameMap = {}
+    const nameQuickIdMap = {}
+    const quickIds = []
 
     fieldIdKeys.forEach((fieldType) => {
-      const id = fieldIds[fieldType]
-      if (id !== "") {
-        ids.push(id) // add id
-        fieldIdNameMap[id] = fieldType
+      const quickId = fieldIds[fieldType]
+      if (quickId !== "") {
+        quickIds.push(quickId)
+        quickIdNameMap[quickId] = fieldType
+        nameQuickIdMap[fieldType] = quickId
       }
     })
-    const filters = [{ k: "id", o: "in", v: ids }]
 
-    api.field
-      .list({ filter: filters })
+    api.quickId
+      .getResources({ id: quickIds })
       .then((res) => {
-        // values
-        const values = {}
-        const resources = {}
-        res.data.data.forEach((field) => {
-          let value = objectPath.get(field, "current.value", "")
+        const resourcesRaw = res.data
+        // add resources into redux store
+        this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
 
-          const fieldName = fieldIdNameMap[field.id]
-          switch (fieldName) {
-            case "dimmer":
-            case "colorTemperature":
-              values[fieldName] = Number(value)
-              break
-
-            case "hue":
-              values[fieldName] = Number(value)
-              break
-
-            case "saturation":
-              values[fieldName] = Number(value)
-              break
-
-            case "rgb":
-              if (!value.startsWith("#")) {
-                value = "#" + value
-              }
-              if (value.length > 7) {
-                value = value.substring(0, 7)
-              }
-              values[fieldName] = value
-              break
-
-            default:
-              values[fieldName] = value
-          }
-
-          resources[fieldName] = {
-            id: field.id,
-            label: field.name,
-            value: value,
-            quickId: `${ResourceType.Field}:${field.gatewayId}.${field.nodeId}.${field.sourceId}.${field.fieldId}`,
-          }
-        })
-        this.setState({ loading: false, resources, ...values })
+        this.setState({ loading: false, quickIdNameMap: quickIdNameMap, nameQuickIdMap: nameQuickIdMap })
       })
       .catch((_e) => {
         console.log("error", _e)
-        this.setState({ loading: false })
+        this.setState({ loading: false, quickIdNameMap: quickIdNameMap, nameQuickIdMap: nameQuickIdMap })
       })
+  }
+
+  componentWillUnmount() {
+    this.props.unloadData({ key: this.getWsKey() })
   }
 
   componentDidMount() {
     this.updateComponents()
   }
 
-  onChange = (fieldName, newValue) => {
-    console.log(fieldName, newValue)
-    const data = {}
-    data[fieldName] = newValue
-    this.setState((prevState) => {
-      const field = objectPath.get(prevState, `resources.${fieldName}`, undefined)
-
-      if (field) {
-        api.action.send({ resource: field.quickId, payload: newValue })
-      }
-      return { ...data }
-    })
+  onChange = (nameQuickIdMap, fieldName, newValue) => {
+    const quickId = objectPath.get(nameQuickIdMap, fieldName, undefined)
+    if (quickId) {
+      api.action.send({ resource: quickId, payload: newValue })
+    }
   }
+
   render() {
-    const { power, dimmer, colorTemperature, rgb, hue, saturation, resources, loading } = this.state
+    const { loading, quickIdNameMap, nameQuickIdMap } = this.state
     const { lightType, rgbComponent } = this.props.config
 
     if (loading) {
       return <Loading />
     }
+
+    // get resources from store
+    const resourcesRaw = getValue(this.props.wsData, this.getWsKey(), {})
+
+    const values = {}
+    const resources = {}
+    const quickIds = Object.keys(resourcesRaw)
+
+    quickIds.forEach((quickId) => {
+      const field = resourcesRaw[quickId]
+      let value = objectPath.get(field, "current.value", "")
+
+      const fieldName = quickIdNameMap[quickId]
+      switch (fieldName) {
+        case "dimmer":
+        case "colorTemperature":
+          values[fieldName] = Number(value)
+          break
+
+        case "hue":
+          values[fieldName] = Number(value)
+          break
+
+        case "saturation":
+          values[fieldName] = Number(value)
+          break
+
+        case "rgb":
+          if (!value.startsWith("#")) {
+            value = "#" + value
+          }
+          if (value.length > 7) {
+            value = value.substring(0, 7)
+          }
+          values[fieldName] = value
+          break
+
+        default:
+          values[fieldName] = value
+      }
+
+      resources[fieldName] = {
+        id: field.id,
+        label: field.name,
+        value: value,
+        quickId: quickId,
+      }
+    })
+
+    const {
+      power = false,
+      dimmer = 0,
+      colorTemperature = 350,
+      rgb = "black",
+      hue = 230,
+      saturation = 0,
+    } = values
 
     const fieldItems = []
 
@@ -134,7 +155,7 @@ class LightPanel extends React.Component {
         field={
           <Switch
             id={"rgb-panel-power-" + getValue(resources, "power.id", "id")}
-            onChange={(newState) => this.onChange("power", newState)}
+            onChange={(newState) => this.onChange(nameQuickIdMap, "power", newState)}
             isChecked={power}
           />
         }
@@ -152,7 +173,7 @@ class LightPanel extends React.Component {
             className="slider-brightness"
             id={"dimmer"}
             onChange={(newValue) => {
-              this.onChange("dimmer", Math.round(newValue))
+              this.onChange(nameQuickIdMap, "dimmer", Math.round(newValue))
             }}
             value={dimmer}
           />
@@ -174,7 +195,7 @@ class LightPanel extends React.Component {
               min={153}
               max={500}
               onChange={(newValue) => {
-                this.onChange("colorTemperature", Math.round(newValue))
+                this.onChange(nameQuickIdMap, "colorTemperature", Math.round(newValue))
               }}
               value={colorTemperature}
             />
@@ -193,7 +214,7 @@ class LightPanel extends React.Component {
             iconTooltip="RGB Color"
             field={
               <ColorBox
-                onChange={(newColor) => this.onChange("rgb", newColor)}
+                onChange={(newColor) => this.onChange(nameQuickIdMap, "rgb", newColor)}
                 colors={ColorsSetBig}
                 color={rgb}
               />
@@ -209,7 +230,7 @@ class LightPanel extends React.Component {
             field={
               <HueSlider
                 onChange={(newHue) => {
-                  this.onChange("hue", Math.round(newHue))
+                  this.onChange(nameQuickIdMap, "hue", Math.round(newHue))
                 }}
                 hue={hue}
               />
@@ -229,7 +250,7 @@ class LightPanel extends React.Component {
               className="slider-saturation"
               id={"saturation"}
               onChange={(newSaturation) => {
-                this.onChange("saturation", Math.round(newSaturation))
+                this.onChange(nameQuickIdMap, "saturation", Math.round(newSaturation))
               }}
               value={saturation}
             />
@@ -248,7 +269,16 @@ class LightPanel extends React.Component {
   }
 }
 
-export default LightPanel
+const mapStateToProps = (state) => ({
+  wsData: state.entities.websocket.data,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData: (data) => dispatch(loadData(data)),
+  unloadData: (data) => dispatch(unloadData(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LightPanel)
 
 // helper functions
 
