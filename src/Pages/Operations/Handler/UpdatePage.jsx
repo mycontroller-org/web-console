@@ -252,6 +252,28 @@ const getExporterItems = (rootObject) => {
           helperTextInvalid: "Enter a directory",
           validated: "default",
           validator: { isNotEmpty: {} },
+        },
+        {
+          label: "Prefix",
+          fieldId: "spec.spec.prefix",
+          fieldType: FieldType.Text,
+          dataType: DataType.String,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a prefix",
+          validated: "default",
+          validator: { isNotEmpty: {} },
+        },
+        {
+          label: "Retention Count",
+          fieldId: "spec.spec.retentionCount",
+          fieldType: FieldType.Text,
+          dataType: DataType.Integer,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a retention count, 0 for no limit",
+          validated: "default",
+          validator: { isInteger: {} },
         }
       )
     default:

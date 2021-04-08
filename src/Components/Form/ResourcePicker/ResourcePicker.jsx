@@ -368,6 +368,25 @@ const getExporterItems = (rootObject) => {
           dataType: DataType.String,
           value: "",
           isRequired: false,
+        },
+        {
+          label: "Prefix",
+          fieldId: "data.spec.prefix",
+          fieldType: FieldType.Text,
+          dataType: DataType.String,
+          value: "",
+          isRequired: false,
+        },
+        {
+          label: "Retention Count",
+          fieldId: "data.spec.retentionCount",
+          fieldType: FieldType.Text,
+          dataType: DataType.Integer,
+          value: "",
+          isRequired: true,
+          helperTextInvalid: "Enter a retention count, 0 for no limit",
+          validated: "default",
+          validator: { isInteger: {} },
         }
       )
       break
