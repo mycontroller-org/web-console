@@ -20,6 +20,7 @@ import EmptyState from "../../Components/EmptyState/EmptyState"
 import Loading from "../../Components/Loading/Loading"
 import { connect } from "react-redux"
 import { updateSelectionId } from "../../store/entities/dashboard"
+import { GridBreakPoints, GridColumns } from "../../Constants/Dashboard"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -326,8 +327,8 @@ class Dashboard extends React.Component {
           key="dashboardLayout"
           className="layout"
           layouts={{ lg: layouts }}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 100, md: 80, sm: 50, xs: 25, xxs: 10 }}
+          breakpoints={GridBreakPoints}
+          cols={GridColumns}
           rowHeight={1}
           autoSize={true}
           margin={[7, 7]}

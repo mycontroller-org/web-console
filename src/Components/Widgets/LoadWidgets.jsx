@@ -50,7 +50,14 @@ const loadPanel = (widget, history, widgetKey) => {
 
     case WidgetType.UtilizationPanel:
       return (
-        <UtilizationPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
+        <UtilizationPanel
+          key={widgetKey}
+          widgetId={widget.id}
+          showTitle={widget.showTitle}
+          layout={widget.layout}
+          config={widget.config}
+          history={history}
+        />
       )
 
     default:

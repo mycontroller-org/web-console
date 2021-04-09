@@ -14,7 +14,7 @@ import "./UtilizationPanel.scss"
 import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
 
-const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
+const SparkLine = ({ config = {}, resource = {}, metric = {}, widgetWidth = 800, widgetHeight = 100 }) => {
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
@@ -81,8 +81,8 @@ const SparkLine = ({ config = {}, resource = {}, metric = {} }) => {
     metricsChart = (
       <ChartGroup
         standalone={true}
-        height={100}
-        width={400}
+        height={widgetHeight}
+        width={widgetWidth}
         domainPadding={{ y: 9 }}
         minDomain={{ y: minValue }}
         containerComponent={

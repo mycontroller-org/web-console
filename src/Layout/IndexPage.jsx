@@ -13,7 +13,11 @@ class IndexPage extends React.Component {
       "resize",
       debounce(() => {
         // TODO: fix, this listener called often, seems called every 200ms
-        const data = { height: window.innerHeight, width: window.innerWidth }
+        const data = {
+          height: window.innerHeight,
+          width: window.innerWidth,
+          outerHeight: window.outerHeight,
+        }
         const oldData = this.props.globalSettings.windowSize
         if (data.height !== oldData.height || data.width !== oldData.width) {
           this.props.updateWindowSize(data)

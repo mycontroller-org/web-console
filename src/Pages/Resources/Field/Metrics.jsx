@@ -31,6 +31,7 @@ import {
 import { api } from "../../../Service/Api"
 import { getItem } from "../../../Util/Util"
 import { updateMetricConfigGauge, updateMetricConfigBinary } from "../../../store/entities/resources/field"
+import { getWindowWidth } from "../../../Constants/Common"
 
 const defaultDuration = Duration.LastHour
 const defaultInterval = AggregationInterval.Minute_1
@@ -249,25 +250,24 @@ class Metrics extends React.Component {
         // nav size: 290
         const { windowSize, isNavOpen } = this.props.globalSettings
 
-        let calculatedWidth = windowSize.width - 400 // 300 - extra width on both side of the chart
+        let calculatedWidth = getWindowWidth(windowSize.width, isNavOpen)
+
+        if (calculatedWidth > 800) {
+          // to increase the font size, ugly fix
+          // TODO: needs to be fixed in proper way
+          calculatedWidth = calculatedWidth - 300
+        }
+
         let tickCountX = 3
 
-        if (calculatedWidth < 800) {
-          calculatedWidth = windowSize.width
-        } else {
-          // remove nav width
-          if (isNavOpen) {
-            calculatedWidth = calculatedWidth - 290
-          }
-          if (calculatedWidth > 1500) {
-            tickCountX = 9
-          } else if (calculatedWidth > 1200) {
-            tickCountX = 7
-          } else if (calculatedWidth > 1000) {
-            tickCountX = 5
-          } else if (calculatedWidth > 800) {
-            tickCountX = 4
-          }
+        if (calculatedWidth > 1500) {
+          tickCountX = 9
+        } else if (calculatedWidth > 1200) {
+          tickCountX = 7
+        } else if (calculatedWidth > 1000) {
+          tickCountX = 5
+        } else if (calculatedWidth > 800) {
+          tickCountX = 4
         }
 
         // update minimum value

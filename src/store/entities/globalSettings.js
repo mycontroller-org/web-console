@@ -8,8 +8,8 @@ const slice = createSlice({
   },
   reducers: {
     updateWindowSize: (settings, action) => {
-      const { height, width } = action.payload
-      settings.windowSize = { height: height, width: width }
+      const { height, width, outerHeight } = action.payload
+      settings.windowSize = { height: height, width: width, outerHeight: outerHeight }
       console.log("new state:", JSON.stringify(settings))
     },
 

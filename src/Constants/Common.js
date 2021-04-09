@@ -9,3 +9,14 @@ export const ALERT_TYPE_WARN = "warning"
 export const ALERT_TYPE_ERROR = "danger"
 
 export const DATA_CACHE_TIMEOUT = 0 // in seconds, data cache in list tables. 0 - disabled
+
+export const NAV_WIDTH = 290
+
+export const getWindowWidth = (windowSizeWidth, isNavOpen) => {
+  if (windowSizeWidth < 1200) {
+    return windowSizeWidth
+  } else if (isNavOpen) {
+    return windowSizeWidth - NAV_WIDTH
+  }
+  return windowSizeWidth
+}
