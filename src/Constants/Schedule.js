@@ -3,6 +3,7 @@ export const ScheduleFrequency = {
   Daily: "daily",
   Weekly: "weekly",
   Monthly: "monthly",
+  OnDate: "on_date",
 }
 
 // Schedule Frequency options
@@ -10,6 +11,7 @@ export const ScheduleFrequencyOptions = [
   { value: ScheduleFrequency.Daily, label: "Daily", description: "Runs every day" },
   { value: ScheduleFrequency.Weekly, label: "Weekly", description: "Runs weekly once" },
   { value: ScheduleFrequency.Monthly, label: "Monthly", description: "Runs monthly once" },
+  { value: ScheduleFrequency.OnDate, label: "On Date", description: "Runs once at the specified date, time" },
 ]
 
 export const WeekDayOptions = [

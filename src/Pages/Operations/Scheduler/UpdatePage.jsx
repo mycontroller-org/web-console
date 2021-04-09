@@ -57,6 +57,8 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject, id) => {
+  const isOnDateJob = objectPath.get(rootObject, "spec.frequency", "") === ScheduleFrequency.OnDate
+
   const items = [
     {
       label: "ID",
@@ -103,34 +105,52 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "Date (yyyy-mm-dd)",
-      fieldId: "validity.date",
-      fieldType: FieldType.DateRangePicker,
-      dataType: DataType.Object,
-      value: {},
-      isRequired: false,
-      //helperTextInvalid: "Invalid date",
-      validated: "default",
-      //validator: { isNotEmpty: {} },
-    },
-    {
-      label: "Time (hh:mm:ss)",
-      fieldId: "validity.time",
-      fieldType: FieldType.TimeRangePicker,
-      dataType: DataType.Object,
-      value: {},
-      isRequired: false,
-      //helperTextInvalid: "Invalid date",
-      validated: "default",
-      // validator: { isNotEmpty: {} },
-    },
-    {
-      label: "Validate Time Everyday",
-      fieldId: "validity.validateTimeEveryday",
+      label: "Enabled",
+      fieldId: "validity.enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+      isDisabled: isOnDateJob,
     },
+  ]
+
+  const validityEnabled = objectPath.get(rootObject, "validity.enabled", false)
+
+  if (validityEnabled) {
+    items.push(
+      {
+        label: "Date (yyyy-mm-dd)",
+        fieldId: "validity.date",
+        fieldType: FieldType.DateRangePicker,
+        dataType: DataType.Object,
+        value: {},
+        isRequired: false,
+        //helperTextInvalid: "Invalid date",
+        validated: "default",
+        //validator: { isNotEmpty: {} },
+      },
+      {
+        label: "Time (hh:mm:ss)",
+        fieldId: "validity.time",
+        fieldType: FieldType.TimeRangePicker,
+        dataType: DataType.Object,
+        value: {},
+        isRequired: false,
+        //helperTextInvalid: "Invalid date",
+        validated: "default",
+        // validator: { isNotEmpty: {} },
+      },
+      {
+        label: "Validate Time Everyday",
+        fieldId: "validity.validateTimeEveryday",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      }
+    )
+  }
+
+  items.push(
     {
       label: "Schedule",
       fieldId: "!schedule",
@@ -146,8 +166,8 @@ const getFormItems = (rootObject, id) => {
       value: "",
       resetFields: { spec: {} },
       validator: { isNotEmpty: {} },
-    },
-  ]
+    }
+  )
 
   const scheduleType = objectPath.get(rootObject, "type", "")
 
@@ -192,8 +212,6 @@ const getFormItems = (rootObject, id) => {
     case ScheduleType.Simple:
     case ScheduleType.Sunrise:
     case ScheduleType.Sunset:
-    case ScheduleType.Moonrise:
-    case ScheduleType.Moonset:
       updateSimpleJob(rootObject, items)
       break
 
@@ -256,6 +274,26 @@ const getFormItems = (rootObject, id) => {
   return items
 }
 
+const updateOneTimeJobDependencies = (rootObject, newValue) => {
+  const validity = objectPath.get(rootObject, "validity", {})
+  const frequency = objectPath.get(rootObject, "spec.frequency", "")
+  if (frequency === ScheduleFrequency.OnDate) {
+    return {
+      enabled: false,
+      date: {
+        from: "",
+        to: "",
+      },
+      time: {
+        from: "",
+        to: "",
+      },
+      validateTimeEveryday: false,
+    }
+  }
+  return validity
+}
+
 const updateSimpleJob = (rootObject, items = []) => {
   items.push({
     label: "Frequency",
@@ -265,7 +303,12 @@ const updateSimpleJob = (rootObject, items = []) => {
     dataType: DataType.String,
     options: ScheduleFrequencyOptions,
     value: "",
-    resetFields: { "spec.dayOfWeek": "" },
+    resetFields: {
+      "spec.dayOfWeek": "",
+      "spec.date": "",
+      "spec.dayOfMonth": "",
+      validity: updateOneTimeJobDependencies,
+    },
     validator: { isNotEmpty: {} },
   })
 
@@ -312,6 +355,20 @@ const updateSimpleJob = (rootObject, items = []) => {
       })
       break
 
+    case ScheduleFrequency.OnDate:
+      items.push({
+        label: "Date (yyyy-mm-dd)",
+        fieldId: "spec.date",
+        fieldType: FieldType.DatePicker,
+        dataType: DataType.String,
+        value: {},
+        isRequired: true,
+        helperTextInvalid: "Invalid date",
+        validated: "default",
+        validator: { isNotEmpty: {} },
+      })
+      break
+
     default:
   }
 
@@ -319,11 +376,12 @@ const updateSimpleJob = (rootObject, items = []) => {
 
   if (scheduleType === ScheduleType.Simple) {
     items.push({
-      label: "Time",
+      label: "Time (hh:mm:ss)",
       fieldId: "spec.time",
       fieldType: FieldType.TimePicker,
       dataType: DataType.String,
       value: "",
+      placeholder: "hh:mm:ss",
       isRequired: true,
       helperTextInvalid: "Invalid time",
       validated: "default",

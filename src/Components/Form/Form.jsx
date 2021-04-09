@@ -237,6 +237,8 @@ const getField = (item, onChange) => {
           onChange={onChange}
           validated={item.validated}
           isDisabled={item.isDisabled}
+          placeholder={item.placeholder}
+          className="mc-time-range-picker"
           is24Hour
         />
       )
