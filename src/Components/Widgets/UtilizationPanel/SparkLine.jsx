@@ -78,6 +78,15 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, widgetWidth = 800,
 
     const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.1 : 0
 
+    // ugly fix to increase tooltip fontsize
+    if (widgetWidth > 800) {
+      widgetWidth -= 200
+    } else if (widgetWidth > 500) {
+      widgetWidth -= 100
+    } else if (widgetWidth > 300) {
+      widgetWidth -= 50
+    } 
+
     metricsChart = (
       <ChartGroup
         standalone={true}
