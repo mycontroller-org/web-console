@@ -74,6 +74,7 @@ export const validate = (func, val, opts) => {
       return v.isEmail(val, opts)
 
     case "isInt":
+    case "isInteger":
       return v.isInt(val, opts)
 
     case "isDecimal":

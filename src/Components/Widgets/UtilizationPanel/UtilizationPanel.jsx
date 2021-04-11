@@ -22,8 +22,6 @@ import {
 import "./UtilizationPanel.scss"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
-import { getWindowWidth } from "../../../Constants/Common"
-import { getWidgetHeight, getWidgetWidth } from "../../../Constants/Dashboard"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -211,7 +209,7 @@ class UtilizationPanel extends React.Component {
 
   render() {
     const { loading, resources, metrics } = this.state
-    const { widgetId, showTitle, layout, config, globalSettings } = this.props
+    const { widgetId, dimensions, config } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
@@ -243,18 +241,13 @@ class UtilizationPanel extends React.Component {
         case ChartType.SparkLine:
         case ChartType.SparkArea:
         case ChartType.SparkBar:
-          const { windowSize, isNavOpen } = globalSettings
-          let windowWidth = getWindowWidth(windowSize.width, isNavOpen)
-          const widgetWidth = getWidgetWidth(windowWidth, layout.w)
-
           chart = (
             <SparkLine
               className="on-edit"
               key={"chart_" + index}
               widgetId={widgetId}
-              layout={layout}
+              dimensions={dimensions}
               config={config}
-              widgetWidth={widgetWidth}
               resource={resource}
               metric={metrics[resource.id]}
             />
@@ -267,6 +260,7 @@ class UtilizationPanel extends React.Component {
               className="on-edit"
               key={"chart_" + index}
               widgetId={widgetId}
+              dimensions={dimensions}
               config={config}
               resource={resource}
             />
@@ -307,7 +301,6 @@ UtilizationPanel.propTypes = {
 
 const mapStateToProps = (state) => ({
   wsData: state.entities.websocket.data,
-  globalSettings: state.entities.globalSettings,
 })
 
 const mapDispatchToProps = (dispatch) => ({

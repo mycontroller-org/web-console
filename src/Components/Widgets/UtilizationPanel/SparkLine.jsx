@@ -14,7 +14,7 @@ import "./UtilizationPanel.scss"
 import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
 
-const SparkLine = ({ config = {}, resource = {}, metric = {}, widgetWidth = 800, widgetHeight = 100 }) => {
+const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} }) => {
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
@@ -22,6 +22,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, widgetWidth = 800,
   const metricFunction = getValue(config, "chart.metricFunction", "")
   const unit = getValue(config, "resource.unit", "")
   const roundDecimal = getValue(config, "resource.roundDecimal", 2)
+  const chartHeight = getValue(config, "chart.height", 100)
 
   const displayValueFloat = parseFloat(resource.value)
   let displayValue = resource.value
@@ -78,20 +79,11 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, widgetWidth = 800,
 
     const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.1 : 0
 
-    // ugly fix to increase tooltip fontsize
-    if (widgetWidth > 800) {
-      widgetWidth -= 200
-    } else if (widgetWidth > 500) {
-      widgetWidth -= 100
-    } else if (widgetWidth > 300) {
-      widgetWidth -= 50
-    } 
-
     metricsChart = (
       <ChartGroup
         standalone={true}
-        height={widgetHeight}
-        width={widgetWidth}
+        height={chartHeight}
+        width={dimensions.width}
         domainPadding={{ y: 9 }}
         minDomain={{ y: minValue }}
         containerComponent={

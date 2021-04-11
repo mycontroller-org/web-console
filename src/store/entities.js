@@ -4,7 +4,6 @@ import authReducer from "./entities/auth"
 import dashboardReducer from "./entities/dashboard"
 import spinnerReducer from "./entities/globalSpinner"
 import notificationReducer from "./entities/notification"
-import globalSettingsReducer from "./entities/globalSettings"
 import resourceGatewayReducer from "./entities/resources/gateway"
 import resourceNodeReducer from "./entities/resources/node"
 import resourceSourceReducer from "./entities/resources/source"
@@ -25,7 +24,6 @@ export default combineReducers({
   auth: authReducer,
   dashboard: dashboardReducer,
   spinner: spinnerReducer,
-  globalSettings: globalSettingsReducer,
   resourceGateway: resourceGatewayReducer,
   resourceNode: resourceNodeReducer,
   resourceSource: resourceSourceReducer,

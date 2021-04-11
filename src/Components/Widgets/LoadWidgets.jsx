@@ -1,6 +1,7 @@
 import { Card, CardBody, CardTitle, Flex, FlexItem, Split, SplitItem } from "@patternfly/react-core"
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
+import Measure from "react-measure"
 import { cloneDeep } from "../../Util/Util"
 import { IconButton } from "../Buttons/Buttons"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
@@ -11,7 +12,7 @@ import SwitchPanel from "./SwitchPanel/SwitchPanel"
 import UtilizationPanel from "./UtilizationPanel/UtilizationPanel"
 import "./Widget.scss"
 
-const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
+export const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
   const items = []
 
   widgets.forEach((widget, index) => {
@@ -26,7 +27,15 @@ const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) 
     const widgetKey = widget.type + index
 
     // load panel
-    item.content = <ErrorBoundary>{loadPanel(widget, history, widgetKey)}</ErrorBoundary>
+    item.content = (
+      <ErrorBoundary>
+        <Measure offset>
+          {({ measureRef, contentRect }) => (
+            <div ref={measureRef}>{loadPanel(widget, history, widgetKey, contentRect.offset)}</div>
+          )}
+        </Measure>
+      </ErrorBoundary>
+    )
 
     items.push(item)
   })
@@ -37,24 +46,39 @@ export default LoadWidgets
 
 // helper functions
 
-const loadPanel = (widget, history, widgetKey) => {
+const loadPanel = (widget, history, widgetKey, dimensions) => {
   switch (widget.type) {
     case WidgetType.EmptyPanel:
-      return <EmptyPanel widgetId={widget.id} key={widgetKey} />
+      return <EmptyPanel widgetId={widget.id} key={widgetKey} dimensions={dimensions} />
 
     case WidgetType.SwitchPanel:
-      return <SwitchPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
+      return (
+        <SwitchPanel
+          key={widgetKey}
+          widgetId={widget.id}
+          config={widget.config}
+          history={history}
+          dimensions={dimensions}
+        />
+      )
 
     case WidgetType.LightPanel:
-      return <LightPanel key={widgetKey} widgetId={widget.id} config={widget.config} history={history} />
+      return (
+        <LightPanel
+          key={widgetKey}
+          widgetId={widget.id}
+          config={widget.config}
+          history={history}
+          dimensions={dimensions}
+        />
+      )
 
     case WidgetType.UtilizationPanel:
       return (
         <UtilizationPanel
           key={widgetKey}
           widgetId={widget.id}
-          showTitle={widget.showTitle}
-          layout={widget.layout}
+          dimensions={dimensions}
           config={widget.config}
           history={history}
         />

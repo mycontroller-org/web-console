@@ -12,6 +12,7 @@ import {
 import moment from "moment"
 import React from "react"
 import { connect } from "react-redux"
+import Measure from "react-measure"
 import { RefreshButton } from "../../../Components/Buttons/Buttons"
 import { LineChart } from "../../../Components/Graphs/Graphs"
 import Loading from "../../../Components/Loading/Loading"
@@ -246,51 +247,48 @@ class Metrics extends React.Component {
       if (metrics.length === 0) {
         graphs.push(<span key="no data">No data</span>)
       } else {
-        // calculate width of the chart
-        // nav size: 290
-        const { windowSize, isNavOpen } = this.props.globalSettings
-
-        let calculatedWidth = getWindowWidth(windowSize.width, isNavOpen)
-
-        if (calculatedWidth > 800) {
-          // to increase the font size, ugly fix
-          // TODO: needs to be fixed in proper way
-          calculatedWidth = calculatedWidth - 300
-        }
-
-        let tickCountX = 3
-
-        if (calculatedWidth > 1500) {
-          tickCountX = 9
-        } else if (calculatedWidth > 1200) {
-          tickCountX = 7
-        } else if (calculatedWidth > 1000) {
-          tickCountX = 5
-        } else if (calculatedWidth > 800) {
-          tickCountX = 4
-        }
-
         // update minimum value
         let updateMinValue = isBinaryMetric ? 0 : minValue
         if (!isBinaryMetric && minValue !== undefined) {
           updateMinValue = minValue * 0.98 // add minimum value as 98% of original min value
         }
 
+        const getTickCountX = (width) => {
+          let tickCountX = 3
+
+          if (width > 1500) {
+            tickCountX = 9
+          } else if (width > 1200) {
+            tickCountX = 7
+          } else if (width > 1000) {
+            tickCountX = 5
+          } else if (width > 800) {
+            tickCountX = 4
+          }
+          return tickCountX
+        }
+
         metrics.forEach((m, index) => {
           graphs.push(
             <GridItem key={m.name + "_" + index}>
-              <LineChart
-                key={m.name}
-                title={m.name}
-                unit={m.unit}
-                data={m.data}
-                interpolation={m.interpolation}
-                type={m.type}
-                height={180}
-                width={calculatedWidth}
-                tickCountX={tickCountX}
-                minDomainY={updateMinValue}
-              />
+              <Measure offset>
+                {({ measureRef, contentRect }) => (
+                  <div ref={measureRef}>
+                    <LineChart
+                      key={m.name}
+                      title={m.name}
+                      unit={m.unit}
+                      data={m.data}
+                      interpolation={m.interpolation}
+                      type={m.type}
+                      height={180}
+                      width={contentRect.offset.width ? contentRect.offset.width : 1500}
+                      tickCountX={getTickCountX(contentRect.offset.width)}
+                      minDomainY={updateMinValue}
+                    />
+                  </div>
+                )}
+              </Measure>
             </GridItem>
           )
         })
@@ -330,7 +328,6 @@ class Metrics extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  globalSettings: state.entities.globalSettings,
   metricConfigBinary: state.entities.resourceField.metricConfig.binary,
   metricConfigGauge: state.entities.resourceField.metricConfig.gauge,
 })

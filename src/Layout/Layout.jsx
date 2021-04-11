@@ -39,7 +39,6 @@ import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Servic
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
 import { notificationDrawerToggle } from "../store/entities/notification"
-import { updateNavState } from "../store/entities/globalSettings"
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
@@ -279,8 +278,6 @@ class PageLayoutExpandableNav extends React.Component {
       </PageHeaderTools>
     )
 
-    const { isNavOpen } = this.props.globalSettings
-
     const Header = (
       <PageHeader
         //logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
@@ -306,11 +303,9 @@ class PageLayoutExpandableNav extends React.Component {
         headerTools={headerTools}
         //avatar={<Avatar src={imgAvatar} alt="Avatar image" />}
         showNavToggle
-        isNavOpen={isNavOpen}
-        onNavToggle={this.props.updateNavState}
       />
     )
-    const Sidebar = <PageSidebar nav={PageNav} theme="dark" isNavOpen={isNavOpen} />
+    const Sidebar = <PageSidebar nav={PageNav} theme="dark" />
 
     const pageId = "main-content-page-layout-expandable-nav"
     const PageSkipToContent = <SkipToContent href={`#${pageId}`}>Skip to content</SkipToContent>
@@ -325,7 +320,7 @@ class PageLayoutExpandableNav extends React.Component {
           }}
           header={Header}
           sidebar={Sidebar}
-          isManagedSidebar={false}
+          isManagedSidebar={true}
           skipToContent={PageSkipToContent}
           mainContainerId={pageId}
           notificationDrawer={notificationDrawer}
@@ -344,14 +339,12 @@ const mapStateToProps = (state) => ({
   notificationCount: state.entities.notification.unreadCount,
   showGlobalSpinner: state.entities.spinner.show,
   userDetail: state.entities.auth.user,
-  globalSettings: state.entities.globalSettings,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onNotificationBadgeClick: () => dispatch(notificationDrawerToggle()),
   showAbout: () => dispatch(aboutShow()),
   doLogout: () => dispatch(clearAuth()),
-  updateNavState: () => dispatch(updateNavState()),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageLayoutExpandableNav))

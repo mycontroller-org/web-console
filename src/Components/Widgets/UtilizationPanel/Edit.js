@@ -257,6 +257,18 @@ const getSparkLineItems = (rootObject) => {
       value: "",
       colors: ColorsSetBig,
     },
+    {
+      label: "Height (px)",
+      fieldId: "config.chart.height",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid height",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
   ]
 
   const chartType = getValue(rootObject, "config.chart.type", "")
