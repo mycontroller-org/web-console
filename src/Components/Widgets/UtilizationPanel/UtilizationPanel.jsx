@@ -22,6 +22,9 @@ import {
 import "./UtilizationPanel.scss"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
+import { LastSeen } from "../../Time/Time"
+import { Bullseye } from "@patternfly/react-core"
+import TableUtilization from "./TableUtilization"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -65,6 +68,7 @@ class UtilizationPanel extends React.Component {
     const displayName = getValue(config, "resource.displayName", false)
     const resourceNameKey = getValue(config, "resource.nameKey", "undefined")
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
+    const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
     const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
 
     const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
@@ -120,6 +124,8 @@ class UtilizationPanel extends React.Component {
             name: name,
             metricType: objectPath.get(resource, "metricType", ""),
             value: objectPath.get(resource, resourceValueKey, ""),
+            timestamp:
+              resourceValueTimestampKey !== "" ? objectPath.get(resource, resourceValueTimestampKey, "") : "",
           }
         })
 
@@ -213,6 +219,7 @@ class UtilizationPanel extends React.Component {
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
+    const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
     const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {
@@ -231,10 +238,18 @@ class UtilizationPanel extends React.Component {
         const resource = resources[index]
         if (resource.quickId === qId) {
           resources[index].value = objectPath.get(res, resourceValueKey, "")
+          if (resourceValueTimestampKey !== "") {
+            resources[index].timestamp = objectPath.get(res, resourceValueTimestampKey, "")
+          }
         }
       }
     })
 
+    if (chartType === ChartType.Table) {
+      return <TableUtilization widgetId={widgetId} config={config} resources={resources} />
+    }
+
+    // if chartType not equal to table
     const charts = resources.map((resource, index) => {
       let chart = null
       switch (chartType) {
@@ -254,18 +269,32 @@ class UtilizationPanel extends React.Component {
           )
           break
 
-        default:
+        case ChartType.CircleSize50:
+        case ChartType.CircleSize75:
+        case ChartType.CircleSize100:
           chart = (
-            <DonutUtilization
-              className="on-edit"
-              key={"chart_" + index}
-              widgetId={widgetId}
-              dimensions={dimensions}
-              config={config}
-              resource={resource}
-            />
+            <>
+              <DonutUtilization
+                className="on-edit"
+                key={"chart_" + index}
+                widgetId={widgetId}
+                dimensions={dimensions}
+                config={config}
+                resource={resource}
+              />
+              <Bullseye>
+                <span className="gauge-value-timestamp">
+                  <LastSeen date={resource.timestamp} tooltipPosition="top" />
+                </span>
+              </Bullseye>
+            </>
           )
+          break
+
+        default:
+          return <span>Type not implemented: {chartType}</span>
       }
+
       return (
         <div
           className="mc-utilization-panel-item"

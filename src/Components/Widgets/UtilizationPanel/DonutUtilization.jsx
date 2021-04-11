@@ -1,19 +1,16 @@
 import React from "react"
 import { ChartDonutUtilization, ChartLabel } from "@patternfly/react-charts"
 import "./UtilizationPanel.scss"
-import { getValue } from "../../../Util/Util"
+import { getPercentage, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import v from "validator"
-
-const getInPercent = (maximumValue, value) => {
-  return value > maximumValue ? 100 : (value / maximumValue) * 100
-}
 
 const DonutUtilization = ({ config = {}, resource = {} }) => {
   const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
   const thresholds = getValue(config, "chart.thresholds", {})
   const thickness = getValue(config, "chart.thickness", 10)
   const cornerSmoothing = getValue(config, "chart.cornerSmoothing", 0)
+  const minimumValue = getValue(config, "chart.minimumValue", 0)
   const maximumValue = getValue(config, "chart.maximumValue", 100)
   const unit = getValue(config, "resource.unit", "")
   const displayName = getValue(config, "resource.displayName", false)
@@ -23,7 +20,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   const innerRadius = 100 - thickness
 
   const resourceName = resource.name !== "" ? resource.name : "1"
-  const value = getInPercent(maximumValue, resource.value)
+  const value = getPercentage(resource.value, minimumValue, maximumValue)
 
   const displayValueFloat = parseFloat(resource.value)
   let displayValue = resource.value

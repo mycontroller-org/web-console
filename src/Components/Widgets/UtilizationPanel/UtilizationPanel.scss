@@ -10,27 +10,44 @@
   .utilization-chart {
     margin: 2px;
   }
-}
 
-.mc-spark-chart {
-  .title {
+  .mc-spark-chart {
+    .title {
+      color: var(--pf-global--palette--black-600);
+      font-size: 19px;
+    }
+    .value {
+      color: var(--pf-global--palette--black-800);
+      font-size: 56px;
+    }
+    .value-unit {
+      color: var(--pf-global--palette--black-600);
+      font-size: 22px;
+      padding-right: 10px;
+    }
+    .value-timestamp {
+      color: var(--pf-global--palette--black-600);
+      font-size: 14px;
+      padding-right: 10px;
+    }
+    .metric-function {
+      color: var(--pf-global--palette--black-400);
+      font-size: 12px;
+    }
+    .no-metric-data {
+      font-size: 16px;
+    }
+  }
+
+  .gauge-value-timestamp {
     color: var(--pf-global--palette--black-600);
-    font-size: 19px;
+    font-size: 14px;
   }
-  .value {
-    color: var(--pf-global--palette--black-800);
-    font-size: 56px;
+
+  &.ut-table {
+    cursor: auto;
   }
-  .value-unit {
-    color: var(--pf-global--palette--black-600);
-    font-size: 22px;
-    padding-right: 10px;
-  }
-  .metric-function {
-    color: var(--pf-global--palette--black-400);
-    font-size: 12px;
-  }
-  .no-metric-data {
-    font-size: 16px;
+  .table-progress-bar {
+    --pf-c-progress__bar--Height: 1.2rem;
   }
 }

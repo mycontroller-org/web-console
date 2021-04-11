@@ -13,6 +13,7 @@ import { Stack, StackItem } from "@patternfly/react-core"
 import "./UtilizationPanel.scss"
 import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
+import { LastSeen } from "../../Time/Time"
 
 const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} }) => {
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
@@ -81,6 +82,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} })
 
     metricsChart = (
       <ChartGroup
+        ariaTitle="hello"
         standalone={true}
         height={chartHeight}
         width={dimensions.width}
@@ -135,6 +137,9 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} })
       <StackItem>
         <span className="value">{displayValueText}</span>
         <span className="value-unit">{unitText}</span>
+        <span className="value-timestamp">
+          <LastSeen date={resource.timestamp} tooltipPosition="top" />
+        </span>
         <span className="metric-function">{metricFunctionText}</span>
       </StackItem>
       <StackItem>{metricsChart}</StackItem>

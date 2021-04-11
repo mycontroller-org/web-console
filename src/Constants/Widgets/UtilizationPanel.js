@@ -6,6 +6,7 @@ export const ChartType = {
   SparkArea: "spark_area",
   SparkLine: "spark_line",
   SparkBar: "spark_bar",
+  Table: "table",
 }
 
 // utilization panel chart type options
@@ -16,4 +17,5 @@ export const ChartTypeOptions = [
   { value: ChartType.SparkArea, label: "Spark Area" },
   { value: ChartType.SparkLine, label: "Spark Line" },
   { value: ChartType.SparkBar, label: "Spark Bar" },
+  { value: ChartType.Table, label: "Table" },
 ]

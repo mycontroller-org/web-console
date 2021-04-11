@@ -15,14 +15,20 @@ import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 
 // UtilizationPanel items
 export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
-  items.push(
-    {
+  // update chart config items
+  const chartType = getValue(rootObject, "config.chart.type", "")
+
+  if (chartType !== ChartType.Table) {
+    items.push({
       label: "Column Display",
       fieldId: "config.chart.columnDisplay",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
-    },
+    })
+  }
+
+  items.push(
     {
       label: "Chart",
       fieldId: "!chart",
@@ -40,9 +46,6 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     }
   )
 
-  // update chart config items
-  const chartType = getValue(rootObject, "config.chart.type", "")
-
   switch (chartType) {
     case ChartType.CircleSize50:
     case ChartType.CircleSize75:
@@ -50,8 +53,18 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       // set defaults:
       objectPath.set(rootObject, "config.chart.thickness", 20, true)
       objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
-      const circleItems = getCircleItems(rootObject)
+      objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
+      objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
+      const circleItems = getCircleAndTableItems(rootObject, chartType)
       items.push(...circleItems)
+      break
+
+    case ChartType.Table:
+      objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
+      objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
+      objectPath.set(rootObject, "config.resource.displayName", true, false)
+      const tableItems = getCircleAndTableItems(rootObject, chartType)
+      items.push(...tableItems)
       break
 
     case ChartType.SparkArea:
@@ -89,6 +102,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+      isDisabled: chartType === ChartType.Table,
     }
   )
 
@@ -137,6 +151,18 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       isRequired: false,
     },
     {
+      label: "Timestamp Key",
+      fieldId: "config.resource.valueTimestampKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Timestamp Key. chars: min=1 and max=100",
+      validated: "default",
+      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
+    },
+    {
       label: "Limit",
       fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
@@ -163,8 +189,20 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   )
 }
 
-const getCircleItems = (_rootObject) => {
-  return [
+const getCircleAndTableItems = (_rootObject = {}, chartType = "") => {
+  const items = [
+    {
+      label: "Minimum Value",
+      fieldId: "config.chart.minimumValue",
+      fieldType: FieldType.Text,
+      dataType: DataType.Number,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Maximum Value.",
+      validated: "default",
+      validator: { isDecimal: { decimal_digits: 2 } },
+    },
     {
       label: "Maximum Value",
       fieldId: "config.chart.maximumValue",
@@ -177,26 +215,42 @@ const getCircleItems = (_rootObject) => {
       validated: "default",
       validator: { isDecimal: { decimal_digits: 2 } },
     },
-    {
-      label: "Thickness",
-      fieldId: "config.chart.thickness",
-      fieldType: FieldType.SliderSimple,
-      dataType: DataType.Integer,
-      value: "",
-      min: 1,
-      max: 99,
-      step: 1,
-    },
-    {
-      label: "Corner Smoothing",
-      fieldId: "config.chart.cornerSmoothing",
-      fieldType: FieldType.SliderSimple,
-      dataType: DataType.Integer,
-      value: "",
-      min: 0,
-      max: 100,
-      step: 1,
-    },
+  ]
+
+  if (chartType === ChartType.Table) {
+    items.push({
+      label: "Display Percentage",
+      fieldId: "config.chart.displayStatusPercentage",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    })
+  } else {
+    items.push(
+      {
+        label: "Thickness",
+        fieldId: "config.chart.thickness",
+        fieldType: FieldType.SliderSimple,
+        dataType: DataType.Integer,
+        value: "",
+        min: 1,
+        max: 99,
+        step: 1,
+      },
+      {
+        label: "Corner Smoothing",
+        fieldId: "config.chart.cornerSmoothing",
+        fieldType: FieldType.SliderSimple,
+        dataType: DataType.Integer,
+        value: "",
+        min: 0,
+        max: 100,
+        step: 1,
+      }
+    )
+  }
+
+  items.push(
     {
       label: "Thresholds Color",
       fieldId: "!thresholds",
@@ -208,8 +262,10 @@ const getCircleItems = (_rootObject) => {
       fieldType: FieldType.ThresholdsColor,
       dataType: DataType.Object,
       value: "",
-    },
-  ]
+    }
+  )
+
+  return items
 }
 
 const getSparkLineItems = (rootObject) => {

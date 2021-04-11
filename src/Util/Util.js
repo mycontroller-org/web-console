@@ -39,3 +39,13 @@ export const getItem = (value, options) => {
 export const capitalizeFirstLetter = (value) => {
   return value.charAt(0).toUpperCase() + value.slice(1)
 }
+
+export const getPercentage = (value, minimum = 0, maximum = 100, inRange = true) => {
+  const result = ((value - minimum) * 100) / (maximum - minimum)
+  if (inRange && result < 0) {
+    return 0
+  } else if (inRange && result > 100) {
+    return 100
+  }
+  return result
+}
