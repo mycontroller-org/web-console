@@ -47,6 +47,11 @@
   &.ut-table {
     cursor: auto;
   }
+
+  &.pf-c-table tbody > tr > * {
+    vertical-align: bottom;
+  }
+
   .table-progress-bar {
     --pf-c-progress__bar--Height: 1.2rem;
   }

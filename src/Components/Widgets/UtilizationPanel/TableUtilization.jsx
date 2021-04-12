@@ -1,12 +1,22 @@
 import React from "react"
 import "./UtilizationPanel.scss"
-import { getValue, getPercentage } from "../../../Util/Util"
+import { getValue } from "../../../Util/Util"
 import v from "validator"
 import { LastSeen } from "../../Time/Time"
-import { cellWidth, Table, TableBody, TableHeader, textCenter } from "@patternfly/react-table"
-import { Bullseye, Level, Progress } from "@patternfly/react-core"
+import {
+  cellWidth,
+  fitContent,
+  nowrap,
+  Table,
+  TableBody,
+  TableHeader,
+  TableVariant,
+} from "@patternfly/react-table"
+import { Button, Progress } from "@patternfly/react-core"
+import { navigateToResource } from "../Helper/Resource"
 
-const TableUtilization = ({ widgetId = "", config = {}, resources = [] }) => {
+const TableUtilization = ({ widgetId = "", config = {}, resources = [], history = null }) => {
+  const resourceType = getValue(config, "resource.type", "")
   const thresholds = getValue(config, "chart.thresholds", {})
   const minimumValue = getValue(config, "chart.minimumValue", 0)
   const maximumValue = getValue(config, "chart.maximumValue", 100)
@@ -50,7 +60,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [] }) => {
     return (
       <Progress
         key={"resource_" + resource.quickId}
-        className="progress-bar"
+        className="table-progress-bar"
         aria-label="utilization_table_status"
         style={{
           "--pf-c-progress__indicator--BackgroundColor": thresholdColor,
@@ -66,12 +76,26 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [] }) => {
 
   resources.forEach((resource) => {
     rows.push([
-      resource.name !== "" ? resource.name : "undefined",
+      {
+        title: (
+          <Button
+            variant="link"
+            isInline
+            onClick={() => navigateToResource(resourceType, resource.id, history)}
+          >
+            {resource.name !== "" ? resource.name : "undefined"}
+          </Button>
+        ),
+      },
       { title: getStatus(resource) },
-      getResourceValue(resource),
-      <span className="gauge-value-timestamp">
-        <LastSeen date={resource.timestamp} tooltipPosition="top" />
-      </span>,
+      { title: getResourceValue(resource) },
+      {
+        title: (
+          <span className="gauge-value-timestamp">
+            <LastSeen date={resource.timestamp} tooltipPosition="top" />
+          </span>
+        ),
+      },
     ])
   })
 
@@ -84,7 +108,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [] }) => {
       key={"utilization_table_" + widgetId}
       className="mc-utilization-panel-item ut-table"
       aria-label="Utilization Table"
-      variant="compact"
+      variant={TableVariant.compact}
       borders={true}
       cells={columns}
       rows={rows}

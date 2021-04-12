@@ -32,7 +32,7 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   const keys = Object.keys(thresholds)
 
   const tunedThresholds = keys.map((key) => {
-    return { value: getInPercent(maximumValue, Number(key)), color: thresholds[key] }
+    return { value: getPercentage(Number(key), minimumValue, maximumValue), color: thresholds[key] }
   })
 
   let titleComponent = <ChartLabel />

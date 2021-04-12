@@ -25,6 +25,7 @@ import { loadData, unloadData } from "../../../store/entities/websocket"
 import { LastSeen } from "../../Time/Time"
 import { Bullseye } from "@patternfly/react-core"
 import TableUtilization from "./TableUtilization"
+import { navigateToResource } from "../Helper/Resource"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -186,36 +187,9 @@ class UtilizationPanel extends React.Component {
       })
   }
 
-  onClick = (resourceType, id) => {
-    let route = null
-
-    switch (resourceType) {
-      case ResourceType.Gateway:
-        route = rMap.resources.gateway.detail
-        break
-
-      case ResourceType.Node:
-        route = rMap.resources.node.detail
-        break
-
-      case ResourceType.Source:
-        route = rMap.resources.source.detail
-        break
-
-      case ResourceType.Field:
-        route = rMap.resources.field.detail
-        break
-
-      default:
-    }
-    if (route !== null) {
-      rd(this.props.history, route, { id: id })
-    }
-  }
-
   render() {
     const { loading, resources, metrics } = this.state
-    const { widgetId, dimensions, config } = this.props
+    const { widgetId, dimensions, config, history } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
@@ -246,7 +220,7 @@ class UtilizationPanel extends React.Component {
     })
 
     if (chartType === ChartType.Table) {
-      return <TableUtilization widgetId={widgetId} config={config} resources={resources} />
+      return <TableUtilization widgetId={widgetId} config={config} resources={resources} history={history} />
     }
 
     // if chartType not equal to table
@@ -299,7 +273,7 @@ class UtilizationPanel extends React.Component {
         <div
           className="mc-utilization-panel-item"
           key={"chart_" + index}
-          onClick={() => this.onClick(resourceType, resource.id)}
+          onClick={() => navigateToResource(resourceType, resource.id, history)}
           style={{ height: "100%", width: "100%", cursor: "pointer" }}
         >
           {chart}
