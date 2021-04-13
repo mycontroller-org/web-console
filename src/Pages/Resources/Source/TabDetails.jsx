@@ -3,6 +3,8 @@ import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { RouteLink } from "../../../Components/Buttons/Buttons"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { LastSeen } from "../../../Components/Time/Time"
+import InputField from "../../../Components/Widgets/ControlPanel/Common/InputField"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
 
@@ -70,17 +72,25 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
     },
     {
       title: (
-        <RouteLink
-          history={history}
-          path={rMap.resources.field.detail}
-          id={rawData.id}
-          text={rawData.name}
-        />
+        <RouteLink history={history} path={rMap.resources.field.detail} id={rawData.id} text={rawData.name} />
       ),
     },
     rawData.metricType,
     rawData.unit,
-    String(rawData.current.value),
+    {
+      title: (
+        <InputField
+          payload={rawData.current.value}
+          id={rawData.id}
+          quickId={getQuickId(ResourceType.Field, rawData)}
+          widgetId={rawData.id}
+          key={rawData.id}
+          sendPayloadWrapper={(callBack) => {
+            callBack()
+          }}
+        />
+      ),
+    },
     String(rawData.previous.value),
     { title: <LastSeen date={rawData.lastSeen} /> },
   ]
