@@ -14,7 +14,6 @@ import { LightType, RGBComponentType } from "../../../Constants/Widgets/LightPan
 import { AdjustIcon, ImageIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } from "@patternfly/react-icons"
 import { getValue } from "../../../Util/Util"
 import SimpleSlider from "../../Form/Slider/Simple"
-import { ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
 import { connect } from "react-redux"
 

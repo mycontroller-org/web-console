@@ -55,7 +55,7 @@ page section padding fixed
 Removes the gray color of bottom page
 */
 .pf-c-page__main {
-  background-color: white !important;
+  background-color: var(--mc-background-color);
 }
 
 /* hides some of the elements on mobile view */

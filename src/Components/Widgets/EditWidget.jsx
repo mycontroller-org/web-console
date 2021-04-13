@@ -4,7 +4,7 @@ import { DataType, FieldType } from "../../Constants/Form"
 import { WidgetType, WidgetTypeOptions } from "../../Constants/Widgets/Widgets"
 import Editor from "../Editor/Editor"
 import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
-import { updateFormItemsSwitchPanel } from "./SwitchPanel/Edit"
+import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
 import { updateFormItemsLightPanel } from "./LightPanel/Edit"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 
@@ -44,8 +44,8 @@ const getFormItems = (rootObject) => {
   const items = getPanelSettingsItems(rootObject)
 
   switch (rootObject.type) {
-    case WidgetType.SwitchPanel:
-      updateFormItemsSwitchPanel(rootObject, items)
+    case WidgetType.ControlPanel:
+      updateFormItemsControlPanel(rootObject, items)
       break
 
     case WidgetType.LightPanel:

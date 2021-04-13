@@ -27,6 +27,7 @@ import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
 import ScriptEditor from "./ScriptEditor/ScriptEditor"
 import SimpleSlider from "./Slider/Simple"
 import ColorBox from "../Color/ColorBox/ColorBox"
+import MixedControlListForm from "./Widget/MixedControlList"
 
 // item sample
 // const item = {
@@ -143,8 +144,8 @@ const getField = (item, onChange) => {
           validateKeyFunc={
             item.validateKeyFunc
               ? item.validateKeyFunc
-              : (key) => {
-                  return validate("isKey", key)
+              : (value) => {
+                  return validate("isKey", value)
                 }
           }
         />
@@ -166,6 +167,23 @@ const getField = (item, onChange) => {
               ? item.validateKeyFunc
               : (key) => {
                   return validate("isVariableKey", key)
+                }
+          }
+        />
+      )
+
+    case FieldType.MixedControlList:
+      return (
+        <MixedControlListForm
+          key={item.fieldId}
+          valuesList={item.value}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          validateValueFunc={
+            item.validateValueFunc
+              ? item.validateValueFunc
+              : (value) => {
+                  return validate("isObject", value)
                 }
           }
         />
@@ -314,6 +332,7 @@ const getField = (item, onChange) => {
           onChange={onChange}
           selected={item.value}
           isDisabled={item.isDisabled}
+          disableClear={item.disableClear}
         />
       )
 

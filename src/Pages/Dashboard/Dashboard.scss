@@ -1,5 +1,5 @@
 .react-grid-layout {
-  background: #fff;
+  background: var(--mc-dashboard-background-color);
 }
 
 .react-grid-item:not(.react-grid-placeholder) {
@@ -21,4 +21,12 @@
 
 .react-grid-item.react-grid-placeholder {
   background: var(--pf-global--palette--blue-200);
+}
+
+.dashboard {
+  .mc-page-content {
+    .pf-c-page__main-section {
+      background-color: var(--mc-dashboard-background-color);
+    }
+  }
 }

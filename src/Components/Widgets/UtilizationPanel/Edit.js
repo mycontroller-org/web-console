@@ -10,6 +10,7 @@ import {
   InterpolationType,
   InterpolationTypeLineOptions,
   MetricFunctionTypeOptions,
+  RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
 import { ColorsSetBig } from "../../../Constants/Widgets/Color"
 
@@ -269,6 +270,8 @@ const getCircleAndTableItems = (_rootObject = {}, chartType = "") => {
 }
 
 const getSparkLineItems = (rootObject) => {
+  objectPath.set(rootObject, "config.chart.height", 120, true)
+
   const items = [
     {
       label: "Duration",
@@ -356,6 +359,18 @@ const getSparkLineItems = (rootObject) => {
       }
     )
   }
+
+  objectPath.set(rootObject, "config.chart.refreshInterval", 0, true)
+  items.push({
+    label: "Refresh Interval",
+    fieldId: "config.chart.refreshInterval",
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.Integer,
+    value: "",
+    options: RefreshIntervalTypeOptions,
+    isRequired: true,
+    validator: { isNotEmpty: {} },
+  })
 
   return items
 }

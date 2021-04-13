@@ -22,6 +22,7 @@ export const FieldType = {
   Labels: "labels",
   KeyValueMap: "key_value_map",
   VariablesMap: "variables_map",
+  MixedControlList: "mixed_control_list",
   ColorBox: "color_box",
   ThresholdsColor: "thresholds_color",
   DynamicArray: "dynamic_array",

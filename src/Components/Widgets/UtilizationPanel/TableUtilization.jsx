@@ -33,9 +33,9 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   const valueUnit = unit !== "" ? ` (${unit})` : ""
   const columns = [
     { title: "Name" },
-    { title: "Status", transforms: [cellWidth(35)] },
+    "Last Update",
     `Value${valueUnit}`,
-    "Last Seen",
+    { title: "Status", transforms: [cellWidth(35)] },
   ]
 
   const rows = []
@@ -87,8 +87,6 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
           </Button>
         ),
       },
-      { title: getStatus(resource) },
-      { title: getResourceValue(resource) },
       {
         title: (
           <span className="gauge-value-timestamp">
@@ -96,6 +94,8 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
           </span>
         ),
       },
+      { title: getResourceValue(resource) },
+      { title: getStatus(resource) },
     ])
   })
 

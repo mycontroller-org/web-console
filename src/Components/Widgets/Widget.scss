@@ -1,7 +1,7 @@
 .dashboard-widget {
   height: 100%;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--mc-widget-background-color);
   border-radius: 0px;
   position: relative;
   overflow: auto;
@@ -25,7 +25,7 @@
     }
     .dashboard-widget-title {
       padding: 5px 0px 5px 10px;
-      background-color: #f0f0f0;
+      background-color: var(--mc-widget-title-background-color);
     }
     .dashboard-widget-action {
       margin-left: 3px;
@@ -39,4 +39,3 @@
     }
   }
 }
-

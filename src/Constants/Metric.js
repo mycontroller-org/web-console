@@ -169,3 +169,29 @@ export const InterpolationTypeLineOptions = [
   { value: InterpolationType.StepAfter, label: "Step After" },
   { value: InterpolationType.StepBefore, label: "Step Before" },
 ]
+
+export const RefreshIntervalType = {
+  None: "0",
+  Seconds_5: "5000",
+  Seconds_10: "10000",
+  Seconds_15: "15000",
+  Seconds_30: "30000",
+  Seconds_45: "45000",
+  Minutes_1: "60000",
+  Minutes_5: "300000",
+  Minutes_15: "900000",
+  Minutes_30: "1800000",
+}
+
+export const RefreshIntervalTypeOptions = [
+  { value: RefreshIntervalType.None, label: "Never" },
+  { value: RefreshIntervalType.Seconds_5, label: "5 Seconds" },
+  { value: RefreshIntervalType.Seconds_10, label: "10 Seconds" },
+  { value: RefreshIntervalType.Seconds_15, label: "15 Seconds" },
+  { value: RefreshIntervalType.Seconds_30, label: "30 Seconds" },
+  { value: RefreshIntervalType.Seconds_45, label: "45 Seconds" },
+  { value: RefreshIntervalType.Minutes_1, label: "1 Minute" },
+  { value: RefreshIntervalType.Minutes_5, label: "5 Minutes" },
+  { value: RefreshIntervalType.Minutes_15, label: "15 Minutes" },
+  { value: RefreshIntervalType.Minutes_30, label: "30 Minutes" },
+]

@@ -20,3 +20,13 @@ export const getWindowWidth = (windowSizeWidth, isNavOpen) => {
   }
   return windowSizeWidth
 }
+
+export const DropDownPositionType = {
+  UP: "up",
+  DOWN: "down",
+}
+
+export const DropDownPositionTypeOptions = [
+  { value: DropDownPositionType.DOWN, label: "Down" },
+  { value: DropDownPositionType.UP, label: "UP" },
+]

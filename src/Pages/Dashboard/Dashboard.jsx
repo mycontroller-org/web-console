@@ -386,23 +386,25 @@ class Dashboard extends React.Component {
           onChange={this.onWidgetConfigChange}
           onSave={this.onWidgetConfigSave}
         />
-        <PageTitle
-          key="page-title"
-          title={
-            <div style={{ marginBottom: "5px" }}>
-              <Selector
-                prefix="Dashboard"
-                disabled={editEnabled || loading || dashboardItems.length === 0}
-                items={dashboardItems}
-                selection={{ text: title }}
-                onChange={this.onDashboardChange}
-                onBookmarkAction={this.onDashboardBookmarkAction}
-              />
-            </div>
-          }
-          actions={actions}
-        />
-        <PageContent key="page-content">{pageContent}</PageContent>
+        <div className="dashboard">
+          <PageTitle
+            key="page-title"
+            title={
+              <div style={{ marginBottom: "5px" }}>
+                <Selector
+                  prefix="Dashboard"
+                  disabled={editEnabled || loading || dashboardItems.length === 0}
+                  items={dashboardItems}
+                  selection={{ text: title }}
+                  onChange={this.onDashboardChange}
+                  onBookmarkAction={this.onDashboardBookmarkAction}
+                />
+              </div>
+            }
+            actions={actions}
+          />
+          <PageContent key="page-content">{pageContent}</PageContent>
+        </div>
       </React.Fragment>
     )
   }

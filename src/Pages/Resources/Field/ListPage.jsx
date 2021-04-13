@@ -5,6 +5,8 @@ import ListBase from "../../../Components/BasePage/ListBase"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { LastSeen } from "../../../Components/Time/Time"
+import InputField from "../../../Components/Widgets/ControlPanel/Common/InputField"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
@@ -116,7 +118,20 @@ const toRowFuncImpl = (rawData, history) => {
       },
       rawData.metricType,
       rawData.unit,
-      String(rawData.current.value),
+      {
+        title: (
+          <InputField
+            payload={rawData.current.value}
+            id={rawData.id}
+            quickId={getQuickId(ResourceType.Field, rawData)}
+            widgetId={rawData.id}
+            key={rawData.id}
+            sendPayloadWrapper={(callBack) => {
+              callBack()
+            }}
+          />
+        ),
+      },
       String(rawData.previous.value),
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],

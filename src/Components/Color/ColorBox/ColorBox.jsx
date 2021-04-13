@@ -1,4 +1,4 @@
-import { Popover } from "@patternfly/react-core"
+import { Badge, Popover, Split, SplitItem, Text } from "@patternfly/react-core"
 import React from "react"
 import { CirclePicker } from "react-color"
 import "./ColorBox.scss"

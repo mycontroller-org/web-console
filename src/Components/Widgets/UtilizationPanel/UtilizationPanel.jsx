@@ -4,7 +4,6 @@ import { api } from "../../../Service/Api"
 import _ from "lodash"
 import { connect } from "react-redux"
 import objectPath from "object-path"
-import { redirect as rd, routeMap as rMap } from "../../../Service/Routes"
 import Loading from "../../Loading/Loading"
 import { getItem, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
@@ -17,6 +16,7 @@ import {
   MetricType,
   DurationOptions,
   getRecommendedInterval,
+  RefreshIntervalType,
 } from "../../../Constants/Metric"
 
 import "./UtilizationPanel.scss"
@@ -32,6 +32,7 @@ const wsKey = "dashboard_utilization_panel"
 class UtilizationPanel extends React.Component {
   state = {
     loading: true,
+    loadingMetrics: true,
     resources: [],
     metrics: {},
   }
@@ -41,17 +42,94 @@ class UtilizationPanel extends React.Component {
   }
 
   componentWillUnmount() {
+    clearInterval(this.interval)
     this.props.unloadData({ key: this.getWsKey() })
   }
 
   componentDidMount() {
     this.updateComponents()
+    // update metrics query on interval
+    const { config } = this.props
+    const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
+    if (refreshInterval !== RefreshIntervalType.None) {
+      this.interval = setInterval(() => {
+        this.updateMetrics()
+      }, refreshInterval)
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(this.props.config, prevProps.config)) {
       this.updateComponents()
     }
+  }
+
+  updateMetrics = () => {
+    const { config } = this.props
+
+    // if config empty, stop here
+    if (config === undefined) {
+      return
+    }
+
+    const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
+    if (!chartType.startsWith("spark")) {
+      return
+    }
+
+    const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
+    const chartInterval = getValue(config, "chart.interval", getRecommendedInterval(chartDuration))
+    const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
+
+    // if it is spark chart, get metrics data
+
+    const duration = getItem(chartDuration, DurationOptions)
+
+    const metricQuery = {
+      global: {
+        start: duration.value,
+        window: chartInterval,
+        functions: [metricFunction],
+      },
+      individual: [], // add id and metric type
+    }
+    this.setState((prevState) => {
+      const { resources } = prevState
+      // add id and metricType
+      resources.forEach((r) => {
+        // supports only for the below types
+        if (
+          r.metricType === MetricType.Gauge ||
+          r.metricType === MetricType.GaugeFloat ||
+          r.metricType === MetricType.Binary
+        ) {
+          metricQuery.individual.push({
+            name: r.id,
+            metricType: r.metricType,
+            tags: { id: r.id },
+          })
+        }
+      })
+      if (metricQuery.individual.length > 0) {
+        api.metric
+          .fetch(metricQuery)
+          .then((metricRes) => {
+            // update metrics data
+            const keys = Object.keys(metricRes.data)
+            const metrics = {}
+            keys.forEach((key) => {
+              const metricsRaw = metricRes.data[key]
+              // update data into metrics object
+              metrics[key] = getMetrics(metricsRaw, duration.tsFormat, metricFunction)
+            })
+            this.setState({ metrics: metrics, loadingMetrics: true })
+          })
+          .catch((_e) => {
+            this.setState({ loadingMetrics: false })
+          })
+      }
+      return {}
+    })
   }
 
   updateComponents = () => {
@@ -70,12 +148,6 @@ class UtilizationPanel extends React.Component {
     const resourceNameKey = getValue(config, "resource.nameKey", "undefined")
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
     const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
-    const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
-
-    const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
-    const chartInterval = getValue(config, "chart.interval", getRecommendedInterval(chartDuration))
-
-    const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
 
     const filters = []
     if (resourceSelectors) {
@@ -132,55 +204,9 @@ class UtilizationPanel extends React.Component {
 
         // push raw resources into redux
         this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
-
-        // if it is spark chart, get metrics data
-        if (chartType.startsWith("spark")) {
-          const duration = getItem(chartDuration, DurationOptions)
-
-          const metricQuery = {
-            global: {
-              start: duration.value,
-              window: chartInterval,
-              functions: [metricFunction],
-            },
-            individual: [], // add id and metric type
-          }
-          // add id and metricType
-          resources.forEach((r) => {
-            // supports only for the below types
-            if (
-              r.metricType === MetricType.Gauge ||
-              r.metricType === MetricType.GaugeFloat ||
-              r.metricType === MetricType.Binary
-            ) {
-              metricQuery.individual.push({
-                name: r.id,
-                metricType: r.metricType,
-                tags: { id: r.id },
-              })
-            }
-          })
-          if (metricQuery.individual.length > 0) {
-            api.metric
-              .fetch(metricQuery)
-              .then((metricRes) => {
-                // update metrics data
-                const keys = Object.keys(metricRes.data)
-                const metrics = {}
-                keys.forEach((key) => {
-                  const metricsRaw = metricRes.data[key]
-                  // update data into metrics object
-                  metrics[key] = getMetrics(metricsRaw, duration.tsFormat, metricFunction)
-                })
-                this.setState({ loading: false, resources, metrics })
-              })
-              .catch((_e) => {
-                this.setState({ loading: false, resources })
-              })
-          }
-        } else {
-          this.setState({ loading: false, resources })
-        }
+        this.setState({ loading: false, resources }, () => {
+          this.updateMetrics()
+        })
       })
       .catch((_e) => {
         this.setState({ loading: false })
@@ -188,7 +214,7 @@ class UtilizationPanel extends React.Component {
   }
 
   render() {
-    const { loading, resources, metrics } = this.state
+    const { loading, loadingMetrics, resources, metrics } = this.state
     const { widgetId, dimensions, config, history } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
@@ -239,6 +265,7 @@ class UtilizationPanel extends React.Component {
               config={config}
               resource={resource}
               metric={metrics[resource.id]}
+              isMetricsLoading={loadingMetrics}
             />
           )
           break
@@ -323,7 +350,7 @@ const getMetrics = (metricsRaw = [], tsFormat, metricFunction) => {
   const metricType = metricsRaw[0].metricType
   switch (metricType) {
     case MetricType.Binary:
-      return getBinaryMetrics(metricsRaw, tsFormat)
+      return getBinaryMetrics(metricsRaw, `${tsFormat}:ss`)
 
     case MetricType.Gauge:
     case MetricType.GaugeFloat:

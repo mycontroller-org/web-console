@@ -8,9 +8,9 @@ import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import { WidgetType } from "../../Constants/Widgets/Widgets"
 import EmptyPanel from "./EmptyPanel/EmptyPanel"
 import LightPanel from "./LightPanel/LightPanel"
-import SwitchPanel from "./SwitchPanel/SwitchPanel"
 import UtilizationPanel from "./UtilizationPanel/UtilizationPanel"
 import "./Widget.scss"
+import ControlPanel from "./ControlPanel/ControlPanel"
 
 export const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
   const items = []
@@ -51,9 +51,9 @@ const loadPanel = (widget, history, widgetKey, dimensions) => {
     case WidgetType.EmptyPanel:
       return <EmptyPanel widgetId={widget.id} key={widgetKey} dimensions={dimensions} />
 
-    case WidgetType.SwitchPanel:
+    case WidgetType.ControlPanel:
       return (
-        <SwitchPanel
+        <ControlPanel
           key={widgetKey}
           widgetId={widget.id}
           config={widget.config}

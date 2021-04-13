@@ -3,7 +3,6 @@ import { sortable, Table as PfTable, TableBody, TableHeader, TableVariant } from
 import PropTypes from "prop-types"
 import React from "react"
 
-
 const ITEMS_LIMIT = 10
 
 class Table extends React.Component {

@@ -67,6 +67,7 @@ export const updateItems = (rootObject, items) => {
 
       case FieldType.DynamicArray:
       case FieldType.ConditionsArrayMap:
+      case FieldType.MixedControlList:
         item.value = objectPath.get(rootObject, item.fieldId, [])
         if (item.value === null) {
           item.value = []
@@ -95,7 +96,6 @@ export const updateItems = (rootObject, items) => {
           }
           break
         }
-
 
       // case FieldType.Select:
       // case FieldType.SelectTypeAhead:

@@ -8,6 +8,7 @@ import {
   Title,
 } from "@patternfly/react-core"
 import React from "react"
+import "./PageTitle.scss"
 
 const PageTitle = ({ title, description, actions, hideDivider = false }) => {
   const divider = hideDivider ? null : (
@@ -26,7 +27,7 @@ const PageTitle = ({ title, description, actions, hideDivider = false }) => {
       title
     )
   return (
-    <PageSection variant={PageSectionVariants.light}>
+    <PageSection className="mc-page-title" variant={PageSectionVariants.light}>
       <Grid hasGutter={false}>
         <GridItem span={6}>
           {titleComponent}

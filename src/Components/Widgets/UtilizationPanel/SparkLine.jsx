@@ -15,7 +15,7 @@ import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
 import { LastSeen } from "../../Time/Time"
 
-const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} }) => {
+const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, isMetricsLoading }) => {
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
@@ -78,11 +78,11 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} })
       default:
     }
 
-    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.1 : 0
+    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.06 : 0
 
     metricsChart = (
       <ChartGroup
-        ariaTitle="hello"
+        // ariaTitle="hello"
         standalone={true}
         height={chartHeight}
         width={dimensions.width}
@@ -107,6 +107,12 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {} })
       >
         {chart}
       </ChartGroup>
+    )
+  } else if (isMetricsLoading) {
+    metricsChart = (
+      <span className="no-metric-data" style={{ color: chartColor }}>
+        Loading Metric data
+      </span>
     )
   } else {
     metricsChart = (

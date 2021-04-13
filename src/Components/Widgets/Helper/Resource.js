@@ -25,6 +25,14 @@ export const navigateToResource = (resourceType, id, history = null) => {
       route = rMap.resources.field.detail
       break
 
+    case ResourceType.Task:
+      route = rMap.operations.task.detail
+      break
+
+    case ResourceType.Schedule:
+      route = rMap.operations.scheduler.detail
+      break
+
     default:
   }
   if (route !== null) {
