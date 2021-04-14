@@ -204,7 +204,7 @@ const getItems = (rootObject) => {
     case MixedControlType.Input:
       objectPath.set(rootObject, "control.config.input.minWidth", 70, true)
       items.push({
-        label: "Minimum Width",
+        label: "Width (px)",
         fieldId: "control.config.input.minWidth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
@@ -219,8 +219,13 @@ const getItems = (rootObject) => {
 
     case MixedControlType.SelectOptions:
     case MixedControlType.TabOptions:
-      const selectOptionItems = getSelectOptions(rootObject, controlType)
+      const selectOptionItems = getSelectOptionItems(rootObject, controlType)
       items.push(...selectOptionItems)
+      break
+
+    case MixedControlType.Slider:
+      const sliderItems = getSliderItems(rootObject)
+      items.push(...sliderItems)
       break
 
     default:
@@ -302,7 +307,7 @@ const getToggleSwitchItems = (rootObject, controlType) => {
         helperTextInvalid: "Select a ON button type",
       },
       {
-        label: "Minimum Width",
+        label: "Width (px)",
         fieldId: "control.config.button.minWidth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
@@ -362,7 +367,7 @@ const getPushButtonItems = (rootObject) => {
       helperTextInvalid: "Select a button type",
     },
     {
-      label: "Minimum Width",
+      label: "Width (px)",
       fieldId: "control.config.button.minWidth",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
@@ -378,7 +383,7 @@ const getPushButtonItems = (rootObject) => {
   return items
 }
 
-const getSelectOptions = (rootObject, controlType) => {
+const getSelectOptionItems = (rootObject, controlType) => {
   const items = []
 
   if (controlType === MixedControlType.SelectOptions) {
@@ -407,5 +412,66 @@ const getSelectOptions = (rootObject, controlType) => {
       return validate("isNotEmpty", value)
     },
   })
+  return items
+}
+
+const getSliderItems = (rootObject) => {
+  // default values
+  objectPath.set(rootObject, "control.config.slider.min", 0, true)
+  objectPath.set(rootObject, "control.config.slider.max", 100, true)
+  objectPath.set(rootObject, "control.config.slider.step", 1, true)
+  objectPath.set(rootObject, "control.config.slider.minWidth", 220, true)
+  const items = []
+
+  items.push(
+    {
+      label: "Minimum",
+      fieldId: "control.config.slider.min",
+      fieldType: FieldType.Text,
+      dataType: DataType.Float,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid value",
+      validated: "default",
+      validator: { isFloat: {} },
+    },
+    {
+      label: "Maximum",
+      fieldId: "control.config.slider.max",
+      fieldType: FieldType.Text,
+      dataType: DataType.Float,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid value",
+      validated: "default",
+      validator: { isFloat: {} },
+    },
+    {
+      label: "Step",
+      fieldId: "control.config.slider.step",
+      fieldType: FieldType.Text,
+      dataType: DataType.Float,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid value",
+      validated: "default",
+      validator: { isFloat: {} },
+    },
+    {
+      label: "Width (px)",
+      fieldId: "control.config.slider.minWidth",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid width",
+      validated: "default",
+      validator: { isInteger: { min: 1 } },
+    }
+  )
   return items
 }

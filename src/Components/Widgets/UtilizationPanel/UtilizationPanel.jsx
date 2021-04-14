@@ -42,7 +42,9 @@ class UtilizationPanel extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval)
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
     this.props.unloadData({ key: this.getWsKey() })
   }
 
@@ -74,6 +76,7 @@ class UtilizationPanel extends React.Component {
 
     const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
     if (!chartType.startsWith("spark")) {
+      this.setState({ loadingMetrics: false })
       return
     }
 
@@ -122,11 +125,13 @@ class UtilizationPanel extends React.Component {
               // update data into metrics object
               metrics[key] = getMetrics(metricsRaw, duration.tsFormat, metricFunction)
             })
-            this.setState({ metrics: metrics, loadingMetrics: true })
+            this.setState({ metrics: metrics, loadingMetrics: false })
           })
           .catch((_e) => {
             this.setState({ loadingMetrics: false })
           })
+      } else {
+        this.setState({ loadingMetrics: false })
       }
       return {}
     })

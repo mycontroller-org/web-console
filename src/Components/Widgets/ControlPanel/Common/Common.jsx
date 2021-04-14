@@ -9,6 +9,7 @@ import { Table, TableBody, TableHeader, TableVariant } from "@patternfly/react-t
 import "./Common.scss"
 import InputField from "./InputField"
 import { navigateToResource } from "../../Helper/Resource"
+import SliderControl from "./SliderControl"
 
 const columns = ["Name", "Last Update", ""]
 
@@ -147,6 +148,25 @@ const ControlObjects = ({
             payload={resource.payload}
             quickId={resource.quickId}
             minWidth={mixedControlCfg.config.input.minWidth}
+            sendPayloadWrapper={(callBack) =>
+              sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
+            }
+          />
+        )
+        break
+
+      case MixedControlType.Slider:
+        const { slider = {} } = mixedControlCfg.config
+        controlElement = (
+          <SliderControl
+            id={`push_button_${resource.id}_${index}`}
+            widgetId={widgetId}
+            quickId={resource.quickId}
+            payload={resource.payload}
+            min={slider.min}
+            max={slider.max}
+            step={slider.step}
+            minWidth={slider.minWidth}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
             }

@@ -36,6 +36,7 @@ export const MixedControlType = {
   SelectOptions: "options_select",
   TabOptions: "options_tab",
   Input: "input",
+  Slider: "slider",
 }
 
 // mixed control type options
@@ -46,4 +47,5 @@ export const MixedControlTypeOptions = [
   { value: MixedControlType.SelectOptions, label: "Select Options" },
   { value: MixedControlType.TabOptions, label: "Tab Options" },
   { value: MixedControlType.Input, label: "Input" },
+  { value: MixedControlType.Slider, label: "Slider" },
 ]

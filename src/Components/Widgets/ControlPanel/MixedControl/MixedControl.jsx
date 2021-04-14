@@ -36,6 +36,10 @@ class MixedControl extends React.Component {
     }
 
     const { resources: resourcesRaw = [] } = this.props.config
+    if (resourcesRaw.length === 0) {
+      this.setState({ isLoading: false })
+      return
+    }
 
     const resourceQuickIds = resourcesRaw.map((res) => {
       const { type, quickId: id } = res.resource
@@ -74,6 +78,10 @@ class MixedControl extends React.Component {
     }
     const { wsData, widgetId, config = {}, history } = this.props
     const { resources: resourcesConfig = [] } = config
+
+    if (resourcesConfig.length === 0) {
+      return <span>No resources configured</span>
+    }
 
     // console.log("wsData:", this.props.wsData)
     const resourcesRaw = getValue(wsData, this.getWsKey(), {})
