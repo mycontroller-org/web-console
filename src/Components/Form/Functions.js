@@ -16,12 +16,21 @@ const getValue = (item, data) => {
       return Boolean(data)
 
     case DataType.Number:
+      if (data === "" || data === "-") {
+        return data
+      }
       return Number(data)
 
     case DataType.Integer:
+      if (data === "" || data === "-") {
+        return data
+      }
       return v.toInt(data)
 
     case DataType.Float:
+      if (data === "" || data === "-") {
+        return data
+      }
       return v.toFloat(data)
 
     // case DataType.ArrayString:

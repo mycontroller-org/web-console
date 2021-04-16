@@ -19,6 +19,7 @@ export const MetricTypeOptions = [
 ]
 
 export const Duration = {
+  Last30Minutes: "-30m",
   LastHour: "-1h",
   Last2Hours: "-2h",
   Last3Hours: "-3h",
@@ -35,6 +36,7 @@ export const Duration = {
 }
 
 export const DurationOptions = [
+  { value: Duration.Last30Minutes, tsFormat: "HH:mm", label: "Last 30 minutes" },
   { value: Duration.LastHour, tsFormat: "HH:mm", label: "Last 1 hour" },
   { value: Duration.Last2Hours, tsFormat: "HH:mm", label: "Last 2 hours" },
   { value: Duration.Last3Hours, tsFormat: "HH:mm", label: "Last 3 hours" },
@@ -80,6 +82,7 @@ export const AggregationIntervalOptions = [
 
 export const getRecommendedInterval = (durationValue) => {
   switch (durationValue) {
+    case Duration.Last30Minutes:
     case Duration.LastHour:
     case Duration.Last2Hours:
       return AggregationInterval.Minute_1

@@ -11,34 +11,6 @@
     margin: 2px;
   }
 
-  .mc-spark-chart {
-    .title {
-      color: var(--pf-global--palette--black-600);
-      font-size: 19px;
-    }
-    .value {
-      color: var(--pf-global--palette--black-800);
-      font-size: 56px;
-    }
-    .value-unit {
-      color: var(--pf-global--palette--black-600);
-      font-size: 22px;
-      padding-right: 10px;
-    }
-    .value-timestamp {
-      color: var(--pf-global--palette--black-600);
-      font-size: 14px;
-      padding-right: 10px;
-    }
-    .metric-function {
-      color: var(--pf-global--palette--black-400);
-      font-size: 12px;
-    }
-    .no-metric-data {
-      font-size: 16px;
-    }
-  }
-
   .gauge-value-timestamp {
     color: var(--pf-global--palette--black-600);
     font-size: 14px;
@@ -54,5 +26,47 @@
 
   .table-progress-bar {
     --pf-c-progress__bar--Height: 1.2rem;
+  }
+
+  // Spark line chart css
+  .mc-spark-chart {
+    .title {
+      color: var(--pf-global--palette--black-600);
+      font-size: 16px;
+    }
+    .value {
+      color: var(--pf-global--palette--black-800);
+      font-size: 44px;
+      line-height: 44px;
+    }
+    .value-unit {
+      color: var(--pf-global--palette--black-600);
+      font-size: 22px;
+      line-height: 0px;
+    }
+    .value-timestamp {
+      color: var(--pf-global--palette--black-600);
+      font-size: 14px;
+      line-height: 0px;
+    }
+    .metric-function {
+      color: var(--pf-global--palette--black-400);
+      font-size: 12px;
+      position: fixed;
+      bottom: 0;
+      padding-bottom: 5px;
+    }
+    .no-metric-data {
+      font-size: 14px;
+      position: fixed;
+      bottom: 0;
+      padding-bottom: 2px;
+    }
+    .metrics-chart {
+      max-height: inherit;
+      left: 0;
+      position: fixed;
+      bottom: 0;
+    }
   }
 }

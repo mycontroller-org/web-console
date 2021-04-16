@@ -16,3 +16,9 @@ export const LastSeen = ({ date, tooltipPosition = "left" }) => {
     </Tooltip>
   )
 }
+
+export const getLastSeen = (date) => {
+  const lastSeen = moment(date)
+  const disabled = lastSeen.year() <= 1 // set "-" of zero year
+  return disabled ? "-" : lastSeen.fromNow()
+}

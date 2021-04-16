@@ -4,6 +4,7 @@ import "./UtilizationPanel.scss"
 import { getPercentage, getValue } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import v from "validator"
+import { getLastSeen } from "../../Time/Time"
 
 const DonutUtilization = ({ config = {}, resource = {} }) => {
   const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
@@ -41,26 +42,37 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
   let endAngle = 360
   let isStandalone = true
 
+  // size calculation
+  const definedChartSize = 250
+
   switch (chartType) {
     case ChartType.CircleSize50:
-      titleComponent = <ChartLabel y={85} />
-      subTitleComponent = <ChartLabel y={105} />
+      titleComponent = <ChartLabel y={0.31 * definedChartSize} />
+      subTitleComponent = <ChartLabel y={0.42 * definedChartSize} />
       startAngle = -90
       endAngle = 90
       isStandalone = false
       break
 
     case ChartType.CircleSize75:
-      titleComponent = <ChartLabel y={100} />
-      subTitleComponent = <ChartLabel y={120} />
+      titleComponent = <ChartLabel y={0.43 * definedChartSize} />
+      subTitleComponent = <ChartLabel y={0.54 * definedChartSize} />
       startAngle = -135
       endAngle = 135
+      isStandalone = false
+      break
+
+    case ChartType.CircleSize100:
+      titleComponent = <ChartLabel y={0.43 * definedChartSize} />
+      subTitleComponent = <ChartLabel y={0.54 * definedChartSize} />
       isStandalone = false
       break
 
     default:
   }
 
+  const lastSeenValue = getLastSeen(resource.timestamp)
+  const subTitleData = [lastSeenValue, displayName ? resource.name : "-"]
   const chart = (
     <ChartDonutUtilization
       animate={true}
@@ -72,10 +84,10 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       // labels={({ datum }) => (datum.x ? `${datum.x}: ${datum.y.toFixed(1)}%` : null)}
       title={`${displayValue}${unit}`}
       titleComponent={titleComponent}
-      subTitle={displayName ? resource.name : ""}
+      subTitle={subTitleData}
       subTitleComponent={subTitleComponent}
-      width={230}
-      height={230}
+      width={definedChartSize}
+      height={definedChartSize}
       cornerRadius={cornerSmoothing}
       startAngle={startAngle}
       endAngle={endAngle}
@@ -88,12 +100,13 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
 
   switch (chartType) {
     case ChartType.CircleSize50:
+      const circle50Height = (definedChartSize * 0.51).toFixed(0)
       return (
         <svg
-          viewBox={"0 0 230 120"}
+          viewBox={`0 0 ${definedChartSize} ${circle50Height}`}
           preserveAspectRatio="none"
-          height="120"
-          width="230"
+          height={circle50Height}
+          width={definedChartSize}
           role="img"
           style={{ height: "100%", width: "100%" }}
         >
@@ -102,12 +115,13 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       )
 
     case ChartType.CircleSize75:
+      const circle75Height = (definedChartSize * 0.82).toFixed(0)
       return (
         <svg
-          viewBox={"0 0 230 190"}
+          viewBox={`0 0 ${definedChartSize} ${circle75Height}`}
           preserveAspectRatio="none"
-          height="190"
-          width="230"
+          height={circle75Height}
+          width={definedChartSize}
           role="img"
           style={{ height: "100%", width: "100%" }}
         >
@@ -116,7 +130,18 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       )
 
     case ChartType.CircleSize100:
-      return chart
+      return (
+        <svg
+          viewBox={`0 0 ${definedChartSize} ${definedChartSize}`}
+          preserveAspectRatio="none"
+          height={definedChartSize}
+          width={definedChartSize}
+          role="img"
+          style={{ height: "100%", width: "100%" }}
+        >
+          {chart}
+        </svg>
+      )
 
     default:
       return <span>Invalid chart type: {chartType}</span>

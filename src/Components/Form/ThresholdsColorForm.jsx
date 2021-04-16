@@ -15,6 +15,7 @@ import _ from "lodash"
 import PropTypes from "prop-types"
 
 import ColorBox from "../Color/ColorBox/ColorBox"
+import { ColorsSetBig } from "../../Constants/Widgets/Color"
 
 const defaultColor = "#0066CC"
 
@@ -157,6 +158,7 @@ class ThresholdsColorForm extends React.Component {
             <ColorBox
               id={"value_" + index}
               color={item.value}
+              colors={ColorsSetBig}
               onChange={(newValue) => {
                 this.onChange(index, "value", newValue)
               }}

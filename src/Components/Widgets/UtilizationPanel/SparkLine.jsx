@@ -24,6 +24,8 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
   const unit = getValue(config, "resource.unit", "")
   const roundDecimal = getValue(config, "resource.roundDecimal", 2)
   const chartHeight = getValue(config, "chart.height", 100)
+  const yAxisMinValue = getValue(config, "chart.yAxisMinValue", "")
+  const chartWidth = dimensions.width + 20 // include padding px to put the char till edge of the container
 
   const displayValueFloat = parseFloat(resource.value)
   let displayValue = resource.value
@@ -78,35 +80,36 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
       default:
     }
 
-    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.06 : 0
-
+    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.05 : 0
     metricsChart = (
-      <ChartGroup
-        // ariaTitle="hello"
-        standalone={true}
-        height={chartHeight}
-        width={dimensions.width}
-        domainPadding={{ y: 9 }}
-        minDomain={{ y: minValue }}
-        containerComponent={
-          <ChartVoronoiContainer
-            labels={({ datum }) => {
-              if (datum.y || datum.y === 0) {
-                // round decimal number
-                const yValue = datum.y % 1 === 0 ? datum.y : datum.y.toFixed(roundDecimal)
-                return `${yValue} ${unit} at ${datum.x}`
-              }
-              return null
-            }}
-            constrainToVisibleArea
-          />
-        }
-        padding={padding}
-        color={chartColor}
-        scale={{ x: "time", y: "linear" }}
-      >
-        {chart}
-      </ChartGroup>
+      <div className="metrics-chart" style={{ height: `${chartHeight}px`, width: `${chartWidth}px` }}>
+        <ChartGroup
+          // ariaTitle="hello"
+          standalone={true}
+          height={chartHeight}
+          width={chartWidth}
+          domainPadding={{ y: 9 }}
+          minDomain={{ y: yAxisMinValue !== "" ? yAxisMinValue : minValue }}
+          containerComponent={
+            <ChartVoronoiContainer
+              labels={({ datum }) => {
+                if (datum.y || datum.y === 0) {
+                  // round decimal number
+                  const yValue = datum.y % 1 === 0 ? datum.y : datum.y.toFixed(roundDecimal)
+                  return `${yValue} ${unit} at ${datum.x}`
+                }
+                return null
+              }}
+              constrainToVisibleArea
+            />
+          }
+          padding={padding}
+          color={chartColor}
+          scale={{ x: "time", y: "linear" }}
+        >
+          {chart}
+        </ChartGroup>
+      </div>
     )
   } else if (isMetricsLoading) {
     metricsChart = (
@@ -132,24 +135,32 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
   }
 
   if (resource.metricType !== MetricType.Binary && isMetricDataAvailable) {
-    metricFunctionText = `[${capitalizeFirstLetter(metricFunction)}]`
+    metricFunctionText = `${capitalizeFirstLetter(metricFunction)}`
   }
 
   return (
-    <Stack className="mc-spark-chart" hasGutter={false}>
-      <StackItem>
-        <span className="title">{resource.name}</span>
-      </StackItem>
-      <StackItem>
-        <span className="value">{displayValueText}</span>
-        <span className="value-unit">{unitText}</span>
-        <span className="value-timestamp">
-          <LastSeen date={resource.timestamp} tooltipPosition="top" />
-        </span>
-        <span className="metric-function">{metricFunctionText}</span>
-      </StackItem>
-      <StackItem>{metricsChart}</StackItem>
-    </Stack>
+    <>
+      <Stack className="mc-spark-chart" hasGutter={false}>
+        <StackItem>
+          <span className="title">{resource.name}</span>
+        </StackItem>
+        <StackItem>
+          <span>
+            <span className="value">{displayValueText}</span>
+            <span className="value-unit">{unitText}</span>
+          </span>
+        </StackItem>
+        <StackItem>
+          <span className="value-timestamp">
+            <LastSeen date={resource.timestamp} tooltipPosition="top" />
+          </span>
+        </StackItem>
+        <StackItem>
+          <span className="metric-function">{metricFunctionText}</span>
+        </StackItem>
+        <StackItem>{metricsChart}</StackItem>
+      </Stack>
+    </>
   )
 }
 

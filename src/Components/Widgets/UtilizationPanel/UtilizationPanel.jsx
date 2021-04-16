@@ -22,8 +22,6 @@ import {
 import "./UtilizationPanel.scss"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
-import { LastSeen } from "../../Time/Time"
-import { Bullseye } from "@patternfly/react-core"
 import TableUtilization from "./TableUtilization"
 import { navigateToResource } from "../Helper/Resource"
 
@@ -263,7 +261,6 @@ class UtilizationPanel extends React.Component {
         case ChartType.SparkBar:
           chart = (
             <SparkLine
-              className="on-edit"
               key={"chart_" + index}
               widgetId={widgetId}
               dimensions={dimensions}
@@ -279,21 +276,12 @@ class UtilizationPanel extends React.Component {
         case ChartType.CircleSize75:
         case ChartType.CircleSize100:
           chart = (
-            <>
-              <DonutUtilization
-                className="on-edit"
-                key={"chart_" + index}
-                widgetId={widgetId}
-                dimensions={dimensions}
-                config={config}
-                resource={resource}
-              />
-              <Bullseye>
-                <span className="gauge-value-timestamp">
-                  <LastSeen date={resource.timestamp} tooltipPosition="top" />
-                </span>
-              </Bullseye>
-            </>
+            <DonutUtilization
+              key={"chart_" + index}
+              widgetId={widgetId}
+              config={config}
+              resource={resource}
+            />
           )
           break
 

@@ -2,9 +2,10 @@ import { ResourceTypeOptions } from "../../../Constants/Resource"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
-import { getItem, getValue } from "../../../Util/Util"
+import { getValue } from "../../../Util/Util"
 import {
   AggregationIntervalOptions,
+  Duration,
   DurationOptions,
   getRecommendedInterval,
   InterpolationType,
@@ -19,7 +20,11 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   // update chart config items
   const chartType = getValue(rootObject, "config.chart.type", "")
 
-  if (chartType !== ChartType.Table) {
+  if (
+    chartType === ChartType.CircleSize50 ||
+    chartType === ChartType.CircleSize75 ||
+    chartType === ChartType.CircleSize100
+  ) {
     items.push({
       label: "Column Display",
       fieldId: "config.chart.columnDisplay",
@@ -27,6 +32,8 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       dataType: DataType.Boolean,
       value: false,
     })
+  } else {
+    objectPath.set(rootObject, "config.chart.columnDisplay", false, false)
   }
 
   items.push(
@@ -51,19 +58,11 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     case ChartType.CircleSize50:
     case ChartType.CircleSize75:
     case ChartType.CircleSize100:
-      // set defaults:
-      objectPath.set(rootObject, "config.chart.thickness", 20, true)
-      objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
-      objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
-      objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
       const circleItems = getCircleAndTableItems(rootObject, chartType)
       items.push(...circleItems)
       break
 
     case ChartType.Table:
-      objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
-      objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
-      objectPath.set(rootObject, "config.resource.displayName", true, false)
       const tableItems = getCircleAndTableItems(rootObject, chartType)
       items.push(...tableItems)
       break
@@ -71,9 +70,6 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     case ChartType.SparkArea:
     case ChartType.SparkLine:
     case ChartType.SparkBar:
-      // set defaults:
-      objectPath.set(rootObject, "config.chart.thickness", 20, true)
-      objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
       const sparkLineItems = getSparkLineItems(rootObject)
       items.push(...sparkLineItems)
       break
@@ -162,8 +158,17 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       helperTextInvalid: "Invalid Timestamp Key. chars: min=1 and max=100",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
-    },
-    {
+    }
+  )
+
+  if (
+    chartType === ChartType.SparkArea ||
+    chartType === ChartType.SparkLine ||
+    chartType === ChartType.SparkBar
+  ) {
+    objectPath.set(rootObject, "config.resource.limit", 1, false)
+  } else {
+    items.push({
       label: "Limit",
       fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
@@ -174,7 +179,10 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       helperTextInvalid: "Invalid limit.",
       validated: "default",
       validator: { isInteger: {} },
-    },
+    })
+  }
+
+  items.push(
     {
       label: "Selectors",
       fieldId: "!selectors",
@@ -190,7 +198,14 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   )
 }
 
-const getCircleAndTableItems = (_rootObject = {}, chartType = "") => {
+const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
+  // set defaults
+  objectPath.set(rootObject, "config.chart.thickness", 20, true)
+  objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
+  objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
+  objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
+  objectPath.set(rootObject, "config.resource.displayName", true, false)
+
   const items = [
     {
       label: "Minimum Value",
@@ -270,6 +285,15 @@ const getCircleAndTableItems = (_rootObject = {}, chartType = "") => {
 }
 
 const getSparkLineItems = (rootObject) => {
+  // set defaults:
+  objectPath.set(rootObject, "config.chart.duration", Duration.LastHour, true)
+  objectPath.set(
+    rootObject,
+    "config.chart.interval",
+    getRecommendedInterval(getValue(rootObject, "config.chart.interval", "")),
+    true
+  )
+  objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
   objectPath.set(rootObject, "config.chart.height", 120, true)
 
   const items = [
@@ -359,6 +383,15 @@ const getSparkLineItems = (rootObject) => {
       }
     )
   }
+
+  items.push({
+    label: "Minimum Value (Y Axis)",
+    fieldId: "config.chart.yAxisMinValue",
+    fieldType: FieldType.Text,
+    dataType: DataType.Integer,
+    value: "",
+    isRequired: false,
+  })
 
   objectPath.set(rootObject, "config.chart.refreshInterval", 0, true)
   items.push({
