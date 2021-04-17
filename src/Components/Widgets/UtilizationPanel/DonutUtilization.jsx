@@ -103,8 +103,8 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       const circle50Height = (definedChartSize * 0.51).toFixed(0)
       return (
         <svg
-          viewBox={`0 0 ${definedChartSize} ${circle50Height}`}
-          preserveAspectRatio="none"
+          viewBox={`23 23 ${definedChartSize - 46} ${circle50Height - 23}`}
+          preserveAspectRatio="xMaxYMid meet"
           height={circle50Height}
           width={definedChartSize}
           role="img"
@@ -118,7 +118,8 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
       const circle75Height = (definedChartSize * 0.82).toFixed(0)
       return (
         <svg
-          viewBox={`0 0 ${definedChartSize} ${circle75Height}`}
+          // viewBox={`0 0 ${definedChartSize} ${circle75Height}`}
+          viewBox={`23 25 ${definedChartSize - 46} ${circle75Height - 35}`}
           preserveAspectRatio="none"
           height={circle75Height}
           width={definedChartSize}
@@ -132,7 +133,8 @@ const DonutUtilization = ({ config = {}, resource = {} }) => {
     case ChartType.CircleSize100:
       return (
         <svg
-          viewBox={`0 0 ${definedChartSize} ${definedChartSize}`}
+          // viewBox={`0 0 ${definedChartSize} ${definedChartSize}`}
+          viewBox={`23 23 ${definedChartSize - 46} ${definedChartSize - 46}`}
           preserveAspectRatio="none"
           height={definedChartSize}
           width={definedChartSize}

@@ -35,7 +35,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
     { title: "Name" },
     "Last Update",
     `Value${valueUnit}`,
-    { title: "Status", transforms: [cellWidth(35)] },
+    { title: "Status", transforms: [cellWidth(35), fitContent] },
   ]
 
   const rows = []
@@ -106,7 +106,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   return (
     <Table
       key={"utilization_table_" + widgetId}
-      className="mc-utilization-panel-item ut-table"
+      className="mc-utilization-table ut-table"
       aria-label="Utilization Table"
       variant={TableVariant.compact}
       borders={true}

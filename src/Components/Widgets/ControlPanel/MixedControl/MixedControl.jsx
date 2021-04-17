@@ -89,12 +89,23 @@ class MixedControl extends React.Component {
     const resources = []
 
     resourcesConfig.forEach((resCfg) => {
-      const { type: resourceType, quickId: qId, nameKey: resourceNameKey } = resCfg.resource
+      const {
+        type: resourceType,
+        quickId: qId,
+        nameKey: resourceNameKey,
+        valueTimestampKey: resourceTimestampKey,
+      } = resCfg.resource
       const quickId = `${resourceType}:${qId}`
       const resourceRaw = resourcesRaw[quickId]
 
       if (resourceRaw !== undefined) {
-        const resource = getResource(resourceType, resourceRaw, resourceNameKey, ControlType.MixedControl)
+        const resource = getResource(
+          resourceType,
+          resourceRaw,
+          resourceNameKey,
+          resourceTimestampKey,
+          ControlType.MixedControl
+        )
         // update config
         resource["config"] = resCfg
         resources.push(resource)
@@ -111,7 +122,7 @@ class MixedControl extends React.Component {
           widgetId={widgetId}
           config={config}
           history={history}
-          payloadOn="true"
+          payloadOn="false"
           resources={resources}
           sendPayloadWrapper={this.sendPayloadWrapper}
         />
@@ -123,7 +134,7 @@ class MixedControl extends React.Component {
           actions={[
             <Button
               key="confirm"
-              variant="primary"
+              variant="warning"
               onClick={() => {
                 this.hideModal()
                 modalCallBack()

@@ -14,7 +14,7 @@ const SliderControl = ({
   sendPayloadWrapper = () => {},
 }) => {
   return (
-    <div style={{ minWidth: `${minWidth}px` }}>
+    <div style={{ minWidth: `${minWidth}px`, marginBottom: "-6px" }}>
       <SimpleSlider
         id={`${widgetId}_${id}`}
         min={min}

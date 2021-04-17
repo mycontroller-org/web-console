@@ -18,11 +18,12 @@
     padding-right: 10px;
   }
 
+  &.pf-c-table thead > tr > *,
   &.pf-c-table tbody > tr > * {
     vertical-align: bottom;
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 7px;
+    padding-top: 5px;
     padding-bottom: 7px;
   }
 }

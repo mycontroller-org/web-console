@@ -147,6 +147,14 @@ const getItems = (rootObject) => {
         helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
+      },
+      {
+        label: "Timestamp Key",
+        fieldId: "resource.valueTimestampKey",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: false,
       }
     )
   }

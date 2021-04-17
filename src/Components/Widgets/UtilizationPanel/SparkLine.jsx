@@ -25,6 +25,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
   const roundDecimal = getValue(config, "resource.roundDecimal", 2)
   const chartHeight = getValue(config, "chart.height", 100)
   const yAxisMinValue = getValue(config, "chart.yAxisMinValue", "")
+  const yAxisMaxValue = getValue(config, "chart.yAxisMaxValue", "")
   const chartWidth = dimensions.width + 20 // include padding px to put the char till edge of the container
 
   const displayValueFloat = parseFloat(resource.value)
@@ -90,6 +91,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
           width={chartWidth}
           domainPadding={{ y: 9 }}
           minDomain={{ y: yAxisMinValue !== "" ? yAxisMinValue : minValue }}
+          maxDomain={yAxisMaxValue !== "" ? { y: yAxisMaxValue } : {}}
           containerComponent={
             <ChartVoronoiContainer
               labels={({ datum }) => {

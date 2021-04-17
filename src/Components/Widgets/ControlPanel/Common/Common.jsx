@@ -10,20 +10,18 @@ import "./Common.scss"
 import InputField from "./InputField"
 import { navigateToResource } from "../../Helper/Resource"
 import SliderControl from "./SliderControl"
+import { Button } from "@patternfly/react-core"
 
-const columns = ["Name", "Last Update", ""]
+const columns = [{ title: "Name" }, "Last Update", ""]
 
 const ControlObjects = ({
   widgetId = "",
   resources = [],
   config = {},
   history = {},
-  payloadOn = "true",
   sendPayloadWrapper = () => {},
 }) => {
   const rows = resources.map((resource, index) => {
-    const className = String(resource.payload) === payloadOn ? "text enabled" : "text"
-
     const mixedControlCfg = resource.config && resource.config.control ? resource.config.control : {}
 
     let controlElement = null
@@ -181,15 +179,19 @@ const ControlObjects = ({
     return [
       {
         title: (
-          <span className={className} onClick={() => navigateToResource(resource.type, resource.id, history)}>
+          <Button
+            variant="link"
+            isInline
+            onClick={() => navigateToResource(resource.type, resource.id, history)}
+          >
             {resource.label}
-          </span>
+          </Button>
         ),
       },
       {
         title: (
           <span className="value-timestamp">
-            <LastSeen date={resource.timestamp} tooltipPosition="left" />
+            <LastSeen date={resource.timestamp} tooltipPosition="top" />
           </span>
         ),
       },

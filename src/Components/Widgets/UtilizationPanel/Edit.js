@@ -384,14 +384,24 @@ const getSparkLineItems = (rootObject) => {
     )
   }
 
-  items.push({
-    label: "Minimum Value (Y Axis)",
-    fieldId: "config.chart.yAxisMinValue",
-    fieldType: FieldType.Text,
-    dataType: DataType.Integer,
-    value: "",
-    isRequired: false,
-  })
+  items.push(
+    {
+      label: "Min (Y Axis)",
+      fieldId: "config.chart.yAxisMinValue",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "Max (Y Axis)",
+      fieldId: "config.chart.yAxisMaxValue",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: false,
+    }
+  )
 
   objectPath.set(rootObject, "config.chart.refreshInterval", 0, true)
   items.push({

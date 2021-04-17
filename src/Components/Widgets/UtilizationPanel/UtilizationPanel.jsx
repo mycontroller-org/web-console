@@ -249,7 +249,11 @@ class UtilizationPanel extends React.Component {
     })
 
     if (chartType === ChartType.Table) {
-      return <TableUtilization widgetId={widgetId} config={config} resources={resources} history={history} />
+      return (
+        <div className="mc-utilization-panel-item">
+          <TableUtilization widgetId={widgetId} config={config} resources={resources} history={history} />
+        </div>
+      )
     }
 
     // if chartType not equal to table

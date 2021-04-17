@@ -331,7 +331,7 @@ class Dashboard extends React.Component {
           cols={GridColumns}
           rowHeight={1}
           autoSize={true}
-          margin={[7, 7]}
+          margin={[3, 3]}
           containerPadding={[0, 0]}
           onLayoutChange={this.onLayoutChange}
           preventCollision={false}

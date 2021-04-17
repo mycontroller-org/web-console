@@ -2,6 +2,7 @@ import { api } from "../../../../Service/Api"
 import { getQuickId, ResourceType } from "../../../../Constants/ResourcePicker"
 import objectPath from "object-path"
 import { ControlType } from "../../../../Constants/Widgets/ControlPanel"
+import { getValue } from "../../../../Util/Util"
 
 export const getListAPI = (resourceType) => {
   switch (resourceType) {
@@ -24,11 +25,13 @@ export const getResource = (
   resourceType,
   resource,
   resourceNameKey,
+  resourceTimestampKey = "",
   controlType = ControlType.SwitchToggle
 ) => {
   const quickId = getQuickId(resourceType, resource)
   const defaultLabel = controlType !== ControlType.MixedControl ? "undefined" : resourceNameKey
-  const label = objectPath.get(resource, resourceNameKey, defaultLabel)
+  const label = getValue(resource, resourceNameKey, defaultLabel)
+
   switch (resourceType) {
     case ResourceType.Gateway:
     case ResourceType.Task:
@@ -39,7 +42,8 @@ export const getResource = (
         type: resourceType,
         label: label,
         payload: resource.enabled,
-        timestamp: resource.lastSeen,
+        timestamp:
+          resourceTimestampKey === "" ? resource.lastSeen : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
       }
 
@@ -49,7 +53,8 @@ export const getResource = (
         type: resourceType,
         label: label,
         payload: resource.current.value,
-        timestamp: resource.noChangeSince,
+        timestamp:
+          resourceTimestampKey === "" ? resource.noChangeSince : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
       }
 
