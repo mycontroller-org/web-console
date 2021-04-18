@@ -8,7 +8,7 @@ const tabDetails = ({ resourceId, history }) => {
     <TabDetailsBase
       resourceId={resourceId ? resourceId : "none"}
       history={history}
-      apiGetRecord={api.settings.getSystem}
+      apiGetRecord={api.settings.getSystemSettings}
       getDetailsFunc={getDetailsFuncImpl}
     />
   )

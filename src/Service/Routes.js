@@ -34,6 +34,7 @@ import SchedulerListPage from "../Pages/Operations/Scheduler/ListPage"
 import SchedulerUpdatePage from "../Pages/Operations/Scheduler/UpdatePage"
 import SchedulerDetailPage from "../Pages/Operations/Scheduler/DetailsPage"
 import SettingsSystemPage from "../Pages/Settings/System/DetailsPage"
+import SystemBackupPage from "../Pages/Settings/Backup/ListPage"
 
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
@@ -82,6 +83,7 @@ const routeMap = {
   settings: {
     profile: "/settings/profile",
     system: "/settings/system",
+    backup: "/settings/backup",
   },
   operations: {
     forwardPayload: {
@@ -223,6 +225,12 @@ const routes = [
         title: "System",
         to: routeMap.settings.system,
         component: SettingsSystemPage,
+      },
+      {
+        id: "backup-restore",
+        title: "Backup and Restore",
+        to: routeMap.settings.backup,
+        component: SystemBackupPage,
       },
     ],
   },

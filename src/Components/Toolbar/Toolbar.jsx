@@ -1,7 +1,7 @@
 import { Flex, Toolbar as PfToolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from "@patternfly/react-core"
 import React from "react"
 import Actions from "../Actions/Actions"
-import { AddButton, RefreshButton } from "../Buttons/Buttons"
+import { AddButton, CustomButton, RefreshButton } from "../Buttons/Buttons"
 import "./Toolbar.scss"
 
 const Toolbar = ({
@@ -33,6 +33,7 @@ const Toolbar = ({
           </ToolbarItem>
         )
         break
+
       case "addButton":
         tbItems[group].push(
           <ToolbarItem key={"tb-items-" + index}>
@@ -40,6 +41,7 @@ const Toolbar = ({
           </ToolbarItem>
         )
         break
+
       case "refresh":
         tbItems[group].push(
           <ToolbarItem key={"tb-items-" + index}>
@@ -47,9 +49,25 @@ const Toolbar = ({
           </ToolbarItem>
         )
         break
+
+      case "customButton":
+        tbItems[group].push(
+          <ToolbarItem key={"tb-items-" + index}>
+            <CustomButton
+              text={item.text}
+              icon={item.icon}
+              isSmall={item.isSmall}
+              variant={item.variant}
+              onClick={item.onClick}
+            />
+          </ToolbarItem>
+        )
+        break
+
       case "separator":
         tbItems[group].push(<ToolbarItem key={"tb-items-" + index} variant="separator" />)
         break
+
       default:
       // nothing to do
     }

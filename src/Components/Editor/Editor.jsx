@@ -11,7 +11,6 @@ import objectPath from "object-path"
 import Loading from "../Loading/Loading"
 import { DownloadIcon } from "@patternfly/react-icons"
 import { toObject, toString } from "../../Util/Language"
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 const { v4: uuidv4 } = require("uuid")
 
 class Editor extends React.Component {

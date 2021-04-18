@@ -12,7 +12,7 @@ export const FieldDataType = {
   TypePushbullet: "pushbullet",
   TypeResourceByQuickId: "resource_by_quick_id",
   TypeResourceByLabels: "resource_by_labels",
-  TypeExporter: "exporter",
+  TypeBackup: "backup",
 }
 
 export const FieldDataTypeOptions = [
@@ -22,7 +22,7 @@ export const FieldDataTypeOptions = [
   { value: FieldDataType.TypeWebhook, label: "Webhook", disable: true }, // not implemented yet
   { value: FieldDataType.TypeEmail, label: "Email" },
   { value: FieldDataType.TypeTelegram, label: "Telegram" },
-  { value: FieldDataType.TypeExporter, label: "Exporter" },
+  { value: FieldDataType.TypeBackup, label: "Backup" },
 ]
 
 export const ResourceType = {
@@ -85,23 +85,23 @@ export const TelegramParseModeOptions = [
 ]
 
 // Exporter type values
-export const ExporterType = {
+export const BackupProviderType = {
   Disk: "disk",
 }
 
 // Exporter type options
-export const ExporterTypeOptions = [
-  { value: ExporterType.Disk, label: "Disk", description: "Exports data to disk location" },
+export const BackupProviderTypeOptions = [
+  { value: BackupProviderType.Disk, label: "Disk", description: "Backup data in to disk" },
 ]
 
-// Export type values
-export const ExportType = {
+// Storage Export type values
+export const StorageExportType = {
   YAML: "yaml",
   JSON: "json",
 }
 
-// Export type options
-export const ExportTypeOptions = [
-  { value: ExportType.YAML, label: "YAML" },
-  { value: ExportType.JSON, label: "JSON", disable: true }, // on json export user password is not exported
+// Storage Export type options
+export const StorageExportTypeOptions = [
+  { value: StorageExportType.YAML, label: "YAML" },
+  { value: StorageExportType.JSON, label: "JSON" },
 ]

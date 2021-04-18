@@ -4,7 +4,7 @@ export const HandlerType = {
   Resource: "resource",
   Email: "email",
   Telegram: "telegram",
-  Exporter: "exporter",
+  Backup: "backup",
 }
 
 // Handler type options
@@ -13,5 +13,5 @@ export const HandlerTypeOptions = [
   { value: HandlerType.Resource, label: "Resource", description: "Internal resource related actions" },
   { value: HandlerType.Email, label: "Email", description: "Sends email" },
   { value: HandlerType.Telegram, label: "Telegram", description: "Sends text to telegram" },
-  { value: HandlerType.Exporter, label: "Exporter", description: "Exports storage database data" },
+  { value: HandlerType.Backup, label: "Backup", description: "Perform backup of the server" },
 ]

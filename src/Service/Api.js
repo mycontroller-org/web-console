@@ -213,9 +213,16 @@ export const api = {
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/datarepository", {}, data),
   },
   settings: {
-    getSystem: () => newRequest(HTTP_VERBS.GET, "/settings/system", {}, {}),
-    updateSystem: (data) => newRequest(HTTP_VERBS.POST, "/settings/system", {}, data),
+    updateSystem: (data) => newRequest(HTTP_VERBS.POST, "/settings", {}, data),
+    getSystemSettings: () => newRequest(HTTP_VERBS.GET, "/settings/system", {}, {}),
     getJobs: () => newRequest(HTTP_VERBS.GET, "/settings/jobs", {}, {}),
+    getBackupLocations: () => newRequest(HTTP_VERBS.GET, "/settings/backuplocations", {}, {}),
+  },
+  backup: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/backup", filter, {}),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/backup", {}, data),
+    runOnDemandBackup: (data) => newRequest(HTTP_VERBS.POST, "/backup/run", {}, data),
+    runRestore: (query) => newRequest(HTTP_VERBS.GET, "/restore/run", query, {}),
   },
   quickId: {
     getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
@@ -223,4 +230,11 @@ export const api = {
   websocket: {
     get: () => newRequest(HTTP_VERBS.GET, "/ws", {}, {}),
   },
+}
+
+// This key used to update system settings on a api
+// api.settings.updateSystem == POST /settings
+export const SystemApiKey = {
+  SystemSettings: "system_settings",
+  BackupLocations: "system_backup_locations",
 }

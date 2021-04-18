@@ -53,6 +53,23 @@ export const NodeResetDialog = ({ show, onCloseFn, onOkFn }) => {
   return dialog("Reset Node(s)?", show, onCloseFn, onOkFn, "Reset", message)
 }
 
+export const RestoreDialog = ({ show, fileName, onCloseFn, onOkFn }) => {
+  const message = (
+    <>
+      Are you sure you want to restore to selected backup file?
+      <br />
+      After this action:
+      <List>
+        <ListItem>Server configuration and data will be restored to <b>{fileName}</b></ListItem>
+        <ListItem>You cannot rollback this action</ListItem>
+        <ListItem>Always take a backup before performing a restore action</ListItem>
+        <ListItem>You may need to start the server manually in backend</ListItem>
+      </List>
+    </>
+  )
+  return dialog("Perform server restore operation?", show, onCloseFn, onOkFn, "Restore", message)
+}
+
 const dialog = (
   title = "",
   isOpen = false,

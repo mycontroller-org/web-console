@@ -14,6 +14,7 @@ import operationForwardPayloadReducer from "./entities/operations/forwardPayload
 import operationTaskReducer from "./entities/operations/task"
 import operationHandlerReducer from "./entities/operations/handler"
 import operationSchedulerReducer from "./entities/operations/scheduler"
+import systemBackupReducer from "./entities/system/backup"
 import websocketReducer from "./entities/websocket"
 import toasterReducer from "./entities/toaster"
 
@@ -34,5 +35,6 @@ export default combineReducers({
   operationTask: operationTaskReducer,
   operationHandler: operationHandlerReducer,
   operationScheduler: operationSchedulerReducer,
+  systemBackup: systemBackupReducer,
   websocket: websocketReducer,
 })

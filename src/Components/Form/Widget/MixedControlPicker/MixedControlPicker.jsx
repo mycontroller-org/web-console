@@ -8,8 +8,8 @@ import { DataType, FieldType } from "../../../../Constants/Form"
 import {
   ResourceTypeOptions,
   TelegramParseModeOptions,
-  ExporterTypeOptions,
-  ExportTypeOptions,
+  BackupProviderTypeOptions,
+  StorageExportTypeOptions,
   ExporterType,
 } from "../../../../Constants/ResourcePicker"
 import { validate } from "../../../../Util/Validator"

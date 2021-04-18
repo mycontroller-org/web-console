@@ -7,7 +7,15 @@ import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { HandlerType, HandlerTypeOptions } from "../../../Constants/Handler"
-import { ExporterType, ExporterTypeOptions, ExportTypeOptions } from "../../../Constants/ResourcePicker"
+import {
+  BackupProviderType,
+  BackupProviderTypeOptions,
+  ExporterType,
+  ExporterTypeOptions,
+  ExportTypeOptions,
+  StorageExportType,
+  StorageExportTypeOptions,
+} from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {
   render() {
@@ -200,8 +208,8 @@ const getFormItems = (rootObject, id) => {
       )
       break
 
-    case HandlerType.Exporter:
-      const exporterItems = getExporterItems(rootObject)
+    case HandlerType.Backup:
+      const exporterItems = getBackupItems(rootObject)
       items.push(...exporterItems)
       break
 
@@ -211,34 +219,34 @@ const getFormItems = (rootObject, id) => {
   return items
 }
 
-const getExporterItems = (rootObject) => {
+const getBackupItems = (rootObject) => {
   const items = []
   items.push({
-    label: "Exporter Type",
-    fieldId: "spec.exporterType",
+    label: "Provider Type",
+    fieldId: "spec.providerType",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
-    options: ExporterTypeOptions,
+    options: BackupProviderTypeOptions,
     value: "",
     resetFields: { "spec.spec": {} },
     validator: { isNotEmpty: {} },
   })
 
-  const exporterType = objectPath.get(rootObject, "spec.exporterType", "")
+  const providerType = objectPath.get(rootObject, "spec.providerType", "")
 
-  switch (exporterType) {
-    case ExporterType.Disk:
+  switch (providerType) {
+    case BackupProviderType.Disk:
       items.push(
         {
           label: "Export Type",
-          fieldId: "spec.spec.exportType",
+          fieldId: "spec.spec.storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
-          options: ExportTypeOptions,
+          options: StorageExportTypeOptions,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a telegram token",
+          helperTextInvalid: "Select a storage export type",
           validated: "default",
           validator: { isNotEmpty: {} },
         },
@@ -262,7 +270,7 @@ const getExporterItems = (rootObject) => {
           isRequired: true,
           helperTextInvalid: "Enter a prefix",
           validated: "default",
-          validator: { isNotEmpty: {} },
+          validator: { isNotEmpty: {}, isKey: {} },
         },
         {
           label: "Retention Count",
@@ -276,6 +284,8 @@ const getExporterItems = (rootObject) => {
           validator: { isInteger: {} },
         }
       )
+      break
+
     default:
   }
 

@@ -14,7 +14,7 @@ class UpdatePage extends React.Component {
         key="editor"
         resourceId={id ? id : "none"}
         language="yaml"
-        apiGetRecord={api.settings.getSystem}
+        apiGetRecord={api.settings.getSystemSettings}
         apiSaveRecord={api.settings.updateSystem}
         minimapEnabled
         onSaveRedirectFunc={() => {

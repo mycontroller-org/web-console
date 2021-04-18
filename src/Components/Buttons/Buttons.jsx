@@ -15,7 +15,11 @@ export const LinkButton = ({ text, icon, onClick, isSmall = false }) => {
   return button(text, ButtonVariant.link, icon, onClick, isSmall)
 }
 
-const button = (text, variant, icon, onClickFn, isSmall = false) => {
+export const CustomButton = ({ text = "", icon = null, variant = "secondary", onClick, isSmall = false }) => {
+  return button(text, variant, icon, onClick, isSmall)
+}
+
+const button = (text, variant, icon, onClickFn = () => {}, isSmall = false) => {
   const Icon = icon
   if (text === undefined || text === null || text === "") {
     return (

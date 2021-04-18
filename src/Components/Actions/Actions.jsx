@@ -14,6 +14,7 @@ import {
   UploadIcon,
   SearchIcon,
   AddCircleOIcon,
+  FileImportIcon,
 } from "@patternfly/react-icons"
 import DeleteDialog from "../Dialog/Dialog"
 
@@ -65,6 +66,8 @@ export default class Actions extends React.Component {
           return drawItem("firmware_update", "Firmware Update", UploadIcon, item.disabled, item.onClick)
         case "reset":
           return drawItem("reset", "Reset", EraserIcon, item.disabled, item.onClick)
+        case "restore":
+          return drawItem("restore", "Restore", FileImportIcon, rowsSelectionCount !== 1 || item.disabled, item.onClick)
         case "separator":
           return <DropdownSeparator key={"separator-" + index} />
         default:

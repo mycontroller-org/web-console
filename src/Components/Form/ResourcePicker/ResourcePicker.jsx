@@ -11,9 +11,9 @@ import {
   FieldDataType,
   FieldDataTypeOptions,
   TelegramParseModeOptions,
-  ExporterTypeOptions,
-  ExportTypeOptions,
-  ExporterType,
+  BackupProviderTypeOptions,
+  StorageExportTypeOptions,
+  BackupProviderType,
 } from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
@@ -154,8 +154,8 @@ const getItems = (rootObject, callerType) => {
       items.push(...telegramItems)
       break
 
-    case FieldDataType.TypeExporter:
-      const exporterItems = getExporterItems(rootObject)
+    case FieldDataType.TypeBackup:
+      const exporterItems = getBackupItems(rootObject)
       items.push(...exporterItems)
       break
 
@@ -334,30 +334,30 @@ const getTelegramDataItems = (_rootObject) => {
   return items
 }
 
-const getExporterItems = (rootObject) => {
+const getBackupItems = (rootObject) => {
   const items = []
   items.push({
-    label: "Exporter Type",
-    fieldId: "data.exporterType",
+    label: "Provider Type",
+    fieldId: "data.providerType",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
-    options: ExporterTypeOptions,
+    options: BackupProviderTypeOptions,
     value: "",
     resetFields: { "data.spec": {} },
     validator: { isNotEmpty: {} },
   })
 
-  const exporterType = objectPath.get(rootObject, "data.exporterType", "")
-  switch (exporterType) {
-    case ExporterType.Disk:
+  const providerType = objectPath.get(rootObject, "data.providerType", "")
+  switch (providerType) {
+    case BackupProviderType.Disk:
       items.push(
         {
-          label: "Export Type",
-          fieldId: "data.spec.exportType",
+          label: "Storage Export Type",
+          fieldId: "data.spec.storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
-          options: ExportTypeOptions,
+          options: StorageExportTypeOptions,
           value: "",
           isRequired: false,
         },
