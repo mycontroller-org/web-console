@@ -96,7 +96,7 @@ const updateFilter = (qp) => {
   return qp
 }
 
-const newRequest = (method, url, queryParams, data, headers) => {
+const newRequest = (method, url, queryParams, data, headers = {}) => {
   // grab current state
   const auth = store.getState().entities.auth
   if (auth.authenticated) {

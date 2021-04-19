@@ -5,7 +5,7 @@ import { api } from "../../../Service/Api"
 import "./Upload.scss"
 
 const defaultSettings = {
-  maxSize: 4194304, // 4 MB = 4 * 1024 * 1024
+  maxSize: 6291456, // 6 MiB = 6 * 1024 * 1024
   minSize: 10, // 10 bytes
 }
 
@@ -44,6 +44,8 @@ class FirmwareFileUpload extends React.Component {
         }
       }
 
+      console.log(value)
+
       if (isValidExtension) {
         this.setState({
           value: value,
@@ -66,12 +68,11 @@ class FirmwareFileUpload extends React.Component {
     }
   }
 
-  onUpload = (value, _filename) => {
+  onUpload = (value, filename) => {
     this.setState({ loading: true }, () => {
       const { resourceId } = this.props
       let formData = new FormData()
-      formData.append("file", value)
-      //formData.append("filename", filename)
+      formData.append("file", value, filename)
       const headers = {
         "Content-Type": "multipart/form-data",
       }
