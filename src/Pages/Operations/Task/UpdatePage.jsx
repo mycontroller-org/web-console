@@ -9,9 +9,10 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
   Dampening,
   DampeningOptions,
-  ResourceEventTypeOptions,
   EvaluationType,
   EvaluationTypeOptions,
+  EventTypeOptions,
+  EntityTypeOptions,
 } from "../../../Constants/Task"
 import { CallerType } from "../../../Constants/ResourcePicker"
 
@@ -132,12 +133,22 @@ const getFormItems = (rootObject, id) => {
         fieldType: FieldType.Divider,
       },
       {
-        label: "Resource Types",
-        fieldId: "eventFilter.resourceTypes",
+        label: "Entities",
+        fieldId: "eventFilter.entityTypes",
         isRequired: false,
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.ArrayString,
-        options: ResourceEventTypeOptions,
+        options: EntityTypeOptions,
+        isMulti: true,
+        value: [],
+      },
+      {
+        label: "Events",
+        fieldId: "eventFilter.eventTypes",
+        isRequired: false,
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.ArrayString,
+        options: EventTypeOptions,
         isMulti: true,
         value: [],
       },

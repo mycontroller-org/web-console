@@ -1,6 +1,7 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 
 const tabDetails = ({ resourceId, history }) => {
@@ -23,11 +24,10 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Version", value: data.version })
-  fieldsList1.push({ key: "Last Modified", value: data.lastModifiedOn })
+  fieldsList1.push({ key: "Description", value: data.description })
+  fieldsList1.push({ key: "Modified On", value: <LastSeen date={data.modifiedOn} /> })
+  fieldsList1.push({ key: "Labels", value: <Labels data={data.labels} /> })
 
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
   fieldsList2.push({ key: "File Details", value: <KeyValueMap data={data.file} /> })
 
   return {
@@ -35,5 +35,3 @@ const getDetailsFuncImpl = (data) => {
     "list-2": fieldsList2,
   }
 }
-
-

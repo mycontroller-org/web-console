@@ -37,7 +37,7 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "Node ID", value: data.nodeId })
   fieldsList1.push({ key: "Source ID", value: data.sourceId })
   fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Last Seen", value: data.lastSeen })
+  fieldsList1.push({ key: "Last Seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
   fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
   fieldsList2.push({ key: "Others", value: <KeyValueMap data={data.others} /> })
 

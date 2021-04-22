@@ -1,7 +1,7 @@
 import { api } from "../Service/Api"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import { store } from "../store/persister"
-import { updateResource } from "../store/entities/websocket"
+import { updateEvent } from "../store/entities/websocket"
 
 let wsClient = null
 let wsUrl = null
@@ -33,7 +33,7 @@ export const wsConnect = () => {
   }
 
   wsClient.onmessage = (message) => {
-    store.dispatch(updateResource({ response: message.data }))
+    store.dispatch(updateEvent({ response: message.data }))
   }
 
   wsClient.onclose = (err) => {

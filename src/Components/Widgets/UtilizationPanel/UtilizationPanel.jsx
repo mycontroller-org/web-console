@@ -51,7 +51,7 @@ class UtilizationPanel extends React.Component {
     // update metrics query on interval
     const { config } = this.props
     const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
-    if (refreshInterval !== RefreshIntervalType.None) {
+    if (refreshInterval >= 1000) {
       this.interval = setInterval(() => {
         this.updateMetrics()
       }, refreshInterval)

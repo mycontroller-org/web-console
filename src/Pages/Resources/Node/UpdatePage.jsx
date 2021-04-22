@@ -139,10 +139,10 @@ const getFormItems = (rootObject, gateways) => {
       apiOptions: api.firmware.list,
       optionValueKey: "id",
       getFiltersFunc: (value) => {
-        return [{ k: "name", o: "regex", v: value }]
+        return [{ k: "id", o: "regex", v: value }]
       },
       getOptionsDescriptionFunc: (item) => {
-        return `${item.name}:${item.version}`
+        return item.description
       },
     },
     {

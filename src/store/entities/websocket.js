@@ -36,7 +36,7 @@ const slice = createSlice({
       state.data = data
     },
 
-    updateResource: (state, action) => {
+    updateEvent: (state, action) => {
       const { response } = action.payload
       let data = { ...state.data }
       state.data = updateItem(data, response)
@@ -46,28 +46,28 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export const { subscribe, unsubscribe, loadData, unloadData, updateResource } = slice.actions
+export const { subscribe, unsubscribe, loadData, unloadData, updateEvent } = slice.actions
 
 // helpers
 const updateItem = (data = {}, responseString = "{}") => {
   // console.log("received:", responseString)
   const keys = Object.keys(data)
   const response = JSON.parse(responseString)
-  const responseData = response.data
-  if (response.type !== "resource" || responseData === undefined) {
+  const event = response.data
+  if (response.type !== "event" || event === undefined) {
     return data
   }
 
   
 
-  const quickId = responseData.quickId
-  const resource = responseData.resource
+  const quickId = event.entityQuickId
+  const entity = event.entity
 
   keys.forEach((key) => {
     const items = getValue(data, key, {})
     if (items[quickId] !== undefined) {
       //console.log("updated:", responseString)
-      items[quickId] = resource
+      items[quickId] = entity
       data[key] = items
     }
   })

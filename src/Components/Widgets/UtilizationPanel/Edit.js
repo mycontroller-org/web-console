@@ -389,7 +389,7 @@ const getSparkLineItems = (rootObject) => {
       label: "Min (Y Axis)",
       fieldId: "config.chart.yAxisMinValue",
       fieldType: FieldType.Text,
-      dataType: DataType.Integer,
+      dataType: DataType.Float,
       value: "",
       isRequired: false,
     },
@@ -397,7 +397,7 @@ const getSparkLineItems = (rootObject) => {
       label: "Max (Y Axis)",
       fieldId: "config.chart.yAxisMaxValue",
       fieldType: FieldType.Text,
-      dataType: DataType.Integer,
+      dataType: DataType.Float,
       value: "",
       isRequired: false,
     }

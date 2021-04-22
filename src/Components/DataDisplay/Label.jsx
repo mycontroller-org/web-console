@@ -1,6 +1,7 @@
 import { Flex, FlexItem, Label as PfLabel } from "@patternfly/react-core"
 import React from "react"
 import IFrame from "../IFrame/IFrame"
+import { LastSeen } from "../Time/Time"
 
 import "./Label.scss"
 
@@ -41,6 +42,19 @@ export const KeyValue = ({ name, value, index = 0 }) => {
     case "node_web_url":
       finalValue = <IFrame url={value} />
       break
+
+    case "modifiedOn":
+    case "timestamp":
+    case "lastEvaluation":
+    case "lastSuccess":
+    case "lastRun":
+    case "since":
+    case "ota_start_time":
+    case "ota_end_time":
+    case "ota_status_on":
+      finalValue = <LastSeen date={value} tooltipPosition="top" />
+      break
+
     default:
       finalValue = hideItems.includes(name) ? "******" : value !== undefined ? String(value) : ""
   }
@@ -63,7 +77,7 @@ export const KeyValueMap = ({ data = {} }) => {
   names.sort()
 
   const elements = names.map((name, index) => {
-    const value = typeof data[name] !== "object" ? data[name] : JSON.stringify(data[name],null," ")
+    const value = typeof data[name] !== "object" ? data[name] : JSON.stringify(data[name], null, " ")
     return <KeyValue key={index} name={name} value={value} index={index} />
   })
   return elements

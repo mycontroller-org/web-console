@@ -58,8 +58,8 @@ class List extends ListBase {
 
 // Properties definition
 const tableColumns = [
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Version", fieldKey: "Version", sortable: true },
+  { title: "ID", fieldKey: "id", sortable: true },
+  { title: "Description", fieldKey: "description", sortable: true },
   { title: "File Name", fieldKey: "file.name", sortable: true },
   { title: "Last Modified", fieldKey: "lastModified", sortable: true },
 ]
@@ -76,21 +76,21 @@ const toRowFuncImpl = (rawData, history) => {
               r(history, rMap.resources.firmware.detail, { id: rawData.id })
             }}
           >
-            {rawData.name}
+            {rawData.id}
           </Button>
         ),
       },
-      rawData.version,
+      rawData.description,
       rawData.file.name,
-      { title: <LastSeen date={rawData.lastModifiedOn} /> },
+      { title: <LastSeen date={rawData.modifiedOn} /> },
     ],
     rid: rawData.id,
   }
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "version", categoryName: "Version", fieldType: "input", dataType: "string" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
+  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
 ]
 

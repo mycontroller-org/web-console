@@ -14,22 +14,36 @@ export const DampeningOptions = [
   { value: Dampening.ActiveTime, label: "Active Time", description: "Active Time" },
 ]
 
-// Resource event types
-export const ResourceEventType = {
+// event types
+export const EventType = {
+  Created: "created",
+  Updated: "updated",
+  Deleted: "deleted",
+  Requested: "requested",
+}
+
+// event type options
+export const EventTypeOptions = [
+  { value: EventType.Created, label: "Created" },
+  { value: EventType.Updated, label: "Updated" },
+  { value: EventType.Deleted, label: "Deleted" },
+  { value: EventType.Requested, label: "Requested" },
+]
+
+// Entity types
+export const EntityType = {
   Gateway: "gateway",
   Node: "node",
   Source: "source",
-  FieldSet: "field.set",
-  FieldRequest: "field.request",
+  Field: "field",
 }
 
-// Resource event type options
-export const ResourceEventTypeOptions = [
-  { value: ResourceEventType.Gateway, label: "Gateway" },
-  { value: ResourceEventType.Node, label: "Node" },
-  { value: ResourceEventType.Source, label: "Source" },
-  { value: ResourceEventType.FieldSet, label: "Field Set" },
-  { value: ResourceEventType.FieldRequest, label: "Field Request" },
+// Entity type options
+export const EntityTypeOptions = [
+  { value: EntityType.Gateway, label: "Gateway" },
+  { value: EntityType.Node, label: "Node" },
+  { value: EntityType.Source, label: "Source" },
+  { value: EntityType.Field, label: "Field" },
 ]
 
 // Operator values

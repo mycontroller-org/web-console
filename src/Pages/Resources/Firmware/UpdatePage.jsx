@@ -8,6 +8,7 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
 import objectPath from "object-path"
 import Loading from "../../../Components/Loading/Loading"
+import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   state = {
@@ -15,21 +16,11 @@ class UpdatePage extends React.Component {
   }
 
   componentDidMount() {
-    api.gateway
-      .list({})
-      .then((res) => {
-        const gateways = res.data.data.map((gw) => {
-          return { value: gw.id, label: gw.id, description: gw.name }
-        })
-        this.setState({ loading: false, gateways: gateways })
-      })
-      .catch((_e) => {
-        this.setState({ loading: false })
-      })
+    this.setState({ loading: false })
   }
 
   render() {
-    const { loading, gateways } = this.state
+    const { loading } = this.state
 
     if (loading) {
       return <Loading key="loading" />
@@ -53,7 +44,7 @@ class UpdatePage extends React.Component {
         onCancelFunc={() => {
           r(this.props.history, rMap.resources.firmware.list)
         }}
-        getFormItems={(rootObject) => getFormItems(rootObject, gateways)}
+        getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />
     )
 
@@ -73,10 +64,7 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (rootObject, gateways) => {
-  // set ID, if not set
-  const newID = uuidv4().toString()
-  objectPath.set(rootObject, "id", newID, true)
+const getFormItems = (_rootObject, id) => {
   const items = [
     {
       label: "ID",
@@ -85,36 +73,18 @@ const getFormItems = (rootObject, gateways) => {
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: true,
+      isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "",
+      helperTextInvalid: "Invalid id. chars: min=3 and max=100",
       validated: "default",
-      options: gateways,
-      validator: { isNotEmpty: {} },
+      validator: { isLength: { min: 3, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Name",
-      fieldId: "name",
+      label: "Description",
+      fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
-    },
-    {
-      label: "Version",
-      fieldId: "version",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid version",
-      validated: "default",
-      validator: { isNotEmpty: {}, isVersion: {} },
     },
     {
       label: "Labels",
