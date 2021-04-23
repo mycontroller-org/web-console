@@ -14,6 +14,7 @@ import {
   BackupProviderTypeOptions,
   StorageExportTypeOptions,
   BackupProviderType,
+  ResourceType,
 } from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
@@ -189,10 +190,10 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
     validator: { isNotEmpty: {} },
   })
 
+  const resourceType = objectPath.get(rootObject, "data.resourceType", "")
+
   switch (dataType) {
     case FieldDataType.TypeResourceByQuickId:
-      const resourceType = objectPath.get(rootObject, "data.resourceType", "")
-
       if (resourceType !== "") {
         const resourceAPI = getResourceOptionsAPI(resourceType)
         const resourceOptionValueFunc = getResourceOptionValueFunc(resourceType)
@@ -234,6 +235,16 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
     // no change
   }
 
+  if (callerType === CallerType.Variable || resourceType === ResourceType.DataRepository) {
+    items.push({
+      label: "Selector",
+      fieldId: "data.selector",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    })
+  }
+
   if (callerType === CallerType.Parameter) {
     items.push(
       {
@@ -251,15 +262,8 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
         value: "",
       }
     )
-  } else if (callerType === CallerType.Variable) {
-    items.push({
-      label: "Selector",
-      fieldId: "data.selector",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-    })
   }
+  
   return items
 }
 
