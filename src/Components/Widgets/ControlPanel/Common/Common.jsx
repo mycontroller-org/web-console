@@ -58,6 +58,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
+            selector={resource.selector}
             payloadOn="true"
             payloadOff="false"
             sendPayloadWrapper={(callBack) =>
@@ -79,6 +80,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
+            selector={resource.selector}
             payloadOn="true"
             payloadOff="false"
             onButtonType={onButtonType}
@@ -100,6 +102,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={payload}
+            selector={resource.selector}
             buttonType={button.buttonType}
             buttonText={button.text}
             minWidth={button.minWidth}
@@ -117,6 +120,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
+            selector={resource.selector}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
             }
@@ -131,6 +135,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
+            selector={resource.selector}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
             }
@@ -145,6 +150,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
+            selector={resource.selector}
             minWidth={mixedControlCfg.config.input.minWidth}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
@@ -161,6 +167,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
+            selector={resource.selector}
             min={slider.min}
             max={slider.max}
             step={slider.step}

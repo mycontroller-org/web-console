@@ -13,8 +13,8 @@ class SendPayload extends React.Component {
   }
 
   send = (value) => {
-    const { quickId } = this.props
-    api.action.send({ resource: quickId, payload: value })
+    const { quickId, selector } = this.props
+    api.action.send({ resource: quickId, payload: value, selector: selector })
   }
 
   onChange = (newValue) => {
@@ -49,6 +49,7 @@ const InputField = ({
   id,
   widgetId,
   quickId,
+  selector = "",
   payload = "",
   minWidth = 70,
   sendPayloadWrapper = () => {},
@@ -61,7 +62,12 @@ const InputField = ({
       hasAutoWidth
       headerContent={<div>Send Payload</div>}
       bodyContent={
-        <SendPayload quickId={quickId} payload={payload} sendPayloadWrapper={sendPayloadWrapper} />
+        <SendPayload
+          quickId={quickId}
+          selector={selector}
+          payload={payload}
+          sendPayloadWrapper={sendPayloadWrapper}
+        />
       }
       className="mixed-ctl-input-field"
     >

@@ -7,6 +7,7 @@ const SwitchButton = ({
   widgetId,
   quickId,
   payload,
+  selector = "",
   payloadOn = "true",
   payloadOff = "false",
   onButtonType = "primary",
@@ -19,7 +20,7 @@ const SwitchButton = ({
   return (
     <Button
       id={`${widgetId}_${id}`}
-      onClick={() => sendPayloadWrapper(() => onChange(!isChecked, quickId, payloadOn, payloadOff))}
+      onClick={() => sendPayloadWrapper(() => onChange(!isChecked, quickId, selector, payloadOn, payloadOff))}
       variant={isChecked ? onButtonType : "tertiary"}
       isSmall
       style={{ minWidth: `${minWidth}px` }}
@@ -28,8 +29,8 @@ const SwitchButton = ({
     </Button>
   )
 }
-const onChange = (isChecked, quickId, payloadOn, payloadOff) => {
-  api.action.send({ resource: quickId, payload: isChecked ? payloadOn : payloadOff })
+const onChange = (isChecked, quickId, selector, payloadOn, payloadOff) => {
+  api.action.send({ resource: quickId, selector: selector, payload: isChecked ? payloadOn : payloadOff })
 }
 
 export default SwitchButton

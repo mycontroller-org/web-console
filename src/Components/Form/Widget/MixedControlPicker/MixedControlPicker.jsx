@@ -11,6 +11,7 @@ import {
   BackupProviderTypeOptions,
   StorageExportTypeOptions,
   ExporterType,
+  ResourceType,
 } from "../../../../Constants/ResourcePicker"
 import { validate } from "../../../../Util/Validator"
 import PropTypes from "prop-types"
@@ -157,6 +158,21 @@ const getItems = (rootObject) => {
         isRequired: false,
       }
     )
+  }
+
+  if (resourceType === ResourceType.DataRepository) {
+    items.push({
+      label: "Selector",
+      fieldId: "resource.selector",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "selector can not be empty",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    })
   }
 
   items.push(

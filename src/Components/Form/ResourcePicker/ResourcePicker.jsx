@@ -242,6 +242,11 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "selector can not be empty",
+      validated: "default",
+      validator: { isNotEmpty: {} },
     })
   }
 
@@ -263,7 +268,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
       }
     )
   }
-  
+
   return items
 }
 

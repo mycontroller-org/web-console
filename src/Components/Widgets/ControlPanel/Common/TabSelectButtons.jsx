@@ -9,6 +9,7 @@ export const TabButton = ({
   quickId = "",
   mixedControlCfg = {},
   payload = "",
+  selector = "",
   sendPayloadWrapper = () => {},
 }) => {
   const { options = {} } = mixedControlCfg.config
@@ -18,7 +19,7 @@ export const TabButton = ({
       key={id}
       selected={String(payload)}
       options={getOptions(options)}
-      onSelectionFunc={(newValue) => sendPayloadWrapper(() => onChange(quickId, newValue))}
+      onSelectionFunc={(newValue) => sendPayloadWrapper(() => onChange(quickId, selector, newValue))}
     />
   )
 }
@@ -27,6 +28,7 @@ export const SelectButton = ({
   id,
   quickId = "",
   mixedControlCfg = {},
+  selector = "",
   payload = "",
   sendPayloadWrapper = () => {},
 }) => {
@@ -38,7 +40,7 @@ export const SelectButton = ({
       variant={SelectVariant.single}
       options={getOptions(options)}
       selected={String(payload)}
-      onChange={(newValue) => sendPayloadWrapper(() => onChange(quickId, newValue))}
+      onChange={(newValue) => sendPayloadWrapper(() => onChange(quickId, selector, newValue))}
       isDisabled={false}
       disableClear={true}
       direction={dropDownPosition}
@@ -56,6 +58,6 @@ const getOptions = (options) => {
   return tabOptions
 }
 
-const onChange = (quickId, payload) => {
-  api.action.send({ resource: quickId, payload: payload })
+const onChange = (quickId, selector, payload) => {
+  api.action.send({ resource: quickId, selector: selector, payload: payload })
 }

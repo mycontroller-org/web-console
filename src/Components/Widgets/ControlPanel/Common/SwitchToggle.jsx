@@ -9,20 +9,23 @@ const SwitchToggle = ({
   payload,
   payloadOn = "true",
   payloadOff = "false",
+  selector = "",
   sendPayloadWrapper = () => {},
 }) => {
   const isChecked = String(payload) === payloadOn
   return (
     <PfSwitch
       id={`${widgetId}_${id}`}
-      onChange={(newState) => sendPayloadWrapper(() => onChange(newState, quickId, payloadOn, payloadOff))}
+      onChange={(newState) =>
+        sendPayloadWrapper(() => onChange(newState, quickId, selector, payloadOn, payloadOff))
+      }
       isChecked={isChecked}
     />
   )
 }
 
-const onChange = (isChecked, quickId, payloadOn, payloadOff) => {
-  api.action.send({ resource: quickId, payload: isChecked ? payloadOn : payloadOff })
+const onChange = (isChecked, quickId, selector, payloadOn, payloadOff) => {
+  api.action.send({ resource: quickId, selector: selector, payload: isChecked ? payloadOn : payloadOff })
 }
 
 export default SwitchToggle

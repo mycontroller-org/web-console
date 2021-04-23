@@ -1,6 +1,5 @@
 import { api } from "../../../../Service/Api"
 import { getQuickId, ResourceType } from "../../../../Constants/ResourcePicker"
-import objectPath from "object-path"
 import { ControlType } from "../../../../Constants/Widgets/ControlPanel"
 import { getValue } from "../../../../Util/Util"
 
@@ -16,6 +15,8 @@ export const getListAPI = (resourceType) => {
       return api.scheduler.list
     case ResourceType.Handler:
       return api.handler.list
+    case ResourceType.DataRepository:
+      return api.dataRepository.list
     default:
       return () => {}
   }
@@ -26,7 +27,8 @@ export const getResource = (
   resource,
   resourceNameKey,
   resourceTimestampKey = "",
-  controlType = ControlType.SwitchToggle
+  controlType = ControlType.SwitchToggle,
+  selector = ""
 ) => {
   const quickId = getQuickId(resourceType, resource)
   const defaultLabel = controlType !== ControlType.MixedControl ? "undefined" : resourceNameKey
@@ -45,6 +47,19 @@ export const getResource = (
         timestamp:
           resourceTimestampKey === "" ? resource.lastSeen : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
+        selector: selector,
+      }
+
+    case ResourceType.DataRepository:
+      return {
+        id: resource.id,
+        type: resourceType,
+        label: label,
+        payload: selector !== "" ? getValue(resource, `data.${selector}`, "") : "",
+        timestamp:
+          resourceTimestampKey === "" ? resource.modifiedOn : getValue(resource, resourceTimestampKey, ""),
+        quickId: quickId,
+        selector: selector,
       }
 
     case ResourceType.Field:
@@ -56,6 +71,7 @@ export const getResource = (
         timestamp:
           resourceTimestampKey === "" ? resource.noChangeSince : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
+        selector: selector,
       }
 
     default:

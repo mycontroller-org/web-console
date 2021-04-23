@@ -33,6 +33,10 @@ export const navigateToResource = (resourceType, id, history = null) => {
       route = rMap.operations.scheduler.detail
       break
 
+    case ResourceType.DataRepository:
+      route = rMap.resources.dataRepository.detail
+      break
+
     default:
   }
   if (route !== null) {
