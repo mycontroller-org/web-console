@@ -333,6 +333,31 @@ const getProtocolMqttItems = (_rootObject) => {
 const getProtocolSerialItems = (_rootObject) => {
   const items = [
     {
+      label: "Port Name",
+      fieldId: "provider.protocol.portname",
+      isRequired: true,
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+    {
+      label: "Baud Rate",
+      fieldId: "provider.protocol.baudrate",
+      isRequired: true,
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      validator: { isBaudRate: {} },
+      helperTextInvalid: "Invalid Baud rate.",
+    },
+  ]
+  return items
+}
+
+// get protocol ethernet items
+const getProtocolEthernetItems = (_rootObject) => {
+  const items = [
+    {
       label: "Server",
       fieldId: "provider.protocol.server",
       isRequired: true,
@@ -352,31 +377,6 @@ const getProtocolSerialItems = (_rootObject) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
-    },
-  ]
-  return items
-}
-
-// get protocol ethernet items
-const getProtocolEthernetItems = (_rootObject) => {
-  const items = [
-    {
-      label: "Port Name",
-      fieldId: "provider.protocol.portname",
-      isRequired: true,
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-    },
-    {
-      label: "Baud Rate",
-      fieldId: "provider.protocol.baudrate",
-      isRequired: true,
-      fieldType: FieldType.Text,
-      dataType: DataType.Integer,
-      value: "",
-      validator: { isBaudRate: {} },
-      helperTextInvalid: "Invalid Baud rate.",
     },
   ]
   return items
