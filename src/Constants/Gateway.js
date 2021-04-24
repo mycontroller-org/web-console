@@ -28,7 +28,7 @@ export const filterProtocolOptions = (providerType) => {
   const protocols = []
   switch (providerType) {
     case Provider.MySensorsV2:
-      protocols.push(Protocol.MQTT, Protocol.Serial)
+      protocols.push(Protocol.MQTT, Protocol.Serial, Protocol.Ethernet)
       break
 
     case Provider.Tasmota:
