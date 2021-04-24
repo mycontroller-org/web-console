@@ -14,12 +14,14 @@ export const ProviderOptions = [
 export const Protocol = {
   MQTT: "mqtt",
   Serial: "serial",
+  Ethernet: "ethernet",
 }
 
 // Protocol options list
 export const ProtocolOptions = [
   { value: Protocol.MQTT, label: "MQTT", description: "MQTT Protocol" },
   { value: Protocol.Serial, label: "Serial", description: "Serial Protocol" },
+  { value: Protocol.Ethernet, label: "Ethernet", description: "Ethernet Protocol" },
 ]
 
 export const filterProtocolOptions = (providerType) => {

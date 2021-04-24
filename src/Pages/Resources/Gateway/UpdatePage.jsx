@@ -172,6 +172,11 @@ const getFormItems = (rootObject, id) => {
         items.push(...protocolSerialItems)
         break
 
+      case Protocol.Ethernet:
+        const protocolEthernetItems = getProtocolEthernetItems(rootObject)
+        items.push(...protocolEthernetItems)
+        break
+
       default:
         break
     }
@@ -208,7 +213,6 @@ const getFormItems = (rootObject, id) => {
 
   return items
 }
-
 
 // get provider items
 // get MySensor Provider items
@@ -327,6 +331,34 @@ const getProtocolMqttItems = (_rootObject) => {
 
 // get protocol serial items
 const getProtocolSerialItems = (_rootObject) => {
+  const items = [
+    {
+      label: "Server",
+      fieldId: "provider.protocol.server",
+      isRequired: true,
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      validator: {
+        isURL: {
+          protocols: ["tcp", "tcps", "ssl", "tls"],
+        },
+      },
+      helperTextInvalid: "Invalid Server URL.",
+    },
+    {
+      label: "Insecure Skip Verify",
+      fieldId: "provider.protocol.insecureSkipVerify",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+    },
+  ]
+  return items
+}
+
+// get protocol ethernet items
+const getProtocolEthernetItems = (_rootObject) => {
   const items = [
     {
       label: "Port Name",
