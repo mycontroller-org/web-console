@@ -134,7 +134,7 @@ const getFormItems = (rootObject, id) => {
   }
 
   // if there is provider selected, common details
-  if (providerType !== "") {
+  if (providerType !== "" && providerType !== Provider.SystemMonitoring) {
     items.push(
       {
         label: "Protocol",
@@ -182,33 +182,40 @@ const getFormItems = (rootObject, id) => {
     }
   }
 
-  // message logger
-  items.push(
-    {
-      label: "Message Logger",
-      fieldId: "!messageLogger.type",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "Type",
-      fieldId: "messageLogger.type",
-      isRequired: true,
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      options: MessageLoggerOptions,
+  if (providerType !== Provider.SystemMonitoring) {
+    // message logger
+    items.push(
+      {
+        label: "Message Logger",
+        fieldId: "!messageLogger.type",
+        fieldType: FieldType.Divider,
+      },
+      {
+        label: "Type",
+        fieldId: "messageLogger.type",
+        isRequired: true,
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.String,
+        options: MessageLoggerOptions,
+      }
+    )
+
+    // message logger properties
+    const msgLoggerType = objectPath.get(rootObject, "messageLogger.type", "").toLowerCase()
+    switch (msgLoggerType) {
+      case MessageLogger.FileLogger:
+        const fileLoggerItems = getLoggerFileItems(rootObject)
+        items.push(...fileLoggerItems)
+        break
+
+      default:
+        break
     }
-  )
+  }
 
-  // message logger properties
-  const msgLoggerType = objectPath.get(rootObject, "messageLogger.type", "").toLowerCase()
-  switch (msgLoggerType) {
-    case MessageLogger.FileLogger:
-      const fileLoggerItems = getLoggerFileItems(rootObject)
-      items.push(...fileLoggerItems)
-      break
-
-    default:
-      break
+  if (providerType === Provider.SystemMonitoring) {
+    const systemMonitoringItems = getSystemMonitoringItems(rootObject)
+    items.push(...systemMonitoringItems)
   }
 
   return items
@@ -422,6 +429,42 @@ const getLoggerFileItems = (_rootObject) => {
       value: "",
       validator: { isInt: { min: 0 } },
       helperTextInvalid: "Invalid Maximum Backup. int, min=0",
+    },
+  ]
+  return items
+}
+
+// get System Monitoring config
+const getSystemMonitoringItems = (_rootObject) => {
+  const items = [
+    {
+      label: "Configuration",
+      fieldId: "!configuration_sm",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Host ID Map",
+      fieldId: "provider.hostIdMap",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      value: "",
+      saveButtonText: "Update",
+      updateButtonText: "Update",
+      language: "yaml",
+      minimapEnabled: true,
+      isRequired: false,
+    },
+    {
+      label: "Host Config Map",
+      fieldId: "provider.hostConfigMap",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      value: "",
+      saveButtonText: "Update",
+      updateButtonText: "Update",
+      language: "yaml",
+      minimapEnabled: true,
+      isRequired: false,
     },
   ]
   return items

@@ -294,7 +294,7 @@ const getSparkLineItems = (rootObject) => {
     true
   )
   objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
-  objectPath.set(rootObject, "config.chart.height", 120, true)
+  objectPath.set(rootObject, "config.chart.height", 70, true)
 
   const items = [
     {

@@ -21,7 +21,6 @@ export const Protocol = {
   MQTT: "mqtt",
   Serial: "serial",
   Ethernet: "ethernet",
-  Internal: "internal",
 }
 
 // Protocol options list
@@ -29,7 +28,6 @@ export const ProtocolOptions = [
   { value: Protocol.MQTT, label: "MQTT", description: "MQTT Protocol" },
   { value: Protocol.Serial, label: "Serial", description: "Serial Protocol" },
   { value: Protocol.Ethernet, label: "Ethernet", description: "Ethernet Protocol" },
-  { value: Protocol.Internal, label: "Internal", description: "Internal Protocol" },
 ]
 
 export const filterProtocolOptions = (providerType) => {
@@ -41,10 +39,6 @@ export const filterProtocolOptions = (providerType) => {
 
     case Provider.Tasmota:
       protocols.push(Protocol.MQTT)
-      break
-
-    case Provider.SystemMonitoring:
-      protocols.push(Protocol.Internal)
       break
 
     default:
