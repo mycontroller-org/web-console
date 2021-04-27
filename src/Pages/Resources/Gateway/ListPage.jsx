@@ -18,6 +18,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/resources/gateway"
+import { getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
