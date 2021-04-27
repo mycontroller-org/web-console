@@ -1,6 +1,4 @@
-// https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
 import { AddCircleOIcon, CheckIcon, CloseIcon, EditIcon } from "@patternfly/react-icons"
-import "chartjs-plugin-colorschemes"
 import React from "react"
 import { Responsive, WidthProvider } from "react-grid-layout"
 import { LinkButton } from "../../Components/Buttons/Buttons"

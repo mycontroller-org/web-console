@@ -2,12 +2,18 @@
 export const Provider = {
   MySensorsV2: "mysensors_v2",
   Tasmota: "tasmota",
+  SystemMonitoring: "system_monitoring",
 }
 
 // Providers options list
 export const ProviderOptions = [
   { value: Provider.MySensorsV2, label: "MySensors v2", description: "MySensors.org Version 2.x" },
   { value: Provider.Tasmota, label: "Tasmota", description: "tasmota.github.io" },
+  {
+    value: Provider.SystemMonitoring,
+    label: "System Monitoring",
+    description: "Capture system resources and reports",
+  },
 ]
 
 // Protocol values
@@ -15,6 +21,7 @@ export const Protocol = {
   MQTT: "mqtt",
   Serial: "serial",
   Ethernet: "ethernet",
+  Internal: "internal",
 }
 
 // Protocol options list
@@ -22,6 +29,7 @@ export const ProtocolOptions = [
   { value: Protocol.MQTT, label: "MQTT", description: "MQTT Protocol" },
   { value: Protocol.Serial, label: "Serial", description: "Serial Protocol" },
   { value: Protocol.Ethernet, label: "Ethernet", description: "Ethernet Protocol" },
+  { value: Protocol.Internal, label: "Internal", description: "Internal Protocol" },
 ]
 
 export const filterProtocolOptions = (providerType) => {
@@ -33,6 +41,10 @@ export const filterProtocolOptions = (providerType) => {
 
     case Provider.Tasmota:
       protocols.push(Protocol.MQTT)
+      break
+
+    case Provider.SystemMonitoring:
+      protocols.push(Protocol.Internal)
       break
 
     default:
