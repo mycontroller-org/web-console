@@ -17,15 +17,31 @@ class IFrame extends React.Component {
 
   render() {
     const { isOpen } = this.state
+    const { enableInLine = false } = this.props
+
+    let elements = null
+    if (enableInLine) {
+      elements = (
+        <>
+          <Button variant="link" isInline onClick={this.handleToggle}>
+            {this.props.url}
+          </Button>{" "}
+          <a href={this.props.url} target="_blank" rel="noopener noreferrer">
+            <ExternalLinkSquareAltIcon />
+          </a>
+        </>
+      )
+    } else {
+      elements = (
+        <a href={this.props.url} target="_blank" rel="noopener noreferrer">
+          {this.props.url} <ExternalLinkSquareAltIcon />
+        </a>
+      )
+    }
 
     return (
       <>
-        <Button variant="link" isInline onClick={this.handleToggle}>
-          {this.props.url}
-        </Button>{" "}
-        <a href={this.props.url} target="_blank" rel="noopener noreferrer">
-          <ExternalLinkSquareAltIcon />
-        </a>
+        {elements}
         <Modal
           title={this.props.url}
           isOpen={isOpen}
