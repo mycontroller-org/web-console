@@ -5,14 +5,7 @@ import React from "react"
 import Editor from "../../../Editor/Editor"
 import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import {
-  ResourceTypeOptions,
-  TelegramParseModeOptions,
-  BackupProviderTypeOptions,
-  StorageExportTypeOptions,
-  ExporterType,
-  ResourceType,
-} from "../../../../Constants/ResourcePicker"
+import { ResourceTypeOptions, ResourceType } from "../../../../Constants/ResourcePicker"
 import { validate } from "../../../../Util/Validator"
 import PropTypes from "prop-types"
 import {

@@ -32,7 +32,6 @@ import {
 import { api } from "../../../Service/Api"
 import { getItem } from "../../../Util/Util"
 import { updateMetricConfigGauge, updateMetricConfigBinary } from "../../../store/entities/resources/field"
-import { getWindowWidth } from "../../../Constants/Common"
 
 const defaultDuration = Duration.LastHour
 const defaultInterval = AggregationInterval.Minute_1

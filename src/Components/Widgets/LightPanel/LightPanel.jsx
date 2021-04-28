@@ -1,7 +1,5 @@
 import React from "react"
-
 import { api } from "../../../Service/Api"
-import Slider, { createSliderWithTooltip } from "rc-slider"
 import "rc-slider/assets/index.css"
 import "./LightPanel.scss"
 import { Grid, GridItem, Stack, Switch, Tooltip } from "@patternfly/react-core"
@@ -16,8 +14,6 @@ import { getValue } from "../../../Util/Util"
 import SimpleSlider from "../../Form/Slider/Simple"
 import { loadData, unloadData } from "../../../store/entities/websocket"
 import { connect } from "react-redux"
-
-const SliderWithTooltip = createSliderWithTooltip(Slider)
 
 const wsKey = "dashboard_light_panel"
 

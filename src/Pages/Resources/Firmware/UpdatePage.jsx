@@ -5,10 +5,7 @@ import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { v4 as uuidv4 } from "uuid"
-import objectPath from "object-path"
 import Loading from "../../../Components/Loading/Loading"
-import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   state = {

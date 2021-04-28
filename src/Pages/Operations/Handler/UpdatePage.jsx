@@ -10,10 +10,6 @@ import { HandlerType, HandlerTypeOptions } from "../../../Constants/Handler"
 import {
   BackupProviderType,
   BackupProviderTypeOptions,
-  ExporterType,
-  ExporterTypeOptions,
-  ExportTypeOptions,
-  StorageExportType,
   StorageExportTypeOptions,
 } from "../../../Constants/ResourcePicker"
 

@@ -340,7 +340,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(UtilizationPanel)
 // helper functions
 
 const getMetrics = (metricsRaw = [], tsFormat, metricFunction) => {
-  if (metricsRaw.length == 0) {
+  if (metricsRaw.length === 0) {
     return { data: [] }
   }
 

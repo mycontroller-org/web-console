@@ -1,4 +1,4 @@
-import { Card, CardBody, CardTitle, Flex, FlexItem, Split, SplitItem } from "@patternfly/react-core"
+import { Card, CardBody, CardTitle, FlexItem, Split, SplitItem } from "@patternfly/react-core"
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
 import Measure from "react-measure"

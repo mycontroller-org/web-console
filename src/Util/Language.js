@@ -15,6 +15,7 @@ export const toString = (language = "", data = {}) => {
       } else if (language === "json") {
         return JSON.stringify(data)
       }
+      break
 
     case "javascript":
       return data
@@ -36,6 +37,7 @@ export const toObject = (language = "", data = "") => {
       } else if (language === "json") {
         return JSON.parse(data)
       }
+      break
 
     case "javascript":
       return data

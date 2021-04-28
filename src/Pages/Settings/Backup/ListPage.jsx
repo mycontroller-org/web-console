@@ -5,7 +5,7 @@ import { RestoreDialog } from "../../../Components/Dialog/Dialog"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { LastSeen } from "../../../Components/Time/Time"
-import { BackupProviderType, ExporterType } from "../../../Constants/ResourcePicker"
+import { BackupProviderType } from "../../../Constants/ResourcePicker"
 import { api, SystemApiKey } from "../../../Service/Api"
 import {
   deleteAllFilter,

@@ -1,6 +1,6 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
-import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { KeyValueMap } from "../../../Components/DataDisplay/Label"
 import { api } from "../../../Service/Api"
 
 const tabDetails = ({ resourceId, history }) => {

@@ -82,13 +82,14 @@ class AsyncSelect extends React.Component {
     const selectOptions = options.map((option) => {
       return <SelectOption value={option.label} description={option.description} />
     })
+
+    const spinnerSpan = showSpinner ? 1 : 0
     const spinner =
       loading && showSpinner ? (
         <GridItem span={spinnerSpan}>
           <Spinner size="lg" />{" "}
         </GridItem>
       ) : null
-    const spinnerSpan = showSpinner ? 1 : 0
     return (
       <Grid hasGutter>
         <GridItem span={12 - spinnerSpan}>

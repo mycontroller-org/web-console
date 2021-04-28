@@ -39,14 +39,10 @@ const getValue = (item, data) => {
     //   })
 
     case DataType.ArrayNumber:
-      return data.map((d) => {
-        Number(d)
-      })
+      return data.map((d) => Number(d))
 
     case DataType.ArrayBoolean:
-      return data.map((d) => {
-        Boolean(d)
-      })
+      return data.map((d) => Boolean(d))
 
     case DataType.ArrayObject:
       return data
@@ -94,8 +90,8 @@ export const updateItems = (rootObject, items) => {
           if (item.value === null) {
             item.value = []
           }
-          break
         }
+        break
 
       case FieldType.ScriptEditor:
         if (item.dataType === DataType.Object) {
@@ -103,8 +99,8 @@ export const updateItems = (rootObject, items) => {
           if (item.value === null) {
             item.value = {}
           }
-          break
         }
+        break
 
       // case FieldType.Select:
       // case FieldType.SelectTypeAhead:

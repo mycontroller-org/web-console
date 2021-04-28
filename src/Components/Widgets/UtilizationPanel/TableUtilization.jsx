@@ -3,15 +3,7 @@ import "./UtilizationPanel.scss"
 import { getValue } from "../../../Util/Util"
 import v from "validator"
 import { LastSeen } from "../../Time/Time"
-import {
-  cellWidth,
-  fitContent,
-  nowrap,
-  Table,
-  TableBody,
-  TableHeader,
-  TableVariant,
-} from "@patternfly/react-table"
+import { cellWidth, fitContent, Table, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
 import { Button, Progress } from "@patternfly/react-core"
 import { navigateToResource } from "../Helper/Resource"
 
