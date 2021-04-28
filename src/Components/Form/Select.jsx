@@ -31,7 +31,6 @@ class Select extends React.Component {
           const uniqueValues = [...new Set(itemsSelected)].filter((v) => v !== "")
           finalValue = isArrayData ? uniqueValues : uniqueValues.join(",")
         }
-        console.log("finalValue:", finalValue)
         onChange(finalValue)
       }
     })

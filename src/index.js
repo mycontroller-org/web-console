@@ -1,13 +1,13 @@
 import "@patternfly/react-core/dist/styles/base.css"
-import React from "react"
-import ReactDOM from "react-dom"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
+import "./index.css"
+
+import React from "react"
+import ReactDOM from "react-dom"
 import { HashRouter as Router } from "react-router-dom"
 import App from "./App"
-import "./index.css"
 import * as serviceWorker from "./serviceWorker"
-
 
 ReactDOM.render(
   //<React.StrictMode>

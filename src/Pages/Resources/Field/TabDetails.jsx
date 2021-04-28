@@ -36,6 +36,7 @@ const getDetailsFuncImpl = (data) => {
   fieldsList2.push({ key: "Others", value: <KeyValueMap data={data.others} /> })
   fieldsList2.push({ key: "Metric Type", value: data.metricType })
   fieldsList2.push({ key: "Unit", value: data.unit })
+  fieldsList2.push({ key: "No Change Since", value: <LastSeen date={data.noChangeSince} tooltipPosition="top" /> })
   fieldsList2.push({ key: "Value", value: <KeyValueMap data={data.current} /> })
   fieldsList2.push({ key: "Previous Value", value: <KeyValueMap data={data.previous} /> })
 

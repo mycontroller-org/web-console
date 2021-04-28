@@ -134,7 +134,11 @@ const getFormItems = (rootObject, id) => {
   }
 
   // if there is provider selected, common details
-  if (providerType !== "" && providerType !== Provider.SystemMonitoring) {
+  if (
+    providerType !== "" &&
+    providerType !== Provider.SystemMonitoring &&
+    providerType !== Provider.PhilipsHue
+  ) {
     items.push(
       {
         label: "Protocol",
@@ -182,7 +186,11 @@ const getFormItems = (rootObject, id) => {
     }
   }
 
-  if (providerType !== Provider.SystemMonitoring) {
+  if (
+    providerType !== "" &&
+    providerType !== Provider.SystemMonitoring &&
+    providerType !== Provider.PhilipsHue
+  ) {
     // message logger
     items.push(
       {
@@ -216,6 +224,9 @@ const getFormItems = (rootObject, id) => {
   if (providerType === Provider.SystemMonitoring) {
     const systemMonitoringItems = getSystemMonitoringItems(rootObject)
     items.push(...systemMonitoringItems)
+  } else if (providerType === Provider.PhilipsHue) {
+    const philipsHueItems = getPhilipsHueItems(rootObject)
+    items.push(...philipsHueItems)
   }
 
   return items
@@ -465,6 +476,63 @@ const getSystemMonitoringItems = (_rootObject) => {
       language: "yaml",
       minimapEnabled: true,
       isRequired: false,
+    },
+  ]
+  return items
+}
+
+// get PhilipsHue Items
+const getPhilipsHueItems = (_rootObject) => {
+  const items = [
+    {
+      label: "Configuration",
+      fieldId: "!provider.configuration",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Bridge",
+      fieldId: "provider.host",
+      isRequired: true,
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      validator: {
+        isURL: {
+          protocols: ["http", "https"],
+        },
+      },
+      helperTextInvalid: "Invalid Bridge URL.",
+    },
+    {
+      label: "Username",
+      fieldId: "provider.username",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid username. chars: min=2 and max=100",
+      validated: "default",
+      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
+    },
+    {
+      label: "Sync Interval",
+      fieldId: "provider.syncInterval",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      // isRequired: true,
+      // helperText: "",
+      // helperTextInvalid: "Invalid sync interval. chars: min=2",
+      // validated: "default",
+      // validator: { isLength: { min: 2 }, isNotEmpty: {} },
+    },
+    {
+      label: "Bridge Sync Interval",
+      fieldId: "provider.bridgeSyncInterval",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
     },
   ]
   return items
