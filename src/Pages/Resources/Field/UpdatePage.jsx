@@ -153,9 +153,9 @@ const getFormItems = (rootObject) => {
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4 and max=100",
+      helperTextInvalid: "Invalid name. chars: min=2 and max=100",
       validated: "default",
-      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
+      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
       label: "Labels",

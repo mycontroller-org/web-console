@@ -1,4 +1,5 @@
 import { List, ListItem } from "@patternfly/react-core"
+import fileSize from "filesize"
 import objectPath from "object-path"
 import React from "react"
 
@@ -26,4 +27,8 @@ export const DisplayList = ({ data, field, defaultValue = [] }) => {
     })
   }
   return <List>{finalData}</List>
+}
+
+export const FileSize = ({ bytes = 0 }) => {
+  return <span>{fileSize(bytes, { standard: "iec" })}</span>
 }

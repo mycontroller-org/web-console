@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
+import { FileSize } from "../../../Components/DataDisplay/Miscellaneous"
 import { RestoreDialog } from "../../../Components/Dialog/Dialog"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
@@ -42,11 +43,9 @@ class List extends ListBase {
         const locations = {}
         res.data.spec.locations.forEach((loc) => {
           if (loc.type === BackupProviderType.Disk) {
-            console.log(loc)
             locations[loc.name] = loc.config.targetDirectory
           }
         })
-        console.log(locations)
         this.setState({ backupLocations: locations })
       })
       .catch((_e) => {})
@@ -179,7 +178,7 @@ const toRowFuncImpl = (rawData, _history) => {
     cells: [
       rawData.locationName,
       rawData.fileName,
-      rawData.fileSize,
+      { title: <FileSize bytes={rawData.fileSize} /> },
       { title: <LastSeen date={rawData.modifiedOn} /> },
     ],
     rid: rawData.id,

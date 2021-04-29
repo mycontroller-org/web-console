@@ -4,6 +4,7 @@ import IFrame from "../IFrame/IFrame"
 import { LastSeen } from "../Time/Time"
 
 import "./Label.scss"
+import { FileSize } from "./Miscellaneous"
 
 export const Label = ({ name, value, index = 0 }) => {
   return (
@@ -53,6 +54,10 @@ export const KeyValue = ({ name, value, index = 0 }) => {
     case "ota_end_time":
     case "ota_status_on":
       finalValue = <LastSeen date={value} tooltipPosition="top" />
+      break
+
+    case "size":
+      finalValue = <FileSize bytes={value} />
       break
 
     default:
