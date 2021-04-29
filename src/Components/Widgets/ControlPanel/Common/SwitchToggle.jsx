@@ -16,6 +16,7 @@ const SwitchToggle = ({
   return (
     <PfSwitch
       id={`${widgetId}_${id}`}
+      aria-label={`${widgetId}_${id}`}
       onChange={(newState) =>
         sendPayloadWrapper(() => onChange(newState, quickId, selector, payloadOn, payloadOff))
       }

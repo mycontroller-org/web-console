@@ -340,6 +340,7 @@ const getField = (item, onChange) => {
       return (
         <Switch
           id={item.fieldId}
+          aria-label={item.fieldId}
           isDisabled={item.isDisabled}
           label={item.labelOn}
           labelOff={item.labelOff}

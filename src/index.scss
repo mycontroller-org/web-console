@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+#root {
+  height: 100%; // Height 100% fixes navbar menu and page to fit full height
+}
+
+:root {
+  --pf-global--spacer--form-element: 0.2rem; // default: 0.375rem
+  --pf-global--gutter: 1rem; // default: 1rem
+  //--pf-c-form-control--Height: none;
+
+  --mc-background-color: #fff;
+  --mc-components-background-color: #fff;
+  --mc-dashboard-background-color: #f7f7f7;
+  --mc-widget-background-color: #fff;
+  --mc-widget-title-background-color: #f0f0f0;
+}
+
+.pf-c-card {
+  --pf-c-card--BackgroundColor: var(--mc-background-color);
+}
+
+.pf-c-table {
+  --pf-c-table--BackgroundColor: var(--mc-background-color);
+}
+
+.pf-c-pagination {
+  --pf-c-pagination--m-bottom--BackgroundColor: var(--mc-background-color);
+  --pf-c-pagination--BackgroundColor: var(--mc-background-color);
+}
+.pf-c-toolbar {
+  --pf-c-toolbar--BackgroundColor: var(--mc-background-color);
+}
+
+.pf-c-modal-box {
+  --pf-c-modal-box--BackgroundColor: var(--mc-background-color);
+}
+
+/* Workaround for chrome border feature,
+https://support.google.com/chrome/thread/48974735?hl=en
+
+input,
+button {
+  outline: none;
+}
+*/

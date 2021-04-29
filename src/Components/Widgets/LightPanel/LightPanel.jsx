@@ -149,7 +149,8 @@ class LightPanel extends React.Component {
         iconTooltip="Power"
         field={
           <Switch
-            id={"rgb-panel-power-" + getValue(resources, "power.id", "id")}
+            id={`rgb-panel-power-${getValue(resources, "power.id", "id")}`}
+            aria-label={`rgb-panel-power-${getValue(resources, "power.id", "id")}`}
             onChange={(newState) => this.onChange(nameQuickIdMap, "power", newState)}
             isChecked={power}
           />

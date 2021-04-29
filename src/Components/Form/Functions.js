@@ -90,6 +90,8 @@ export const updateItems = (rootObject, items) => {
           if (item.value === null) {
             item.value = []
           }
+        } else {
+          item.value = String(objectPath.get(rootObject, item.fieldId, ""))
         }
         break
 
@@ -99,6 +101,8 @@ export const updateItems = (rootObject, items) => {
           if (item.value === null) {
             item.value = {}
           }
+        } else {
+          item.value = String(objectPath.get(rootObject, item.fieldId, ""))
         }
         break
 
