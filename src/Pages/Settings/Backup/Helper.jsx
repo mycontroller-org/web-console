@@ -61,7 +61,7 @@ const getRunOnDemandBackupEditor = (backupLocations, onClose) => {
     <Editor
       key="import-export-editor"
       language="yaml"
-      saveButtonText="Run Export"
+      saveButtonText="Run Backup"
       rootObject={{}}
       onChangeFunc={() => {}}
       onSaveFunc={(rootObject) => {
