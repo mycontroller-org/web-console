@@ -3,67 +3,90 @@ import {
   LoginFooterItem,
   LoginForm,
   LoginMainFooterBandItem,
-  LoginPage
+  LoginPage,
 } from "@patternfly/react-core"
 import { ExclamationCircleIcon } from "@patternfly/react-icons"
 import React from "react"
 import { connect } from "react-redux"
+import htmlParser from "html-react-parser"
 import logoBackground from "../Logo/mc-black-login-page.svg"
 import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { authSuccess } from "../store/entities/auth"
+import { getValue } from "../Util/Util"
 import "./Login.scss"
 
 class SimpleLoginPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showHelperText: false,
-      usernameValue: "",
-      isValidUsername: true,
-      passwordValue: "",
-      isValidPassword: true,
-      isRememberMeChecked: false,
-      isLoginButtonDisabled: false,
-    }
+  state = {
+    showHelperText: false,
+    usernameValue: "",
+    isValidUsername: true,
+    passwordValue: "",
+    isValidPassword: true,
+    isRememberMeChecked: false,
+    isLoginButtonDisabled: false,
+    loginData: { message: "Fetching...", serverMessage: "" },
+  }
 
-    this.handleUsernameChange = (value) => {
-      this.setState({ usernameValue: value })
-    }
+  componentDidMount() {
+    api.status
+      .get()
+      .then((res) => {
+        const loginData = getValue(res.data, "login", { message: "No message set for login" })
+        this.setState({ loginData: loginData })
+      })
+      .catch((_e) => {
+        this.setState({ loginData: { message: "Error on fetching login message" } })
+      })
+  }
 
-    this.handlePasswordChange = (passwordValue) => {
-      this.setState({ passwordValue })
-    }
+  handleUsernameChange = (value) => {
+    this.setState({ usernameValue: value })
+  }
 
-    this.onRememberMeClick = () => {
-      this.setState({ isRememberMeChecked: !this.state.isRememberMeChecked })
-    }
+  handlePasswordChange = (passwordValue) => {
+    this.setState({ passwordValue })
+  }
 
-    this.onLoginButtonClick = (event) => {
-      event.preventDefault()
-      this.setState({ isLoginButtonDisabled: true })
-      const loginData = {
-        username: this.state.usernameValue,
-        password: this.state.passwordValue,
-      }
-      api.auth
-        .login(loginData)
-        .then((res) => {
-          const user = { ...res.data }
-          this.props.updateSuccessLogin(user)
+  onRememberMeClick = () => {
+    this.setState({ isRememberMeChecked: !this.state.isRememberMeChecked })
+  }
+
+  onLoginButtonClick = (event) => {
+    event.preventDefault()
+    this.setState({ isLoginButtonDisabled: true })
+    const loginData = {
+      username: this.state.usernameValue,
+      password: this.state.passwordValue,
+    }
+    api.auth
+      .login(loginData)
+      .then((res) => {
+        const user = { ...res.data }
+        this.props.updateSuccessLogin(user)
+      })
+      .catch((e) => {
+        this.setState({
+          isValidUsername: false,
+          isValidPassword: false,
+          showHelperText: true,
+          isLoginButtonDisabled: false,
         })
-        .catch((e) => {
-          this.setState({
-            isValidUsername: false,
-            isValidPassword: false,
-            showHelperText: true,
-            isLoginButtonDisabled: false,
-          })
-        })
-    }
+      })
   }
 
   render() {
+    const { message: loginMessage, serverMessage } = this.state.loginData
+    let loginText = loginMessage
+    if (serverMessage !== undefined && serverMessage !== "") {
+      loginText = `
+        <p>${loginMessage}</p><br>
+        <p><b>System Message</b></p>
+        <p>${serverMessage}</p>
+      `
+    }
+    loginText = htmlParser(loginText)
+
     const helperText = (
       <React.Fragment>
         <ExclamationCircleIcon />
@@ -83,7 +106,7 @@ class SimpleLoginPage extends React.Component {
           <LoginFooterItem href="#">Terms of Use </LoginFooterItem>
         </ListItem>
         <ListItem>
-          <LoginFooterItem href="#">Help</LoginFooterItem>
+          <LoginFooterItem href="https://v2.mycontroller.org/docs/">Help</LoginFooterItem>
         </ListItem>
         <ListItem>
           <LoginFooterItem href="#">Privacy Policy</LoginFooterItem>
@@ -121,7 +144,7 @@ class SimpleLoginPage extends React.Component {
         backgroundImgSrc={logoBackground}
         backgroundImgAlt="Images"
         footerListItems={listItem}
-        textContent="This is placeholder text only. Use this area to place any information or introductory message about your application that may be relevant to users."
+        textContent={loginText}
         loginTitle="Welcome to MyController.org"
         loginSubtitle="Login to your account"
         forgotCredentials={forgotCredentials}
