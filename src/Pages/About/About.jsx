@@ -37,7 +37,7 @@ class AboutPage extends React.Component {
         className="mc-about"
         isOpen={this.props.showModel}
         onClose={this.props.hideAbout}
-        trademark="TODO: Trademark and copyright information"
+        trademark="© 2021 The MyController.org Authors. All Rights Reserved"
         brandImageSrc={brandImg}
         brandImageAlt="MyController.org"
         //productName="MYCONTROLLER.ORG"

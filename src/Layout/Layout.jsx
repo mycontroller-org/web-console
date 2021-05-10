@@ -201,10 +201,15 @@ class PageLayoutExpandableNav extends React.Component {
     const notificationDrawer = <NotificationContainer />
 
     const kebabDropdownItems = [
-      <DropdownItem key="settings">
+      <DropdownItem
+        key="settings"
+        onClick={() => {
+          r(this.props.history, rMap.settings.system)
+        }}
+      >
         <CogIcon /> Settings
       </DropdownItem>,
-      <DropdownItem key="help">
+      <DropdownItem key="help" href="https://v2.mycontroller.org/docs/" target="_blank">
         <HelpIcon /> Help
       </DropdownItem>,
       <DropdownItem key="about" onClick={this.props.showAbout}>
@@ -213,16 +218,16 @@ class PageLayoutExpandableNav extends React.Component {
     ]
 
     const userDropdownItems = [
-      <DropdownGroup key="group 2">
+      <DropdownGroup key="group2">
         <DropdownItem
-          key="group 2 profile"
+          key="group2_profile"
           onClick={() => {
             r(this.props.history, rMap.settings.profile)
           }}
         >
           <UserIcon /> Profile
         </DropdownItem>
-        <DropdownItem key="group 2 logout" onClick={this.props.doLogout}>
+        <DropdownItem key="group2_logout" onClick={this.props.doLogout}>
           <PowerOffIcon /> Logout
         </DropdownItem>
       </DropdownGroup>,
