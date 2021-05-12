@@ -65,18 +65,6 @@ const getFormItems = (_rootObject, id) => {
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Name",
-      fieldId: "name",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
-    },
-    {
       label: "Description",
       fieldId: "description",
       fieldType: FieldType.Text,
