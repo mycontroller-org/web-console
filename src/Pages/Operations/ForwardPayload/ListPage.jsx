@@ -73,7 +73,7 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "Name", fieldKey: "name", sortable: true },
+  { title: "ID", fieldKey: "id", sortable: true },
   { title: "Description", fieldKey: "description", sortable: true },
   { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
   { title: "Source Field", fieldKey: "srcFieldId", sortable: true },
@@ -92,7 +92,7 @@ const toRowFuncImpl = (rawData, history) => {
               r(history, rMap.operations.forwardPayload.detail, { id: rawData.id })
             }}
           >
-            {rawData.name}
+            {rawData.id}
           </Button>
         ),
       },
@@ -106,7 +106,7 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
+  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
   { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
   { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },

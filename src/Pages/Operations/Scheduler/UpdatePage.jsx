@@ -69,7 +69,7 @@ const getFormItems = (rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },

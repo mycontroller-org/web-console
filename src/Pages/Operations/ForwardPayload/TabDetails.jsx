@@ -23,7 +23,6 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Name", value: data.name })
   fieldsList1.push({ key: "Description", value: data.description })
   fieldsList1.push({ key: "Enabled", value: data.enabled ? "true" : "false" })
   fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })

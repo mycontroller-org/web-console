@@ -29,7 +29,7 @@ class UpdatePage extends React.Component {
         onCancelFunc={() => {
           r(this.props.history, rMap.operations.forwardPayload.list)
         }}
-        getFormItems={getFormItems}
+        getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />
     )
 
@@ -49,11 +49,7 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (rootObject) => {
-  // set ID, if not set
-  const newID = uuidv4().toString()
-  objectPath.set(rootObject, "id", newID, true)
-
+const getFormItems = (_rootObject, id) => {
   const items = [
     {
       label: "ID",
@@ -62,8 +58,11 @@ const getFormItems = (rootObject) => {
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: true,
-      validator: { isNotEmpty: {} },
+      isDisabled: id ? true : false,
+      helperText: "",
+      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      validated: "default",
+      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
       label: "Name",
