@@ -123,6 +123,7 @@ class KeyValueMapForm extends React.Component {
       actionSpan = 1,
       showUpdateButton,
       callerType,
+      valueField = getValueField,
     } = this.props
     const keys = []
 
@@ -182,15 +183,7 @@ class KeyValueMapForm extends React.Component {
           <GridItem span={8 - actionSpan}>
             <Split>
               <SplitItem isFilled>
-                <TextInput
-                  id={"value_id_" + index}
-                  key={"value_" + index}
-                  value={item.value}
-                  validated={validatedValue}
-                  onChange={(newValue) => {
-                    this.onChange(index, "value", newValue)
-                  }}
-                />
+                {valueField(index, item.value, this.onChange, validatedValue)}
               </SplitItem>
               <SplitItem>{updateButton}</SplitItem>
             </Split>
@@ -248,6 +241,23 @@ KeyValueMapForm.propTypes = {
   validateValueFunc: PropTypes.func,
   showUpdateButton: PropTypes.bool,
   callerType: PropTypes.string,
+  valueField: PropTypes.func,
 }
 
 export default KeyValueMapForm
+
+// helper functions
+
+const getValueField = (index, value, onChange, validated) => {
+  return (
+    <TextInput
+      id={"value_id_" + index}
+      key={"value_" + index}
+      value={value}
+      validated={validated}
+      onChange={(newValue) => {
+        onChange(index, "value", newValue)
+      }}
+    />
+  )
+}

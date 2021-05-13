@@ -4,6 +4,8 @@ import Base64 from "base-64"
 import UTF8 from "utf8"
 import { api } from "../../../Service/Api"
 import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
+import { getValue } from "../../../Util/Util"
+import { TextInput } from "@patternfly/react-core"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
   const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
@@ -196,4 +198,25 @@ export const getOptionsDescriptionFunc = (resourceType) => {
     default:
       return null
   }
+}
+
+// returns variable value to display on variables list
+export const getDisplayValue = (index, value, _onChange, validated) => {
+  let textValue = null
+  try {
+    const objValue = JSON.parse(value)
+    textValue = `type: ${objValue.type}`
+  } catch (_error) {
+    // ignore errors
+    textValue = `type: string, value: ${value}`
+  }
+  return (
+    <TextInput
+      id={"value_id_" + index}
+      key={"value_" + index}
+      value={textValue}
+      isDisabled={true}
+      validated={validated}
+    />
+  )
 }

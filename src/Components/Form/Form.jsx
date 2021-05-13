@@ -28,6 +28,7 @@ import ScriptEditor from "./ScriptEditor/ScriptEditor"
 import SimpleSlider from "./Slider/Simple"
 import ColorBox from "../Color/ColorBox/ColorBox"
 import MixedControlListForm from "./Widget/MixedControlList"
+import { getDisplayValue } from "./ResourcePicker/ResourceUtils"
 
 // item sample
 // const item = {
@@ -169,6 +170,7 @@ const getField = (item, onChange) => {
                   return validate("isVariableKey", key)
                 }
           }
+          valueField={getDisplayValue}
         />
       )
 
