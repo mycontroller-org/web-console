@@ -15,6 +15,7 @@ import {
   EntityTypeOptions,
 } from "../../../Constants/Task"
 import { CallerType } from "../../../Constants/ResourcePicker"
+import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
   render() {
@@ -319,18 +320,8 @@ const getFormItems = (rootObject, id) => {
       break
 
     case EvaluationType.Webhook:
-      items.push({
-        label: "Webhook API",
-        fieldId: "evaluationConfig.webhookApi",
-        fieldType: FieldType.Text,
-        dataType: DataType.String,
-        value: "",
-        isRequired: true,
-        helperText: "",
-        helperTextInvalid: "Invalid server URL",
-        validated: "default",
-        validator: { isNotEmpty: {}, isURL: {} },
-      })
+      const webhookItems = getWebhookItems(rootObject)
+      items.push(...webhookItems)
       break
 
     default:
@@ -366,5 +357,46 @@ const getFormItems = (rootObject, id) => {
     }
   )
 
+  return items
+}
+
+const getWebhookItems = (_rootObject) => {
+  const items = [
+    {
+      label: "URL",
+      fieldId: "evaluationConfig.webhook.url",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid URL",
+      validated: "default",
+      validator: { isNotEmpty: {}, isURL: {} },
+    },
+    {
+      label: "Insecure Skip Verify",
+      fieldId: "evaluationConfig.webhook.insecureSkipVerify",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
+    {
+      label: "Headers",
+      fieldId: "evaluationConfig.webhook.headers",
+      fieldType: FieldType.KeyValueMap,
+      dataType: DataType.ArrayObject,
+      value: {},
+      validateKeyFunc: (key) => validate("isNotEmpty", key, {}),
+      validateValueFunc: (value) => validate("isNotEmpty", value, {}),
+    },
+    {
+      label: "Include Task Config",
+      fieldId: "evaluationConfig.webhook.includeTaskConfig",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
+  ]
   return items
 }

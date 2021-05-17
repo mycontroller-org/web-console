@@ -89,5 +89,5 @@ export const EvaluationType = {
 export const EvaluationTypeOptions = [
   { value: EvaluationType.Rule, label: "Rule" },
   { value: EvaluationType.Javascript, label: "Javascript" },
-  { value: EvaluationType.Webhook, label: "Webhook", disabled: true }, // this feature not impleted yet
+  { value: EvaluationType.Webhook, label: "Webhook" },
 ]
