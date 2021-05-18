@@ -11,6 +11,7 @@ import {
   BackupProviderType,
   BackupProviderTypeOptions,
   StorageExportTypeOptions,
+  WebhookMethodTypeOptions,
 } from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {
@@ -204,6 +205,11 @@ const getFormItems = (rootObject, id) => {
       )
       break
 
+    case HandlerType.Webhook:
+      const webhookItems = getWebhookItems(rootObject)
+      items.push(...webhookItems)
+      break
+
     case HandlerType.Backup:
       const exporterItems = getBackupItems(rootObject)
       items.push(...exporterItems)
@@ -211,6 +217,95 @@ const getFormItems = (rootObject, id) => {
 
     default:
   }
+
+  return items
+}
+
+const getWebhookItems = (rootObject) => {
+  objectPath.set(rootObject, "spec.allowOverride", true, true)
+  objectPath.set(rootObject, "spec.responseCode", 0, true)
+
+  const items = [
+    {
+      label: "Server",
+      fieldId: "spec.server",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Enter a server url",
+      validated: "default",
+      validator: { isNotEmpty: {}, isURL: {} },
+    },
+    {
+      label: "API",
+      fieldId: "spec.api",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Enter a api",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Method",
+      fieldId: "spec.method",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      options: WebhookMethodTypeOptions,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Select a method",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Skip Insecure Verify",
+      fieldId: "spec.skipInsecureVerify",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+    },
+    {
+      label: "Response Code",
+      fieldId: "spec.responseCode",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Enter a response code, enter 0 to ignore",
+      validated: "default",
+      validator: { isInteger: {} },
+    },
+    {
+      label: "Headers",
+      fieldId: "spec.headers",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Headers",
+      value: {},
+      isRequired: false,
+    },
+    {
+      label: "Query Parameters",
+      fieldId: "spec.headers",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Query Parameters",
+      value: {},
+      isRequired: false,
+    },
+    {
+      label: "Allow Override",
+      fieldId: "spec.allowOverride",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+    },
+  ]
 
   return items
 }

@@ -105,3 +105,19 @@ export const StorageExportTypeOptions = [
   { value: StorageExportType.YAML, label: "YAML" },
   { value: StorageExportType.JSON, label: "JSON" },
 ]
+
+// Webhook method type values
+export const WebhookMethodType = {
+  GET: "GET",
+  POST: "POST",
+  PUT: "PUT",
+  DELETE: "DELETE",
+}
+
+// Webhook method type options
+export const WebhookMethodTypeOptions = [
+  { value: WebhookMethodType.GET, label: "GET" },
+  { value: WebhookMethodType.POST, label: "POST" },
+  { value: WebhookMethodType.PUT, label: "PUT" },
+  { value: WebhookMethodType.DELETE, label: "DELETE" },
+]

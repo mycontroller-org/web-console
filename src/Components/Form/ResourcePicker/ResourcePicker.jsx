@@ -15,6 +15,8 @@ import {
   StorageExportTypeOptions,
   BackupProviderType,
   ResourceType,
+  WebhookMethodType,
+  WebhookMethodTypeOptions,
 } from "../../../Constants/ResourcePicker"
 import {
   getOptionsDescriptionFunc,
@@ -158,6 +160,11 @@ const getItems = (rootObject, callerType) => {
     case FieldDataType.TypeBackup:
       const exporterItems = getBackupItems(rootObject)
       items.push(...exporterItems)
+      break
+
+    case FieldDataType.TypeWebhook:
+      const webhookItems = getWebhookItems(rootObject)
+      items.push(...webhookItems)
       break
 
     default:
@@ -401,6 +408,99 @@ const getBackupItems = (rootObject) => {
       break
 
     default:
+  }
+
+  return items
+}
+
+const getWebhookItems = (rootObject) => {
+  objectPath.set(rootObject, "data.responseCode", 0, true)
+  const items = [
+    {
+      label: "Server",
+      fieldId: "data.server",
+      isRequired: true,
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "API",
+      fieldId: "data.api",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "Method",
+      fieldId: "data.method",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      options: WebhookMethodTypeOptions,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "Response Code",
+      fieldId: "data.responseCode",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Enter a response code, enter 0 to ignore",
+      validated: "default",
+      validator: { isInteger: {} },
+    },
+    {
+      label: "Headers",
+      fieldId: "data.headers",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Headers",
+      value: {},
+      isRequired: false,
+    },
+    {
+      label: "Query Parameters",
+      fieldId: "data.headers",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Query Parameters",
+      value: {},
+      isRequired: false,
+    },
+  ]
+
+  const methodType = objectPath.get(rootObject, "data.method", "")
+
+  if (methodType !== WebhookMethodType.GET) {
+    items.push({
+      label: "Custom Data",
+      fieldId: "data.customData",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+      isRequired: false,
+    })
+
+    const customData = objectPath.get(rootObject, "data.customData", false)
+    if (customData) {
+      items.push({
+        label: "Data",
+        fieldId: "data.data",
+        isRequired: true,
+        fieldType: FieldType.ScriptEditor,
+        dataType: DataType.Object,
+        language: "yaml",
+        updateButtonText: "Update Data",
+        value: {},
+        isRequired: false,
+      })
+    }
   }
 
   return items
