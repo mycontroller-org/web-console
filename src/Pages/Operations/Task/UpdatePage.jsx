@@ -14,7 +14,7 @@ import {
   EventTypeOptions,
   EntityTypeOptions,
 } from "../../../Constants/Task"
-import { CallerType } from "../../../Constants/ResourcePicker"
+import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
 import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
@@ -375,6 +375,18 @@ const getWebhookItems = (_rootObject) => {
       validator: { isNotEmpty: {}, isURL: {} },
     },
     {
+      label: "Method",
+      fieldId: "evaluationConfig.webhook.method",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      options: WebhookMethodTypeOptions,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Select a method",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
       label: "Insecure Skip Verify",
       fieldId: "evaluationConfig.webhook.insecureSkipVerify",
       fieldType: FieldType.Switch,
@@ -391,8 +403,18 @@ const getWebhookItems = (_rootObject) => {
       validateValueFunc: (value) => validate("isNotEmpty", value, {}),
     },
     {
-      label: "Include Task Config",
-      fieldId: "evaluationConfig.webhook.includeTaskConfig",
+      label: "Query Parameters",
+      fieldId: "evaluationConfig.webhook.queryParameters",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Query Parameters",
+      value: {},
+      isRequired: false,
+    },
+    {
+      label: "Include Config",
+      fieldId: "evaluationConfig.webhook.includeConfig",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,

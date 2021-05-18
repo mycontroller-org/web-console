@@ -13,7 +13,7 @@ import {
   ScheduleType,
   ScheduleTypeOptions,
 } from "../../../Constants/Schedule"
-import { CallerType } from "../../../Constants/ResourcePicker"
+import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
 import { CustomVariableType, CustomVariableTypeOptions } from "../../../Constants/Schedule"
 
 class UpdatePage extends React.Component {
@@ -451,22 +451,75 @@ const loadCustomVariablesItems = (rootObject) => {
       break
 
     case CustomVariableType.Webhook:
-      items.push({
-        label: "Webhook API",
-        fieldId: "customVariableConfig.webhookApi",
-        fieldType: FieldType.Text,
-        dataType: DataType.String,
-        value: "",
-        isRequired: true,
-        helperText: "",
-        helperTextInvalid: "Invalid server URL",
-        validated: "default",
-        validator: { isNotEmpty: {}, isURL: {} },
-      })
+      const webhookItems = getWebhookItems(rootObject)
+      items.push(...webhookItems)
       break
 
     default:
   }
 
+  return items
+}
+
+const getWebhookItems = (_rootObject) => {
+  const items = [
+    {
+      label: "URL",
+      fieldId: "customVariableConfig.webhook.url",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid URL",
+      validated: "default",
+      validator: { isNotEmpty: {}, isURL: {} },
+    },
+    {
+      label: "Method",
+      fieldId: "customVariableConfig.webhook.method",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      options: WebhookMethodTypeOptions,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "Select a method",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Insecure Skip Verify",
+      fieldId: "customVariableConfig.webhook.insecureSkipVerify",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
+    {
+      label: "Headers",
+      fieldId: "customVariableConfig.webhook.headers",
+      fieldType: FieldType.KeyValueMap,
+      dataType: DataType.ArrayObject,
+      value: {},
+      validateKeyFunc: (key) => validate("isNotEmpty", key, {}),
+      validateValueFunc: (value) => validate("isNotEmpty", value, {}),
+    },
+    {
+      label: "Query Parameters",
+      fieldId: "customVariableConfig.webhook.queryParameters",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      language: "yaml",
+      updateButtonText: "Update Query Parameters",
+      value: {},
+      isRequired: false,
+    },
+    {
+      label: "Include Config",
+      fieldId: "customVariableConfig.webhook.includeConfig",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
+  ]
   return items
 }

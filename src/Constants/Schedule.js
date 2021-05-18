@@ -53,5 +53,5 @@ export const CustomVariableType = {
 export const CustomVariableTypeOptions = [
   { value: CustomVariableType.None, label: "None" },
   { value: CustomVariableType.Javascript, label: "Javascript" },
-  { value: CustomVariableType.Webhook, label: "Webhook", disabled: true }, // this feature not implemented yet
+  { value: CustomVariableType.Webhook, label: "Webhook" },
 ]
