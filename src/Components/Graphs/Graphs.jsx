@@ -74,7 +74,7 @@ export const LineChart = ({
           }}
         />
         <ChartGroup>
-          <ChartArea interpolation={interpolation} data={data} style={{ labels: { fontSize: "12px" } }} />
+          <ChartArea interpolation={interpolation} data={data} style={{ labels: { fontSize: "14px" } }} />
         </ChartGroup>
       </Chart>
     </div>

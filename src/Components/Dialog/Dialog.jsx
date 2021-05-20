@@ -20,7 +20,7 @@ const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
         </Button>,
       ]}
     >
-      Are you sure you want to delete the selected resource?
+      Are you sure want to delete the selected resource?
       <br />
       Resource name: {resourceName}
     </Modal>
@@ -34,16 +34,16 @@ export const NodeRebootDialog = ({ show, onCloseFn, onOkFn }) => {
     onCloseFn,
     onOkFn,
     "Reboot",
-    "Are you sure you want to reboot the selected node(s)?"
+    "Are you sure want to reboot the selected node(s)?"
   )
 }
 
 export const NodeResetDialog = ({ show, onCloseFn, onOkFn }) => {
   const message = (
     <>
-      Are you sure you want to reset the selected node(s)?
+      Are you sure want to reset the selected node(s)?
       <br />
-      After this action:
+      After this operation:
       <List>
         <ListItem>Configuration will be restored to factory settings.</ListItem>
         <ListItem> you may lose access to the selected node(s) from MyController!</ListItem>
@@ -56,18 +56,18 @@ export const NodeResetDialog = ({ show, onCloseFn, onOkFn }) => {
 export const RestoreDialog = ({ show, fileName, onCloseFn, onOkFn }) => {
   const message = (
     <>
-      Are you sure you want to restore to selected backup file?
+      Are you sure want to restore to selected backup file?
       <br />
-      After this action:
+      After this operation:
       <List>
-        <ListItem>Server configuration and data will be restored to <b>{fileName}</b></ListItem>
-        <ListItem>You cannot rollback this action</ListItem>
-        <ListItem>Always take a backup before performing a restore action</ListItem>
-        <ListItem>You may need to start the server manually in backend</ListItem>
+        <ListItem>Server data will be restored to <b>{fileName}</b></ListItem>
+        <ListItem>You cannot rollback this operation</ListItem>
+        <ListItem>Always take a backup before performing a restore operation</ListItem>
+        <ListItem>You may need to start the server manually</ListItem>
       </List>
     </>
   )
-  return dialog("Perform server restore operation?", show, onCloseFn, onOkFn, "Restore", message)
+  return dialog("Confirm to perform a restore operation?", show, onCloseFn, onOkFn, "Restore", message)
 }
 
 const dialog = (

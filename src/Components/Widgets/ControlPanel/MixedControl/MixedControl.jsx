@@ -130,6 +130,7 @@ class MixedControl extends React.Component {
         />
         <Modal
           variant={ModalVariant.small}
+          position="top"
           title="Need your confirm"
           isOpen={isModalOpen}
           onClose={this.hideModal}

@@ -88,6 +88,12 @@ const getFormItems = (rootObject) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.gateway.list,
+      getFiltersFunc: (value) => {
+        return [{ k: "id", o: "regex", v: value }]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.description
+      },
     },
     {
       label: "Node ID",
@@ -145,7 +151,7 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Labels,
       dataType: DataType.Object,
       value: "",
-    }
+    },
   ]
 
   return items

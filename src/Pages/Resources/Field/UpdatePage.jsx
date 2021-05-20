@@ -89,6 +89,12 @@ const getFormItems = (rootObject) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
       apiOptions: api.gateway.list,
+      getFiltersFunc: (value) => {
+        return [{ k: "id", o: "regex", v: value }]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.description
+      },
     },
     {
       label: "Node ID",
@@ -177,13 +183,13 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "On Receive Formatter",
+      label: "On Receive",
       fieldId: "formatter.onReceive",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.String,
       value: "",
       saveButtonText: "Update",
-      updateButtonText: "Update Script",
+      updateButtonText: "Update Javascript",
       language: "javascript",
       minimapEnabled: true,
       isRequired: false,

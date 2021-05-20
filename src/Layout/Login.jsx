@@ -13,8 +13,14 @@ import logoBackground from "../Logo/mc-black-login-page.svg"
 import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { authSuccess } from "../store/entities/auth"
+import { updateDocumentationUrl } from "../store/entities/about"
 import { getValue } from "../Util/Util"
 import "./Login.scss"
+import {
+  MINIMUM_LOGIN_EXPIRES_IN_DAYS,
+  MAXIMUM_LOGIN_EXPIRES_IN_DAYS,
+  URL_DOCUMENTATION,
+} from "../Constants/Common"
 
 class SimpleLoginPage extends React.Component {
   state = {
@@ -32,6 +38,10 @@ class SimpleLoginPage extends React.Component {
     api.status
       .get()
       .then((res) => {
+        // update documentation url
+        const docUrl = res.data.documentationUrl
+        this.props.updateDocUrl({ documentationUrl: docUrl !== "" ? docUrl : URL_DOCUMENTATION })
+
         const loginData = getValue(res.data, "login", { message: "No message set for login" })
         this.setState({ loginData: loginData })
       })
@@ -55,9 +65,13 @@ class SimpleLoginPage extends React.Component {
   onLoginButtonClick = (event) => {
     event.preventDefault()
     this.setState({ isLoginButtonDisabled: true })
+
+    const { usernameValue, passwordValue, isRememberMeChecked } = this.state
+    const expiresIn = isRememberMeChecked ? MAXIMUM_LOGIN_EXPIRES_IN_DAYS : MINIMUM_LOGIN_EXPIRES_IN_DAYS
     const loginData = {
-      username: this.state.usernameValue,
-      password: this.state.passwordValue,
+      username: usernameValue,
+      password: passwordValue,
+      expiresIn: expiresIn,
     }
     api.auth
       .login(loginData)
@@ -103,13 +117,7 @@ class SimpleLoginPage extends React.Component {
     const listItem = (
       <React.Fragment>
         <ListItem>
-          <LoginFooterItem href="#">Terms of Use </LoginFooterItem>
-        </ListItem>
-        <ListItem>
-          <LoginFooterItem href="https://v2.mycontroller.org/docs/">Help</LoginFooterItem>
-        </ListItem>
-        <ListItem>
-          <LoginFooterItem href="#">Privacy Policy</LoginFooterItem>
+          <LoginFooterItem href={this.props.documentationUrl}>Documentation</LoginFooterItem>
         </ListItem>
       </React.Fragment>
     )
@@ -147,7 +155,7 @@ class SimpleLoginPage extends React.Component {
         textContent={loginText}
         loginTitle="Welcome to MyController.org"
         loginSubtitle="Login to your account"
-        forgotCredentials={forgotCredentials}
+        // forgotCredentials={forgotCredentials}
       >
         {loginForm}
       </LoginPage>
@@ -155,10 +163,13 @@ class SimpleLoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  documentationUrl: state.entities.about.documentationUrl,
+})
 
 const mapDispatchToProps = (dispatch) => ({
   updateSuccessLogin: (data) => dispatch(authSuccess(data)),
+  updateDocUrl: (data) => dispatch(updateDocumentationUrl(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SimpleLoginPage)

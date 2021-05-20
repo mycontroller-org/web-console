@@ -13,8 +13,8 @@
 Limits the height of the header
 */
 .pf-c-page__header {
-  max-height: 48px !important;
-  min-height: 48px !important;
+  max-height: 50px !important;
+  min-height: 50px !important;
 }
 
 .mc-header-logo {
@@ -63,4 +63,8 @@ Removes the gray color of bottom page
   .mc-mobile-view {
     display: none;
   }
+}
+
+.pf-c-select__toggle-clear {
+  margin-top: 3px;
 }

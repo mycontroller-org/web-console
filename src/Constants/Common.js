@@ -10,9 +10,15 @@ export const ALERT_TYPE_ERROR = "danger"
 
 export const DATA_CACHE_TIMEOUT = 0 // in seconds, data cache in list tables. 0 - disabled
 
-export const NAV_WIDTH = 290
-
 export const SECRET_ENCRYPTION_PREFIX = "ENCRYPTED;MC;AES256;BASE64;"
+
+export const MINIMUM_LOGIN_EXPIRES_IN_DAYS = "24h" // 1 day
+export const MAXIMUM_LOGIN_EXPIRES_IN_DAYS = "720h" // 24 * 30
+export const URL_HOMEPAGE = "https://mycontroller.org"
+export const URL_DOCUMENTATION = "https://v2.mycontroller.org/docs/"
+export const URL_FORUM = "https://forum.mycontroller.org"
+
+export const NAV_WIDTH = 290
 
 export const getWindowWidth = (windowSizeWidth, isNavOpen) => {
   if (windowSizeWidth < 1200) {

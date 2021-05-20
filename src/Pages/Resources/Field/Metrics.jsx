@@ -4,10 +4,13 @@ import {
   CardTitle,
   Divider,
   Flex,
+  FlexItem,
   Grid,
   GridItem,
   Level,
   LevelItem,
+  Split,
+  SplitItem,
 } from "@patternfly/react-core"
 import moment from "moment"
 import React from "react"
@@ -197,43 +200,70 @@ class Metrics extends React.Component {
     } else {
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
-          <Select
-            key="function-selection"
-            defaultValue={gaugeConfig.func}
-            options={MetricFunctionTypeOptions}
-            title=""
-            onSelectionFunc={(newMetricFn) => {
-              this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
-            }}
+          <MetricDropdown
+            key="metric-dropdown-func"
+            label="Function"
+            dropdown={
+              <Select
+                key="function-selection"
+                defaultValue={gaugeConfig.func}
+                options={MetricFunctionTypeOptions}
+                title=""
+                onSelectionFunc={(newMetricFn) => {
+                  this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
+                }}
+              />
+            }
           />
         </div>,
-        <Select
-          key="duration-selection"
-          defaultValue={gaugeConfig.duration}
-          options={DurationOptions}
-          title=""
-          onSelectionFunc={(newDuration) => {
-            const newInterval = getRecommendedInterval(newDuration)
-            this.onChangeFunc({ ...gaugeConfig, duration: newDuration, interval: newInterval }, binaryConfig)
-          }}
+        <MetricDropdown
+          key="metric-dropdown-duration"
+          label="Duration"
+          dropdown={
+            <Select
+              key="duration-selection"
+              defaultValue={gaugeConfig.duration}
+              options={DurationOptions}
+              title=""
+              onSelectionFunc={(newDuration) => {
+                const newInterval = getRecommendedInterval(newDuration)
+                this.onChangeFunc(
+                  { ...gaugeConfig, duration: newDuration, interval: newInterval },
+                  binaryConfig
+                )
+              }}
+            />
+          }
         />,
-        <Select
-          key="interval-selection"
-          defaultValue={gaugeConfig.interval}
-          options={AggregationIntervalOptions}
-          title=""
-          onSelectionFunc={(newInterval) => {
-            this.onChangeFunc({ ...gaugeConfig, interval: newInterval }, binaryConfig)
-          }}
+        <MetricDropdown
+          key="metric-dropdown-interval"
+          label="Interval"
+          dropdown={
+            <Select
+              key="interval-selection"
+              defaultValue={gaugeConfig.interval}
+              options={AggregationIntervalOptions}
+              title=""
+              onSelectionFunc={(newInterval) => {
+                this.onChangeFunc({ ...gaugeConfig, interval: newInterval }, binaryConfig)
+              }}
+            />
+          }
         />,
-        <Select
-          key="interpolation-selection"
-          defaultValue={gaugeConfig.interpolationType}
-          options={InterpolationTypeLineOptions}
-          title=""
-          onSelectionFunc={(newInterpolationType) => {
-            this.onChangeFunc({ ...gaugeConfig, interpolationType: newInterpolationType }, binaryConfig)
-          }}
+        <MetricDropdown
+          key="metric-dropdown-interpolation"
+          label="Interpolation"
+          dropdown={
+            <Select
+              key="interpolation-selection"
+              defaultValue={gaugeConfig.interpolationType}
+              options={InterpolationTypeLineOptions}
+              title=""
+              onSelectionFunc={(newInterpolationType) => {
+                this.onChangeFunc({ ...gaugeConfig, interpolationType: newInterpolationType }, binaryConfig)
+              }}
+            />
+          }
         />
       )
     }
@@ -337,3 +367,14 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Metrics)
+
+// helper functions
+
+const MetricDropdown = ({ label = "", dropdown }) => {
+  return (
+    <Flex>
+      <FlexItem spacer={{ default: "spacerXs" }}><small>{label}</small></FlexItem>
+      <FlexItem>{dropdown}</FlexItem>
+    </Flex>
+  )
+}

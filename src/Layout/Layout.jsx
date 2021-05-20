@@ -25,7 +25,16 @@ import {
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
 //import spacingStyles from "@patternfly/react-styles/css/utilities/Spacing/spacing";
 //import { css } from "@patternfly/react-styles";
-import { BellIcon, CogIcon, HelpIcon, InfoAltIcon, PowerOffIcon, UserIcon } from "@patternfly/react-icons"
+import {
+  BellIcon,
+  BookIcon,
+  ChatIcon,
+  CogIcon,
+  HelpIcon,
+  InfoAltIcon,
+  PowerOffIcon,
+  UserIcon,
+} from "@patternfly/react-icons"
 import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
@@ -43,6 +52,7 @@ import { notificationDrawerToggle } from "../store/entities/notification"
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
+import { URL_DOCUMENTATION, URL_FORUM } from "../Constants/Common"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -209,8 +219,11 @@ class PageLayoutExpandableNav extends React.Component {
       >
         <CogIcon /> Settings
       </DropdownItem>,
-      <DropdownItem key="help" href="https://v2.mycontroller.org/docs/" target="_blank">
-        <HelpIcon /> Help
+      <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
+        <BookIcon /> Documentation
+      </DropdownItem>,
+      <DropdownItem key="forum" href={URL_FORUM} target="_blank">
+        <ChatIcon /> Forum
       </DropdownItem>,
       <DropdownItem key="about" onClick={this.props.showAbout}>
         <InfoAltIcon /> About
@@ -344,6 +357,7 @@ const mapStateToProps = (state) => ({
   notificationCount: state.entities.notification.unreadCount,
   showGlobalSpinner: state.entities.spinner.show,
   userDetail: state.entities.auth.user,
+  documentationUrl: state.entities.about.documentationUrl,
 })
 
 const mapDispatchToProps = (dispatch) => ({

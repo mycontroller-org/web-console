@@ -1,4 +1,15 @@
-import { Alert, Divider, Flex, Grid, Radio, Stack, StackItem } from "@patternfly/react-core"
+import {
+  Alert,
+  Divider,
+  Flex,
+  FlexItem,
+  Grid,
+  Level,
+  LevelItem,
+  Radio,
+  Stack,
+  StackItem,
+} from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
 import ActionBar from "../ActionBar/ActionBar"
@@ -270,23 +281,29 @@ class Editor extends React.Component {
       <div className="mc-editor">
         <Stack hasGutter>
           <StackItem>
-            <Flex style={{ paddingBottom: "5px" }}>
-              <span>
-                <strong>Configure via:</strong>
-              </span>
-              <Radio
-                isChecked={formView}
-                onChange={this.onViewChange}
-                label="Form View"
-                id={"form_view_" + uuidv4()}
-              />
-              <Radio
-                isChecked={!formView}
-                isDisabled={disableEditor}
-                onChange={this.onViewChange}
-                label="YAML View"
-                id={"yaml_view_" + uuidv4()}
-              />
+            <Flex>
+              <FlexItem>
+                <span>
+                  <strong>Configure via:</strong>
+                </span>
+              </FlexItem>
+              <FlexItem>
+                <Radio
+                  isChecked={formView}
+                  onChange={this.onViewChange}
+                  label="Form View"
+                  id={"form_view_" + uuidv4()}
+                />
+              </FlexItem>
+              <FlexItem>
+                <Radio
+                  isChecked={!formView}
+                  isDisabled={disableEditor}
+                  onChange={this.onViewChange}
+                  label="YAML View"
+                  id={"yaml_view_" + uuidv4()}
+                />
+              </FlexItem>
             </Flex>
             <Divider component="hr" />
           </StackItem>

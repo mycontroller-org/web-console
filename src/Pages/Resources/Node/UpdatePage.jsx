@@ -11,25 +11,14 @@ import objectPath from "object-path"
 class UpdatePage extends React.Component {
   state = {
     loading: true,
-    gateways: [],
   }
 
   componentDidMount() {
-    api.gateway
-      .list({})
-      .then((res) => {
-        const gateways = res.data.data.map((gw) => {
-          return { value: gw.id, label: gw.id, description: gw.name }
-        })
-        this.setState({ loading: false, gateways: gateways })
-      })
-      .catch((_e) => {
-        this.setState({ loading: false })
-      })
+    this.setState({ loading: false })
   }
 
   render() {
-    const { loading, gateways } = this.state
+    const { loading } = this.state
 
     if (loading) {
       return <span>Loading...</span>
@@ -53,7 +42,7 @@ class UpdatePage extends React.Component {
         onCancelFunc={() => {
           r(this.props.history, rMap.resources.node.list)
         }}
-        getFormItems={(rootObject) => getFormItems(rootObject, gateways)}
+        getFormItems={getFormItems}
       />
     )
 
@@ -73,7 +62,7 @@ export default UpdatePage
 
 // support functions
 
-const getFormItems = (rootObject, gateways) => {
+const getFormItems = (rootObject) => {
   // set ID, if not set
   const newID = uuidv4().toString()
   objectPath.set(rootObject, "id", newID, true)
@@ -89,21 +78,23 @@ const getFormItems = (rootObject, gateways) => {
       helperText: "",
       helperTextInvalid: "",
       validated: "default",
-      options: gateways,
       validator: { isNotEmpty: {} },
     },
     {
       label: "Gateway",
       fieldId: "gatewayId",
-      fieldType: FieldType.SelectTypeAhead,
+      fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperText: "",
-      helperTextInvalid: "",
-      validated: "default",
-      options: gateways,
       validator: { isNotEmpty: {} },
+      apiOptions: api.gateway.list,
+      getFiltersFunc: (value) => {
+        return [{ k: "id", o: "regex", v: value }]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.description
+      },
     },
     {
       label: "Node ID",
