@@ -2,7 +2,6 @@ import { TachometerAltIcon } from "@patternfly/react-icons"
 import React from "react"
 import Dashboard from "../Pages/Dashboard/Dashboard"
 import GatewayUpdatePage from "../Pages/Resources/Gateway/UpdatePage"
-// import DummyPage from "../Pages/DummyPage/DummyPage"
 import { default as GatewayDetailPage } from "../Pages/Resources/Gateway/DetailsPage"
 import GatewayListPage from "../Pages/Resources/Gateway/ListPage"
 import NodeUpdatePage from "../Pages/Resources/Node/UpdatePage"
@@ -30,9 +29,9 @@ import TaskDetailPage from "../Pages/Operations/Task/DetailsPage"
 import HandlerListPage from "../Pages/Operations/Handler/ListPage"
 import HandlerUpdatePage from "../Pages/Operations/Handler/UpdatePage"
 import HandlerDetailPage from "../Pages/Operations/Handler/DetailsPage"
-import SchedulerListPage from "../Pages/Operations/Scheduler/ListPage"
-import SchedulerUpdatePage from "../Pages/Operations/Scheduler/UpdatePage"
-import SchedulerDetailPage from "../Pages/Operations/Scheduler/DetailsPage"
+import ScheduleListPage from "../Pages/Operations/Schedule/ListPage"
+import ScheduleUpdatePage from "../Pages/Operations/Schedule/UpdatePage"
+import ScheduleDetailPage from "../Pages/Operations/Schedule/DetailsPage"
 import SettingsSystemPage from "../Pages/Settings/System/DetailsPage"
 import SystemBackupPage from "../Pages/Settings/Backup/ListPage"
 
@@ -105,10 +104,10 @@ const routeMap = {
       add: "/operations/handler/add",
     },
     scheduler: {
-      list: "/operations/scheduler",
-      detail: "/operations/scheduler/list/:id",
-      update: "/operations/scheduler/update/:id",
-      add: "/operations/scheduler/add",
+      list: "/operations/schedule",
+      detail: "/operations/schedule/list/:id",
+      update: "/operations/schedule/update/:id",
+      add: "/operations/schedule/add",
     },
   },
 }
@@ -194,7 +193,7 @@ const routes = [
         id: "scheduler",
         title: "Schedules",
         to: routeMap.operations.scheduler.list,
-        component: SchedulerListPage,
+        component: ScheduleListPage,
       },
       {
         id: "handler",
@@ -315,11 +314,11 @@ const hiddenRoutes = [
   },
   {
     to: routeMap.operations.scheduler.detail,
-    component: SchedulerDetailPage,
+    component: ScheduleDetailPage,
   },
   {
     to: routeMap.operations.scheduler.add,
-    component: SchedulerUpdatePage,
+    component: ScheduleUpdatePage,
   },
 ]
 

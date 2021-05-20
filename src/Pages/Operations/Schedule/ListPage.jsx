@@ -18,7 +18,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/scheduler"
-import { LastSeen } from "../../../Components/Time/Time"
+import { getLastSeen, LastSeen } from "../../../Components/Time/Time"
 import { DisplaySuccess } from "../../../Components/DataDisplay/Miscellaneous"
 
 class List extends ListBase {
@@ -39,13 +39,13 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.scheduler.enable)
+        this.actionFuncWithRefresh(api.schedule.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.scheduler.disable)
+        this.actionFuncWithRefresh(api.schedule.disable)
       },
     },
     { type: "delete", onClick: this.onDeleteActionClick },
@@ -87,6 +87,8 @@ const tableColumns = [
 ]
 
 const toRowFuncImpl = (rawData, history) => {
+  // get last run status
+  const lastRun = getLastSeen(getValue(rawData, "state.lastRun"), "")
   return {
     cells: [
       {
@@ -107,7 +109,7 @@ const toRowFuncImpl = (rawData, history) => {
       { title: rawData.type },
       { title: getValue(rawData, "state.executedCount") },
       { title: <LastSeen date={rawData.state.lastRun} /> },
-      { title: <DisplaySuccess data={rawData} field="state.lastStatus" /> },
+      { title: lastRun !== "-" ? <DisplaySuccess data={rawData} field="state.lastStatus" /> : "-" },
       { title: getValue(rawData, "state.message") },
     ],
     rid: rawData.id,
@@ -123,8 +125,8 @@ const filtersDefinition = [
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.scheduler.list,
-  apiDeleteRecords: api.scheduler.delete,
+  apiGetRecords: api.schedule.list,
+  apiDeleteRecords: api.schedule.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
   resourceName: "Schedule(s)",

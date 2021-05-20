@@ -29,8 +29,8 @@ class UpdatePage extends React.Component {
         key="editor"
         resourceId={id}
         language="yaml"
-        apiGetRecord={api.scheduler.get}
-        apiSaveRecord={api.scheduler.update}
+        apiGetRecord={api.schedule.get}
+        apiSaveRecord={api.schedule.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
           r(this.props.history, rMap.operations.scheduler.list)

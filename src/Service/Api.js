@@ -198,13 +198,13 @@ export const api = {
     reload: (data) => newRequest(HTTP_VERBS.POST, "/handler/reload", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/handler", {}, data),
   },
-  scheduler: {
-    list: (filter) => newRequest(HTTP_VERBS.GET, "/scheduler", filter, {}),
-    get: (id) => newRequest(HTTP_VERBS.GET, "/scheduler/" + id, {}, {}),
-    update: (data) => newRequest(HTTP_VERBS.POST, "/scheduler", {}, data),
-    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/scheduler", {}, data),
-    enable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/enable", {}, data),
-    disable: (data) => newRequest(HTTP_VERBS.POST, "/scheduler/disable", {}, data),
+  schedule: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/schedule", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/schedule/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/schedule", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/schedule", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/schedule/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/schedule/disable", {}, data),
   },
   dataRepository: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/datarepository", filter, {}),

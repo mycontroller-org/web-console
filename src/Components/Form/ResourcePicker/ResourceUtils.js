@@ -107,7 +107,7 @@ export const getResourceOptionsAPI = (resourceType) => {
       return api.task.list
 
     case ResourceType.Schedule:
-      return api.scheduler.list
+      return api.schedule.list
 
     case ResourceType.Handler:
       return api.handler.list

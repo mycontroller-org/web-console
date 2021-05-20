@@ -9,7 +9,7 @@ const tabDetails = ({ resourceId, history }) => {
     <TabDetailsBase
       resourceId={resourceId}
       history={history}
-      apiGetRecord={api.scheduler.get}
+      apiGetRecord={api.schedule.get}
       getDetailsFunc={getDetailsFuncImpl}
     />
   )
