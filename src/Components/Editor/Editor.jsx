@@ -278,7 +278,7 @@ class Editor extends React.Component {
     }
 
     return (
-      <div className="mc-editor">
+      <div className={formView ? "mc-editor" : ""}>
         <Stack hasGutter>
           <StackItem>
             <Flex>
