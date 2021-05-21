@@ -1,4 +1,3 @@
-import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
 import { DataType, FieldType } from "../../../Constants/Form"
@@ -6,7 +5,6 @@ import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { v4 as uuidv4 } from "uuid"
 import {ResourceType} from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {

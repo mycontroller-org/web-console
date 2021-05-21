@@ -1,25 +1,25 @@
+import React from "react"
 import { List, ListItem } from "@patternfly/react-core"
 import fileSize from "filesize"
-import objectPath from "object-path"
-import React from "react"
+import { getValue } from "../../Util/Util"
 
 export const DisplayEnabled = ({ data, field, defaultValue = false }) => {
-  const value = objectPath.get(data, field, defaultValue)
+  const value = getValue(data, field, defaultValue)
   return <span>{value ? "enabled" : "disabled"}</span>
 }
 
 export const DisplayTrue = ({ data, field, defaultValue = false }) => {
-  const value = objectPath.get(data, field, defaultValue)
+  const value = getValue(data, field, defaultValue)
   return <span>{value ? "true" : "false"}</span>
 }
 
 export const DisplaySuccess = ({ data, field, defaultValue = false }) => {
-  const value = objectPath.get(data, field, defaultValue)
+  const value = getValue(data, field, defaultValue)
   return <span>{value ? "success" : "failed"}</span>
 }
 
 export const DisplayList = ({ data, field, defaultValue = [] }) => {
-  const values = objectPath.get(data, field, defaultValue)
+  const values = getValue(data, field, defaultValue)
   const finalData = []
   if (Array.isArray(values)) {
     values.forEach((v) => {
@@ -32,3 +32,4 @@ export const DisplayList = ({ data, field, defaultValue = [] }) => {
 export const FileSize = ({ bytes = 0 }) => {
   return <span>{fileSize(bytes, { standard: "iec" })}</span>
 }
+

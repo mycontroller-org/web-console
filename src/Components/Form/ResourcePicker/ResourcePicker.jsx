@@ -419,7 +419,6 @@ const getWebhookItems = (rootObject) => {
     {
       label: "Server",
       fieldId: "data.server",
-      isRequired: true,
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -491,7 +490,6 @@ const getWebhookItems = (rootObject) => {
       items.push({
         label: "Data",
         fieldId: "data.data",
-        isRequired: true,
         fieldType: FieldType.ScriptEditor,
         dataType: DataType.Object,
         language: "yaml",

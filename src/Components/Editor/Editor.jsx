@@ -4,8 +4,6 @@ import {
   Flex,
   FlexItem,
   Grid,
-  Level,
-  LevelItem,
   Radio,
   Stack,
   StackItem,

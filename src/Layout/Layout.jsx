@@ -52,7 +52,7 @@ import { notificationDrawerToggle } from "../store/entities/notification"
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
-import { URL_DOCUMENTATION, URL_FORUM } from "../Constants/Common"
+import { URL_FORUM } from "../Constants/Common"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {

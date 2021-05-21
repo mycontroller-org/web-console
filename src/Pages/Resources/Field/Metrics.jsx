@@ -9,8 +9,6 @@ import {
   GridItem,
   Level,
   LevelItem,
-  Split,
-  SplitItem,
 } from "@patternfly/react-core"
 import moment from "moment"
 import React from "react"

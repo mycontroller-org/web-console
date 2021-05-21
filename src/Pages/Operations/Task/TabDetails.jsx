@@ -3,6 +3,7 @@ import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { api } from "../../../Service/Api"
 import { DisplayList, DisplayTrue } from "../../../Components/DataDisplay/Miscellaneous"
+import { ResourceVariables } from "../../../Components/DataDisplay/Resource"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -31,8 +32,14 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "Auto Disable", value: <DisplayTrue data={data} field="autoDisable" /> })
   fieldsList1.push({ key: "Trigger On Event", value: <DisplayTrue data={data} field="triggerOnEvent" /> })
   fieldsList1.push({ key: "State", value: <KeyValueMap data={data.state} /> })
-  fieldsList2.push({ key: "Variables", value: <KeyValueMap data={data.variables} /> })
-  fieldsList2.push({ key: "Handler Parameters", value: <KeyValueMap data={data.handlerParameters} /> })
+  fieldsList2.push({
+    key: "Variables",
+    value: <ResourceVariables data={data.variables} originalType="variable" />,
+  })
+  fieldsList2.push({
+    key: "Handler Parameters",
+    value: <ResourceVariables data={data.handlerParameters} originalType="parameter" />,
+  })
   fieldsList2.push({ key: "Handlers", value: <DisplayList data={data} field="handlers" /> })
 
   return {

@@ -8,8 +8,6 @@ export const FieldDataType = {
   TypeEmail: "email",
   TypeTelegram: "telegram",
   TypeWebhook: "webhook",
-  TypeSMS: "sms",
-  TypePushbullet: "pushbullet",
   TypeResourceByQuickId: "resource_by_quick_id",
   TypeResourceByLabels: "resource_by_labels",
   TypeBackup: "backup",
@@ -19,7 +17,7 @@ export const FieldDataTypeOptions = [
   { value: FieldDataType.TypeString, label: "String" },
   { value: FieldDataType.TypeResourceByQuickId, label: "Resource By Quick ID" },
   { value: FieldDataType.TypeResourceByLabels, label: "Resource By Labels" },
-  { value: FieldDataType.TypeWebhook, label: "Webhook", disable: true }, // not implemented yet
+  { value: FieldDataType.TypeWebhook, label: "Webhook"},
   { value: FieldDataType.TypeEmail, label: "Email" },
   { value: FieldDataType.TypeTelegram, label: "Telegram" },
   { value: FieldDataType.TypeBackup, label: "Backup" },

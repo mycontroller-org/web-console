@@ -1,4 +1,3 @@
-import objectPath from "object-path"
 import YAML from "js-yaml"
 import Base64 from "base-64"
 import UTF8 from "utf8"
@@ -8,8 +7,8 @@ import { getValue } from "../../../Util/Util"
 import { TextInput } from "@patternfly/react-core"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
-  const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
-  const isDisabled = objectPath.get(rootObject, "disabled", "")
+  const dataType = getValue(rootObject, "type", FieldDataType.TypeString)
+  const isDisabled = getValue(rootObject, "disabled", "")
 
   let data = ""
   if (dataType !== FieldDataType.TypeString) {
@@ -23,7 +22,7 @@ export const updateValue = (rootObject = {}, onChange, onClose) => {
       data = err.toString()
     }
   } else {
-    data = objectPath.get(rootObject, "string", "")
+    data = getValue(rootObject, "string", "")
   }
 
   if (onChange) {
