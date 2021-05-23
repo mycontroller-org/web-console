@@ -7,6 +7,7 @@ import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
 import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
 import { updateFormItemsLightPanel } from "./LightPanel/Edit"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
+import { updateFormItemsImagePanel } from "./ImagePanel/Edit"
 
 const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }) => {
   return (
@@ -54,6 +55,10 @@ const getFormItems = (rootObject) => {
 
     case WidgetType.UtilizationPanel:
       updateFormItemsUtilizationPanel(rootObject, items)
+      break
+
+    case WidgetType.ImagePanel:
+      updateFormItemsImagePanel(rootObject, items)
       break
 
     default:

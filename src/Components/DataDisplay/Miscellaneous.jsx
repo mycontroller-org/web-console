@@ -1,5 +1,6 @@
-import React from "react"
 import { List, ListItem } from "@patternfly/react-core"
+
+import React from "react"
 import fileSize from "filesize"
 import { getValue } from "../../Util/Util"
 
@@ -33,3 +34,6 @@ export const FileSize = ({ bytes = 0 }) => {
   return <span>{fileSize(bytes, { standard: "iec" })}</span>
 }
 
+export const DisplayImage = ({ data = "" }) => {
+  return <img width="200" height="200" src={data} />
+}

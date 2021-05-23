@@ -4,7 +4,7 @@ import IFrame from "../IFrame/IFrame"
 import { LastSeen } from "../Time/Time"
 
 import "./Label.scss"
-import { FileSize } from "./Miscellaneous"
+import { DisplayImage, FileSize } from "./Miscellaneous"
 
 export const Label = ({ name, value, index = 0 }) => {
   return (
@@ -61,7 +61,11 @@ export const KeyValue = ({ name, value, index = 0 }) => {
       break
 
     default:
-      finalValue = hideItems.includes(name) ? "******" : value !== undefined ? String(value) : ""
+      if (String(value).startsWith("data:image")) {
+        finalValue = <DisplayImage key={index} data={value} />
+      } else {
+        finalValue = hideItems.includes(name) ? "******" : value !== undefined ? String(value) : ""
+      }
   }
   return (
     <div className="key-value-map" key={name + index}>

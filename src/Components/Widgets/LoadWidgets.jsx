@@ -11,6 +11,7 @@ import LightPanel from "./LightPanel/LightPanel"
 import UtilizationPanel from "./UtilizationPanel/UtilizationPanel"
 import "./Widget.scss"
 import ControlPanel from "./ControlPanel/ControlPanel"
+import ImagePanel from "./ImagePanel/ImagePanel"
 
 export const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
   const items = []
@@ -65,6 +66,17 @@ const loadPanel = (widget, history, widgetKey, dimensions) => {
     case WidgetType.LightPanel:
       return (
         <LightPanel
+          key={widgetKey}
+          widgetId={widget.id}
+          config={widget.config}
+          history={history}
+          dimensions={dimensions}
+        />
+      )
+
+    case WidgetType.ImagePanel:
+      return (
+        <ImagePanel
           key={widgetKey}
           widgetId={widget.id}
           config={widget.config}

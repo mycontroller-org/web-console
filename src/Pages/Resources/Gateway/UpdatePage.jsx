@@ -137,7 +137,8 @@ const getFormItems = (rootObject, id) => {
   if (
     providerType !== "" &&
     providerType !== Provider.SystemMonitoring &&
-    providerType !== Provider.PhilipsHue
+    providerType !== Provider.PhilipsHue &&
+    providerType !== Provider.ESPHome
   ) {
     items.push(
       {
@@ -189,7 +190,8 @@ const getFormItems = (rootObject, id) => {
   if (
     providerType !== "" &&
     providerType !== Provider.SystemMonitoring &&
-    providerType !== Provider.PhilipsHue
+    providerType !== Provider.PhilipsHue &&
+    providerType !== Provider.ESPHome
   ) {
     // message logger
     items.push(
@@ -227,6 +229,9 @@ const getFormItems = (rootObject, id) => {
   } else if (providerType === Provider.PhilipsHue) {
     const philipsHueItems = getPhilipsHueItems(rootObject)
     items.push(...philipsHueItems)
+  } else if (providerType === Provider.ESPHome) {
+    const espHomeItems = getESPHomeItems(rootObject)
+    items.push(...espHomeItems)
   }
 
   return items
@@ -533,6 +538,44 @@ const getPhilipsHueItems = (_rootObject) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+    },
+  ]
+  return items
+}
+
+// get ESPHome config
+const getESPHomeItems = (_rootObject) => {
+  const items = [
+    {
+      label: "Configuration",
+      fieldId: "!configuration_sm",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Connection Timeout",
+      fieldId: "provider.timeout",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+    {
+      label: "Password",
+      fieldId: "provider.password",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
+    {
+      label: "Nodes",
+      fieldId: "provider.nodes",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.Object,
+      value: "",
+      saveButtonText: "Update",
+      updateButtonText: "Update",
+      language: "yaml",
+      minimapEnabled: true,
+      isRequired: false,
     },
   ]
   return items

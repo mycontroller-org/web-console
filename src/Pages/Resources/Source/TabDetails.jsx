@@ -7,6 +7,7 @@ import InputField from "../../../Components/Widgets/ControlPanel/Common/InputFie
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
+import { getFieldValue, getValue } from "../../../Util/Util"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -59,6 +60,22 @@ const tableColumns = [
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {
+  const isReadOnly = getValue(rawData, "labels.readonly", "false") === "true"
+  const currentValue = isReadOnly ? (
+    getFieldValue(getValue(rawData, "current.value", ""))
+  ) : (
+    <InputField
+      payload={getValue(rawData, "current.value", "")}
+      id={rawData.id}
+      quickId={getQuickId(ResourceType.Field, rawData)}
+      widgetId={rawData.id}
+      key={rawData.id}
+      sendPayloadWrapper={(callBack) => {
+        callBack()
+      }}
+    />
+  )
+
   return [
     {
       title: (
@@ -77,21 +94,8 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
     },
     rawData.metricType,
     rawData.unit,
-    {
-      title: (
-        <InputField
-          payload={rawData.current.value}
-          id={rawData.id}
-          quickId={getQuickId(ResourceType.Field, rawData)}
-          widgetId={rawData.id}
-          key={rawData.id}
-          sendPayloadWrapper={(callBack) => {
-            callBack()
-          }}
-        />
-      ),
-    },
-    String(rawData.previous.value),
+    { title: currentValue },
+    { title: getFieldValue(getValue(rawData, "previous.value", "")) },
     { title: <LastSeen date={rawData.lastSeen} /> },
   ]
 }

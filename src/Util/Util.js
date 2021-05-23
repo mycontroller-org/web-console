@@ -49,3 +49,11 @@ export const getPercentage = (value, minimum = 0, maximum = 100, inRange = true)
   }
   return result
 }
+
+export const getFieldValue = (value) => {
+  const stringValue = String(value)
+  if (stringValue.startsWith("data:image")) {
+    return "CAMERA IMAGE"
+  }
+  return stringValue
+}

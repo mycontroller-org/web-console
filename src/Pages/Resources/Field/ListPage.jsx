@@ -19,6 +19,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/resources/field"
+import { getFieldValue, getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
@@ -73,6 +74,22 @@ const tableColumns = [
 ]
 
 const toRowFuncImpl = (rawData, history) => {
+  const isReadOnly = getValue(rawData, "labels.readonly", "false") === "true"
+  const currentValue = isReadOnly ? (
+    getFieldValue(getValue(rawData, "current.value", ""))
+  ) : (
+    <InputField
+      payload={getValue(rawData, "current.value", "")}
+      id={rawData.id}
+      quickId={getQuickId(ResourceType.Field, rawData)}
+      widgetId={rawData.id}
+      key={rawData.id}
+      sendPayloadWrapper={(callBack) => {
+        callBack()
+      }}
+    />
+  )
+
   return {
     cells: [
       {
@@ -118,21 +135,8 @@ const toRowFuncImpl = (rawData, history) => {
       },
       rawData.metricType,
       rawData.unit,
-      {
-        title: (
-          <InputField
-            payload={rawData.current.value}
-            id={rawData.id}
-            quickId={getQuickId(ResourceType.Field, rawData)}
-            widgetId={rawData.id}
-            key={rawData.id}
-            sendPayloadWrapper={(callBack) => {
-              callBack()
-            }}
-          />
-        ),
-      },
-      String(rawData.previous.value),
+      { title: currentValue },
+      getFieldValue(getValue(rawData, "previous.value", "")),
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],
     rid: rawData.id,

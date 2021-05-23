@@ -1,5 +1,6 @@
 // Provider keeps supported providers list, this value will be used in backend
 export const Provider = {
+  ESPHome: "esphome",
   MySensorsV2: "mysensors_v2",
   PhilipsHue: "philips_hue",
   SystemMonitoring: "system_monitoring",
@@ -8,6 +9,7 @@ export const Provider = {
 
 // Providers options list
 export const ProviderOptions = [
+  { value: Provider.ESPHome, label: "ESPHome", description: "esphome.io" },
   { value: Provider.MySensorsV2, label: "MySensors v2", description: "MySensors.org Version 2.x" },
   { value: Provider.PhilipsHue, label: "PhilipsHue", description: "developers.meethue.com" },
   {

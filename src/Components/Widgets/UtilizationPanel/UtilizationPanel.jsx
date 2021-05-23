@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
-import _ from "lodash"
+import lodash from "lodash"
 import { connect } from "react-redux"
 import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
@@ -59,7 +59,7 @@ class UtilizationPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props.config, prevProps.config)) {
+    if (!lodash.isEqual(this.props.config, prevProps.config)) {
       this.updateComponents()
     }
   }
