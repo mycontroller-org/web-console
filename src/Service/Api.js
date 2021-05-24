@@ -235,8 +235,7 @@ export const api = {
     getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
   },
   secureShare: {
-    get: (suffixUrl = "", queries = {}) =>
-      newRequest(HTTP_VERBS.GET, `/secure_share/${suffixUrl}`, queries, headers, extraConfig),
+    get: (suffixUrl = "", queries = {}) => newRequest(HTTP_VERBS.GET, `/secure_share/${suffixUrl}`, queries),
   },
   websocket: {
     get: () => newRequest(HTTP_VERBS.GET, "/ws", {}, {}),
