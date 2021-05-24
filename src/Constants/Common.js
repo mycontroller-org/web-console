@@ -18,6 +18,9 @@ export const URL_HOMEPAGE = "https://mycontroller.org"
 export const URL_DOCUMENTATION = "https://v2.mycontroller.org/docs/"
 export const URL_FORUM = "https://forum.mycontroller.org"
 
+export const SECURE_SHARE_PREFIX = "/secure_share/"
+export const INSECURE_SHARE_PREFIX = "/insecure_share/"
+
 export const NAV_WIDTH = 290
 
 export const getWindowWidth = (windowSizeWidth, isNavOpen) => {

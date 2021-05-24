@@ -6,12 +6,13 @@ import { Stack, StackItem } from "@patternfly/react-core"
 import { RefreshIntervalType } from "../../../Constants/Metric"
 import lodash from "lodash"
 import { ImageSourceType } from "../../../Constants/Widgets/ImagePanel"
+import { connect } from "react-redux"
 
 class ImageURLPanel extends React.Component {
   state = {
     isLoading: true,
     error: "",
-    refreshHash: 0,
+    refreshHash: Date.now(),
   }
 
   componentDidMount() {
@@ -21,7 +22,7 @@ class ImageURLPanel extends React.Component {
     const refreshInterval = getValue(config, "refreshInterval", RefreshIntervalType.None)
     if (refreshInterval >= 1000) {
       this.interval = setInterval(() => {
-        this.setState({ refreshHash: Date.now() })
+        this.updateComponents()
       }, refreshInterval)
     }
   }
@@ -44,7 +45,7 @@ class ImageURLPanel extends React.Component {
       return
     }
 
-    this.setState({ isLoading: false })
+    this.setState({ isLoading: false, refreshHash: Date.now() })
   }
 
   render() {
@@ -59,13 +60,17 @@ class ImageURLPanel extends React.Component {
     }
 
     const { sourceType, imageURL, imageLocation, rotation } = this.props.config
+    const { authToken } = this.props
 
-    const finalURL = sourceType === ImageSourceType.URL ? imageURL : imageLocation
+    let finalUrl = `${imageURL}?mcRefreshHash=${refreshHash}`
+    if (sourceType == ImageSourceType.Disk) {
+      finalUrl = `${imageLocation}?access_token=${authToken}&mcRefreshHash=${refreshHash}`
+    }
 
     return (
       <Stack>
         <StackItem isFilled>
-          <img style={{ transform: `rotate(${rotation}deg)` }} src={`${finalURL}?${refreshHash}`} />
+          <img style={{ transform: `rotate(${rotation}deg)` }} src={finalUrl} />
         </StackItem>
         <StackItem></StackItem>
       </Stack>
@@ -77,4 +82,8 @@ ImageURLPanel.propTypes = {
   config: PropTypes.object,
 }
 
-export default ImageURLPanel
+const mapStateToProps = (state) => ({
+  authToken: state.entities.auth.token,
+})
+
+export default connect(mapStateToProps)(ImageURLPanel)

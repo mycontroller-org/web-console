@@ -1,5 +1,6 @@
 import axios from "axios"
 import qs from "qs"
+import { SECURE_SHARE_PREFIX } from "../Constants/Common"
 import { clearAuth } from "../store/entities/auth"
 import { spinnerHide, spinnerShow } from "../store/entities/globalSpinner"
 import { notificationAdd } from "../store/entities/notification"
@@ -96,7 +97,7 @@ const updateFilter = (qp) => {
   return qp
 }
 
-const newRequest = (method, url, queryParams, data, headers = {}) => {
+const newRequest = (method, url, queryParams = {}, data, headers = {}) => {
   // grab current state
   const auth = store.getState().entities.auth
   if (auth.authenticated) {
@@ -106,12 +107,18 @@ const newRequest = (method, url, queryParams, data, headers = {}) => {
 
   return myAxios.request({
     method: method,
-    url: "/api" + url,
-    //url: "http://localhost:8080/api" + url,
+    url: getFinalUrl(url),
     data: data,
     headers: { ...getHeaders(), ...headers },
     params: updateFilter(queryParams),
   })
+}
+
+const getFinalUrl = (url) => {
+  if (url.startsWith(SECURE_SHARE_PREFIX)) {
+    return url
+  }
+  return "/api" + url
 }
 
 export const api = {
@@ -226,6 +233,10 @@ export const api = {
   },
   quickId: {
     getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
+  },
+  secureShare: {
+    get: (suffixUrl = "", queries = {}) =>
+      newRequest(HTTP_VERBS.GET, `/secure_share/${suffixUrl}`, queries, headers, extraConfig),
   },
   websocket: {
     get: () => newRequest(HTTP_VERBS.GET, "/ws", {}, {}),
