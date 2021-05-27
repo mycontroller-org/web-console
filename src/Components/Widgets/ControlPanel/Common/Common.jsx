@@ -10,7 +10,19 @@ import "./Common.scss"
 import InputField from "./InputField"
 import { navigateToResource } from "../../Helper/Resource"
 import SliderControl from "./SliderControl"
-import { Button } from "@patternfly/react-core"
+import {
+  Bullseye,
+  Button,
+  Divider,
+  Grid,
+  GridItem,
+  Level,
+  LevelItem,
+  Split,
+  SplitItem,
+  Stack,
+  StackItem,
+} from "@patternfly/react-core"
 
 const columns = [{ title: "Name" }, "Last Update", ""]
 
@@ -206,20 +218,43 @@ const ControlObjects = ({
     ]
   })
 
-  return (
-    <Table
-      key={"mixed_panel_table_" + widgetId}
-      className="mc-control-panel"
-      aria-label="Mixed Panel Table"
-      variant={TableVariant.compact}
-      borders={true}
-      cells={columns}
-      rows={rows}
-    >
-      <TableHeader hidden={config.hideHeader} />
-      <TableBody />
-    </Table>
-  )
+  const { tableView, hideHeader, hideBorder } = config
+
+  if (tableView) {
+    return (
+      <Table
+        key={"mixed_panel_table_" + widgetId}
+        className="mc-control-panel"
+        aria-label="Mixed Panel Table"
+        variant={TableVariant.compact}
+        borders={!hideBorder}
+        cells={columns}
+        rows={rows}
+      >
+        <TableHeader hidden={hideHeader} />
+        <TableBody />
+      </Table>
+    )
+  }
+
+  const divider = hideBorder ? null : <Divider style={{ margin: "4px 0px" }} />
+
+  const switches = rows.map((row, _index) => {
+    const dividerComponent = resources.length > 1 ? divider : null
+    return (
+      <StackItem style={{marginBottom:"6px"}}>
+        <Split hasGutter>
+          <SplitItem>{row[0].title}</SplitItem>
+          <SplitItem isFilled>{row[1].title}</SplitItem>
+          <SplitItem>
+            <span style={{ float: "right" }}>{row[2].title}</span>
+          </SplitItem>
+        </Split>
+        {dividerComponent}
+      </StackItem>
+    )
+  })
+  return <Stack className="mc-control-panel">{switches}</Stack>
 }
 
 export default ControlObjects

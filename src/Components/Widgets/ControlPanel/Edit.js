@@ -19,6 +19,8 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
       objectPath.set(rootObject, "config.resource.selectors", { metricType: "binary" }, false)
     }
   }
+  objectPath.set(rootObject, "config.tableView", true, true)
+  const tableView = objectPath.get(rootObject, "config.tableView", true)
 
   items.push(
     {
@@ -36,13 +38,31 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
       isRequired: true,
     },
     {
-      label: "Hide Header",
-      fieldId: "config.hideHeader",
+      label: "Table View",
+      fieldId: "config.tableView",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     }
   )
+
+  if (tableView) {
+    items.push({
+      label: "Hide Header",
+      fieldId: "config.hideHeader",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    })
+  }
+
+  items.push({
+    label: "Hide Border",
+    fieldId: "config.hideBorder",
+    fieldType: FieldType.Switch,
+    dataType: DataType.Boolean,
+    value: false,
+  })
 
   const controlType = objectPath.get(rootObject, "config.type", "")
 

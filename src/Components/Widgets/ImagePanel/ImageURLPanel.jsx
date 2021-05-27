@@ -63,7 +63,7 @@ class ImageURLPanel extends React.Component {
     const { authToken } = this.props
 
     let finalUrl = `${imageURL}?mcRefreshHash=${refreshHash}`
-    if (sourceType == ImageSourceType.Disk) {
+    if (sourceType === ImageSourceType.Disk) {
       finalUrl = `${imageLocation}?access_token=${authToken}&mcRefreshHash=${refreshHash}`
     }
 
