@@ -204,6 +204,7 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
   objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
   objectPath.set(rootObject, "config.chart.minimumValue", 0, true)
   objectPath.set(rootObject, "config.chart.maximumValue", 100, true)
+  objectPath.set(rootObject, "config.chart.hideValueColumn", false, true)
   objectPath.set(rootObject, "config.resource.displayName", true, false)
 
   const items = [
@@ -234,13 +235,29 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
   ]
 
   if (chartType === ChartType.Table) {
-    items.push({
-      label: "Display Percentage",
-      fieldId: "config.chart.displayStatusPercentage",
-      fieldType: FieldType.Switch,
-      dataType: DataType.Boolean,
-      value: false,
-    })
+    items.push(
+      {
+        label: "Display Percentage",
+        fieldId: "config.chart.displayStatusPercentage",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      },
+      {
+        label: "Hide Value Column",
+        fieldId: "config.chart.hideValueColumn",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      },
+      {
+        label: "Hide Border",
+        fieldId: "config.hideBorder",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      }
+    )
   } else {
     items.push(
       {

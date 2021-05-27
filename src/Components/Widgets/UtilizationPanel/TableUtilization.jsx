@@ -23,12 +23,12 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   })
 
   const valueUnit = unit !== "" ? ` (${unit})` : ""
-  const columns = [
-    { title: "Name" },
-    "Last Update",
-    `Value${valueUnit}`,
-    { title: "Status", transforms: [cellWidth(35), fitContent] },
-  ]
+
+  const columns = [{ title: "Name" }, { title: "Last Update" }]
+  if (!config.chart.hideValueColumn) {
+    columns.push({ title: `Value${valueUnit}` })
+  }
+  columns.push({ title: "Status", transforms: [cellWidth(35), fitContent] })
 
   const rows = []
 
@@ -67,7 +67,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   }
 
   resources.forEach((resource) => {
-    rows.push([
+    const rowItems = [
       {
         title: (
           <Button
@@ -86,9 +86,14 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
           </span>
         ),
       },
-      { title: getResourceValue(resource) },
-      { title: getStatus(resource) },
-    ])
+    ]
+
+    if (!config.chart.hideValueColumn) {
+      rowItems.push({ title: getResourceValue(resource) })
+    }
+    rowItems.push({ title: getStatus(resource) })
+
+    rows.push(rowItems)
   })
 
   if (rows.length === 0) {
@@ -101,7 +106,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
       className="mc-utilization-table ut-table"
       aria-label="Utilization Table"
       variant={TableVariant.compact}
-      borders={true}
+      borders={!config.hideBorder}
       cells={columns}
       rows={rows}
     >
