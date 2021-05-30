@@ -168,7 +168,6 @@ const getField = (item, onChange) => {
           isValueDisabled={item.isValueDisabled}
           actionSpan={item.actionSpan}
           showUpdateButton={item.showUpdateButton}
-          callerType={item.callerType}
           onChange={onChange}
           validateKeyFunc={
             item.validateKeyFunc
@@ -178,8 +177,8 @@ const getField = (item, onChange) => {
                 }
           }
           valueField={getResourceDisplayValue}
-          updateButtonCallback={(index, item, onChange) =>
-            resourceUpdateButtonCallback(item.callerType, index, item, onChange)
+          updateButtonCallback={(cbIndex, cbItem, cbOnChange) =>
+            resourceUpdateButtonCallback(item.callerType, cbIndex, cbItem, cbOnChange)
           }
         />
       )
