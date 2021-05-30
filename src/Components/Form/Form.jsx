@@ -28,7 +28,12 @@ import ScriptEditor from "./ScriptEditor/ScriptEditor"
 import SimpleSlider from "./Slider/Simple"
 import ColorBox from "../Color/ColorBox/ColorBox"
 import MixedControlListForm from "./Widget/MixedControlList"
-import { getDisplayValue } from "./ResourcePicker/ResourceUtils"
+import { getResourceDisplayValue, resourceUpdateButtonCallback } from "./ResourcePicker/ResourceUtils"
+import {
+  chartYAxisConfigUpdateButtonCallback,
+  displayYAxisConfig,
+} from "./Widget/ChartsPanel/ChartYAxisConfigMapUtils"
+import MixedResourceConfigList from "./Widget/ChartsPanel/MixedResourceConfigList/MixedResourceConfigList"
 
 // item sample
 // const item = {
@@ -159,6 +164,8 @@ const getField = (item, onChange) => {
           keyValueMap={item.value}
           keyLabel={item.keyLabel}
           valueLabel={item.valueLabel}
+          isKeyDisabled={item.isKeyDisabled}
+          isValueDisabled={item.isValueDisabled}
           actionSpan={item.actionSpan}
           showUpdateButton={item.showUpdateButton}
           callerType={item.callerType}
@@ -170,7 +177,30 @@ const getField = (item, onChange) => {
                   return validate("isVariableKey", key)
                 }
           }
-          valueField={getDisplayValue}
+          valueField={getResourceDisplayValue}
+          updateButtonCallback={(index, item, onChange) =>
+            resourceUpdateButtonCallback(item.callerType, index, item, onChange)
+          }
+        />
+      )
+
+    case FieldType.ChartYAxisConfigMap:
+      return (
+        <KeyValueMapForm
+          key={item.fieldId}
+          keyValueMap={item.value}
+          keyLabel={"Axis"}
+          valueLabel={"Config"}
+          isKeyDisabled={true}
+          isValueDisabled={true}
+          actionSpan={0}
+          isActionDisabled={true}
+          showUpdateButton={true}
+          onChange={onChange}
+          validateKeyFunc={null}
+          forceSync={true}
+          valueField={displayYAxisConfig}
+          updateButtonCallback={chartYAxisConfigUpdateButtonCallback}
         />
       )
 
@@ -179,6 +209,24 @@ const getField = (item, onChange) => {
         <MixedControlListForm
           key={item.fieldId}
           valuesList={item.value}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          validateValueFunc={
+            item.validateValueFunc
+              ? item.validateValueFunc
+              : (value) => {
+                  return validate("isObject", value)
+                }
+          }
+        />
+      )
+
+    case FieldType.ChartMixedResourceConfig:
+      return (
+        <MixedResourceConfigList
+          key={item.fieldId}
+          valuesList={item.value}
+          yAxisConfig={item.yAxisConfig}
           valueLabel={item.valueLabel}
           onChange={onChange}
           validateValueFunc={

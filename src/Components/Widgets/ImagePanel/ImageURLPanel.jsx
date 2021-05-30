@@ -70,7 +70,7 @@ class ImageURLPanel extends React.Component {
     return (
       <Stack>
         <StackItem isFilled>
-          <img style={{ transform: `rotate(${rotation}deg)` }} src={finalUrl} />
+          <img style={{ transform: `rotate(${rotation}deg)` }} src={finalUrl} alt="dynamic data" />
         </StackItem>
         <StackItem></StackItem>
       </Stack>

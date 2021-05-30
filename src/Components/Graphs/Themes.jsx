@@ -15,6 +15,7 @@ export const areaTheme = {
   area: {
     style: {
       data: {
+        strokeWidth: 2,
         fillOpacity: 0.15,
       },
     },

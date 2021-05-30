@@ -199,40 +199,25 @@ class Metrics extends React.Component {
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
           <MetricDropdown
-            key="metric-dropdown-func"
-            label="Function"
+            key="metric-dropdown-duration"
+            label="Duration"
             dropdown={
               <Select
-                key="function-selection"
-                defaultValue={gaugeConfig.func}
-                options={MetricFunctionTypeOptions}
+                key="duration-selection"
+                defaultValue={gaugeConfig.duration}
+                options={DurationOptions}
                 title=""
-                onSelectionFunc={(newMetricFn) => {
-                  this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
+                onSelectionFunc={(newDuration) => {
+                  const newInterval = getRecommendedInterval(newDuration)
+                  this.onChangeFunc(
+                    { ...gaugeConfig, duration: newDuration, interval: newInterval },
+                    binaryConfig
+                  )
                 }}
               />
             }
           />
         </div>,
-        <MetricDropdown
-          key="metric-dropdown-duration"
-          label="Duration"
-          dropdown={
-            <Select
-              key="duration-selection"
-              defaultValue={gaugeConfig.duration}
-              options={DurationOptions}
-              title=""
-              onSelectionFunc={(newDuration) => {
-                const newInterval = getRecommendedInterval(newDuration)
-                this.onChangeFunc(
-                  { ...gaugeConfig, duration: newDuration, interval: newInterval },
-                  binaryConfig
-                )
-              }}
-            />
-          }
-        />,
         <MetricDropdown
           key="metric-dropdown-interval"
           label="Interval"
@@ -244,6 +229,21 @@ class Metrics extends React.Component {
               title=""
               onSelectionFunc={(newInterval) => {
                 this.onChangeFunc({ ...gaugeConfig, interval: newInterval }, binaryConfig)
+              }}
+            />
+          }
+        />,
+        <MetricDropdown
+          key="metric-dropdown-func"
+          label="Function"
+          dropdown={
+            <Select
+              key="function-selection"
+              defaultValue={gaugeConfig.func}
+              options={MetricFunctionTypeOptions}
+              title=""
+              onSelectionFunc={(newMetricFn) => {
+                this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
               }}
             />
           }
@@ -371,7 +371,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Metrics)
 const MetricDropdown = ({ label = "", dropdown }) => {
   return (
     <Flex>
-      <FlexItem spacer={{ default: "spacerXs" }}><small>{label}</small></FlexItem>
+      <FlexItem spacer={{ default: "spacerXs" }}>
+        <small>{label}</small>
+      </FlexItem>
       <FlexItem>{dropdown}</FlexItem>
     </Flex>
   )

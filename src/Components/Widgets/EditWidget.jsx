@@ -8,6 +8,7 @@ import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
 import { updateFormItemsLightPanel } from "./LightPanel/Edit"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import { updateFormItemsImagePanel } from "./ImagePanel/Edit"
+import { updateFormItemsChartsPanel } from "./ChartsPanel/Edit"
 
 const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }) => {
   return (
@@ -45,8 +46,20 @@ const getFormItems = (rootObject) => {
   const items = getPanelSettingsItems(rootObject)
 
   switch (rootObject.type) {
+    case WidgetType.ChartsPanel:
+      updateFormItemsChartsPanel(rootObject, items)
+      break
+
     case WidgetType.ControlPanel:
       updateFormItemsControlPanel(rootObject, items)
+      break
+
+    case WidgetType.EmptyPanel:
+      // noop
+      break
+
+    case WidgetType.ImagePanel:
+      updateFormItemsImagePanel(rootObject, items)
       break
 
     case WidgetType.LightPanel:
@@ -55,10 +68,6 @@ const getFormItems = (rootObject) => {
 
     case WidgetType.UtilizationPanel:
       updateFormItemsUtilizationPanel(rootObject, items)
-      break
-
-    case WidgetType.ImagePanel:
-      updateFormItemsImagePanel(rootObject, items)
       break
 
     default:

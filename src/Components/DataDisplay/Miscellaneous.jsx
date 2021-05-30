@@ -1,8 +1,9 @@
-import { List, ListItem } from "@patternfly/react-core"
+import { Label, List, ListItem, Split, SplitItem } from "@patternfly/react-core"
 
 import React from "react"
 import fileSize from "filesize"
 import { getValue } from "../../Util/Util"
+import { LastSeen } from "../Time/Time"
 
 export const DisplayEnabled = ({ data, field, defaultValue = false }) => {
   const value = getValue(data, field, defaultValue)
@@ -36,4 +37,19 @@ export const FileSize = ({ bytes = 0 }) => {
 
 export const DisplayImage = ({ data = "" }) => {
   return <img width="200" height="200" src={data} />
+}
+
+export const DisplayFieldValue = ({ value = "", timestamp = "" }) => {
+  return (
+    <Split hasGutter className="mc-resource-variables">
+      <SplitItem>
+        <Label variant="filled" color="grey">
+          <strong>{String(value)}</strong>
+        </Label>
+      </SplitItem>
+      <SplitItem>
+        <LastSeen date={timestamp} tooltipPosition="top" />
+      </SplitItem>
+    </Split>
+  )
 }

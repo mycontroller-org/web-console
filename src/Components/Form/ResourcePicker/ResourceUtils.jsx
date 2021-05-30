@@ -4,7 +4,9 @@ import UTF8 from "utf8"
 import { api } from "../../../Service/Api"
 import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
 import { getValue } from "../../../Util/Util"
+import React from "react"
 import { TextInput } from "@patternfly/react-core"
+import ResourcePicker from "./ResourcePicker"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
   const dataType = getValue(rootObject, "type", FieldDataType.TypeString)
@@ -200,7 +202,7 @@ export const getOptionsDescriptionFunc = (resourceType) => {
 }
 
 // returns variable value to display on variables list
-export const getDisplayValue = (index, value, _onChange, validated) => {
+export const getResourceDisplayValue = (index, value, _onChange, validated, _isDisabled) => {
   let textValue = null
   try {
     const objValue = JSON.parse(value)
@@ -216,6 +218,22 @@ export const getDisplayValue = (index, value, _onChange, validated) => {
       value={textValue}
       isDisabled={true}
       validated={validated}
+    />
+  )
+}
+
+// calls the model to update the resource details
+export const resourceUpdateButtonCallback = (callerType, index = 0, item = {}, onChange) => {
+  return (
+    <ResourcePicker
+      key={"picker_" + index}
+      value={item.value}
+      name={item.key}
+      id={"model_" + index}
+      callerType={callerType}
+      onChange={(newValue) => {
+        onChange(index, "value", newValue)
+      }}
     />
   )
 }

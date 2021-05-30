@@ -14,7 +14,6 @@ import React from "react"
 import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
-import ResourcePicker from "./ResourcePicker/ResourcePicker"
 
 class KeyValueMapForm extends React.Component {
   state = {
@@ -22,9 +21,18 @@ class KeyValueMapForm extends React.Component {
   }
 
   updateItems = () => {
-    const { keyValueMap } = this.props
+    const { keyValueMap, forceSync = false } = this.props
 
     if (!keyValueMap) {
+      return
+    }
+
+    if (forceSync) {
+      const keys = Object.keys(keyValueMap) // reload all the keys
+      const newItems = keys.map((key) => {
+        return { key, value: keyValueMap[key] }
+      })
+      this.setState({ items: newItems })
       return
     }
 
@@ -121,9 +129,12 @@ class KeyValueMapForm extends React.Component {
       keyLabel,
       valueLabel,
       actionSpan = 1,
-      showUpdateButton,
-      callerType,
+      isActionDisabled = false,
+      showUpdateButton = false,
+      updateButtonCallback = () => {},
       valueField = getValueField,
+      isKeyDisabled = false,
+      isValueDisabled = false,
     } = this.props
     const keys = []
 
@@ -154,18 +165,7 @@ class KeyValueMapForm extends React.Component {
           <AddCircleOIcon key={"add-btn" + index} onClick={this.onAdd} className="btn-add icon-btn" />
         ) : null
 
-      const updateButton = showUpdateButton ? (
-        <ResourcePicker
-          key={"picker_" + index}
-          value={item.value}
-          name={item.key}
-          id={"model_" + index}
-          callerType={callerType}
-          onChange={(newValue) => {
-            this.onChange(index, "value", newValue)
-          }}
-        />
-      ) : null
+      const updateButton = showUpdateButton ? updateButtonCallback(index, item, this.onChange) : null
       return (
         <>
           <GridItem span={4}>
@@ -174,6 +174,7 @@ class KeyValueMapForm extends React.Component {
               key={"key_" + index}
               value={item.key}
               validated={validatedKey}
+              isDisabled={isKeyDisabled}
               onChange={(newValue) => {
                 this.onChange(index, "key", newValue)
               }}
@@ -183,22 +184,24 @@ class KeyValueMapForm extends React.Component {
           <GridItem span={8 - actionSpan}>
             <Split>
               <SplitItem isFilled>
-                {valueField(index, item.value, this.onChange, validatedValue)}
+                {valueField(index, item.value, this.onChange, validatedValue, isValueDisabled)}
               </SplitItem>
               <SplitItem>{updateButton}</SplitItem>
             </Split>
           </GridItem>
           <GridItem span={actionSpan}>
-            <Bullseye className="btn-layout">
-              <Split hasGutter className="btn-split">
-                <MinusCircleIcon
-                  key={"btn-remove-" + index}
-                  onClick={() => this.onDelete(index)}
-                  className="btn-remove icon-btn"
-                />
-                {addButton}
-              </Split>
-            </Bullseye>
+            {isActionDisabled ? null : (
+              <Bullseye className="btn-layout">
+                <Split hasGutter className="btn-split">
+                  <MinusCircleIcon
+                    key={"btn-remove-" + index}
+                    onClick={() => this.onDelete(index)}
+                    className="btn-remove icon-btn"
+                  />
+                  {addButton}
+                </Split>
+              </Bullseye>
+            )}
           </GridItem>
         </>
       )
@@ -206,7 +209,7 @@ class KeyValueMapForm extends React.Component {
 
     if (!items || items.length === 0) {
       formItems.push(
-        <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd}>
+        <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd} isDisabled={isActionDisabled}>
           Add an item
         </Button>
       )
@@ -235,26 +238,31 @@ class KeyValueMapForm extends React.Component {
 KeyValueMapForm.propTypes = {
   keyLabel: PropTypes.string,
   valueLabel: PropTypes.string,
+  isKeyDisabled: PropTypes.bool,
+  isValueDisabled: PropTypes.bool,
   actionSpan: PropTypes.number,
+  isActionDisabled: PropTypes.bool,
   keyValueMap: PropTypes.object,
   validateKeyFunc: PropTypes.func,
   validateValueFunc: PropTypes.func,
   showUpdateButton: PropTypes.bool,
-  callerType: PropTypes.string,
+  updateButtonCallback: PropTypes.func,
   valueField: PropTypes.func,
+  forceSync: PropTypes.bool,
 }
 
 export default KeyValueMapForm
 
 // helper functions
 
-const getValueField = (index, value, onChange, validated) => {
+const getValueField = (index, value, onChange, validated, isDisabled = false) => {
   return (
     <TextInput
       id={"value_id_" + index}
       key={"value_" + index}
       value={value}
       validated={validated}
+      isDisabled={isDisabled}
       onChange={(newValue) => {
         onChange(index, "value", newValue)
       }}

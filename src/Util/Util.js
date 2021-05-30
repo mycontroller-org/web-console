@@ -26,14 +26,17 @@ export const splitWithTail = (str = "", separator, limit) => {
   return result
 }
 
-export const getItem = (value, options) => {
+export const getItem = (value, options, defaultIndex = 0, key = "value") => {
   for (let index = 0; index < options.length; index++) {
     const item = options[index]
-    if (value === item.value) {
+    if (value === item[key]) {
       return item
     }
   }
-  return options[0]
+  if (defaultIndex >= 0 && defaultIndex < options.length) {
+    return options[defaultIndex]
+  }
+  return null
 }
 
 export const capitalizeFirstLetter = (value) => {

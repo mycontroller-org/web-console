@@ -12,6 +12,7 @@ import UtilizationPanel from "./UtilizationPanel/UtilizationPanel"
 import "./Widget.scss"
 import ControlPanel from "./ControlPanel/ControlPanel"
 import ImagePanel from "./ImagePanel/ImagePanel"
+import ChartsPanel from "./ChartsPanel/ChartsPanal"
 
 export const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, history) => {
   const items = []
@@ -51,6 +52,17 @@ const loadPanel = (widget, history, widgetKey, dimensions) => {
   switch (widget.type) {
     case WidgetType.EmptyPanel:
       return <EmptyPanel widgetId={widget.id} key={widgetKey} dimensions={dimensions} />
+
+    case WidgetType.ChartsPanel:
+      return (
+        <ChartsPanel
+          key={widgetKey}
+          widgetId={widget.id}
+          config={widget.config}
+          history={history}
+          dimensions={dimensions}
+        />
+      )
 
     case WidgetType.ControlPanel:
       return (

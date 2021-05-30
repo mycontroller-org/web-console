@@ -1,13 +1,13 @@
 // image panel types
 export const ImageSourceType = {
-  CameraSimple: "camera_simple",
+  ImageFromField: "image_from_field",
   URL: "url",
   Disk: "disk",
 }
 
 // image panel options
 export const ImageSourceTypeOptions = [
-  { value: ImageSourceType.CameraSimple, label: "Simple Camera", description: "Camera image from a field" },
+  { value: ImageSourceType.ImageFromField, label: "Image From Field", description: "Image data from a field resource" },
   { value: ImageSourceType.URL, label: "URL", description: "Image from a url" },
   { value: ImageSourceType.Disk, label: "Disk", description: "Image from a disk location" },
 ]

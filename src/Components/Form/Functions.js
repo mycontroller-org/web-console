@@ -64,6 +64,7 @@ export const updateItems = (rootObject, items) => {
       case FieldType.ThresholdsColor:
       case FieldType.DateRangePicker:
       case FieldType.TimeRangePicker:
+      case FieldType.ChartYAxisConfigMap:
         item.value = objectPath.get(rootObject, item.fieldId, {})
         if (item.value === null) {
           item.value = {}
@@ -73,6 +74,7 @@ export const updateItems = (rootObject, items) => {
       case FieldType.DynamicArray:
       case FieldType.ConditionsArrayMap:
       case FieldType.MixedControlList:
+      case FieldType.ChartMixedResourceConfig:
         item.value = objectPath.get(rootObject, item.fieldId, [])
         if (item.value === null) {
           item.value = []

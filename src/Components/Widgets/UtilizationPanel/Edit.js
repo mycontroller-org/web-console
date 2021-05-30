@@ -1,4 +1,4 @@
-import { ResourceTypeOptions } from "../../../Constants/Resource"
+import { ResourceType, ResourceTypeOptions } from "../../../Constants/Resource"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
@@ -10,6 +10,7 @@ import {
   getRecommendedInterval,
   InterpolationType,
   InterpolationTypeLineOptions,
+  MetricFunctionType,
   MetricFunctionTypeOptions,
   RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
@@ -36,23 +37,16 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     objectPath.set(rootObject, "config.chart.columnDisplay", false, false)
   }
 
-  items.push(
-    {
-      label: "Chart",
-      fieldId: "!chart",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "Type",
-      fieldId: "config.chart.type",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      value: "",
-      options: ChartTypeOptions,
-      isRequired: true,
-      validator: { isNotEmpty: {} },
-    }
-  )
+  items.push({
+    label: "Type",
+    fieldId: "config.chart.type",
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    value: "",
+    options: ChartTypeOptions,
+    isRequired: true,
+    validator: { isNotEmpty: {} },
+  })
 
   switch (chartType) {
     case ChartType.CircleSize50:
@@ -76,6 +70,15 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
     default:
   }
+
+  // set default values
+  objectPath.set(rootObject, "config.resource.type", ResourceType.Field, true)
+  objectPath.set(rootObject, "config.resource.displayName", true, true)
+  objectPath.set(rootObject, "config.resource.nameKey", "name", true)
+  objectPath.set(rootObject, "config.resource.valueKey", "current.value", true)
+  objectPath.set(rootObject, "config.resource.valueTimestampKey", "current.timestamp", true)
+  objectPath.set(rootObject, "config.resource.roundDecimal", 0, true)
+  // objectPath.set(rootObject, "config.resource.limit", 1, true)
 
   items.push(
     {
@@ -132,6 +135,18 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
+      label: "Timestamp Key",
+      fieldId: "config.resource.valueTimestampKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Timestamp Key. chars: min=1 and max=100",
+      validated: "default",
+      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
+    },
+    {
       label: "Round Decimal",
       fieldId: "config.resource.roundDecimal",
       fieldType: FieldType.Text,
@@ -146,18 +161,6 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       dataType: DataType.String,
       value: "",
       isRequired: false,
-    },
-    {
-      label: "Timestamp Key",
-      fieldId: "config.resource.valueTimestampKey",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid Timestamp Key. chars: min=1 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     }
   )
 
@@ -208,6 +211,11 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
   objectPath.set(rootObject, "config.resource.displayName", true, false)
 
   const items = [
+    {
+      label: "Config",
+      fieldId: "!config",
+      fieldType: FieldType.Divider,
+    },
     {
       label: "Minimum Value",
       fieldId: "config.chart.minimumValue",
@@ -307,13 +315,20 @@ const getSparkLineItems = (rootObject) => {
   objectPath.set(
     rootObject,
     "config.chart.interval",
-    getRecommendedInterval(getValue(rootObject, "config.chart.interval", "")),
+    getRecommendedInterval(getValue(rootObject, "config.chart.duration", "")),
     true
   )
   objectPath.set(rootObject, "config.chart.cornerSmoothing", 2, true)
   objectPath.set(rootObject, "config.chart.height", 70, true)
+  objectPath.set(rootObject, "config.chart.refreshInterval", 0, true)
+  objectPath.set(rootObject, "config.chart.metricFunction", MetricFunctionType.Percentile99, true)
 
   const items = [
+    {
+      label: "Metric Config",
+      fieldId: "!metric_config",
+      fieldType: FieldType.Divider,
+    },
     {
       label: "Duration",
       fieldId: "config.chart.duration",
@@ -350,13 +365,39 @@ const getSparkLineItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Color",
-      fieldId: "config.chart.color",
-      fieldType: FieldType.ColorBox,
+      label: "Refresh Interval",
+      fieldId: "config.chart.refreshInterval",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.Integer,
+      value: "",
+      options: RefreshIntervalTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Chart Config",
+      fieldId: "!chart_config",
+      fieldType: FieldType.Divider,
+    },
+  ]
+
+  const chartType = getValue(rootObject, "config.chart.type", "")
+
+  if (chartType !== ChartType.SparkBar) {
+    objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Basis, true)
+    items.push({
+      label: "Interpolation",
+      fieldId: "config.chart.interpolation",
+      fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
-      colors: ColorsSetBig,
-    },
+      options: InterpolationTypeLineOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    })
+  }
+
+  items.push(
     {
       label: "Height (px)",
       fieldId: "config.chart.height",
@@ -369,39 +410,43 @@ const getSparkLineItems = (rootObject) => {
       validated: "default",
       validator: { isNotEmpty: {} },
     },
-  ]
+    {
+      label: "Color",
+      fieldId: "config.chart.color",
+      fieldType: FieldType.ColorBox,
+      dataType: DataType.String,
+      value: "",
+      colors: ColorsSetBig,
+    }
+  )
 
-  const chartType = getValue(rootObject, "config.chart.type", "")
-
-  if (chartType === ChartType.SparkLine || chartType === ChartType.SparkArea) {
-    objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
-    objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Basis, true)
-
-    items.push(
-      {
-        label: "Stroke Width",
-        fieldId: "config.chart.strokeWidth",
-        fieldType: FieldType.SliderSimple,
-        dataType: DataType.Integer,
-        value: "",
-        min: 1,
-        max: 20,
-        step: 1,
-      },
-      {
-        label: "Interpolation",
-        fieldId: "config.chart.interpolation",
-        fieldType: FieldType.SelectTypeAhead,
-        dataType: DataType.String,
-        value: "",
-        options: InterpolationTypeLineOptions,
-        isRequired: true,
-        validator: { isNotEmpty: {} },
-      }
-    )
+  if (chartType !== ChartType.SparkLine) {
+    objectPath.set(rootObject, "config.chart.fillOpacity", 2, true)
+    items.push({
+      label: "Fill Opacity (%)",
+      fieldId: "config.chart.fillOpacity",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Integer,
+      value: "",
+      min: 1,
+      max: 100,
+      step: 1,
+    })
   }
 
+  objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
+
   items.push(
+    {
+      label: "Stroke Width",
+      fieldId: "config.chart.strokeWidth",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Float,
+      value: "",
+      min: 0,
+      max: 20,
+      step: 0.5,
+    },
     {
       label: "Min (Y Axis)",
       fieldId: "config.chart.yAxisMinValue",
@@ -419,18 +464,6 @@ const getSparkLineItems = (rootObject) => {
       isRequired: false,
     }
   )
-
-  objectPath.set(rootObject, "config.chart.refreshInterval", 0, true)
-  items.push({
-    label: "Refresh Interval",
-    fieldId: "config.chart.refreshInterval",
-    fieldType: FieldType.SelectTypeAhead,
-    dataType: DataType.Integer,
-    value: "",
-    options: RefreshIntervalTypeOptions,
-    isRequired: true,
-    validator: { isNotEmpty: {} },
-  })
 
   return items
 }

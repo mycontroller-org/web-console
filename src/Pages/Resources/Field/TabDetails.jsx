@@ -1,8 +1,11 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { DisplayFieldValue } from "../../../Components/DataDisplay/Miscellaneous"
 import { LastSeen } from "../../../Components/Time/Time"
+import { MetricTypeOptions } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
+import { getItem, getValue } from "../../../Util/Util"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -34,11 +37,30 @@ const getDetailsFuncImpl = (data) => {
 
   fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
   fieldsList2.push({ key: "Others", value: <KeyValueMap data={data.others} /> })
-  fieldsList2.push({ key: "Metric Type", value: data.metricType })
+  fieldsList2.push({ key: "Metric Type", value: getItem(data.metricType, MetricTypeOptions).label })
   fieldsList2.push({ key: "Unit", value: data.unit })
-  fieldsList2.push({ key: "No Change Since", value: <LastSeen date={data.noChangeSince} tooltipPosition="top" /> })
-  fieldsList2.push({ key: "Value", value: <KeyValueMap data={data.current} /> })
-  fieldsList2.push({ key: "Previous Value", value: <KeyValueMap data={data.previous} /> })
+  fieldsList2.push({
+    key: "No Change Since",
+    value: <LastSeen date={data.noChangeSince} tooltipPosition="top" />,
+  })
+  fieldsList2.push({
+    key: "Value",
+    value: (
+      <DisplayFieldValue
+        value={getValue(data, "current.value", "")}
+        timestamp={getValue(data, "current.timestamp", "")}
+      />
+    ),
+  })
+  fieldsList2.push({
+    key: "Previous Value",
+    value: (
+      <DisplayFieldValue
+        value={getValue(data, "previous.value", "")}
+        timestamp={getValue(data, "previous.timestamp", "")}
+      />
+    ),
+  })
 
   return {
     "list-1": fieldsList1,

@@ -26,7 +26,7 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
       options: ImageSourceTypeOptions,
       isRequired: true,
       validator: { isNotEmpty: {} },
-      // resetFields: { "config.fieldIds": {}, "config.rgbComponent": "" },
+      // resetFields: { "config.fieldIds": {}, "config...": "" },
     },
     {
       label: "Rotation",
@@ -43,7 +43,7 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
   const imageSourceType = objectPath.get(rootObject, "config.sourceType", "")
 
   switch (imageSourceType) {
-    case ImageSourceType.CameraSimple:
+    case ImageSourceType.ImageFromField:
       const simpleCameraItems = getSimpleCameraItems(rootObject)
       items.push(...simpleCameraItems)
       break

@@ -7,6 +7,7 @@ import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { v4 as uuidv4 } from "uuid"
 import objectPath from "object-path"
+import { MetricTypeOptions } from "../../../Constants/Metric"
 
 class UpdatePage extends React.Component {
   state = {
@@ -162,6 +163,24 @@ const getFormItems = (rootObject) => {
       helperTextInvalid: "Invalid name. chars: min=2 and max=100",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
+    },
+    {
+      label: "Unit",
+      fieldId: "unit",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "Metric Type",
+      fieldId: "metricType",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: MetricTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
     },
     {
       label: "Labels",

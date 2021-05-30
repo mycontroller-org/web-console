@@ -40,4 +40,6 @@ export const FieldType = {
   ToggleButtonGroup: "toggle_button_group",
   ScriptEditor: "script_editor",
   SliderSimple: "slider_simple",
+  ChartYAxisConfigMap:"chart_y_axis_config_map",
+  ChartMixedResourceConfig:"chart_mixed_resource_config"
 }

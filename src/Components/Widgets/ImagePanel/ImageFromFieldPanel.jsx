@@ -13,9 +13,9 @@ import { getValue } from "../../../Util/Util"
 import lodash from "lodash"
 import { navigateToResource } from "../Helper/Resource"
 
-const wsKey = "dashboard_image_panel_camera_simple"
+const wsKey = "dashboard_image_panel_image_from_field"
 
-class CameraSimple extends React.Component {
+class ImageFromFieldPanel extends React.Component {
   state = {
     isLoading: true,
     error: "",
@@ -91,6 +91,7 @@ class CameraSimple extends React.Component {
             style={{ transform: `rotate(${rotation}deg)`, objectFit: "contain" }}
             src={getValue(resources, "image.current.value", "")}
             align="left"
+            alt="dynamic data"
           />
         </StackItem>
         <StackItem>
@@ -117,7 +118,7 @@ class CameraSimple extends React.Component {
   }
 }
 
-CameraSimple.propTypes = {
+ImageFromFieldPanel.propTypes = {
   config: PropTypes.object,
 }
 
@@ -130,4 +131,4 @@ const mapDispatchToProps = (dispatch) => ({
   unloadData: (data) => dispatch(unloadData(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CameraSimple)
+export default connect(mapStateToProps, mapDispatchToProps)(ImageFromFieldPanel)

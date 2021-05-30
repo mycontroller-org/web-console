@@ -10,19 +10,7 @@ import "./Common.scss"
 import InputField from "./InputField"
 import { navigateToResource } from "../../Helper/Resource"
 import SliderControl from "./SliderControl"
-import {
-  Bullseye,
-  Button,
-  Divider,
-  Grid,
-  GridItem,
-  Level,
-  LevelItem,
-  Split,
-  SplitItem,
-  Stack,
-  StackItem,
-} from "@patternfly/react-core"
+import { Button, Divider, Split, SplitItem, Stack, StackItem } from "@patternfly/react-core"
 
 const columns = [{ title: "Name" }, "Last Update", ""]
 
@@ -242,7 +230,7 @@ const ControlObjects = ({
   const switches = rows.map((row, _index) => {
     const dividerComponent = resources.length > 1 ? divider : null
     return (
-      <StackItem style={{marginBottom:"6px"}}>
+      <StackItem style={{ marginBottom: "6px" }}>
         <Split hasGutter>
           <SplitItem>{row[0].title}</SplitItem>
           <SplitItem isFilled>{row[1].title}</SplitItem>

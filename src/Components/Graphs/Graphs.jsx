@@ -8,6 +8,7 @@ import {
   ChartThemeColor,
   getCustomTheme,
   ChartThemeVariant,
+  ChartTooltip,
 } from "@patternfly/react-charts"
 
 import { areaTheme } from "./Themes"
@@ -34,8 +35,8 @@ export const LineChart = ({
         containerComponent={
           <ChartVoronoiContainer
             mouseFollowTooltips={false}
-            //radius={20}
             constrainToVisibleArea
+            labelComponent={<ChartTooltip cornerRadius={3} />}
             labels={({ datum }) => {
               if (datum.y || datum.y === 0) {
                 // round decimal number
@@ -50,31 +51,28 @@ export const LineChart = ({
         theme={theme}
         height={height}
         width={width}
-        // padding={{
-        //   bottom: 45, // Adjusted to accommodate legend
-        //   left: 75,
-        //   right: 5,
-        //   top: 5,
-        // }}
         domainPadding={{ y: 20 }}
         scale={{ x: "time", y: "linear" }}
         minDomain={{ y: minDomainY }}
         //themeColor={ChartThemeColor.default}
       >
-        <ChartAxis tickCount={tickCountX} />
+        <ChartAxis showGrid fixLabelOverlap />
         <ChartAxis
           dependentAxis
           showGrid
-          tickCount={tickCountY}
+          fixLabelOverlap
           tickFormat={(tick) => {
             if (tick) {
+              if (tick % 1 !== 0) {
+                return `${tick.toFixed(2)} ${unit}`
+              }
               return `${tick} ${unit}`
             }
-            return `${tick} ${unit}`
+            return "-"
           }}
         />
         <ChartGroup>
-          <ChartArea interpolation={interpolation} data={data} style={{ labels: { fontSize: "14px" } }} />
+          <ChartArea interpolation={interpolation} data={data} />
         </ChartGroup>
       </Chart>
     </div>

@@ -1,6 +1,7 @@
 import React from "react"
 import {
   ChartArea,
+  ChartTooltip,
   ChartBar,
   ChartGroup,
   ChartLine,
@@ -19,6 +20,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
+  const fillOpacity = getValue(config, "chart.fillOpacity", 2)
   const chartInterpolation = getValue(config, "chart.interpolation", InterpolationType.Basis)
   const metricFunction = getValue(config, "chart.metricFunction", "")
   const unit = getValue(config, "resource.unit", "")
@@ -40,48 +42,45 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
   let metricsChart = null
 
   if (isMetricDataAvailable) {
-    let chart = null
-    let padding = 0
+    let ChartSelected = null
 
     switch (chartType) {
       case ChartType.SparkArea:
-        chart = (
-          <ChartArea
-            style={{
-              data: {
-                fill: chartColor,
-                fillOpacity: 0.3,
-                stroke: chartColor,
-                strokeWidth: strokeWidth,
-              },
-            }}
-            interpolation={chartInterpolation}
-            animate={false}
-            data={metric.data}
-          />
-        )
-        // padding = { bottom: -5, left: -2, right: -2 }
+        ChartSelected = ChartArea
         break
 
       case ChartType.SparkLine:
-        chart = (
-          <ChartLine
-            style={{ data: { strokeWidth: strokeWidth } }}
-            interpolation={chartInterpolation}
-            animate={false}
-            data={metric.data}
-          />
-        )
+        ChartSelected = ChartLine
         break
 
       case ChartType.SparkBar:
-        chart = <ChartBar animate={false} data={metric.data} />
+        ChartSelected = ChartBar
+        // chart = <ChartBar animate={false} data={metric.data} />
         break
 
       default:
     }
 
-    const minValue = metric.minValue !== undefined ? metric.minValue - metric.minValue * 0.05 : 0
+    const chart = (
+      <ChartSelected
+        style={{
+          data: {
+            // fill: chartColor, // this color is handled on chartGroup properties
+            fillOpacity: fillOpacity / 100,
+            stroke: chartColor,
+            strokeWidth: strokeWidth,
+          },
+        }}
+        interpolation={chartInterpolation}
+        animate={false}
+        data={metric.data}
+      />
+    )
+
+    const minValue =
+      metric.minValue !== undefined && metric.minValue !== Number.POSITIVE_INFINITY
+        ? metric.minValue * 0.995
+        : 0
     metricsChart = (
       <div className="metrics-chart" style={{ height: `${chartHeight}px`, width: `${chartWidth}px` }}>
         <ChartGroup
@@ -95,6 +94,9 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
           containerComponent={
             <ChartVoronoiContainer
               labels={({ datum }) => {
+                if (datum.y === null) {
+                  return null
+                }
                 if (datum.y || datum.y === 0) {
                   // round decimal number
                   const yValue = datum.y % 1 === 0 ? datum.y : datum.y.toFixed(roundDecimal)
@@ -102,10 +104,11 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
                 }
                 return null
               }}
+              labelComponent={<ChartTooltip cornerRadius={0} />}
               constrainToVisibleArea
             />
           }
-          padding={padding}
+          padding={0}
           color={chartColor}
           scale={{ x: "time", y: "linear" }}
         >

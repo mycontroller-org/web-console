@@ -1,15 +1,15 @@
 import React from "react"
 import { ImageSourceType } from "../../../Constants/Widgets/ImagePanel"
 import { getValue } from "../../../Util/Util"
-import CameraSimple from "./CameraSimplePanel"
+import ImageFromFieldPanel from "./ImageFromFieldPanel"
 import ImageURLPanel from "./ImageURLPanel"
 
 const ImagePanel = ({ widgetId = "", config = {}, history = {}, dimensions = {} }) => {
   const sourceType = getValue(config, "sourceType", "")
 
   switch (sourceType) {
-    case ImageSourceType.CameraSimple:
-      return <CameraSimple widgetId={widgetId} config={config} history={history} dimensions={dimensions} />
+    case ImageSourceType.ImageFromField:
+      return <ImageFromFieldPanel widgetId={widgetId} config={config} history={history} dimensions={dimensions} />
 
     case ImageSourceType.Disk:
     case ImageSourceType.URL:
