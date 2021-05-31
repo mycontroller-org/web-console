@@ -438,7 +438,7 @@ const getSparkLineItems = (rootObject) => {
 
   items.push(
     {
-      label: "Stroke Width",
+      label: "Stroke Width (px)",
       fieldId: "config.chart.strokeWidth",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Float,

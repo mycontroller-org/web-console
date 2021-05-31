@@ -5,13 +5,19 @@ import {
   ChartGroupTypeOptions,
   LegendPositionTypeOptions,
   LegendOrientationTypeOptions,
+  LegendPositionType,
+  LegendOrientationType,
 } from "../../../Constants/Widgets/ChartsPanel"
 import {
   AggregationIntervalOptions,
+  Duration,
   DurationOptions,
   getRecommendedInterval,
+  InterpolationType,
   InterpolationTypeLineOptions,
+  MetricFunctionType,
   MetricFunctionTypeOptions,
+  RefreshIntervalType,
   RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
 import { getValue } from "../../../Util/Util"
@@ -57,21 +63,15 @@ export const updateFormItemsChartsPanel = (rootObject, items = []) => {
     default:
     //noop
   }
-
-  // const selectedChartType = objectPath.get(rootObject, "config.chartType", "")
-  //
-  // switch (selectedChartType) {
-  //   case ChartType.AreaChart:
-  //     const areaChartItems = getAreaChartItems(rootObject)
-  //     items.push(...areaChartItems)
-  //     break
-  //
-  //   default:
-  //   // noop
-  // }
 }
 
-const getGlobalConfigItems = (_rootObject) => {
+const getGlobalConfigItems = (rootObject) => {
+  // update default values
+  objectPath.set(rootObject, "config.chart.fillOpacity", 5, true)
+  objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
+  objectPath.set(rootObject, "config.chart.roundDecimal", 0, true)
+  objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Natural, true)
+
   const items = [
     {
       label: "Global Config",
@@ -89,12 +89,12 @@ const getGlobalConfigItems = (_rootObject) => {
       step: 1,
     },
     {
-      label: "Stroke Width",
+      label: "Stroke Width (px)",
       fieldId: "config.chart.strokeWidth",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Float,
       value: "",
-      min: 0.5,
+      min: 0,
       max: 20,
       step: 0.5,
     },
@@ -123,7 +123,18 @@ const getGlobalConfigItems = (_rootObject) => {
   return items
 }
 
-const getMetricConfigItems = (_rootObject) => {
+const getMetricConfigItems = (rootObject) => {
+  // update default values
+  objectPath.set(rootObject, "config.chart.duration", Duration.Last6Hours, true)
+  objectPath.set(
+    rootObject,
+    "config.chart.interval",
+    getRecommendedInterval(getValue(rootObject, "config.chart.duration", "")),
+    true
+  )
+  objectPath.set(rootObject, "config.chart.metricFunction", MetricFunctionType.Percentile99, true)
+  objectPath.set(rootObject, "config.chart.refreshInterval", RefreshIntervalType.None, true)
+
   const items = [
     {
       label: "Metric Config",
@@ -181,7 +192,20 @@ const getMetricConfigItems = (_rootObject) => {
   return items
 }
 
-const getChartConfigItems = (_rootObject) => {
+const getChartConfigItems = (rootObject) => {
+  // update default values
+  objectPath.set(rootObject, "config.chart.showGridX", false, true)
+  objectPath.set(rootObject, "config.chart.showGridY", false, true)
+  objectPath.set(rootObject, "config.chart.cursorTooltip", true, true)
+  objectPath.set(rootObject, "config.chart.stackCharts", false, true)
+  objectPath.set(rootObject, "config.chart.height", 250, true)
+  objectPath.set(rootObject, "config.chart.legendPosition", LegendPositionType.BottomLeft, true)
+  objectPath.set(rootObject, "config.chart.legendOrientation", LegendOrientationType.Horizontal, true)
+  objectPath.set(rootObject, "config.chart.padding.top", 5, true)
+  objectPath.set(rootObject, "config.chart.padding.right", 30, true)
+  objectPath.set(rootObject, "config.chart.padding.bottom",55, true)
+  objectPath.set(rootObject, "config.chart.padding.left", 70, true)
+
   const items = [
     {
       label: "Chart Config",

@@ -73,12 +73,22 @@ export default ChartYAxisConfigMap
 
 const getItems = (rootObject) => {
   // set default values
-  objectPath.set(rootObject, "color", "", true)
-  objectPath.set(rootObject, "offsetY", "", true)
-  objectPath.set(rootObject, "roundDecimal", "", true)
+  objectPath.set(rootObject, "offsetY", 0, true)
+  objectPath.set(rootObject, "color", "#4f5255", true)
+  objectPath.set(rootObject, "roundDecimal", 0, true)
   objectPath.set(rootObject, "unit", "", true)
 
   const items = [
+    {
+      label: "Offset Y (%)",
+      fieldId: "offsetY",
+      fieldType: FieldType.SliderSimple,
+      dataType: DataType.Integer,
+      value: "",
+      min: 0,
+      max: 100,
+      step: 1,
+    },
     {
       label: "Color",
       fieldId: "color",
@@ -90,28 +100,14 @@ const getItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Offset Y (%)",
-      fieldId: "offsetY",
-      fieldType: FieldType.Text,
-      dataType: DataType.Integer,
-      isRequired: true,
-      value: "",
-      helperText: "",
-      helperTextInvalid: "Enter a valid offset between 0 to 100",
-      validated: "default",
-      validator: { isNotEmpty: {}, isInteger: { min: 0, max: 100 } },
-    },
-    {
       label: "Round Decimal",
       fieldId: "roundDecimal",
-      fieldType: FieldType.Text,
+      fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
-      isRequired: true,
       value: "",
-      helperText: "",
-      helperTextInvalid: "Enter a valid number",
-      validated: "default",
-      validator: { isNotEmpty: {}, isInteger: { min: 0 } },
+      min: 0,
+      max: 10,
+      step: 1,
     },
     {
       label: "Unit",
