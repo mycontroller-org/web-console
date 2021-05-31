@@ -205,10 +205,13 @@ const MultipleAxes = ({ width = 300, chartConfig = {}, metrics = [], backgroundC
     })
 
     const styleData = {
-      fill: metricData.color,
       fillOpacity: styleConfig.fillOpacity,
-      stroke: metricData.color,
       strokeWidth: styleConfig.strokeWidth,
+    }
+
+    if (metricData.color !== undefined && metricData.color !== "") {
+      styleData.fill = metricData.color
+      styleData.stroke = metricData.color
     }
 
     let ChartSelected = null

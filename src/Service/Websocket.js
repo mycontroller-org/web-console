@@ -58,6 +58,8 @@ export const wsDisconnect = () => {
   if (wsClient != null) {
     const _wsClient = wsClient
     wsClient = null
-    _wsClient.close()
+    if (_wsClient!==null){
+      _wsClient.close()
+    }
   }
 }

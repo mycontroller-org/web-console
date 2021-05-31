@@ -7,6 +7,8 @@ import {
   LegendOrientationTypeOptions,
   LegendPositionType,
   LegendOrientationType,
+  ChartTypeOptions,
+  ChartType,
 } from "../../../Constants/Widgets/ChartsPanel"
 import {
   AggregationIntervalOptions,
@@ -21,6 +23,7 @@ import {
   RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
 import { getValue } from "../../../Util/Util"
+import { ResourceType, ResourceTypeOptions } from "../../../Constants/ResourcePicker"
 
 // Charts Panel items
 export const updateFormItemsChartsPanel = (rootObject, items = []) => {
@@ -30,10 +33,10 @@ export const updateFormItemsChartsPanel = (rootObject, items = []) => {
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
     value: "",
-    options: ChartGroupTypeOptions.filter((opt) => opt.value === ChartGroupType.MixedChart),
+    options: ChartGroupTypeOptions.filter((opt) => opt.value !== ChartGroupType.PieChart),
     isRequired: true,
     validator: { isNotEmpty: {} },
-    // resetFields: { "config.fieldIds": {}, "config.abc": "" },
+    resetFields: { "config.resource": {}, "config.resources": [] },
   })
 
   const selectedSubType = objectPath.get(rootObject, "config.subType", "")
@@ -53,6 +56,12 @@ export const updateFormItemsChartsPanel = (rootObject, items = []) => {
 
         const resources = getResourceConfigItems(rootObject)
         items.push(...resources)
+      } else {
+        const axisConfigItems = getAxisYConfigItems(rootObject, true)
+        items.push(...axisConfigItems)
+
+        const resources = getGroupChartResourceConfigItems(rootObject)
+        items.push(...resources)
       }
 
       const chartConfigItems = getChartConfigItems(rootObject)
@@ -71,6 +80,8 @@ const getGlobalConfigItems = (rootObject) => {
   objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
   objectPath.set(rootObject, "config.chart.roundDecimal", 0, true)
   objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Natural, true)
+
+  const subType = getValue(rootObject, "config.subType", ChartGroupType.GroupChart)
 
   const items = [
     {
@@ -119,6 +130,24 @@ const getGlobalConfigItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
   ]
+
+  if (subType === ChartGroupType.GroupChart) {
+    objectPath.set(rootObject, "config.chart.chartType", ChartType.AreaChart, true)
+    items.push({
+      label: "Chart Type",
+      fieldId: "config.chart.chartType",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      isDisabled: false,
+      helperText: "",
+      helperTextInvalid: "Invalid type",
+      validated: "default",
+      options: ChartTypeOptions.filter((opt) => opt.value !== ChartType.PieChart),
+      validator: { isNotEmpty: {} },
+    })
+  }
 
   return items
 }
@@ -202,9 +231,9 @@ const getChartConfigItems = (rootObject) => {
   objectPath.set(rootObject, "config.chart.legendPosition", LegendPositionType.BottomLeft, true)
   objectPath.set(rootObject, "config.chart.legendOrientation", LegendOrientationType.Horizontal, true)
   objectPath.set(rootObject, "config.chart.padding.top", 5, true)
-  objectPath.set(rootObject, "config.chart.padding.right", 30, true)
-  objectPath.set(rootObject, "config.chart.padding.bottom",55, true)
-  objectPath.set(rootObject, "config.chart.padding.left", 70, true)
+  objectPath.set(rootObject, "config.chart.padding.right", 5, true)
+  objectPath.set(rootObject, "config.chart.padding.bottom", 55, true)
+  objectPath.set(rootObject, "config.chart.padding.left", 55, true)
 
   const items = [
     {
@@ -317,8 +346,8 @@ const getChartConfigItems = (rootObject) => {
   return items
 }
 
-const getAxisYConfigItems = (rootObject) => {
-  updateYAxisConfig(rootObject)
+const getAxisYConfigItems = (rootObject, isSingleAxis = false) => {
+  updateYAxisConfig(rootObject, isSingleAxis)
 
   const items = [
     {
@@ -326,7 +355,10 @@ const getAxisYConfigItems = (rootObject) => {
       fieldId: "!y_axis_config",
       fieldType: FieldType.Divider,
     },
-    {
+  ]
+
+  if (!isSingleAxis) {
+    items.push({
       label: "Number of Axis",
       fieldId: "config.axisYCount",
       fieldType: FieldType.SliderSimple,
@@ -336,21 +368,20 @@ const getAxisYConfigItems = (rootObject) => {
       max: 10,
       step: 1,
       onChangeFunc: updateYAxisConfig,
-    },
-    {
-      label: "",
-      fieldId: "config.axisY",
-      fieldType: FieldType.ChartYAxisConfigMap,
-      dataType: DataType.Object,
-      value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update",
-      language: "yaml",
-      minimapEnabled: true,
-      isRequired: false,
-    },
-  ]
-
+    })
+  }
+  items.push({
+    label: "",
+    fieldId: "config.axisY",
+    fieldType: FieldType.ChartYAxisConfigMap,
+    dataType: DataType.Object,
+    value: "",
+    saveButtonText: "Update",
+    updateButtonText: "Update",
+    language: "yaml",
+    minimapEnabled: true,
+    isRequired: false,
+  })
   return items
 }
 
@@ -380,6 +411,83 @@ const getResourceConfigItems = (rootObject) => {
   return items
 }
 
+const getGroupChartResourceConfigItems = (rootObject) => {
+  objectPath.set(rootObject, "config.resource.type", ResourceType.Field, true)
+  objectPath.set(rootObject, "config.resource.nameKey", "name", true)
+  objectPath.set(rootObject, "config.resource.unit", "", true)
+  objectPath.set(rootObject, "config.resource.limit", 5, true)
+  objectPath.set(rootObject, "config.resource.selectors", { "": "" }, true)
+
+  const items = [
+    {
+      label: "Resource Config",
+      fieldId: "!resource_config",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "Resource Type",
+      fieldId: "config.resource.type",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      isDisabled: false,
+      helperText: "",
+      helperTextInvalid: "Invalid type",
+      validated: "default",
+      options: ResourceTypeOptions.filter(
+        (r) => r.value === ResourceType.Node || r.value === ResourceType.Field
+      ),
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "Name Key",
+      fieldId: "config.resource.nameKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+      validated: "default",
+      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
+    },
+    {
+      label: "Unit",
+      fieldId: "config.resource.unit",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "Limit",
+      fieldId: "config.resource.limit",
+      fieldType: FieldType.Text,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "Invalid Items limit.",
+      validated: "default",
+      validator: { isInteger: {} },
+    },
+    {
+      label: "Selectors",
+      fieldId: "!selectors",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "config.resource.selectors",
+      fieldType: FieldType.KeyValueMap,
+      dataType: DataType.Object,
+      value: "",
+    },
+  ]
+  return items
+}
+
 // helper functions
 
 const axisColors = [
@@ -396,8 +504,8 @@ const axisColors = [
 ]
 const axisOffset = [0, 100, 10, 20, 30, 40, 50, 60, 70, 80]
 
-const updateYAxisConfig = (rootObject) => {
-  objectPath.set(rootObject, "config.axisYCount", 1, true)
+const updateYAxisConfig = (rootObject, isSingleAxis = false) => {
+  objectPath.set(rootObject, "config.axisYCount", 1, isSingleAxis ? false : true)
   objectPath.set(rootObject, "config.axisY", {}, true)
 
   const configMap = getValue(rootObject, "config.axisY", {})

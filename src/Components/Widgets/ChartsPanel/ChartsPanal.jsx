@@ -13,6 +13,10 @@ import MultipleAxes from "../../Graphs/MultipleAxes/MultipleAxes"
 import Loading from "../../Loading/Loading"
 import moment from "moment"
 import lodash from "lodash"
+import { ChartGroupType } from "../../../Constants/Widgets/ChartsPanel"
+import { getListAPI } from "../ControlPanel/Common/Utils"
+import { ResourceType } from "../../../Constants/Resource"
+import { getQuickId } from "../../../Constants/ResourcePicker"
 
 class ChartsPanel extends React.Component {
   state = {
@@ -23,8 +27,108 @@ class ChartsPanel extends React.Component {
     metricsData: {},
   }
 
-  loadMetrics = () => {
+  loadMetricsForGroupChart = () => {
+    const { resource: resourceCfg, chart: chartCfg = {} } = this.props.config
+    const {
+      selectors,
+      limit: itemsLimit = 5,
+      type: resourceType = ResourceType.Field,
+      nameKey = "name",
+    } = resourceCfg
+    const selectorKeys = Object.keys(selectors)
+    const filters = selectorKeys.map((key) => {
+      return { k: key, v: selectors[key] }
+    })
+
+    const listAPI = getListAPI(resourceType)
+
+    listAPI({ filter: filters, limit: itemsLimit })
+      .then((res) => {
+        const resourcesAccepted = []
+        const metricQueryIndividuals = []
+        res.data.data.forEach((item) => {
+          switch (item.metricType) {
+            case MetricType.Gauge:
+            case MetricType.GaugeFloat:
+              const quickId = getQuickId(resourceType, item)
+              const resourceName = getValue(item, nameKey, `undefined_${quickId}`)
+              resourcesAccepted.push({
+                chartType: chartCfg.chartType,
+                color: "",
+                disabled: false,
+                nameKey: nameKey,
+                quickId: quickId,
+                resourceType: resourceType,
+                unit: resourceCfg.unit,
+                useGlobalStyle: true,
+                style: {},
+                yAxis: "0",
+                name: resourceName,
+              })
+              metricQueryIndividuals.push({
+                name: resourceName,
+                metricType: item.metricType,
+                tags: { id: item.id },
+              })
+              break
+
+            default:
+            //noop
+          }
+        })
+
+        // get metrics
+        if (metricQueryIndividuals.length > 0) {
+          const metricDuration = getValue(chartCfg, "duration", Duration.LastHour)
+          const metricInterval = getValue(chartCfg, "interval", getRecommendedInterval(metricDuration))
+          const metricFunction = getValue(chartCfg, "chart.metricFunction", MetricFunctionType.Mean)
+
+          const duration = getItem(metricDuration, DurationOptions)
+
+          const metricQuery = {
+            global: {
+              start: duration.value,
+              window: metricInterval,
+              functions: [metricFunction],
+            },
+            individual: metricQueryIndividuals,
+          }
+
+          api.metric
+            .fetch(metricQuery)
+            .then((metricRes) => {
+              // update metrics data
+              const names = Object.keys(metricRes.data)
+              const metricsData = {}
+              names.forEach((name) => {
+                const metricsRaw = metricRes.data[name]
+                // update data into metrics object
+                metricsData[name] = getMetrics(metricsRaw, duration.tsFormat, metricFunction)
+              })
+              this.setState({
+                metricsData: metricsData,
+                resources: resourcesAccepted,
+                resourcesRejected: [],
+                loading: false,
+                error: "",
+              })
+            })
+            .catch((_e) => {
+              this.setState({ loading: false, error: "error on get metric data" })
+            })
+        } else {
+          this.setState({ loading: false, error: "no resource available to get metric data" })
+        }
+      })
+      .catch((_e) => {
+        this.setState({ isLoading: false })
+      })
+  }
+
+  loadMetricsMixedChart = () => {
     const { resources: resourcesCfg, chart: chartCfg = {} } = this.props.config
+
+    // following code for Mixed charts
     const quickIds = []
     resourcesCfg.forEach((r) => {
       if (!r.disabled) {
@@ -134,6 +238,16 @@ class ChartsPanel extends React.Component {
       })
   }
 
+  loadMetrics = () => {
+    const { subType } = this.props.config
+
+    if (subType === ChartGroupType.GroupChart) {
+      this.loadMetricsForGroupChart()
+    } else {
+      this.loadMetricsMixedChart()
+    }
+  }
+
   componentWillUnmount() {
     if (this.interval) {
       clearInterval(this.interval)
@@ -193,11 +307,7 @@ class ChartsPanel extends React.Component {
       }
     })
     //console.log(newMetrics)
-    return (
-      <>
-        <MultipleAxes width={width} chartConfig={chartConfig} metrics={newMetrics} />
-      </>
-    )
+    return <MultipleAxes width={width} chartConfig={chartConfig} metrics={newMetrics} />
   }
 }
 
