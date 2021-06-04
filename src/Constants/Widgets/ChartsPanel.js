@@ -81,7 +81,6 @@ export const ThemeColor = {
   Green: ChartThemeColor.green,
   Orange: ChartThemeColor.orange,
   Purple: ChartThemeColor.purple,
-  Multi: ChartThemeColor.multi,
   MultiOrdered: ChartThemeColor.multiOrdered,
   MultiUnordered: ChartThemeColor.multiUnordered,
 }
@@ -94,7 +93,6 @@ export const ThemeColorOptions = [
   { value: ThemeColor.Green, label: "Green" },
   { value: ThemeColor.Orange, label: "Orange" },
   { value: ThemeColor.Purple, label: "Purple" },
-  { value: ThemeColor.Multi, label: "Multiple" },
   { value: ThemeColor.MultiOrdered, label: "Multiple Ordered" },
   { value: ThemeColor.MultiUnordered, label: "Multiple Unordered" },
 ]
