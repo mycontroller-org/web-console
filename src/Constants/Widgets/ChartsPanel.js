@@ -1,3 +1,5 @@
+import { ChartThemeColor } from "@patternfly/react-charts"
+
 // chart group types
 export const ChartGroupType = {
   GroupChart: "group_chart",
@@ -68,4 +70,31 @@ export const LegendOrientationTypeOptions = [
     description: "Place in horizontal position",
   },
   { value: LegendOrientationType.Vertical, label: "Vertical", description: "Place in vertical position" },
+]
+
+// ThemeColor used on the chart
+export const ThemeColor = {
+  Blue: ChartThemeColor.blue,
+  Cyan: ChartThemeColor.cyan,
+  Gold: ChartThemeColor.gold,
+  Gray: ChartThemeColor.gray,
+  Green: ChartThemeColor.green,
+  Orange: ChartThemeColor.orange,
+  Purple: ChartThemeColor.purple,
+  Multi: ChartThemeColor.multi,
+  MultiOrdered: ChartThemeColor.multiOrdered,
+  MultiUnordered: ChartThemeColor.multiUnordered,
+}
+
+// ThemeColorOptions used on the chart
+export const ThemeColorOptions = [
+  { value: ThemeColor.Blue, label: "Blue" },
+  { value: ThemeColor.Cyan, label: "Cyan" },
+  { value: ThemeColor.Gold, label: "Gold" },
+  { value: ThemeColor.Green, label: "Green" },
+  { value: ThemeColor.Orange, label: "Orange" },
+  { value: ThemeColor.Purple, label: "Purple" },
+  { value: ThemeColor.Multi, label: "Multiple" },
+  { value: ThemeColor.MultiOrdered, label: "Multiple Ordered" },
+  { value: ThemeColor.MultiUnordered, label: "Multiple Unordered" },
 ]

@@ -9,6 +9,8 @@ import {
   LegendOrientationType,
   ChartTypeOptions,
   ChartType,
+  ThemeColor,
+  ThemeColorOptions,
 } from "../../../Constants/Widgets/ChartsPanel"
 import {
   AggregationIntervalOptions,
@@ -133,20 +135,37 @@ const getGlobalConfigItems = (rootObject) => {
 
   if (subType === ChartGroupType.GroupChart) {
     objectPath.set(rootObject, "config.chart.chartType", ChartType.AreaChart, true)
-    items.push({
-      label: "Chart Type",
-      fieldId: "config.chart.chartType",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
-      options: ChartTypeOptions.filter((opt) => opt.value !== ChartType.PieChart),
-      validator: { isNotEmpty: {} },
-    })
+    objectPath.set(rootObject, "config.chart.themeColor", ThemeColor.Multi, true)
+    items.push(
+      {
+        label: "Chart Type",
+        fieldId: "config.chart.chartType",
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.String,
+        value: "",
+        isRequired: true,
+        isDisabled: false,
+        helperText: "",
+        helperTextInvalid: "Invalid type",
+        validated: "default",
+        options: ChartTypeOptions.filter((opt) => opt.value !== ChartType.PieChart),
+        validator: { isNotEmpty: {} },
+      },
+      {
+        label: "Theme Color",
+        fieldId: "config.chart.themeColor",
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.String,
+        value: "",
+        isRequired: true,
+        isDisabled: false,
+        helperText: "",
+        helperTextInvalid: "Invalid theme color",
+        validated: "default",
+        options: ThemeColorOptions,
+        validator: { isNotEmpty: {} },
+      }
+    )
   }
 
   return items

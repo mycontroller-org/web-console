@@ -1,6 +1,7 @@
 import { Grid, GridItem, Select, SelectOption, Spinner } from "@patternfly/react-core"
 import React from "react"
 import PropTypes from "prop-types"
+import { getDynamicFilter } from "../../Util/Filter"
 
 const itemsLimit = 10
 
@@ -46,7 +47,9 @@ class AsyncSelect extends React.Component {
     if (this.props.getFiltersFunc) {
       return this.props.getFiltersFunc(value)
     }
-    return [{ k: "name", o: "regex", v: value }]
+
+    return getDynamicFilter("name", value, [])
+    //  return [{ k: "name", o: "regex", v: value }]
   }
 
   getDescription = (item) => {

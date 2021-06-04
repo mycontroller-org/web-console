@@ -50,7 +50,9 @@ export const wsConnect = () => {
 
   wsClient.onerror = (err) => {
     console.error("websocket encountered error: ", err.message, "Closing socket")
-    wsClient.close()
+    if (wsClient !== null) {
+      wsClient.close()
+    }
   }
 }
 
@@ -58,7 +60,7 @@ export const wsDisconnect = () => {
   if (wsClient != null) {
     const _wsClient = wsClient
     wsClient = null
-    if (_wsClient!==null){
+    if (_wsClient !== null) {
       _wsClient.close()
     }
   }

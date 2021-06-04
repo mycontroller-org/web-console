@@ -153,7 +153,7 @@ class SimpleLoginPage extends React.Component {
         backgroundImgAlt="Images"
         footerListItems={listItem}
         textContent={loginText}
-        loginTitle="Welcome to MyController.org"
+        loginTitle="Welcome to MyController"
         loginSubtitle="Login to your account"
         // forgotCredentials={forgotCredentials}
       >

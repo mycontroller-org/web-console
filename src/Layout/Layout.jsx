@@ -88,7 +88,7 @@ class PageLayoutExpandableNav extends React.Component {
     })
   }
 
-  onKebabDropdownSelect = (event) => {
+  onKebabDropdownSelect = (_event) => {
     this.setState({
       isKebabDropdownOpen: !this.state.isKebabDropdownOpen,
     })
@@ -301,7 +301,7 @@ class PageLayoutExpandableNav extends React.Component {
         //logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
         logo={
           <>
-            <Brand className="mc-header-logo" src={logoMain} alt="MyController.org" />
+            <Brand className="mc-header-logo" src={logoMain} alt="MyController" />
             <TextContent className="rb-logo-text mc-mobile-view">
               <Text component={TextVariants.h3}>
                 MyController.org

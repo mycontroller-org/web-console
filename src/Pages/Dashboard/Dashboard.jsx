@@ -388,9 +388,9 @@ class Dashboard extends React.Component {
           <PageTitle
             key="page-title"
             title={
-              <div style={{ marginBottom: "5px" }}>
+              <div style={{ marginBottom: "3px" }}>
                 <Selector
-                  prefix="Dashboard"
+                  //prefix="Dashboard"
                   disabled={editEnabled || loading || dashboardItems.length === 0}
                   items={dashboardItems}
                   selection={{ text: title }}

@@ -1,13 +1,4 @@
-import {
-  Alert,
-  Divider,
-  Flex,
-  FlexItem,
-  Grid,
-  Radio,
-  Stack,
-  StackItem,
-} from "@patternfly/react-core"
+import { Alert, Divider, Flex, FlexItem, Grid, Radio, Stack, StackItem } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
 import ActionBar from "../ActionBar/ActionBar"

@@ -9,6 +9,7 @@ import {
   ChartPie,
   ChartScatter,
   ChartStack,
+  ChartThemeColor,
   ChartTooltip,
   ChartVoronoiContainer,
   createContainer,
@@ -345,6 +346,7 @@ const MultipleAxes = ({ width = 300, chartConfig = {}, metrics = [], backgroundC
         padding={paddingConfig}
         // if we change 'y' bottom padding from 0, 'axisMinimaValue' concept will not be perfect!
         domainPadding={{ y: [0, 20] }}
+        themeColor={basicConfig.themeColor !== undefined ? basicConfig.themeColor : ChartThemeColor.default}
       >
         {chartAxis}
         <ChartGroup offset={totalBarCharts > 1 ? barWidth : 0}>
