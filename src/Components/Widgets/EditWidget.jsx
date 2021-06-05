@@ -80,16 +80,6 @@ const getFormItems = (rootObject) => {
 const getPanelSettingsItems = (_rootObject) => {
   const items = [
     {
-      label: "Type",
-      fieldId: "type",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.String,
-      value: "",
-      options: WidgetTypeOptions,
-      isRequired: true,
-      resetFields: { config: {} },
-    },
-    {
       label: "Title",
       fieldId: "title",
       fieldType: FieldType.Text,
@@ -114,6 +104,17 @@ const getPanelSettingsItems = (_rootObject) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+    },
+    {
+      label: "Type",
+      fieldId: "type",
+      fieldType: FieldType.SelectTypeAhead,
+      direction: "down",
+      dataType: DataType.String,
+      value: "",
+      options: WidgetTypeOptions,
+      isRequired: true,
+      resetFields: { config: {} },
     },
   ]
   return items

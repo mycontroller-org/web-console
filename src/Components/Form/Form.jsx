@@ -350,6 +350,7 @@ const getField = (item, onChange) => {
       return (
         <Select
           variant={item.isMulti ? SelectVariant.typeaheadMulti : SelectVariant.typeahead}
+          direction={item.direction}
           options={item.options}
           onChange={onChange}
           selected={item.value}

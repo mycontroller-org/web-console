@@ -2,7 +2,7 @@ import React from "react"
 import { api } from "../../../Service/Api"
 import "rc-slider/assets/index.css"
 import "./LightPanel.scss"
-import { Grid, GridItem, Stack, Switch, Tooltip } from "@patternfly/react-core"
+import { Split, SplitItem, Stack, Switch, Tooltip } from "@patternfly/react-core"
 import ColorBox from "../../Color/ColorBox/ColorBox"
 import objectPath from "object-path"
 import { ColorsSetBig } from "../../../Constants/Widgets/Color"
@@ -225,6 +225,7 @@ class LightPanel extends React.Component {
             iconTooltip="HUE Color"
             field={
               <HueSlider
+                className="hue-color"
                 onChange={(newHue) => {
                   this.onChange(nameQuickIdMap, "hue", Math.round(newHue))
                 }}
@@ -257,7 +258,7 @@ class LightPanel extends React.Component {
 
     return (
       <div className="mc-rgb-light-panel">
-        <Stack hasGutter className="component">
+        <Stack hasGutter={false} className="component">
           {fieldItems}
         </Stack>
       </div>
@@ -280,15 +281,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(LightPanel)
 
 const WrapItem = ({ Icon, iconTooltip, field }) => {
   return (
-    <Grid>
-      <GridItem span={1}>
+    <Split className="row">
+      <SplitItem className="icon">
         <Tooltip key="tooltip" content={iconTooltip} position="auto">
           <Icon size="md" />
         </Tooltip>
-      </GridItem>
-      <GridItem span={11} className="field">
+      </SplitItem>
+      <SplitItem isFilled className="field">
         {field}
-      </GridItem>
-    </Grid>
+      </SplitItem>
+    </Split>
   )
 }

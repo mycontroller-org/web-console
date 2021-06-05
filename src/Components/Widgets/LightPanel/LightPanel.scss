@@ -1,20 +1,24 @@
 .mc-rgb-light-panel {
   .component {
-    margin: 0px 5px 5px 10px;
-    .slider-color-temperature {
-      background-image: linear-gradient(to right, #eff, #f81);
-      margin-top: 1px;
-      margin-bottom: 0px;
-      padding-top: 4px;
-      padding-bottom: 5px;
-      border-radius: 2px;
-    }
     .slider-brightness {
       background-image: linear-gradient(to right, #000, #fff);
-      margin-top: 1px;
+      margin-top: 3px;
       margin-bottom: 0px;
-      padding-top: 4px;
-      padding-bottom: 5px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      border-radius: 2px;
+    }
+    .slider-color-temperature {
+      background-image: linear-gradient(to right, #eff, #f81);
+      margin-top: 3px;
+      margin-bottom: 0px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      border-radius: 2px;
+    }
+    .hue-color{
+      margin-top: 5px;
+      margin-bottom: 0px;
       border-radius: 2px;
     }
     .slider-saturation {
@@ -23,8 +27,14 @@
       border-radius: 2px;
     }
   }
-  .field {
-    margin-left: 5px;
-    margin-right: 3px;
+  .row {
+    margin-bottom: 7px;
+    .icon {
+      margin-right: 15px;
+    }
+    .field {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
   }
 }
