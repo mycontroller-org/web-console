@@ -6,8 +6,12 @@ export const toString = (data) => {
   return JSON.stringify(data)
 }
 
-export const getRandomId = () => {
-  return uuidv4()
+export const getRandomId = (length = 0) => {
+  const randomId = uuidv4()
+  if (length !== 0 && randomId.length > length) {
+    return randomId.substr(randomId.length - length)
+  }
+  return randomId
 }
 
 export const cloneDeep = (obj) => clone(obj)

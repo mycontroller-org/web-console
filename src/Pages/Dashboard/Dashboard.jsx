@@ -431,7 +431,7 @@ const getItemById = (items, value, key = "id") => {
 
 // creates new default dashboard
 const getNewDashboard = () => {
-  const randomId = getRandomId()
+  const randomId = getRandomId(5)
   const widget = getNewWidget()
   const dashboard = {
     id: randomId,

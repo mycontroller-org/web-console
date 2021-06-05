@@ -421,7 +421,7 @@ const getSparkLineItems = (rootObject) => {
   )
 
   if (chartType !== ChartType.SparkLine) {
-    objectPath.set(rootObject, "config.chart.fillOpacity", 2, true)
+    objectPath.set(rootObject, "config.chart.fillOpacity", 15, true)
     items.push({
       label: "Fill Opacity (%)",
       fieldId: "config.chart.fillOpacity",
@@ -434,7 +434,7 @@ const getSparkLineItems = (rootObject) => {
     })
   }
 
-  objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
+  objectPath.set(rootObject, "config.chart.strokeWidth", 1.5, true)
 
   items.push(
     {

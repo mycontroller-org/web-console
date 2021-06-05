@@ -78,8 +78,8 @@ export const updateFormItemsChartsPanel = (rootObject, items = []) => {
 
 const getGlobalConfigItems = (rootObject) => {
   // update default values
-  objectPath.set(rootObject, "config.chart.fillOpacity", 5, true)
-  objectPath.set(rootObject, "config.chart.strokeWidth", 1, true)
+  objectPath.set(rootObject, "config.chart.fillOpacity", 15, true)
+  objectPath.set(rootObject, "config.chart.strokeWidth", 1.5, true)
   objectPath.set(rootObject, "config.chart.roundDecimal", 0, true)
   objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Natural, true)
 
@@ -135,7 +135,7 @@ const getGlobalConfigItems = (rootObject) => {
 
   if (subType === ChartGroupType.GroupChart) {
     objectPath.set(rootObject, "config.chart.chartType", ChartType.AreaChart, true)
-    objectPath.set(rootObject, "config.chart.themeColor", ThemeColor.Multi, true)
+    objectPath.set(rootObject, "config.chart.themeColor", ThemeColor.MultiOrdered, true)
     items.push(
       {
         label: "Chart Type",

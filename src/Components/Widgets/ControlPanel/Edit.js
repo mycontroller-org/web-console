@@ -140,6 +140,9 @@ const getToggleSwitchItems = (rootObject) => {
     )
   }
 
+  objectPath.set(rootObject, "config.resource.type", ResourceType.Field, true)
+  objectPath.set(rootObject, "config.resource.nameKey", "name", true)
+  objectPath.set(rootObject, "config.resource.limit", 10, true)
   items.push(
     {
       label: "Resource Config",

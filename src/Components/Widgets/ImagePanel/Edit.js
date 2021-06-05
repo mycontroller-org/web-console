@@ -3,14 +3,16 @@ import objectPath from "object-path"
 import { api } from "../../../Service/Api"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import {
+  ImageRotationType,
   ImageRotationTypeOptions,
   ImageSourceType,
   ImageSourceTypeOptions,
 } from "../../../Constants/Widgets/ImagePanel"
-import { RefreshIntervalTypeOptions } from "../../../Constants/Metric"
+import { RefreshIntervalType, RefreshIntervalTypeOptions } from "../../../Constants/Metric"
 
 // Image Panel items
 export const updateFormItemsImagePanel = (rootObject, items = []) => {
+  objectPath.set(rootObject, "config.rotation", ImageRotationType.Rotate_0, true)
   items.push(
     {
       label: "Image Source",
@@ -82,8 +84,19 @@ const getSimpleCameraItems = (_rootObject) => {
   return items
 }
 
-const getURLItems = (_rootObject) => {
+const getURLItems = (rootObject) => {
+  objectPath.set(rootObject, "config.refreshInterval", RefreshIntervalType.None, true)
   const items = [
+    {
+      label: "Refresh Interval",
+      fieldId: "config.refreshInterval",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.Integer,
+      value: "",
+      options: RefreshIntervalTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+    },
     {
       label: "URL",
       fieldId: "config.imageURL",
@@ -96,6 +109,13 @@ const getURLItems = (_rootObject) => {
       validated: "default",
       validator: { isURL: {}, isNotEmpty: {} },
     },
+  ]
+  return items
+}
+
+const getDiskItems = (rootObject) => {
+  objectPath.set(rootObject, "config.refreshInterval", RefreshIntervalType.None, true)
+  const items = [
     {
       label: "Refresh Interval",
       fieldId: "config.refreshInterval",
@@ -106,12 +126,6 @@ const getURLItems = (_rootObject) => {
       isRequired: true,
       validator: { isNotEmpty: {} },
     },
-  ]
-  return items
-}
-
-const getDiskItems = (_rootObject) => {
-  const items = [
     {
       label: "Location",
       fieldId: "config.imageLocation",
@@ -122,16 +136,6 @@ const getDiskItems = (_rootObject) => {
       helperText: "",
       helperTextInvalid: "Invalid location.",
       validated: "default",
-      validator: { isNotEmpty: {} },
-    },
-    {
-      label: "Refresh Interval",
-      fieldId: "config.refreshInterval",
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.Integer,
-      value: "",
-      options: RefreshIntervalTypeOptions,
-      isRequired: true,
       validator: { isNotEmpty: {} },
     },
   ]
