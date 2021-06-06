@@ -299,8 +299,8 @@ const getWebhookItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Allow Override",
-      fieldId: "spec.allowOverride",
+      label: "Allow Overwrite",
+      fieldId: "spec.allowOverwrite",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",

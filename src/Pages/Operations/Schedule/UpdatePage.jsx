@@ -223,7 +223,7 @@ const getFormItems = (rootObject, id) => {
   // add notify handlers
   items.push(
     {
-      label: "Load Variables",
+      label: "Variables",
       fieldId: "!variables",
       fieldType: FieldType.Divider,
     },
@@ -260,7 +260,7 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Notify Handlers",
+      label: "Handlers",
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
@@ -413,7 +413,7 @@ const loadCustomVariablesItems = (rootObject) => {
 
   const items = [
     {
-      label: "Load Custom Variables",
+      label: "Custom Variables",
       fieldId: "!custom_variables",
       fieldType: FieldType.Divider,
     },

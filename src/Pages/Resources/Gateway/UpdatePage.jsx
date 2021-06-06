@@ -57,6 +57,8 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject, id) => {
+  objectPath.set(rootObject, "reconnectDelay", "30s", true)
+  objectPath.set(rootObject, "labels", { location: "server" }, true)
   const items = [
     {
       label: "ID",
@@ -130,6 +132,10 @@ const getFormItems = (rootObject, id) => {
       items.push(...mySensorsItems)
       break
 
+    case Provider.Tasmota: // set tasmota defaults
+      objectPath.set(rootObject, "provider.protocol.type", Protocol.MQTT, true)
+      break
+
     default:
       break
   }
@@ -141,6 +147,8 @@ const getFormItems = (rootObject, id) => {
     providerType !== Provider.PhilipsHue &&
     providerType !== Provider.ESPHome
   ) {
+    objectPath.set(rootObject, "provider.protocol.transmitPreDelay", "10ms", true)
+
     items.push(
       {
         label: "Protocol",
@@ -195,6 +203,7 @@ const getFormItems = (rootObject, id) => {
     providerType !== Provider.ESPHome
   ) {
     // message logger
+    objectPath.set(rootObject, "messageLogger.type", MessageLogger.None, true)
     items.push(
       {
         label: "Message Logger",
@@ -240,7 +249,9 @@ const getFormItems = (rootObject, id) => {
 
 // get provider items
 // get MySensor Provider items
-const getMySensorsItems = (_rootObject) => {
+const getMySensorsItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.retryCount", 3, true)
+  objectPath.set(rootObject, "provider.timeout", "500ms", true)
   const items = [
     {
       label: "Internal Message Ack",
@@ -278,7 +289,8 @@ const getMySensorsItems = (_rootObject) => {
 
 // get protocol items
 // get protocol mqtt items
-const getProtocolMqttItems = (_rootObject) => {
+const getProtocolMqttItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.protocol.qos", "0", true)
   const items = [
     {
       label: "Broker",
@@ -354,7 +366,8 @@ const getProtocolMqttItems = (_rootObject) => {
 }
 
 // get protocol serial items
-const getProtocolSerialItems = (_rootObject) => {
+const getProtocolSerialItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.protocol.baudrate", 115200, true)
   const items = [
     {
       label: "Port Name",
@@ -489,7 +502,8 @@ const getSystemMonitoringItems = (_rootObject) => {
 }
 
 // get PhilipsHue Items
-const getPhilipsHueItems = (_rootObject) => {
+const getPhilipsHueItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.syncInterval", "15m", true)
   const items = [
     {
       label: "Configuration",
@@ -525,18 +539,6 @@ const getPhilipsHueItems = (_rootObject) => {
     {
       label: "Sync Interval",
       fieldId: "provider.syncInterval",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      // isRequired: true,
-      // helperText: "",
-      // helperTextInvalid: "Invalid sync interval. chars: min=2",
-      // validated: "default",
-      // validator: { isLength: { min: 2 }, isNotEmpty: {} },
-    },
-    {
-      label: "Bridge Sync Interval",
-      fieldId: "provider.bridgeSyncInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",

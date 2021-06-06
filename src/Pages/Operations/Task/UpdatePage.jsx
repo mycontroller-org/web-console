@@ -240,7 +240,7 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Load Variables",
+      label: "Variables",
       fieldId: "!variables",
       fieldType: FieldType.Divider,
     },
@@ -344,7 +344,7 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Notify Handlers",
+      label: "Handlers",
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
