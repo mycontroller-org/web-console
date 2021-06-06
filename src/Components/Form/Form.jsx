@@ -154,6 +154,7 @@ const getField = (item, onChange) => {
                   return validate("isKey", value)
                 }
           }
+          validateValueFunc={item.validateValueFunc}
         />
       )
 

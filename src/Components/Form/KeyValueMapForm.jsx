@@ -146,7 +146,7 @@ class KeyValueMapForm extends React.Component {
 
       let isValidValue = true
       if (validateValueFunc) {
-        isValidValue = validateValueFunc(item.key)
+        isValidValue = validateValueFunc(item.value)
       }
       const validatedValue = isValidValue ? "default" : "error"
 

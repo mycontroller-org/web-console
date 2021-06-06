@@ -14,6 +14,7 @@ import {
   MessageLoggerOptions,
   filterProtocolOptions,
 } from "../../../Constants/Gateway"
+import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
   render() {
@@ -461,14 +462,15 @@ const getSystemMonitoringItems = (_rootObject) => {
     {
       label: "Host ID Map",
       fieldId: "provider.hostIdMap",
-      fieldType: FieldType.ScriptEditor,
+      fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update",
-      language: "yaml",
-      minimapEnabled: true,
+      keyLabel: "Host ID",
+      valueLabel: "Node ID",
       isRequired: false,
+      validateValueFunc: (value) => {
+        return validate("isKey", value)
+      },
     },
     {
       label: "Host Config Map",
@@ -564,6 +566,13 @@ const getESPHomeItems = (_rootObject) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+    },
+    {
+      label: "Auto Discover",
+      fieldId: "provider.autoDiscover",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
     },
     {
       label: "Nodes",
