@@ -99,6 +99,7 @@ const getItems = (rootObject, callerType) => {
         case FieldDataType.TypeString:
         case FieldDataType.TypeResourceByLabels:
         case FieldDataType.TypeResourceByQuickId:
+        case FieldDataType.TypeWebhook:
           return true
         default:
           return false
@@ -163,7 +164,7 @@ const getItems = (rootObject, callerType) => {
       break
 
     case FieldDataType.TypeWebhook:
-      const webhookItems = getWebhookItems(rootObject)
+      const webhookItems = getWebhookItems(rootObject, callerType)
       items.push(...webhookItems)
       break
 
@@ -413,25 +414,57 @@ const getBackupItems = (rootObject) => {
   return items
 }
 
-const getWebhookItems = (rootObject) => {
+const getWebhookItems = (rootObject, callerType) => {
+  const items = []
+
   objectPath.set(rootObject, "data.responseCode", 0, true)
-  const items = [
-    {
-      label: "Server",
-      fieldId: "data.server",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: false,
-    },
-    {
-      label: "API",
-      fieldId: "data.api",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: false,
-    },
+
+  if (callerType === CallerType.Variable) {
+    objectPath.set(rootObject, "data.method", WebhookMethodType.GET, true)
+    items.push(
+      {
+        label: "URL",
+        fieldId: "data.server",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "Invalid URL",
+        validated: "default",
+        validator: { isNotEmpty: {}, isURL: {} },
+      },
+      {
+        label: "Insecure Skip Verify",
+        fieldId: "data.insecureSkipVerify",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      }
+    )
+  } else {
+    objectPath.set(rootObject, "data.method", WebhookMethodType.POST, true)
+    items.push(
+      {
+        label: "Server",
+        fieldId: "data.server",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: false,
+      },
+      {
+        label: "API",
+        fieldId: "data.api",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: false,
+      }
+    )
+  }
+
+  items.push(
     {
       label: "Method",
       fieldId: "data.method",
@@ -470,8 +503,8 @@ const getWebhookItems = (rootObject) => {
       updateButtonText: "Update Query Parameters",
       value: {},
       isRequired: false,
-    },
-  ]
+    }
+  )
 
   const methodType = objectPath.get(rootObject, "data.method", "")
 
