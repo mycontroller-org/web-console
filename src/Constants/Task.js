@@ -36,6 +36,7 @@ export const EntityType = {
   Node: "node",
   Source: "source",
   Field: "field",
+  DataRepository: "data_repository",
 }
 
 // Entity type options
@@ -44,6 +45,7 @@ export const EntityTypeOptions = [
   { value: EntityType.Node, label: "Node" },
   { value: EntityType.Source, label: "Source" },
   { value: EntityType.Field, label: "Field" },
+  { value: EntityType.DataRepository, label: "Data Repository" },
 ]
 
 // Operator values
