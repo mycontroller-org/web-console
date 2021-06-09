@@ -146,17 +146,17 @@ class UtilizationPanel extends React.Component {
 
     const resourceType = getValue(config, "resource.type", "")
     const itemsLimit = getValue(config, "resource.limit", 1)
-    const resourceSelectors = getValue(config, "resource.selectors", "undefined")
+    const resourceFilters = getValue(config, "resource.filters", "undefined")
     const displayName = getValue(config, "resource.displayName", false)
     const resourceNameKey = getValue(config, "resource.nameKey", "undefined")
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
     const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
 
     const filters = []
-    if (resourceSelectors) {
-      const keys = Object.keys(resourceSelectors)
+    if (resourceFilters) {
+      const keys = Object.keys(resourceFilters)
       keys.forEach((key) => {
-        filters.push({ k: key, v: resourceSelectors[key] })
+        filters.push({ k: key, v: resourceFilters[key] })
       })
     }
     let resourceApi = null

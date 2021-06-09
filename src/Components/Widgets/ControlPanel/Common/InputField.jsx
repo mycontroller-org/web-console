@@ -13,8 +13,8 @@ class SendPayload extends React.Component {
   }
 
   send = (value) => {
-    const { quickId, selector } = this.props
-    api.action.send({ resource: quickId, payload: value, selector: selector })
+    const { quickId, keyPath } = this.props
+    api.action.send({ resource: quickId, payload: value, keyPath: keyPath })
   }
 
   onChange = (newValue) => {
@@ -49,7 +49,7 @@ const InputField = ({
   id,
   widgetId,
   quickId,
-  selector = "",
+  keyPath = "",
   payload = "",
   minWidth = 70,
   sendPayloadWrapper = () => {},
@@ -64,7 +64,7 @@ const InputField = ({
       bodyContent={
         <SendPayload
           quickId={quickId}
-          selector={selector}
+          keyPath={keyPath}
           payload={payload}
           sendPayloadWrapper={sendPayloadWrapper}
         />

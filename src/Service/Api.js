@@ -165,6 +165,7 @@ export const api = {
   },
   action: {
     send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
+    post: (actions = []) => newRequest(HTTP_VERBS.POST, "/action", {}, actions),
     nodeAction: (queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
   },
   dashboard: {

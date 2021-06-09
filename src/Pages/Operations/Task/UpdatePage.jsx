@@ -154,8 +154,8 @@ const getFormItems = (rootObject, id) => {
         value: [],
       },
       {
-        label: "Selectors",
-        fieldId: "eventFilter.selectors",
+        label: "Filters",
+        fieldId: "eventFilter.filters",
         fieldType: FieldType.KeyValueMap,
         dataType: DataType.Object,
         value: {},

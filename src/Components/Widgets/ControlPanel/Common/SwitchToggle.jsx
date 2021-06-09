@@ -9,7 +9,7 @@ const SwitchToggle = ({
   payload,
   payloadOn = "true",
   payloadOff = "false",
-  selector = "",
+  keyPath = "",
   sendPayloadWrapper = () => {},
 }) => {
   const isChecked = String(payload) === payloadOn
@@ -18,15 +18,15 @@ const SwitchToggle = ({
       id={`${widgetId}_${id}`}
       aria-label={`${widgetId}_${id}`}
       onChange={(newState) =>
-        sendPayloadWrapper(() => onChange(newState, quickId, selector, payloadOn, payloadOff))
+        sendPayloadWrapper(() => onChange(newState, quickId, keyPath, payloadOn, payloadOff))
       }
       isChecked={isChecked}
     />
   )
 }
 
-const onChange = (isChecked, quickId, selector, payloadOn, payloadOff) => {
-  api.action.send({ resource: quickId, selector: selector, payload: isChecked ? payloadOn : payloadOff })
+const onChange = (isChecked, quickId, keyPath, payloadOn, payloadOff) => {
+  api.action.send({ resource: quickId, keyPath, payload: isChecked ? payloadOn : payloadOff })
 }
 
 export default SwitchToggle

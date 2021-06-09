@@ -435,7 +435,7 @@ const getGroupChartResourceConfigItems = (rootObject) => {
   objectPath.set(rootObject, "config.resource.nameKey", "name", true)
   objectPath.set(rootObject, "config.resource.unit", "", true)
   objectPath.set(rootObject, "config.resource.limit", 5, true)
-  objectPath.set(rootObject, "config.resource.selectors", { "": "" }, true)
+  objectPath.set(rootObject, "config.resource.filters", { "": "" }, true)
 
   const items = [
     {
@@ -492,13 +492,13 @@ const getGroupChartResourceConfigItems = (rootObject) => {
       validator: { isInteger: {} },
     },
     {
-      label: "Selectors",
-      fieldId: "!selectors",
+      label: "Resource Filters",
+      fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },
     {
       label: "",
-      fieldId: "config.resource.selectors",
+      fieldId: "config.resource.filters",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",

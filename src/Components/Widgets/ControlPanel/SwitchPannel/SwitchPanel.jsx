@@ -38,10 +38,14 @@ class SwitchPanel extends React.Component {
     if (this.props.config === undefined) {
       return
     }
-    const { selectors, limit: itemsLimit, type: resourceType } = this.props.config.resource
-    const selectorKeys = Object.keys(selectors)
-    const filters = selectorKeys.map((key) => {
-      return { k: key, v: selectors[key] }
+    const {
+      filters: resourceFilters = {},
+      limit: itemsLimit,
+      type: resourceType,
+    } = this.props.config.resource
+    const filterKeys = Object.keys(resourceFilters)
+    const filters = filterKeys.map((key) => {
+      return { k: key, v: resourceFilters[key] }
     })
 
     const listAPI = getListAPI(resourceType)

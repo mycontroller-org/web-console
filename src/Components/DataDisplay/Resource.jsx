@@ -126,8 +126,8 @@ const getResourceByQuickId = (data, originalType) => {
   ]
   if (originalType === DefaultType) {
     items.push(
-      <Label variant="outline" color="green" icon={<IconSelector />}>
-        {data.selector}
+      <Label variant="outline" color="green" icon={<IconKeyPath />}>
+        {data.keyPath}
       </Label>
     )
   } else {
@@ -153,7 +153,7 @@ const IconPrefix = () => <RawIcon tooltip="Prefix" text="PFX" />
 const IconExport = () => <RawIcon tooltip="Export" text="EXP" />
 const IconPayload = () => <RawIcon tooltip="Payload" text="PL" />
 const IconPreDelay = () => <RawIcon tooltip="Pre Delay" text="PDL" />
-const IconSelector = () => <RawIcon tooltip="Selector" text="SL" />
+const IconKeyPath = () => <RawIcon tooltip="Key Path" text="KP" />
 const IconServer = () => <RawIcon tooltip="Server" text="SVR" />
 const IconAPI = () => <RawIcon tooltip="API" text="API" />
 const IconSubject = () => <RawIcon tooltip="Subject" text="SUB" />

@@ -7,7 +7,7 @@ const PushButton = ({
   widgetId,
   quickId,
   payload = "",
-  selector = "",
+  keyPath = "",
   buttonText = "NO TEXT",
   buttonType = "secondary",
   minWidth = 70,
@@ -16,7 +16,7 @@ const PushButton = ({
   return (
     <Button
       id={`${widgetId}_${id}`}
-      onClick={() => sendPayloadWrapper(() => onChange(quickId, selector, payload))}
+      onClick={() => sendPayloadWrapper(() => onChange(quickId, keyPath, payload))}
       variant={buttonType}
       isSmall
       style={{ minWidth: `${minWidth}px` }}
@@ -26,8 +26,8 @@ const PushButton = ({
   )
 }
 
-const onChange = (quickId, selector, payload) => {
-  api.action.send({ resource: quickId, payload: payload, selector: selector })
+const onChange = (quickId, keyPath, payload) => {
+  api.action.send({ resource: quickId, payload: payload, keyPath: keyPath })
 }
 
 export default PushButton

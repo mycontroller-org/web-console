@@ -200,7 +200,7 @@ class LightPanel extends React.Component {
       )
     }
 
-    // add RGB color selector
+    // add RGB color selection
     if (lightType === LightType.RGB || lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
       if (rgbComponent === RGBComponentType.ColorPickerQuick) {
         fieldItems.push(

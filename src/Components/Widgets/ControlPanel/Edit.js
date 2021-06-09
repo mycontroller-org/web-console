@@ -14,9 +14,9 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
   objectPath.set(rootObject, "config.resource.type", ResourceType.Field, true)
   const resourceType = objectPath.get(rootObject, "config.resource.type", ResourceType.Field)
   if (resourceType === ResourceType.Field) {
-    const selectors = objectPath.get(rootObject, "config.resource.selectors", undefined)
-    if (selectors === undefined) {
-      objectPath.set(rootObject, "config.resource.selectors", { metricType: "binary" }, false)
+    const filters = objectPath.get(rootObject, "config.resource.filters", undefined)
+    if (filters === undefined) {
+      objectPath.set(rootObject, "config.resource.filters", { metricType: "binary" }, false)
     }
   }
   objectPath.set(rootObject, "config.tableView", true, true)
@@ -162,7 +162,7 @@ const getToggleSwitchItems = (rootObject) => {
       validated: "default",
       options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Source),
       validator: { isNotEmpty: {} },
-      resetFields: { "config.resourceSelectors": {} },
+      resetFields: { "config.resource.filters": {} },
     },
     {
       label: "Name Key",
@@ -189,13 +189,13 @@ const getToggleSwitchItems = (rootObject) => {
       validator: { isInteger: {} },
     },
     {
-      label: "Selectors",
-      fieldId: "!selectors",
+      label: "Resource Filters",
+      fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },
     {
       label: "",
-      fieldId: "config.resource.selectors",
+      fieldId: "config.resource.filters",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",

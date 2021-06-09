@@ -245,14 +245,14 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
 
   if (callerType === CallerType.Variable || resourceType === ResourceType.DataRepository) {
     items.push({
-      label: "Selector",
-      fieldId: "data.selector",
+      label: "Key Path",
+      fieldId: "data.keyPath",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "selector can not be empty",
+      helperTextInvalid: "Key Path can not be empty",
       validated: "default",
       validator: { isNotEmpty: {} },
     })

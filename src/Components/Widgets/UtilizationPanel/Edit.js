@@ -187,13 +187,13 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
   items.push(
     {
-      label: "Selectors",
-      fieldId: "!selectors",
+      label: "Resource Filters",
+      fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },
     {
       label: "",
-      fieldId: "config.resource.selectors",
+      fieldId: "config.resource.filters",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",

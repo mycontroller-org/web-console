@@ -58,7 +58,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             payloadOn="true"
             payloadOff="false"
             sendPayloadWrapper={(callBack) =>
@@ -80,7 +80,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             payloadOn="true"
             payloadOff="false"
             onButtonType={onButtonType}
@@ -102,7 +102,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={payload}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             buttonType={button.buttonType}
             buttonText={button.text}
             minWidth={button.minWidth}
@@ -120,7 +120,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
             }
@@ -135,7 +135,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
             }
@@ -150,7 +150,7 @@ const ControlObjects = ({
             mixedControlCfg={mixedControlCfg}
             payload={resource.payload}
             quickId={resource.quickId}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             minWidth={mixedControlCfg.config.input.minWidth}
             sendPayloadWrapper={(callBack) =>
               sendPayloadWrapper(askConfirmation, confirmationMessage, callBack)
@@ -167,7 +167,7 @@ const ControlObjects = ({
             widgetId={widgetId}
             quickId={resource.quickId}
             payload={resource.payload}
-            selector={resource.selector}
+            keyPath={resource.keyPath}
             min={slider.min}
             max={slider.max}
             step={slider.step}

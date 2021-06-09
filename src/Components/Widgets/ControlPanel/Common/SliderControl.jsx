@@ -7,7 +7,7 @@ const SliderControl = ({
   widgetId,
   quickId,
   payload = "",
-  selector = "",
+  keyPath = "",
   min = 0,
   max = 100,
   step = 1,
@@ -22,14 +22,14 @@ const SliderControl = ({
         max={max}
         step={step}
         value={payload}
-        onChange={(newValue) => sendPayloadWrapper(() => onChange(quickId, selector, newValue))}
+        onChange={(newValue) => sendPayloadWrapper(() => onChange(quickId, keyPath, newValue))}
       />
     </div>
   )
 }
 
-const onChange = (quickId, selector, payload) => {
-  api.action.send({ resource: quickId, payload: payload, selector: selector })
+const onChange = (quickId, keyPath, payload) => {
+  api.action.send({ resource: quickId, payload: payload, keyPath: keyPath })
 }
 
 export default SliderControl

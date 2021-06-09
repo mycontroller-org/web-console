@@ -30,14 +30,14 @@ class ChartsPanel extends React.Component {
   loadMetricsForGroupChart = () => {
     const { resource: resourceCfg, chart: chartCfg = {} } = this.props.config
     const {
-      selectors,
+      filters: resourceFilters,
       limit: itemsLimit = 5,
       type: resourceType = ResourceType.Field,
       nameKey = "name",
     } = resourceCfg
-    const selectorKeys = Object.keys(selectors)
-    const filters = selectorKeys.map((key) => {
-      return { k: key, v: selectors[key] }
+    const filterKeys = Object.keys(resourceFilters)
+    const filters = filterKeys.map((key) => {
+      return { k: key, v: resourceFilters[key] }
     })
 
     const listAPI = getListAPI(resourceType)

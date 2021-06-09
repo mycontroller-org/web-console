@@ -94,7 +94,7 @@ class MixedControl extends React.Component {
         quickId: qId,
         nameKey: resourceNameKey,
         valueTimestampKey: resourceTimestampKey,
-        selector,
+        keyPath,
       } = resCfg.resource
       const quickId = `${resourceType}:${qId}`
       const resourceRaw = resourcesRaw[quickId]
@@ -106,7 +106,7 @@ class MixedControl extends React.Component {
           resourceNameKey,
           resourceTimestampKey,
           ControlType.MixedControl,
-          selector
+          keyPath
         )
         // update config
         resource["config"] = resCfg

@@ -155,14 +155,14 @@ const getItems = (rootObject) => {
 
   if (resourceType === ResourceType.DataRepository) {
     items.push({
-      label: "Selector",
-      fieldId: "resource.selector",
+      label: "Key Path",
+      fieldId: "resource.keyPath",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "selector can not be empty",
+      helperTextInvalid: "Key Path can not be empty",
       validated: "default",
       validator: { isNotEmpty: {} },
     })

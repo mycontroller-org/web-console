@@ -28,7 +28,7 @@ export const getResource = (
   resourceNameKey,
   resourceTimestampKey = "",
   controlType = ControlType.SwitchToggle,
-  selector = ""
+  keyPath = ""
 ) => {
   const quickId = getQuickId(resourceType, resource)
   const defaultLabel = controlType !== ControlType.MixedControl ? "undefined" : resourceNameKey
@@ -47,7 +47,7 @@ export const getResource = (
         timestamp:
           resourceTimestampKey === "" ? resource.lastSeen : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
-        selector: selector,
+        keyPath: keyPath,
       }
 
     case ResourceType.DataRepository:
@@ -55,11 +55,11 @@ export const getResource = (
         id: resource.id,
         type: resourceType,
         label: label,
-        payload: selector !== "" ? getValue(resource, `data.${selector}`, "") : "",
+        payload: keyPath !== "" ? getValue(resource, `data.${keyPath}`, "") : "",
         timestamp:
           resourceTimestampKey === "" ? resource.modifiedOn : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
-        selector: selector,
+        keyPath: keyPath,
       }
 
     case ResourceType.Field:
@@ -71,7 +71,7 @@ export const getResource = (
         timestamp:
           resourceTimestampKey === "" ? resource.noChangeSince : getValue(resource, resourceTimestampKey, ""),
         quickId: quickId,
-        selector: selector,
+        keyPath: keyPath,
       }
 
     default:
