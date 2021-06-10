@@ -26,7 +26,7 @@ const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }
           key="editor"
           language="yaml"
           rootObject={widgetConfig}
-          onChangeFunc={onChange}
+          onChangeFunc={() => {}} // ignore on change to improve performance of panel
           onSaveFunc={onSave}
           minimapEnabled={false}
           onCancelFunc={onCancel}
