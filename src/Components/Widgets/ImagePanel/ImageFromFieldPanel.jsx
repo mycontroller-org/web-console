@@ -32,6 +32,12 @@ class ImageFromFieldPanel extends React.Component {
     this.updateComponents()
   }
 
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }

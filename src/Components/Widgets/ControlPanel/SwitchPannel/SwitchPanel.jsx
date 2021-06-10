@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import Loading from "../../../Loading/Loading"
 import { getResource, getListAPI } from "../Common/Utils"
 import { loadData, unloadData } from "../../../../store/entities/websocket"
-import { getValue } from "../../../../Util/Util"
+import { getValue, isEqual } from "../../../../Util/Util"
 import { getQuickId } from "../../../../Constants/ResourcePicker"
 import ControlObjects from "../Common/Common"
 import { isShouldComponentUpdateWithWsData } from "../../Helper/Common"
@@ -26,6 +26,12 @@ class SwitchPanel extends React.Component {
 
   componentDidMount() {
     this.updateComponents()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

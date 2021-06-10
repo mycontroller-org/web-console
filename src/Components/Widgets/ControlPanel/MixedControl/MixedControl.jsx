@@ -3,7 +3,7 @@ import { api } from "../../../../Service/Api"
 import { loadData, unloadData } from "../../../../store/entities/websocket"
 import { connect } from "react-redux"
 import Loading from "../../../Loading/Loading"
-import { getValue } from "../../../../Util/Util"
+import { getValue, isEqual } from "../../../../Util/Util"
 import { getResource } from "../Common/Utils"
 import ControlObjects from "../Common/Common"
 import { ControlType } from "../../../../Constants/Widgets/ControlPanel"
@@ -26,6 +26,12 @@ class MixedControl extends React.Component {
 
   componentDidMount() {
     this.updateComponents()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

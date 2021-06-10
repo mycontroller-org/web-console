@@ -4,7 +4,7 @@ import { api } from "../../../Service/Api"
 import { connect } from "react-redux"
 import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
-import { getItem, getValue } from "../../../Util/Util"
+import { getItem, getValue, isEqual } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import DonutUtilization from "./DonutUtilization"
 import SparkLine from "./SparkLine"
@@ -46,15 +46,30 @@ class UtilizationPanel extends React.Component {
     this.props.unloadData({ key: this.getWsKey() })
   }
 
-  componentDidMount() {
-    this.updateComponents()
+  updateRefreshInterval = () => {
     // update metrics query on interval
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
     const { config } = this.props
     const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
     if (refreshInterval >= 1000) {
       this.interval = setInterval(() => {
-        this.updateMetrics()
+        const diffTime = new Date().getTime() - this.lastMetricUpdate + 200 // add 200 milliseconds as offset
+        if (diffTime >= refreshInterval) {
+          this.updateMetrics()
+        }
       }, refreshInterval)
+    }
+  }
+
+  componentDidMount() {
+    this.updateComponents()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
     }
   }
 
@@ -63,6 +78,8 @@ class UtilizationPanel extends React.Component {
   }
 
   updateMetrics = () => {
+    this.lastMetricUpdate = new Date().getTime() // reference point for auto refresh job
+
     const { config } = this.props
 
     // if config empty, stop here
@@ -134,6 +151,7 @@ class UtilizationPanel extends React.Component {
   }
 
   updateComponents = () => {
+    this.updateRefreshInterval()
     const { config } = this.props
 
     // if config empty, stop here

@@ -10,7 +10,7 @@ import Loading from "../../Loading/Loading"
 import HueSlider from "../../Color/HueSlider/HueSlider"
 import { LightType, RGBComponentType } from "../../../Constants/Widgets/LightPanel"
 import { AdjustIcon, ImageIcon, PaletteIcon, PowerOffIcon, TemperatureLowIcon } from "@patternfly/react-icons"
-import { getValue } from "../../../Util/Util"
+import { getValue, isEqual } from "../../../Util/Util"
 import SimpleSlider from "../../Form/Slider/Simple"
 import { loadData, unloadData } from "../../../store/entities/websocket"
 import { connect } from "react-redux"
@@ -66,6 +66,12 @@ class LightPanel extends React.Component {
 
   componentDidMount() {
     this.updateComponents()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

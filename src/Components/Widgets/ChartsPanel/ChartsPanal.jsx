@@ -238,12 +238,30 @@ class ChartsPanel extends React.Component {
   }
 
   loadMetrics = () => {
+    this.lastMetricUpdate = new Date().getTime() // reference point for auto refresh job
     const { subType } = this.props.config
 
     if (subType === ChartGroupType.GroupChart) {
       this.loadMetricsForGroupChart()
     } else {
       this.loadMetricsMixedChart()
+    }
+  }
+
+  updateRefreshInterval = () => {
+    // update metrics query on interval
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
+    const { config } = this.props
+    const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
+    if (refreshInterval >= 1000) {
+      this.interval = setInterval(() => {
+        const diffTime = new Date().getTime() - this.lastMetricUpdate + 200 // add 200 milliseconds as offset
+        if (diffTime >= refreshInterval) {
+          this.loadMetrics()
+        }
+      }, refreshInterval)
     }
   }
 
@@ -255,13 +273,13 @@ class ChartsPanel extends React.Component {
 
   componentDidMount() {
     this.loadMetrics()
-    // update metrics query on interval
-    const { config } = this.props
-    const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
-    if (refreshInterval >= 1000) {
-      this.interval = setInterval(() => {
-        this.loadMetrics()
-      }, refreshInterval)
+    this.updateRefreshInterval()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.loadMetrics()
+      this.updateRefreshInterval()
     }
   }
 

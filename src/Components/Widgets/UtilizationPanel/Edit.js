@@ -397,6 +397,7 @@ const getSparkLineItems = (rootObject) => {
     })
   }
 
+  objectPath.set(rootObject, "config.chart.color", "#0066cc", true)
   items.push(
     {
       label: "Height (px)",

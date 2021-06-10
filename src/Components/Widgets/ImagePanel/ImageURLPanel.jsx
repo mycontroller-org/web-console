@@ -14,16 +14,26 @@ class ImageURLPanel extends React.Component {
     refreshHash: Date.now(),
   }
 
-  componentDidMount() {
-    this.updateComponents()
+  updateRefreshInterval = () => {
     // update metrics query on interval
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
     const { config } = this.props
-    const refreshInterval = getValue(config, "refreshInterval", RefreshIntervalType.None)
+    const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
     if (refreshInterval >= 1000) {
       this.interval = setInterval(() => {
-        this.updateComponents()
+        const diffTime = new Date().getTime() - this.lastMetricUpdate + 200 // add 200 milliseconds as offset
+        if (diffTime >= refreshInterval) {
+          this.updateComponents()
+        }
       }, refreshInterval)
     }
+  }
+
+  componentDidMount() {
+    this.updateComponents()
+    this.updateRefreshInterval()
   }
 
   componentWillUnmount() {
@@ -32,11 +42,19 @@ class ImageURLPanel extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.config, this.props.config)) {
+      this.updateComponents()
+      this.updateRefreshInterval()
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }
 
   updateComponents = () => {
+    this.lastMetricUpdate = new Date().getTime() // reference point for auto refresh job
     if (this.props.config === undefined) {
       this.setState({ isLoading: false, error: "config not found" })
       return
