@@ -6,7 +6,7 @@ import PageContent from "../../Components/PageContent/PageContent"
 import PageTitle from "../../Components/PageTitle/PageTitle"
 import Selector from "../../Components/Selector/Seletor"
 import { api } from "../../Service/Api"
-import { getRandomId, isEqual } from "../../Util/Util"
+import { cloneDeep, getRandomId, isEqual } from "../../Util/Util"
 import "./Dashboard.scss"
 import EditWidget from "../../Components/Widgets/EditWidget"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
@@ -95,7 +95,9 @@ class Dashboard extends React.Component {
   onSaveClick = () => {
     this.setState((prevState) => {
       api.dashboard.update(prevState.dashboardOnEdit).then((_res) => {
-        this.setState({ editEnabled: false })
+        this.setState({ editEnabled: false }, () => {
+          this.reloadDashboards()
+        })
       })
       return {}
     })
@@ -155,18 +157,19 @@ class Dashboard extends React.Component {
     //console.log(item)
     this.setState((prevState) => {
       const { dashboards } = prevState
-      for (let index = 0; index < dashboards.length; index++) {
-        const dashboard = dashboards[index]
+      const clonedDashboards = cloneDeep(dashboards)
+      for (let index = 0; index < clonedDashboards.length; index++) {
+        const dashboard = clonedDashboards[index]
         if (item.id === dashboard.id) {
-          dashboards[index].favorite = !dashboard.favorite
+          clonedDashboards[index].favorite = !dashboard.favorite
           // update to server
-          api.dashboard.update(dashboards[index]).then((_res) => {
+          api.dashboard.update(clonedDashboards[index]).then((_res) => {
             // no action required on response
           })
           break
         }
       }
-      return { dashboards }
+      return { dashboards: clonedDashboards }
     })
   }
 
@@ -213,22 +216,24 @@ class Dashboard extends React.Component {
   onWidgetDelete = (widgetId) => {
     this.setState((prevState) => {
       const { dashboardOnEdit } = prevState
-      const { widgets } = dashboardOnEdit
+      const clonedDashboard = cloneDeep(dashboardOnEdit)
+      const { widgets } = clonedDashboard
 
       const newWidgets = widgets.filter((w) => {
         return w.id !== widgetId
       })
-      dashboardOnEdit.widgets = newWidgets
-      return { dashboardOnEdit: dashboardOnEdit }
+      clonedDashboard.widgets = newWidgets
+      return { dashboardOnEdit: clonedDashboard }
     })
   }
 
   onAddWidgetClick = () => {
     this.setState((prevState) => {
       const { dashboardOnEdit } = prevState
+      const clonedDashboard = cloneDeep(dashboardOnEdit)
       const newWidget = getNewWidget()
-      dashboardOnEdit.widgets.push(newWidget)
-      return { dashboardOnEdit: dashboardOnEdit }
+      clonedDashboard.widgets.push(newWidget)
+      return { dashboardOnEdit: clonedDashboard }
     })
   }
 
@@ -254,6 +259,7 @@ class Dashboard extends React.Component {
       return { showEditWidget: false, targetWidget: widgetConfig, dashboardOnEdit: dashboardOnEdit }
     })
   }
+
   render() {
     const {
       loading,
@@ -285,7 +291,11 @@ class Dashboard extends React.Component {
         />
       )
     } else {
-      const dashboard = selectionId === "" ? dashboards[0] : getItemById(dashboards, selectionId)
+      let dashboard = selectionId === "" ? dashboards[0] : getItemById(dashboards, selectionId)
+
+      if (editEnabled) {
+        dashboard = dashboardOnEdit
+      }
 
       title = dashboard.title
 

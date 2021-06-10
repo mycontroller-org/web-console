@@ -3,7 +3,7 @@ import { Modal, ModalVariant } from "@patternfly/react-core"
 import { DataType, FieldType } from "../../Constants/Form"
 import Editor from "../../Components/Editor/Editor"
 
-const EditSettings = ({ showEditSettings, dashboard, onCancel, onChange, onSave }) => {
+const EditSettings = ({ showEditSettings, dashboard, onCancel, /*onChange,*/ onSave }) => {
   return (
     <Modal
       key="edit-settings"
