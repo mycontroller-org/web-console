@@ -1,10 +1,13 @@
 import React from "react"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
+import Moment from "react-moment"
 import IndexPage from "./Layout/IndexPage"
-// import Login from "./Layout/Login"
 //import store from "./store/configureStore"
 import { persistor, store } from "./store/persister"
+
+// https://github.com/headzoo/react-moment#pooled-timer
+Moment.startPooledTimer(30000)
 
 function App() {
   return (
@@ -14,7 +17,6 @@ function App() {
       </PersistGate>
     </Provider>
   )
-  //return <Login />
 }
 
 export default App
