@@ -18,7 +18,7 @@ const EditSettings = ({ showEditSettings, dashboard, onCancel, onChange, onSave 
         key="editor"
         language="yaml"
         rootObject={dashboard}
-        onChangeFunc={onChange}
+        onChangeFunc={() => {}}
         onSaveFunc={onSave}
         minimapEnabled={false}
         onCancelFunc={onCancel}
