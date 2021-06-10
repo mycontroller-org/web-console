@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid"
 import clone from "lodash.clonedeep"
+import lodash from "lodash"
 import objectPath from "object-path"
 
 export const toString = (data) => {
@@ -15,6 +16,8 @@ export const getRandomId = (length = 0) => {
 }
 
 export const cloneDeep = (obj) => clone(obj)
+
+export const isEqual = (obj1, obj2) => lodash.isEqual(obj1, obj2)
 
 export const noop = () => {}
 

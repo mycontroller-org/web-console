@@ -8,11 +8,10 @@ import {
   RefreshIntervalType,
 } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
-import { getItem, getValue } from "../../../Util/Util"
+import { getItem, getValue, isEqual } from "../../../Util/Util"
 import MultipleAxes from "../../Graphs/MultipleAxes/MultipleAxes"
 import Loading from "../../Loading/Loading"
 import moment from "moment"
-import lodash from "lodash"
 import { ChartGroupType } from "../../../Constants/Widgets/ChartsPanel"
 import { getListAPI } from "../ControlPanel/Common/Utils"
 import { ResourceType } from "../../../Constants/Resource"
@@ -266,10 +265,8 @@ class ChartsPanel extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!lodash.isEqual(this.props.config, prevProps.config)) {
-      this.loadMetrics()
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }
 
   render() {
@@ -285,7 +282,7 @@ class ChartsPanel extends React.Component {
       return <Loading />
     }
 
-    const { config } = this.props
+    const { config, widgetId } = this.props
 
     const { axisY: axisCfg, chart: basicConfig } = config
 
@@ -307,7 +304,9 @@ class ChartsPanel extends React.Component {
       }
     })
     //console.log(newMetrics)
-    return <MultipleAxes width={width} chartConfig={chartConfig} metrics={newMetrics} />
+    return (
+      <MultipleAxes key={`cp_${widgetId}`} width={width} chartConfig={chartConfig} metrics={newMetrics} />
+    )
   }
 }
 

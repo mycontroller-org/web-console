@@ -6,7 +6,7 @@ import PageContent from "../../Components/PageContent/PageContent"
 import PageTitle from "../../Components/PageTitle/PageTitle"
 import Selector from "../../Components/Selector/Seletor"
 import { api } from "../../Service/Api"
-import { getRandomId } from "../../Util/Util"
+import { getRandomId, isEqual } from "../../Util/Util"
 import "./Dashboard.scss"
 import EditWidget from "../../Components/Widgets/EditWidget"
 import LoadWidgets from "../../Components/Widgets/LoadWidgets"
@@ -77,6 +77,10 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     this.reloadDashboards()
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }
 
   onEditClick = () => {

@@ -1,10 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Loading from "../../Loading/Loading"
-import { getValue } from "../../../Util/Util"
+import { getValue, isEqual } from "../../../Util/Util"
 import { Stack, StackItem } from "@patternfly/react-core"
 import { RefreshIntervalType } from "../../../Constants/Metric"
-import lodash from "lodash"
 import { ImageSourceType } from "../../../Constants/Widgets/ImagePanel"
 import { connect } from "react-redux"
 
@@ -33,10 +32,8 @@ class ImageURLPanel extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!lodash.isEqual(this.props.config, prevProps.config)) {
-      this.updateComponents()
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }
 
   updateComponents = () => {

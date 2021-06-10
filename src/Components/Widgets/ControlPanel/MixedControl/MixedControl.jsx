@@ -8,6 +8,7 @@ import { getResource } from "../Common/Utils"
 import ControlObjects from "../Common/Common"
 import { ControlType } from "../../../../Constants/Widgets/ControlPanel"
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
+import { isShouldComponentUpdateWithWsData } from "../../Helper/Common"
 
 const wsKey = "dashboard_control_panel_mixed"
 
@@ -25,6 +26,10 @@ class MixedControl extends React.Component {
 
   componentDidMount() {
     this.updateComponents()
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return isShouldComponentUpdateWithWsData(this.getWsKey(), this.props, this.state, nextProps, nextState)
   }
 
   componentWillUnmount() {

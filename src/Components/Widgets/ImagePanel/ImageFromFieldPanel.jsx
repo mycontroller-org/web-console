@@ -9,8 +9,7 @@ import React from "react"
 import { ResourceType } from "../../../Constants/Resource"
 import { api } from "../../../Service/Api"
 import { connect } from "react-redux"
-import { getValue } from "../../../Util/Util"
-import lodash from "lodash"
+import { getValue, isEqual } from "../../../Util/Util"
 import { navigateToResource } from "../Helper/Resource"
 
 const wsKey = "dashboard_image_panel_image_from_field"
@@ -33,10 +32,8 @@ class ImageFromFieldPanel extends React.Component {
     this.updateComponents()
   }
 
-  componentDidUpdate(prevProps) {
-    if (!lodash.isEqual(this.props.config, prevProps.config)) {
-      this.updateComponents()
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps)
   }
 
   updateComponents = () => {

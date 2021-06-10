@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { NOTIFICATION_LIMIT, ALERT_TYPE_ERROR } from "../../Constants/Common"
-
-let lastId = 0
+import { getRandomId } from "../../Util/Util"
 
 const DISPLAY_VARIANT_READ = "read"
 const DISPLAY_VARIANT_UNREAD = "unread"
@@ -19,7 +18,7 @@ const slice = createSlice({
     notificationAdd: (state, action) => {
       const { type, title, description } = action.payload
       state.items.push({
-        id: ++lastId,
+        id: getRandomId(5),
         type,
         title,
         description,

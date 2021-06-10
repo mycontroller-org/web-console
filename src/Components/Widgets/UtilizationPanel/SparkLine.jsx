@@ -16,7 +16,14 @@ import { InterpolationType, MetricType } from "../../../Constants/Metric"
 import v from "validator"
 import { LastSeen } from "../../Time/Time"
 
-const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, isMetricsLoading }) => {
+const SparkLine = ({
+  widgetId = "",
+  config = {},
+  resource = {},
+  metric = {},
+  dimensions = {},
+  isMetricsLoading,
+}) => {
   const chartType = getValue(config, "chart.type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
@@ -63,6 +70,7 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
 
     const chart = (
       <ChartSelected
+        key={`${chartType}_${widgetId}`}
         style={{
           data: {
             // fill: chartColor, // this color is handled on chartGroup properties
@@ -82,7 +90,11 @@ const SparkLine = ({ config = {}, resource = {}, metric = {}, dimensions = {}, i
         ? metric.minValue * 0.995
         : 0
     metricsChart = (
-      <div className="metrics-chart" style={{ height: `${chartHeight}px`, width: `${chartWidth}px` }}>
+      <div
+        key={`chart_root_${widgetId}`}
+        className="metrics-chart"
+        style={{ height: `${chartHeight}px`, width: `${chartWidth}px` }}
+      >
         <ChartGroup
           // ariaTitle="hello"
           standalone={true}

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { api } from "../../../Service/Api"
-import lodash from "lodash"
 import { connect } from "react-redux"
 import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
@@ -24,6 +23,7 @@ import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
 import TableUtilization from "./TableUtilization"
 import { navigateToResource } from "../Helper/Resource"
+import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -58,10 +58,8 @@ class UtilizationPanel extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!lodash.isEqual(this.props.config, prevProps.config)) {
-      this.updateComponents()
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return isShouldComponentUpdateWithWsData(this.getWsKey(), this.props, this.state, nextProps, nextState)
   }
 
   updateMetrics = () => {

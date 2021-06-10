@@ -1,13 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import _ from "lodash"
 import Loading from "../../../Loading/Loading"
 import { getResource, getListAPI } from "../Common/Utils"
 import { loadData, unloadData } from "../../../../store/entities/websocket"
 import { getValue } from "../../../../Util/Util"
 import { getQuickId } from "../../../../Constants/ResourcePicker"
 import ControlObjects from "../Common/Common"
+import { isShouldComponentUpdateWithWsData } from "../../Helper/Common"
 
 const wsKey = "dashboard_control_panel_switch"
 
@@ -28,10 +28,8 @@ class SwitchPanel extends React.Component {
     this.updateComponents()
   }
 
-  componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props.config, prevProps.config)) {
-      this.updateComponents()
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return isShouldComponentUpdateWithWsData(this.getWsKey(), this.props, this.state, nextProps, nextState)
   }
 
   updateComponents = () => {
@@ -85,7 +83,7 @@ class SwitchPanel extends React.Component {
 
     return (
       <ControlObjects
-        key="control_objects"
+        key={`control_objects_${widgetId}`}
         widgetId={widgetId}
         config={config}
         history={history}

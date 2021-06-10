@@ -14,6 +14,7 @@ import { getValue } from "../../../Util/Util"
 import SimpleSlider from "../../Form/Slider/Simple"
 import { loadData, unloadData } from "../../../store/entities/websocket"
 import { connect } from "react-redux"
+import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
 
 const wsKey = "dashboard_light_panel"
 
@@ -65,6 +66,10 @@ class LightPanel extends React.Component {
 
   componentDidMount() {
     this.updateComponents()
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return isShouldComponentUpdateWithWsData(this.getWsKey(), this.props, this.state, nextProps, nextState)
   }
 
   onChange = (nameQuickIdMap, fieldName, newValue) => {

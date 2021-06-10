@@ -227,10 +227,10 @@ const ControlObjects = ({
 
   const divider = hideBorder ? null : <Divider style={{ margin: "4px 0px" }} />
 
-  const switches = rows.map((row, _index) => {
+  const switches = rows.map((row, index) => {
     const dividerComponent = resources.length > 1 ? divider : null
     return (
-      <StackItem style={{ marginBottom: "6px" }}>
+      <StackItem key={`si_${index}`} style={{ marginBottom: "6px" }}>
         <Split hasGutter>
           <SplitItem>{row[0].title}</SplitItem>
           <SplitItem isFilled>{row[1].title}</SplitItem>
@@ -242,7 +242,11 @@ const ControlObjects = ({
       </StackItem>
     )
   })
-  return <Stack className="mc-control-panel">{switches}</Stack>
+  return (
+    <Stack key={`cp_${widgetId}`} className="mc-control-panel">
+      {switches}
+    </Stack>
+  )
 }
 
 export default ControlObjects
