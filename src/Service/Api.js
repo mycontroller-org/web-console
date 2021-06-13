@@ -167,6 +167,7 @@ export const api = {
     send: (queries) => newRequest(HTTP_VERBS.GET, "/action", queries, {}),
     post: (actions = []) => newRequest(HTTP_VERBS.POST, "/action", {}, actions),
     nodeAction: (queries) => newRequest(HTTP_VERBS.GET, "/action/node", queries, {}),
+    gatewayAction: (queries) => newRequest(HTTP_VERBS.GET, "/action/gateway", queries, {}),
   },
   dashboard: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/dashboard", filter, {}),

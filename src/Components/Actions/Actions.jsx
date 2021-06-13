@@ -37,37 +37,43 @@ export default class Actions extends React.Component {
     const dropdownItems = items.map((item, index) => {
       switch (item.type) {
         case "new":
-          return drawItem("new", "New", AddCircleOIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "New", AddCircleOIcon, item.disabled, item.onClick)
         case "enable":
-          return drawItem("enable", "Enable", CircleIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Enable", CircleIcon, item.disabled, item.onClick)
         case "disable":
-          return drawItem("disable", "Disable", OutlinedCircleIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Disable", OutlinedCircleIcon, item.disabled, item.onClick)
         case "reload":
-          return drawItem("reload", "Reload", RetweetIcon, item.disabled, item.onClick)
-        case "discover":
-          return drawItem("discover", "Discover", SearchIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Reload", RetweetIcon, item.disabled, item.onClick)
+        case "discover_nodes":
+          return drawItem(item.type, "Discover Nodes", SearchIcon, item.disabled, item.onClick)
         case "edit":
-          return drawItem("edit", "Edit", EditIcon, rowsSelectionCount !== 1 || item.disabled, item.onClick)
-        case "delete":
-          return drawItem("delete", "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
-        case "reboot":
-          return drawItem("reboot", "Reboot", RebootingIcon, item.disabled, item.onClick)
-        case "heartbeat_request":
           return drawItem(
-            "heartbeat_request",
-            "Heartbeat Request",
-            HeartbeatIcon,
-            item.disabled,
+            item.type,
+            "Edit",
+            EditIcon,
+            rowsSelectionCount !== 1 || item.disabled,
             item.onClick
           )
+        case "delete":
+          return drawItem(item.type, "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
+        case "reboot":
+          return drawItem(item.type, "Reboot", RebootingIcon, item.disabled, item.onClick)
+        case "heartbeat_request":
+          return drawItem(item.type, "Request Heartbeat", HeartbeatIcon, item.disabled, item.onClick)
         case "refresh_node_info":
-          return drawItem("refresh_node_info", "Fetch Info", InfoAltIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Fetch Info", InfoAltIcon, item.disabled, item.onClick)
         case "firmware_update":
-          return drawItem("firmware_update", "Firmware Update", UploadIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Update Firmware", UploadIcon, item.disabled, item.onClick)
         case "reset":
-          return drawItem("reset", "Reset", EraserIcon, item.disabled, item.onClick)
+          return drawItem(item.type, "Reset", EraserIcon, item.disabled, item.onClick)
         case "restore":
-          return drawItem("restore", "Restore", FileImportIcon, rowsSelectionCount !== 1 || item.disabled, item.onClick)
+          return drawItem(
+            item.type,
+            "Restore",
+            FileImportIcon,
+            rowsSelectionCount !== 1 || item.disabled,
+            item.onClick
+          )
         case "separator":
           return <DropdownSeparator key={"separator-" + index} />
         default:

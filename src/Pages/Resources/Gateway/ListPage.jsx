@@ -54,7 +54,12 @@ class List extends ListBase {
       },
     },
     { type: "separator" },
-    { type: "discover" },
+    {
+      type: "discover_nodes",
+      onClick: this.actionFunc((ids) => {
+        api.action.gatewayAction({ action: "discover_nodes", id: ids })
+      }),
+    },
     { type: "separator" },
     { type: "delete", onClick: this.onDeleteActionClick },
   ]
