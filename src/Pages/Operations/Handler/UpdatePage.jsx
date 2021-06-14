@@ -56,6 +56,8 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject, id) => {
+  objectPath.set(rootObject, "labels", { location: "server" }, true)
+
   const items = [
     {
       label: "ID",
