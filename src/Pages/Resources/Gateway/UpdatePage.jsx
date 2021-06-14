@@ -298,7 +298,7 @@ const getMySensorsItems = (rootObject) => {
 // get protocol items
 // get protocol mqtt items
 const getProtocolMqttItems = (rootObject) => {
-  objectPath.set(rootObject, "provider.protocol.qos", "0", true)
+  objectPath.set(rootObject, "provider.protocol.qos", 0, true)
   const items = [
     {
       label: "Broker",
