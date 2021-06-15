@@ -152,7 +152,7 @@ export const validate = (func, val, opts) => {
       return regexIsKey.test(val)
 
     case "isVariableKey":
-      const regexIsVariableKey = /^[a-zA-Z0-9_-]+$/
+      const regexIsVariableKey = /^[a-zA-Z0-9_]+$/
       return regexIsVariableKey.test(val)
 
     case "isVersion":

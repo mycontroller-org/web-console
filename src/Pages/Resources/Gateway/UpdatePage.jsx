@@ -15,6 +15,7 @@ import {
   filterProtocolOptions,
 } from "../../../Constants/Gateway"
 import { validate } from "../../../Util/Validator"
+import { getESPHomeItems } from "./EspHome/UpdateEspHome"
 
 class UpdatePage extends React.Component {
   render() {
@@ -556,53 +557,6 @@ const getPhilipsHueItems = (rootObject) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-    },
-  ]
-  return items
-}
-
-// get ESPHome config
-const getESPHomeItems = (rootObject) => {
-  objectPath.set(rootObject, "provider.timeout", "5s", true)
-  const items = [
-    {
-      label: "Configuration",
-      fieldId: "!configuration_sm",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "Connection Timeout",
-      fieldId: "provider.timeout",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-    },
-    {
-      label: "Password",
-      fieldId: "provider.password",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-    },
-    {
-      label: "Auto Discover",
-      fieldId: "provider.autoDiscover",
-      fieldType: FieldType.Switch,
-      dataType: DataType.Boolean,
-      value: false,
-      isDisabled: true,
-    },
-    {
-      label: "Nodes",
-      fieldId: "provider.nodes",
-      fieldType: FieldType.ScriptEditor,
-      dataType: DataType.Object,
-      value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update",
-      language: "yaml",
-      minimapEnabled: true,
-      isRequired: false,
     },
   ]
   return items

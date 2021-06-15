@@ -155,6 +155,8 @@ const getField = (item, onChange) => {
                 }
           }
           validateValueFunc={item.validateValueFunc}
+          valueField={item.valueField}
+          updateButtonCallback={item.updateButtonCallback}
         />
       )
 
