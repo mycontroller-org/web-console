@@ -8,6 +8,7 @@ import {
 import objectPath from "object-path"
 import { api } from "../../../Service/Api"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
+import { getDynamicFilter } from "../../../Util/Filter"
 
 // Light Panel items
 export const updateFormItemsLightPanel = (rootObject, items) => {
@@ -42,7 +43,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       options: RGBComponentOptions,
       isRequired: true,
       validator: { isNotEmpty: {} },
-      resetFields: { "config.fieldIds.color": "", "config.fieldIds.hue": "" },
+      resetFields: { "config.fieldIds.color": "", "config.fieldIds.hue": "", "config.fieldIds.rgb": "" },
     })
   }
 
@@ -66,8 +67,8 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
-      label: "Dimmer",
-      fieldId: "config.fieldIds.dimmer",
+      label: "Brightness",
+      fieldId: "config.fieldIds.brightness",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
@@ -126,8 +127,8 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
-      isRequired: true,
-      validator: { isNotEmpty: {} },
+      isRequired: false,
+      // validator: { isNotEmpty: {} },
       apiOptions: api.field.list,
       getFiltersFunc: getFiltersFunc,
       optionValueFunc: getResourceOptionValueFunc,
@@ -139,7 +140,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
 // helper functions
 
 const getFiltersFunc = (value) => {
-  return [{ k: "name", o: "regex", v: value }]
+  return getDynamicFilter("name", value, [])
 }
 
 const getOptionsDescriptionFuncImpl = (item) => {

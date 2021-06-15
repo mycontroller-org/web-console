@@ -9,6 +9,7 @@ import {
   ImageSourceTypeOptions,
 } from "../../../Constants/Widgets/ImagePanel"
 import { RefreshIntervalType, RefreshIntervalTypeOptions } from "../../../Constants/Metric"
+import { getDynamicFilter } from "../../../Util/Filter"
 
 // Image Panel items
 export const updateFormItemsImagePanel = (rootObject, items = []) => {
@@ -145,7 +146,7 @@ const getDiskItems = (rootObject) => {
 // helper functions
 
 const getFiltersFunc = (value) => {
-  return [{ k: "name", o: "regex", v: value }]
+  return getDynamicFilter("name", value, [])
 }
 
 const getOptionsDescriptionFuncImpl = (item) => {

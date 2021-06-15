@@ -46,7 +46,7 @@ class AboutPage extends React.Component {
           <Text component={TextVariants.h2}>Backend</Text>
           <Divider component="hr" />
           <TextList component="dl">
-            <TextListItem component="dt">Branch</TextListItem>
+            <TextListItem component="dt">Version</TextListItem>
             <TextListItem component="dd">{bk.version}</TextListItem>
             <TextListItem component="dt">Git Commit</TextListItem>
             <TextListItem component="dd">{bk.gitCommit}</TextListItem>
@@ -59,7 +59,7 @@ class AboutPage extends React.Component {
           <Text component={TextVariants.h2}>Web Console</Text>
           <Divider component="hr" />
           <TextList component="dl">
-            <TextListItem component="dt">Branch</TextListItem>
+            <TextListItem component="dt">Version</TextListItem>
             <TextListItem component="dd">{process.env.REACT_APP_GIT_BRANCH}</TextListItem>
             <TextListItem component="dt">Git Commit</TextListItem>
             <TextListItem component="dd">{process.env.REACT_APP_GIT_SHA}</TextListItem>

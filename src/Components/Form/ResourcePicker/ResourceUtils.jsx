@@ -7,6 +7,7 @@ import { getValue } from "../../../Util/Util"
 import React from "react"
 import { TextInput } from "@patternfly/react-core"
 import ResourcePicker from "./ResourcePicker"
+import { getDynamicFilter } from "../../../Util/Filter"
 
 export const updateValue = (rootObject = {}, onChange, onClose) => {
   const dataType = getValue(rootObject, "type", FieldDataType.TypeString)
@@ -159,14 +160,14 @@ export const getResourceFilterFunc = (resourceType) => {
     case ResourceType.Handler:
     case ResourceType.DataRepository:
       return (value) => {
-        return [{ k: "id", o: "regex", v: value }]
+        return getDynamicFilter("id", value, [])
       }
 
     case ResourceType.Node:
     case ResourceType.Source:
     case ResourceType.Field:
       return (value) => {
-        return [{ k: "name", o: "regex", v: value }]
+        return getDynamicFilter("name", value, [])
       }
 
     default:

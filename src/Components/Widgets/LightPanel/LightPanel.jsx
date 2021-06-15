@@ -87,7 +87,7 @@ class LightPanel extends React.Component {
 
   render() {
     const { loading, quickIdNameMap, nameQuickIdMap } = this.state
-    const { lightType, rgbComponent } = this.props.config
+    const { lightType, rgbComponent, fieldIds } = this.props.config
 
     if (loading) {
       return <Loading />
@@ -106,7 +106,7 @@ class LightPanel extends React.Component {
 
       const fieldName = quickIdNameMap[quickId]
       switch (fieldName) {
-        case "dimmer":
+        case "brightness":
         case "colorTemperature":
           values[fieldName] = Number(value)
           break
@@ -143,7 +143,7 @@ class LightPanel extends React.Component {
 
     const {
       power = false,
-      dimmer = 0,
+      brightness = 0,
       colorTemperature = 350,
       rgb = "black",
       hue = 230,
@@ -169,20 +169,20 @@ class LightPanel extends React.Component {
       />
     )
 
-    // add dimmer
+    // add brightness
     fieldItems.push(
       <WrapItem
-        key={"dimmer"}
+        key={"brightness"}
         Icon={AdjustIcon}
         iconTooltip="Brightness"
         field={
           <SimpleSlider
             className="slider-brightness"
-            id={"dimmer"}
+            id={"brightness"}
             onChange={(newValue) => {
-              this.onChange(nameQuickIdMap, "dimmer", Math.round(newValue))
+              this.onChange(nameQuickIdMap, "brightness", Math.round(newValue))
             }}
-            value={dimmer}
+            value={brightness}
           />
         }
       />
@@ -220,11 +220,14 @@ class LightPanel extends React.Component {
             Icon={PaletteIcon}
             iconTooltip="RGB Color"
             field={
-              <ColorBox
-                onChange={(newColor) => this.onChange(nameQuickIdMap, "rgb", newColor)}
-                colors={ColorsSetBig}
-                color={rgb}
-              />
+              <div style={{ marginRight: "49px" }}>
+                <ColorBox
+                  style={{ height: "24px" }}
+                  onChange={(newColor) => this.onChange(nameQuickIdMap, "rgb", newColor)}
+                  colors={ColorsSetBig}
+                  color={rgb}
+                />
+              </div>
             }
           />
         )
@@ -247,24 +250,26 @@ class LightPanel extends React.Component {
         )
       }
 
-      // add saturation slider
-      fieldItems.push(
-        <WrapItem
-          key="saturation"
-          Icon={ImageIcon}
-          iconTooltip="Saturation"
-          field={
-            <SimpleSlider
-              className="slider-saturation"
-              id={"saturation"}
-              onChange={(newSaturation) => {
-                this.onChange(nameQuickIdMap, "saturation", Math.round(newSaturation))
-              }}
-              value={saturation}
-            />
-          }
-        />
-      )
+      if (fieldIds.saturation && fieldIds.saturation !== "") {
+        // add saturation slider
+        fieldItems.push(
+          <WrapItem
+            key="saturation"
+            Icon={ImageIcon}
+            iconTooltip="Saturation"
+            field={
+              <SimpleSlider
+                className="slider-saturation"
+                id={"saturation"}
+                onChange={(newSaturation) => {
+                  this.onChange(nameQuickIdMap, "saturation", Math.round(newSaturation))
+                }}
+                value={saturation}
+              />
+            }
+          />
+        )
+      }
     }
 
     return (

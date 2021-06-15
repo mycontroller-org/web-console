@@ -225,6 +225,7 @@ const getFormItems = (rootObject, id) => {
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
         options: MessageLoggerOptions,
+        direction: "up",
       }
     )
 
@@ -429,7 +430,12 @@ const getProtocolEthernetItems = (_rootObject) => {
 
 // logger items
 // get file logger items
-const getLoggerFileItems = (_rootObject) => {
+const getLoggerFileItems = (rootObject) => {
+  objectPath.set(rootObject, "messageLogger.flushInterval", "1s", true)
+  objectPath.set(rootObject, "messageLogger.logRotateInterval", "12h", true)
+  objectPath.set(rootObject, "messageLogger.maxSize", "2MiB", true)
+  objectPath.set(rootObject, "messageLogger.maxAge", "72h", true)
+  objectPath.set(rootObject, "messageLogger.maxBackup", 7, true)
   const items = [
     {
       label: "Flush Interval",
@@ -556,7 +562,8 @@ const getPhilipsHueItems = (rootObject) => {
 }
 
 // get ESPHome config
-const getESPHomeItems = (_rootObject) => {
+const getESPHomeItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.timeout", "5s", true)
   const items = [
     {
       label: "Configuration",
@@ -583,6 +590,7 @@ const getESPHomeItems = (_rootObject) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
+      isDisabled: true,
     },
     {
       label: "Nodes",

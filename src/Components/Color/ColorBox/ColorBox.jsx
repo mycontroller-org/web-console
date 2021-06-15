@@ -31,7 +31,7 @@ const defaultColors = [
 ]
 const defaultColor = "#0066CC"
 
-const ColorBox = ({ colors = defaultColors, color = defaultColor, onChange = () => {} }) => {
+const ColorBox = ({ colors = defaultColors, color = defaultColor, onChange = () => {}, style = {} }) => {
   const selectedColor = color === "" ? defaultColor : color
 
   return (
@@ -53,7 +53,7 @@ const ColorBox = ({ colors = defaultColors, color = defaultColor, onChange = () 
         />
       }
     >
-      <div className="mc-color-box" style={{ backgroundColor: selectedColor }}></div>
+      <div className="mc-color-box" style={{ backgroundColor: selectedColor, ...style }}></div>
     </Popover>
   )
 }
