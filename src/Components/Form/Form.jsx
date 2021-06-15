@@ -34,6 +34,7 @@ import {
   displayYAxisConfig,
 } from "./Widget/ChartsPanel/ChartYAxisConfigMapUtils"
 import MixedResourceConfigList from "./Widget/ChartsPanel/MixedResourceConfigList/MixedResourceConfigList"
+import { getRandomId } from "../../Util/Util"
 
 // item sample
 // const item = {
@@ -82,12 +83,13 @@ export const Form = ({ isHorizontal = false, isWidthLimited = true, items = [], 
 // helper functions
 
 const getField = (item, onChange) => {
+  const itemId = `${item.fieldId}_${getRandomId(5)}`
   switch (item.fieldType) {
     case FieldType.Text:
     case FieldType.Password:
       return (
         <TextInput
-          id={item.fieldId}
+          id={itemId}
           type={item.fieldType}
           value={item.value}
           onChange={onChange}
@@ -99,7 +101,7 @@ const getField = (item, onChange) => {
     case FieldType.TextArea:
       return (
         <TextArea
-          id={item.fieldId}
+          id={itemId}
           type={item.fieldType}
           value={item.value}
           onChange={onChange}
@@ -392,8 +394,8 @@ const getField = (item, onChange) => {
     case FieldType.Switch:
       return (
         <Switch
-          id={item.fieldId}
-          aria-label={item.fieldId}
+          id={itemId}
+          aria-label={itemId}
           isDisabled={item.isDisabled}
           label={item.labelOn}
           labelOff={item.labelOff}
@@ -416,7 +418,7 @@ const getField = (item, onChange) => {
       return (
         <ScriptEditor
           name={item.label}
-          id={item.fieldId}
+          id={itemId}
           language={item.language}
           minimapEnabled={item.minimapEnabled}
           options={item.options}
@@ -431,7 +433,7 @@ const getField = (item, onChange) => {
     case FieldType.SliderSimple:
       return (
         <SimpleSlider
-          id={item.fieldId}
+          id={itemId}
           min={item.min}
           max={item.max}
           step={item.step}

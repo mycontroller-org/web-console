@@ -198,3 +198,23 @@ export const RefreshIntervalTypeOptions = [
   { value: RefreshIntervalType.Minutes_15, label: "15 Minutes" },
   { value: RefreshIntervalType.Minutes_30, label: "30 Minutes" },
 ]
+
+export const DataUnitType = {
+  Bytes: "",
+  KiB: "KiB",
+  MiB: "MiB",
+  GiB: "GiB",
+  TiB: "TiB",
+  PiB: "PiB",
+  EiB: "EiB",
+}
+
+export const DataUnitTypeOptions = [
+  { value: DataUnitType.Bytes, label: "Bytes" },
+  { value: DataUnitType.KiB, label: "Kibi Bytes (KiB)" },
+  { value: DataUnitType.MiB, label: "Mibi Bytes (MiB)" },
+  { value: DataUnitType.GiB, label: "Gibi Bytes (GiB)" },
+  { value: DataUnitType.TiB, label: "Tebi Bytes (TiB)" },
+  { value: DataUnitType.PiB, label: "Pebi Bytes (PiB)" },
+  { value: DataUnitType.EiB, label: "Exbi Bytes (EiB)" },
+]

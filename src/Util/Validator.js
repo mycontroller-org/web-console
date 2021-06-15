@@ -26,36 +26,8 @@ const isLengthArray = (val, opts) => {
 }
 
 const baudRates = [
-  50,
-  75,
-  110,
-  134,
-  150,
-  200,
-  300,
-  600,
-  1200,
-  1800,
-  2400,
-  4800,
-  9600,
-  19200,
-  38400,
-  57600,
-  115200,
-  230400,
-  460800,
-  500000,
-  576000,
-  921600,
-  1000000,
-  1152000,
-  1500000,
-  2000000,
-  2500000,
-  3000000,
-  3500000,
-  4000000,
+  50, 75, 110, 134, 150, 200, 300, 600, 1200, 1800, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400,
+  460800, 500000, 576000, 921600, 1000000, 1152000, 1500000, 2000000, 2500000, 3000000, 3500000, 4000000,
 ]
 
 const isBaudRate = (val) => {
@@ -91,9 +63,15 @@ export const validate = (func, val, opts) => {
       return v.isCurrency(val, opts)
 
     case "isEmpty":
+      if (t(val).isObject) {
+        return Object.keys(val).length == 0
+      }
       return v.isEmpty(val, opts)
 
     case "isNotEmpty":
+      if (t(val).isObject) {
+        return Object.keys(val).length > 0
+      }
       return !v.isEmpty(val, opts)
 
     case "isEqual":

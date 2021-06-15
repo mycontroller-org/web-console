@@ -14,8 +14,9 @@ import {
   MessageLoggerOptions,
   filterProtocolOptions,
 } from "../../../Constants/Gateway"
-import { validate } from "../../../Util/Validator"
-import { getESPHomeItems } from "./EspHome/UpdateEspHome"
+import { getESPHomeItems } from "./EspHome/Update"
+import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
+import { getPhilipsHueItems } from "./PhilipsHue/Update"
 
 class UpdatePage extends React.Component {
   render() {
@@ -474,89 +475,6 @@ const getLoggerFileItems = (rootObject) => {
       value: "",
       validator: { isInt: { min: 0 } },
       helperTextInvalid: "Invalid Maximum Backup. int, min=0",
-    },
-  ]
-  return items
-}
-
-// get System Monitoring config
-const getSystemMonitoringItems = (_rootObject) => {
-  const items = [
-    {
-      label: "Configuration",
-      fieldId: "!configuration_sm",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "Host ID Map",
-      fieldId: "provider.hostIdMap",
-      fieldType: FieldType.KeyValueMap,
-      dataType: DataType.Object,
-      value: "",
-      keyLabel: "Host ID",
-      valueLabel: "Node ID",
-      isRequired: false,
-      validateValueFunc: (value) => {
-        return validate("isKey", value)
-      },
-    },
-    {
-      label: "Host Config Map",
-      fieldId: "provider.hostConfigMap",
-      fieldType: FieldType.ScriptEditor,
-      dataType: DataType.Object,
-      value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update",
-      language: "yaml",
-      minimapEnabled: true,
-      isRequired: false,
-    },
-  ]
-  return items
-}
-
-// get PhilipsHue Items
-const getPhilipsHueItems = (rootObject) => {
-  objectPath.set(rootObject, "provider.syncInterval", "15m", true)
-  const items = [
-    {
-      label: "Configuration",
-      fieldId: "!provider.configuration",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "Bridge",
-      fieldId: "provider.host",
-      isRequired: true,
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      validator: {
-        isURL: {
-          protocols: ["http", "https"],
-        },
-      },
-      helperTextInvalid: "Invalid Bridge URL.",
-    },
-    {
-      label: "Username",
-      fieldId: "provider.username",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      isRequired: true,
-      helperText: "",
-      helperTextInvalid: "Invalid username. chars: min=2 and max=100",
-      validated: "default",
-      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
-    },
-    {
-      label: "Sync Interval",
-      fieldId: "provider.syncInterval",
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
     },
   ]
   return items

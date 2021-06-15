@@ -54,6 +54,8 @@ class AboutPage extends React.Component {
             <TextListItem component="dd">{bk.buildDate}</TextListItem>
             <TextListItem component="dt">GoLang Version</TextListItem>
             <TextListItem component="dd">{bk.goLang} ({bk.platform}, {bk.arch})</TextListItem>
+            <TextListItem component="dt">Host ID</TextListItem>
+            <TextListItem component="dd">{bk.hostId}</TextListItem>
           </TextList>
 
           <Text component={TextVariants.h2}>Web Console</Text>
