@@ -6,6 +6,7 @@ import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
 import PropTypes from "prop-types"
+import { getValue } from "../../../../Util/Util"
 
 class NodeConfigPicker extends React.Component {
   state = {
@@ -76,7 +77,7 @@ const getItems = (rootObject) => {
   objectPath.set(rootObject, "password", "", true)
   objectPath.set(rootObject, "timeout", "5s", true)
   objectPath.set(rootObject, "aliveCheckInterval", "15s", true)
-  objectPath.set(rootObject, "reconnectDelay", "", true)
+  objectPath.set(rootObject, "reconnectDelay", "30s", true)
 
   const items = [
     {

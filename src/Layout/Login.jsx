@@ -13,7 +13,7 @@ import logoBackground from "../Logo/mc-black-login-page.svg"
 import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { authSuccess } from "../store/entities/auth"
-import { updateDocumentationUrl } from "../store/entities/about"
+import { updateDocumentationUrl, updateMetricsDB } from "../store/entities/about"
 import { getValue } from "../Util/Util"
 import "./Login.scss"
 import {
@@ -41,6 +41,7 @@ class SimpleLoginPage extends React.Component {
         // update documentation url
         const docUrl = res.data.documentationUrl
         this.props.updateDocUrl({ documentationUrl: docUrl !== "" ? docUrl : URL_DOCUMENTATION })
+        this.props.updateMetricsDB({ metricsDBDisabled: res.data.metricsDBDisabled })
 
         const loginData = getValue(res.data, "login", { message: "No message set for login" })
         this.setState({ loginData: loginData })
@@ -170,6 +171,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateSuccessLogin: (data) => dispatch(authSuccess(data)),
   updateDocUrl: (data) => dispatch(updateDocumentationUrl(data)),
+  updateMetricsDB: (data) => dispatch(updateMetricsDB(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SimpleLoginPage)

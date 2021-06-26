@@ -6,6 +6,7 @@ const slice = createSlice({
   initialState: {
     show: false,
     documentationUrl: URL_DOCUMENTATION,
+    metricsDBDisabled: false,
   },
   reducers: {
     aboutShow: (about, action) => {
@@ -19,9 +20,13 @@ const slice = createSlice({
     updateDocumentationUrl: (about, action) => {
       about.documentationUrl = action.payload.documentationUrl
     },
+
+    updateMetricsDB: (about, action) => {
+      about.metricsDBDisabled = action.payload.metricsDBDisabled
+    },
   },
 })
 
 export default slice.reducer
 
-export const { aboutShow, aboutHide, updateDocumentationUrl } = slice.actions
+export const { aboutShow, aboutHide, updateDocumentationUrl, updateMetricsDB } = slice.actions
