@@ -30,6 +30,7 @@ import {
   BookIcon,
   ChatIcon,
   CogIcon,
+  GithubIcon,
   HelpIcon,
   InfoAltIcon,
   PowerOffIcon,
@@ -52,7 +53,7 @@ import { notificationDrawerToggle } from "../store/entities/notification"
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
-import { URL_FORUM } from "../Constants/Common"
+import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
@@ -221,6 +222,9 @@ class PageLayoutExpandableNav extends React.Component {
       </DropdownItem>,
       <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
         <BookIcon /> Documentation
+      </DropdownItem>,
+      <DropdownItem key="source-code" href={URL_SOURCE_CODE} target="_blank">
+        <GithubIcon /> Source Code
       </DropdownItem>,
       <DropdownItem key="forum" href={URL_FORUM} target="_blank">
         <ChatIcon /> Forum

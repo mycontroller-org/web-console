@@ -17,6 +17,7 @@ export const MAXIMUM_LOGIN_EXPIRES_IN_DAYS = "720h" // 24 * 30
 export const URL_HOMEPAGE = "https://mycontroller.org"
 export const URL_DOCUMENTATION = "https://v2.mycontroller.org/docs/"
 export const URL_FORUM = "https://forum.mycontroller.org"
+export const URL_SOURCE_CODE = "https://github.com/mycontroller-org/server"
 
 export const SECURE_SHARE_PREFIX = "/secure_share/"
 export const INSECURE_SHARE_PREFIX = "/insecure_share/"
