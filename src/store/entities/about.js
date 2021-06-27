@@ -21,7 +21,7 @@ const slice = createSlice({
       about.documentationUrl = action.payload.documentationUrl
     },
 
-    updateMetricsDB: (about, action) => {
+    updateMetricsDBStatus: (about, action) => {
       about.metricsDBDisabled = action.payload.metricsDBDisabled
     },
   },
@@ -29,4 +29,4 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export const { aboutShow, aboutHide, updateDocumentationUrl, updateMetricsDB } = slice.actions
+export const { aboutShow, aboutHide, updateDocumentationUrl, updateMetricsDBStatus } = slice.actions

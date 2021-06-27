@@ -13,14 +13,14 @@ import logoBackground from "../Logo/mc-black-login-page.svg"
 import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { authSuccess } from "../store/entities/auth"
-import { updateDocumentationUrl, updateMetricsDB } from "../store/entities/about"
-import { getValue } from "../Util/Util"
 import "./Login.scss"
 import {
   MINIMUM_LOGIN_EXPIRES_IN_DAYS,
   MAXIMUM_LOGIN_EXPIRES_IN_DAYS,
   URL_DOCUMENTATION,
 } from "../Constants/Common"
+import { getValue } from "../Util/Util"
+import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
 
 class SimpleLoginPage extends React.Component {
   state = {
@@ -171,7 +171,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateSuccessLogin: (data) => dispatch(authSuccess(data)),
   updateDocUrl: (data) => dispatch(updateDocumentationUrl(data)),
-  updateMetricsDB: (data) => dispatch(updateMetricsDB(data)),
+  updateMetricsDB: (data) => dispatch(updateMetricsDBStatus(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SimpleLoginPage)
