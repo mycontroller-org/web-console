@@ -43,9 +43,11 @@ class AboutPage extends React.Component {
         //productName="MYCONTROLLER.ORG"
       >
         <TextContent>
-          <Text component={TextVariants.h2}>Backend</Text>
+          <Text component={TextVariants.h2}>Server</Text>
           <Divider component="hr" />
           <TextList component="dl">
+            <TextListItem component="dt">Host ID</TextListItem>
+            <TextListItem component="dd">{bk.hostId}</TextListItem>
             <TextListItem component="dt">Version</TextListItem>
             <TextListItem component="dd">{bk.version}</TextListItem>
             <TextListItem component="dt">Git Commit</TextListItem>
@@ -54,8 +56,6 @@ class AboutPage extends React.Component {
             <TextListItem component="dd">{bk.buildDate}</TextListItem>
             <TextListItem component="dt">GoLang Version</TextListItem>
             <TextListItem component="dd">{bk.goLang} ({bk.platform}, {bk.arch})</TextListItem>
-            <TextListItem component="dt">Host ID</TextListItem>
-            <TextListItem component="dd">{bk.hostId}</TextListItem>
           </TextList>
 
           <Text component={TextVariants.h2}>Web Console</Text>
