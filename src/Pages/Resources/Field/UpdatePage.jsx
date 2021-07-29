@@ -5,8 +5,6 @@ import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { v4 as uuidv4 } from "uuid"
-import objectPath from "object-path"
 import { MetricTypeOptions } from "../../../Constants/Metric"
 
 class UpdatePage extends React.Component {
@@ -62,10 +60,8 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject) => {
-  // set ID, if not set
-  const newID = uuidv4().toString()
-  objectPath.set(rootObject, "id", newID, true)
 
+  // do not set id, new id will be updated on the server side
   const items = [
     {
       label: "ID",
@@ -73,7 +69,7 @@ const getFormItems = (rootObject) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      isRequired: true,
+      isRequired: false,
       isDisabled: true,
       helperText: "",
       helperTextInvalid: "",
