@@ -71,11 +71,6 @@ const getFormItems = (rootObject) => {
       value: "",
       isRequired: false,
       isDisabled: true,
-      helperText: "",
-      helperTextInvalid: "",
-      validated: "default",
-      options: [],
-      validator: { isNotEmpty: {} },
     },
     {
       label: "Gateway",
