@@ -4,7 +4,7 @@ import { api } from "../../../Service/Api"
 import { connect } from "react-redux"
 import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
-import { getItem, getValue, isEqual } from "../../../Util/Util"
+import { getItem, getNodeMetricFieldName, getNodeMetricType, getValue, isEqual } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
 import DonutUtilization from "./DonutUtilization"
 import SparkLine from "./SparkLine"
@@ -24,6 +24,7 @@ import { loadData, unloadData } from "../../../store/entities/websocket"
 import TableUtilization from "./TableUtilization"
 import { navigateToResource } from "../Helper/Resource"
 import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
+import { FIELD_NAME } from "../../../Constants/Common"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -96,10 +97,18 @@ class UtilizationPanel extends React.Component {
     const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
     const chartInterval = getValue(config, "chart.interval", getRecommendedInterval(chartDuration))
     const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
+    const resourceType = getValue(config, "resource.type", "")
 
     // if it is spark chart, get metrics data
-
     const duration = getItem(chartDuration, DurationOptions)
+
+    const extraTags = {}
+
+    if (resourceType === ResourceType.Node) {
+      const valueField = getValue(config, "resource.valueKey", "")
+      const fieldName = getNodeMetricFieldName(valueField)
+      extraTags[FIELD_NAME] = fieldName
+    }
 
     const metricQuery = {
       global: {
@@ -122,7 +131,7 @@ class UtilizationPanel extends React.Component {
           metricQuery.individual.push({
             name: r.id,
             metricType: r.metricType,
-            tags: { id: r.id },
+            tags: { id: r.id, ...extraTags },
           })
         }
       })
@@ -210,11 +219,18 @@ class UtilizationPanel extends React.Component {
 
           const quickId = getQuickId(resourceType, resource)
           resourcesRaw[quickId] = resource
+
+          // update metric type
+          let metricType = objectPath.get(resource, "metricType", "")
+          // for node resource type always fix metric type as gaugeFloat
+          if (quickId.startsWith(ResourceType.Node)) {
+            metricType = getNodeMetricType()
+          }
           return {
             id: resource.id,
             quickId: quickId,
             name: name,
-            metricType: objectPath.get(resource, "metricType", ""),
+            metricType: metricType,
             value: objectPath.get(resource, resourceValueKey, ""),
             timestamp:
               resourceValueTimestampKey !== "" ? objectPath.get(resource, resourceValueTimestampKey, "") : "",

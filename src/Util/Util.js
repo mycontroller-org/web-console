@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from "uuid"
 import clone from "lodash.clonedeep"
 import lodash from "lodash"
 import objectPath from "object-path"
+import { MetricType } from "../Constants/Metric"
+import { NodeField } from "../Constants/Common"
 
 export const toString = (data) => {
   return JSON.stringify(data)
@@ -66,4 +68,26 @@ export const getFieldValue = (value) => {
     return "CAMERA IMAGE"
   }
   return stringValue
+}
+
+export const getNodeMetricType = (fieldName) => {
+  switch (getNodeMetricFieldName(fieldName)) {
+    case NodeField.BATTERY_LEVEL:
+      return MetricType.GaugeFloat
+
+    default:
+      return MetricType.GaugeFloat
+  }
+}
+
+export const getNodeMetricFieldName = (fieldName) => {
+  if (fieldName === "" || fieldName === undefined) {
+    return NodeField.BATTERY_LEVEL
+  }
+
+  if (fieldName.startsWith("others")) {
+    return fieldName.replace("others.", "")
+  }
+
+  return fieldName
 }

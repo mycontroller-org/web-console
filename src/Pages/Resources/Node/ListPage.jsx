@@ -19,6 +19,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/resources/node"
+import { getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
@@ -136,6 +137,7 @@ const tableColumns = [
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Version", fieldKey: "labels.version", sortable: true },
   { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
+  { title: "Battery", fieldKey: "others.battery_level", sortable: true },
   { title: "Status", fieldKey: "state.status", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
@@ -184,6 +186,7 @@ const toRowFuncImpl = (rawData, history) => {
       },
       rawData.labels.version,
       rawData.labels.library_version,
+      { title: getValue(rawData, "others.battery_level", "") },
       { title: getStatus(rawData.state.status) },
       { title: <LastSeen date={rawData.lastSeen} /> },
     ],

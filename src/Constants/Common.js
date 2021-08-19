@@ -42,3 +42,8 @@ export const DropDownPositionTypeOptions = [
   { value: DropDownPositionType.DOWN, label: "Down" },
   { value: DropDownPositionType.UP, label: "UP" },
 ]
+
+export const FIELD_NAME = "fieldname"
+export const NodeField = {
+  BATTERY_LEVEL: "battery_level",
+}

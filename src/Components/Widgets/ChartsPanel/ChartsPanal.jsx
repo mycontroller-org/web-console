@@ -8,7 +8,7 @@ import {
   RefreshIntervalType,
 } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
-import { getItem, getValue, isEqual } from "../../../Util/Util"
+import { getItem, getNodeMetricFieldName, getNodeMetricType, getValue, isEqual } from "../../../Util/Util"
 import MultipleAxes from "../../Graphs/MultipleAxes/MultipleAxes"
 import Loading from "../../Loading/Loading"
 import moment from "moment"
@@ -16,6 +16,7 @@ import { ChartGroupType } from "../../../Constants/Widgets/ChartsPanel"
 import { getListAPI } from "../ControlPanel/Common/Utils"
 import { ResourceType } from "../../../Constants/Resource"
 import { getQuickId } from "../../../Constants/ResourcePicker"
+import { FIELD_NAME } from "../../../Constants/Common"
 
 class ChartsPanel extends React.Component {
   state = {
@@ -46,10 +47,17 @@ class ChartsPanel extends React.Component {
         const resourcesAccepted = []
         const metricQueryIndividuals = []
         res.data.data.forEach((item) => {
-          switch (item.metricType) {
+          let metricType = item.metricType
+          const quickId = getQuickId(resourceType, item)
+          const extraTags = {}
+          if (quickId.startsWith(ResourceType.Node)) {
+            metricType = getNodeMetricType()
+            extraTags[FIELD_NAME] = getNodeMetricFieldName()
+          }
+
+          switch (metricType) {
             case MetricType.Gauge:
             case MetricType.GaugeFloat:
-              const quickId = getQuickId(resourceType, item)
               const resourceName = getValue(item, nameKey, `undefined_${quickId}`)
               resourcesAccepted.push({
                 chartType: chartCfg.chartType,
@@ -66,8 +74,8 @@ class ChartsPanel extends React.Component {
               })
               metricQueryIndividuals.push({
                 name: resourceName,
-                metricType: item.metricType,
-                tags: { id: item.id },
+                metricType: metricType,
+                tags: { id: item.id, ...extraTags },
               })
               break
 
@@ -148,8 +156,17 @@ class ChartsPanel extends React.Component {
         // get metrics and update
         Object.keys(resourceMap).forEach((quickId) => {
           const resource = resourceMap[quickId]
-          if (quickId.startsWith("field")) {
-            const metricType = getValue(resource, "metricType", MetricType.None)
+          if (quickId.startsWith(ResourceType.Field) || quickId.startsWith(ResourceType.Node)) {
+            let metricType = getValue(resource, "metricType", MetricType.None)
+
+            // extra tags used to supply node or other resource fields
+            const extraTags = {}
+
+            // for node type resources, for now supports only for battery_level
+            if (quickId.startsWith(ResourceType.Node)) {
+              metricType = getNodeMetricType()
+              extraTags[FIELD_NAME] = getNodeMetricFieldName()
+            }
             switch (metricType) {
               case MetricType.Gauge:
               case MetricType.GaugeFloat:
@@ -169,7 +186,7 @@ class ChartsPanel extends React.Component {
                     metricQueryIndividuals.push({
                       name: resourceName,
                       metricType: metricType,
-                      tags: { id: resource.id },
+                      tags: { id: resource.id, ...extraTags },
                     })
                     found = true
                     break

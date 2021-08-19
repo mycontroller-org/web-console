@@ -6,6 +6,7 @@ import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
 import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
+import { getValue } from "../../../Util/Util"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -50,6 +51,7 @@ const tableColumns = [
   { title: "Name", fieldKey: "name", sortable: true },
   { title: "Version", fieldKey: "labels.version", sortable: true },
   { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
+  { title: "Battery", fieldKey: "others.battery_level", sortable: true },
   { title: "Status", fieldKey: "state.status", sortable: true },
   { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
 ]
@@ -73,6 +75,7 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
     },
     rawData.labels.version,
     rawData.labels.library_version,
+    { title: getValue(rawData, "others.battery_level", "") },
     { title: getStatus(rawData.state.status) },
     { title: <LastSeen date={rawData.lastSeen} /> },
   ]

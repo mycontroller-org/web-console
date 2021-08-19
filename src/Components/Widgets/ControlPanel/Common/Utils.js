@@ -7,6 +7,8 @@ export const getListAPI = (resourceType) => {
   switch (resourceType) {
     case ResourceType.Gateway:
       return api.gateway.list
+    case ResourceType.Node:
+      return api.node.list
     case ResourceType.Field:
       return api.field.list
     case ResourceType.Task:
