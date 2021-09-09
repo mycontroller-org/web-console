@@ -54,3 +54,17 @@ button {
   outline: none;
 }
 */
+
+
+/* workaround for borders disappear 
+issue: https://github.com/patternfly/patternfly-react/issues/5650
+permanent solution: should be fixed "OptimizeCSSAssetsPlugin"
+until the permanent solution added in MyController web console,
+this workaround will resolve the issue
+*/
+.pf-c-select__toggle:before {
+  border-left: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderLeftColor);
+  border-bottom: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderBottomColor);
+  border-right: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderRightColor);
+  border-top: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderTopColor)
+}
