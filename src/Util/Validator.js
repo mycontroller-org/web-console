@@ -64,7 +64,7 @@ export const validate = (func, val, opts) => {
 
     case "isEmpty":
       if (t(val).isObject) {
-        return Object.keys(val).length == 0
+        return Object.keys(val).length === 0
       }
       return v.isEmpty(val, opts)
 

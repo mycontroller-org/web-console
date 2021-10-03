@@ -6,6 +6,7 @@ import { Stack, StackItem } from "@patternfly/react-core"
 import { RefreshIntervalType } from "../../../Constants/Metric"
 import { ImageSourceType } from "../../../Constants/Widgets/ImagePanel"
 import { connect } from "react-redux"
+import "./ImagePanel.scss"
 
 class ImageURLPanel extends React.Component {
   state = {
@@ -85,7 +86,12 @@ class ImageURLPanel extends React.Component {
     return (
       <Stack>
         <StackItem isFilled>
-          <img style={{ transform: `rotate(${rotation}deg)` }} src={finalUrl} alt="dynamic data" />
+          <img
+            className="auto-resize"
+            style={{ transform: `rotate(${rotation}deg)` }}
+            src={finalUrl}
+            alt="dynamic data"
+          />
         </StackItem>
         <StackItem></StackItem>
       </Stack>

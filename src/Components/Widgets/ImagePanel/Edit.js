@@ -7,6 +7,8 @@ import {
   ImageRotationTypeOptions,
   ImageSourceType,
   ImageSourceTypeOptions,
+  ImageType,
+  ImageTypeOptions,
 } from "../../../Constants/Widgets/ImagePanel"
 import { RefreshIntervalType, RefreshIntervalTypeOptions } from "../../../Constants/Metric"
 import { getDynamicFilter } from "../../../Util/Filter"
@@ -29,7 +31,7 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
       options: ImageSourceTypeOptions,
       isRequired: true,
       validator: { isNotEmpty: {} },
-      // resetFields: { "config.fieldIds": {}, "config...": "" },
+      resetFields: { "config.field": {} },
     },
     {
       label: "Rotation",
@@ -46,8 +48,8 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
   const imageSourceType = objectPath.get(rootObject, "config.sourceType", "")
 
   switch (imageSourceType) {
-    case ImageSourceType.ImageFromField:
-      const simpleCameraItems = getSimpleCameraItems(rootObject)
+    case ImageSourceType.Field:
+      const simpleCameraItems = getFieldItems(rootObject)
       items.push(...simpleCameraItems)
       break
 
@@ -66,11 +68,11 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
   }
 }
 
-const getSimpleCameraItems = (_rootObject) => {
+const getFieldItems = (rootObject) => {
   const items = [
     {
-      label: "Image Field",
-      fieldId: "config.fields.image",
+      label: "Field",
+      fieldId: "config.field.id",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
@@ -81,7 +83,46 @@ const getSimpleCameraItems = (_rootObject) => {
       optionValueFunc: getResourceOptionValueFunc,
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
+    {
+      label: "Image Type",
+      fieldId: "config.field.type",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.String,
+      value: "",
+      options: ImageTypeOptions,
+      isRequired: true,
+      validator: { isNotEmpty: {} },
+      resetFields: { "config.field.custom_mapping": {} },
+    },
+    {
+      label: "Show Timestamp",
+      fieldId: "config.field.showTimestamp",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
   ]
+
+  const fieldType = objectPath.get(rootObject, "config.field.type", "")
+
+  if (fieldType === ImageType.CustomMapping) {
+    items.push(
+      {
+        label: "Custom Mapping",
+        fieldId: "!custom_mapping",
+        fieldType: FieldType.Divider,
+      },
+      {
+        label: "",
+        fieldId: "config.field.custom_mapping",
+        fieldType: FieldType.KeyValueMap,
+        dataType: DataType.ArrayObject,
+        value: "",
+        keyLabel: "Value",
+        valueLabel: "Image Location",
+      }
+    )
+  }
   return items
 }
 

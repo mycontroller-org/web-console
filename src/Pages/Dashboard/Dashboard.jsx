@@ -359,7 +359,7 @@ class Dashboard extends React.Component {
     if (editEnabled) {
       actions.push(
         <LinkButton key="btn-settings" text="Settings" icon={EditIcon} onClick={this.onEditSettingsClick} />,
-        <LinkButton key="btn-widgets" text="Widget" icon={AddCircleOIcon} onClick={this.onAddWidgetClick} />,
+        <LinkButton key="btn-widgets" text="Add Widget" icon={AddCircleOIcon} onClick={this.onAddWidgetClick} />,
         <LinkButton key="btn-save" text="Save" icon={CheckIcon} onClick={this.onSaveClick} />,
         <LinkButton key="btn-cancel" text="Cancel" icon={CloseIcon} onClick={this.onCancelClick} />
       )
