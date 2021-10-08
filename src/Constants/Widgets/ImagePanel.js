@@ -15,16 +15,44 @@ export const ImageSourceTypeOptions = [
 // image types in field
 export const ImageType = {
   Image: "image",
-  Icon: "icon",
   CustomMapping: "custom_mapping",
 }
 
 // image type options
 export const ImageTypeOptions = [
-  { value: ImageType.Image, label: "Image", description: "Base64 encoded image as input" },
-  { value: ImageType.Icon, label: "Icon", description: "Icon name as input (yet to implemented)", disabled: true },
+  { value: ImageType.Image, label: "Raw Image", description: "Base64 encoded image as input" },
   { value: ImageType.CustomMapping, label: "Custom Mapping", description: "Custom mapping" },
 ]
+
+export const ICON_PREFIX = "icon:"
+
+// icon types
+export const IconType = {
+  // https://github.com/react-icons/react-icons
+  AntDesignIcons: "ai",
+  BootstrapIcons: "bs",
+  BoxIcons: "bi",
+  Devicons: "di",
+  Feather: "fi",
+  FlatColorIcons: "fc",
+  FontAwesomeIcons: "fa",
+  GameIcons: "gi",
+  GithubOcticonsIcons: "go",
+  GrommetIcons: "gr",
+  Heroicons: "hi",
+  IcoMoonFree: "im",
+  Ionicons4: "io",
+  Ionicons5: "io5",
+  MaterialDesignIcons: "md",
+  RemixIcon: "ri",
+  SimpleIcons: "si",
+  Typicons: "ti",
+  VSCodeIcons: "vsc",
+  WeatherIcons: "ws",
+  CSS_gg: "cg",
+  // https://github.com/patternfly/patternfly-react/tree/main/packages/react-icons
+  PatternFlyIcons: "pf",
+}
 
 // image rotation types
 export const ImageRotationType = {

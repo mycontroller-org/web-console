@@ -1,6 +1,6 @@
-import { DataType, FieldType } from "../../../Constants/Form"
 import objectPath from "object-path"
-import { api } from "../../../Service/Api"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { RefreshIntervalType, RefreshIntervalTypeOptions } from "../../../Constants/Metric"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import {
   ImageRotationType,
@@ -8,9 +8,9 @@ import {
   ImageSourceType,
   ImageSourceTypeOptions,
   ImageType,
-  ImageTypeOptions,
+  ImageTypeOptions
 } from "../../../Constants/Widgets/ImagePanel"
-import { RefreshIntervalType, RefreshIntervalTypeOptions } from "../../../Constants/Metric"
+import { api } from "../../../Service/Api"
 import { getDynamicFilter } from "../../../Util/Filter"
 
 // Image Panel items
@@ -84,6 +84,14 @@ const getFieldItems = (rootObject) => {
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
+      label: "Name Key",
+      fieldId: "config.field.nameKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    },
+    {
       label: "Image Type",
       fieldId: "config.field.type",
       fieldType: FieldType.SelectTypeAhead,
@@ -95,8 +103,8 @@ const getFieldItems = (rootObject) => {
       resetFields: { "config.field.custom_mapping": {} },
     },
     {
-      label: "Show Timestamp",
-      fieldId: "config.field.showTimestamp",
+      label: "Display Value",
+      fieldId: "config.field.displayValue",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
@@ -107,6 +115,13 @@ const getFieldItems = (rootObject) => {
 
   if (fieldType === ImageType.CustomMapping) {
     items.push(
+      {
+        label: "Threshold Mode",
+        fieldId: "config.field.thresholdMode",
+        fieldType: FieldType.Switch,
+        dataType: DataType.Boolean,
+        value: false,
+      },
       {
         label: "Custom Mapping",
         fieldId: "!custom_mapping",

@@ -1,18 +1,16 @@
 import { Button, Divider, Split, SplitItem, Stack, StackItem } from "@patternfly/react-core"
-import { loadData, unloadData } from "../../../store/entities/websocket"
-
-import { ChevronCircleRightIcon, InfoAltIcon, InfoCircleIcon, TimesIcon } from "@patternfly/react-icons"
-import { LastSeen } from "../../Time/Time"
-import Loading from "../../Loading/Loading"
 import PropTypes from "prop-types"
 import React from "react"
-import { ResourceType } from "../../../Constants/Resource"
-import { api } from "../../../Service/Api"
 import { connect } from "react-redux"
+import { ResourceType } from "../../../Constants/Resource"
+import { ICON_PREFIX, ImageType } from "../../../Constants/Widgets/ImagePanel"
+import { api } from "../../../Service/Api"
+import { loadData, unloadData } from "../../../store/entities/websocket"
 import { getValue, isEqual } from "../../../Util/Util"
+import Loading from "../../Loading/Loading"
+import { LastSeen } from "../../Time/Time"
 import { navigateToResource } from "../Helper/Resource"
-import { ImageType } from "../../../Constants/Widgets/ImagePanel"
-
+import { getIcon } from "./IconHelper"
 import "./ImagePanel.scss"
 
 const wsKey = "dashboard_image_panel_image_from_field"
@@ -78,7 +76,7 @@ class ImageFromFieldPanel extends React.Component {
     }
 
     const { field, rotation } = this.props.config
-    const { wsData, history, authToken } = this.props
+    const { wsData, history, authToken, dimensions } = this.props
 
     let resourceData = {}
 
@@ -89,69 +87,71 @@ class ImageFromFieldPanel extends React.Component {
       }
     })
 
-    let imageData = ""
     const resourceValue = getValue(resourceData, "current.value", "")
+    let imageElement = null
     switch (field.type) {
       case ImageType.Image:
-        imageData = resourceValue
-        break
-
-      case ImageType.Icon:
+        imageElement = getImage(resourceValue, rotation)
         break
 
       case ImageType.CustomMapping:
-        // load custom mapping image
-        const imageLocation = getValue(field, `custom_mapping.${resourceValue}`, "")
-        imageData = `${imageLocation}?access_token=${authToken}&mcRefreshHash=${refreshHash}`
+        imageElement = getMappedImageOrIcon(
+          resourceValue,
+          field,
+          rotation,
+          authToken,
+          refreshHash,
+          dimensions
+        )
         break
+
+      default:
+        imageElement = <span>Unknown image type: {field.type}</span>
     }
 
-    let resourceTimestamp = null
+    let resourceDetails = null
 
-    if (field.showTimestamp) {
-      resourceTimestamp = (
-        <>
+    if (field.displayValue) {
+      const resourceNameKey = field.nameKey === "" || field.nameKey === undefined ? "name" : field.nameKey
+      const resourceName = getValue(resourceData, resourceNameKey, "undefined")
+      resourceDetails = (
+        <div className="image-field">
           <StackItem>
             <Divider className="divider" component="li" />
           </StackItem>
           <StackItem>
             <Split>
-              <SplitItem>
+              <SplitItem isFilled>
                 <Button
+                  className="name"
                   variant="link"
                   onClick={() =>
                     navigateToResource(ResourceType.Field, getValue(resourceData, "id", ""), history)
                   }
                 >
-                  <InfoAltIcon />
+                  {resourceName}
                 </Button>
               </SplitItem>
-              <SplitItem isFilled style={{ textAlign: "right" }}>
-                <span className="value-timestamp">
-                  <LastSeen date={getValue(resourceData, "current.timestamp", "")} tooltipPosition="top" />
-                </span>
+              <SplitItem style={{ textAlign: "right" }}>
+                <span className="value">{resourceValue}</span>
               </SplitItem>
             </Split>
           </StackItem>
-        </>
+          <StackItem>
+            <span className="value-timestamp">
+              <LastSeen date={getValue(resourceData, "current.timestamp", "")} tooltipPosition="top" />
+            </span>
+          </StackItem>
+        </div>
       )
     }
 
     return (
       <Stack>
         <StackItem isFilled style={{ overflow: "hidden" }}>
-          <img
-            className="auto-resize"
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              objectFit: "contain",
-            }}
-            src={imageData}
-            align="left"
-            alt="dynamic data"
-          />
+          {imageElement}
         </StackItem>
-        {resourceTimestamp}
+        {resourceDetails}
       </Stack>
     )
   }
@@ -172,3 +172,64 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageFromFieldPanel)
+
+// helper functions
+
+const getMappedImageOrIcon = (
+  resourceValue = "",
+  field = {},
+  rotation = 0,
+  authToken = "",
+  refreshHash = "",
+  dimensions = {}
+) => {
+  const thresholdMode = getValue(field, "thresholdMode", false)
+
+  // threshold mode
+  // sort available keys and get the nearest key
+  if (thresholdMode) {
+    const keys = Object.keys(getValue(field, "custom_mapping", [])).sort((a, b) => a - b)
+    if (keys.length > 0) {
+      let key = keys[0]
+      if (keys.length > 1) {
+        keys.forEach((v) => {
+          if (resourceValue >= v) {
+            key = v
+          }
+        })
+      }
+      resourceValue = key
+    }
+  }
+
+  // get image or icon detail
+  const value = getValue(field, `custom_mapping.${resourceValue}`, "")
+
+  // if it is a icon
+  if (value.startsWith(ICON_PREFIX)) {
+    let iconValue = value.replace(ICON_PREFIX, "")
+    if (iconValue.indexOf(":") !== -1) {
+      iconValue = iconValue.substring(iconValue.indexOf(":") + 1)
+    }
+    return getIcon(iconValue, rotation, dimensions)
+  } else {
+    // load custom mapping image
+    const imageData = `${value}?access_token=${authToken}&mcRefreshHash=${refreshHash}`
+    return getImage(imageData, rotation)
+  }
+}
+
+const getImage = (imageData = "", rotation = 0) => {
+  return (
+    <img
+      className="auto-resize"
+      style={{
+        transform: `rotate(${rotation}deg)`,
+        objectFit: "contain",
+      }}
+      src={imageData}
+      align="left"
+      alt="dynamic data"
+    />
+  )
+}
