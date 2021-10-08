@@ -134,7 +134,7 @@ const getFieldItems = (rootObject) => {
         dataType: DataType.ArrayObject,
         value: "",
         keyLabel: "Value",
-        valueLabel: "Image Location",
+        valueLabel: "Icon or Image Location",
       }
     )
   }
