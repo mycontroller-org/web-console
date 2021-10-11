@@ -67,3 +67,9 @@ this workaround will resolve the issue
   border-right: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderRightColor);
   border-top: var(--pf-global--BorderWidth--sm) solid var(--pf-c-select__toggle--before--BorderTopColor);
 }
+
+// update z-index of time selector dropdown
+// default: --pf-c-select__menu--ZIndex
+.pf-c-date-picker {
+  z-index: 101;
+}
