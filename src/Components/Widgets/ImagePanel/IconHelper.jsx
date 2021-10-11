@@ -1,10 +1,11 @@
+import { QuestionIcon } from "@patternfly/react-icons"
 import React from "react"
 // import * as AntDesignIcons from "react-icons/ai"
 // import * as BootstrapIcons from "react-icons/bs"
 // import * as BoxIcons from "react-icons/bi"
 // import * as Devicons from "react-icons/di"
 // import * as Feather from "react-icons/fi"
-import * as FlatColorIcons from "react-icons/fc"
+// import * as FlatColorIcons from "react-icons/fc"
 // import * as FontAwesome from "react-icons/fa"
 // import * as GameIcons from "react-icons/gi"
 // import * as GithubOcticonsIcons from "react-icons/go"
@@ -20,7 +21,7 @@ import * as FlatColorIcons from "react-icons/fc"
 // import * as VSCodeIcons from "react-icons/vsc"
 import * as WeatherIcons from "react-icons/wi"
 // import * as CSS_gg from "react-icons/cg"
-import * as PfIcons from "@patternfly/react-icons"
+// import * as PfIcons from "@patternfly/react-icons"
 import { IconType } from "../../../Constants/Widgets/ImagePanel"
 import { getValue } from "../../../Util/Util"
 
@@ -30,7 +31,7 @@ const icons = {
   // bi: BoxIcons,
   // di: Devicons,
   // fi: Feather,
-  fc: FlatColorIcons,
+  // fc: FlatColorIcons,
   // fa: FontAwesome,
   // gi: GameIcons,
   // go: GithubOcticonsIcons,
@@ -46,11 +47,13 @@ const icons = {
   // vsc: VSCodeIcons,
   wi: WeatherIcons,
   // cg: CSS_gg,
-  pf: PfIcons,
+  // pf: PfIcons,
 }
 
-// To reduce the overall build size and to avoid out of memory in node build
 // commented out most of the icons pack
+// * to reduce the overall build size
+// * to avoid out of memory in node build
+
 
 // output: FcEmptyBattery => ['Fc', 'Empty', 'Battery']
 const iconNameRegex = /[A-Z][a-z]+|[0-9]+/g
@@ -68,11 +71,8 @@ export const getIcon = (iconName = "", rotation = 0, dimensions = {}) => {
   }
 
   let iconsObject = getValue(icons, iconType, null)
-  if (iconsObject === null) {
-    iconsObject = PfIcons
-  }
 
-  const FinalIcon = getValue(iconsObject, iconName, PfIcons.QuestionIcon)
+  const FinalIcon = getValue(iconsObject, iconName, QuestionIcon)
   return (
     <FinalIcon style={{ width: dimensions.width, height: "100%", transform: `rotate(${rotation}deg)` }} />
   )
