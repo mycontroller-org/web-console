@@ -277,6 +277,8 @@ const getField = (item, onChange) => {
                   return validate("isID", key)
                 }
           }
+          isSelectTypeAheadAsync={item.isSelectTypeAheadAsync}
+          selectOptions={item.selectOptions}
         />
       )
 

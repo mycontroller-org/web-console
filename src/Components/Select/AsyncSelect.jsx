@@ -81,7 +81,14 @@ class AsyncSelect extends React.Component {
 
   render() {
     const { isOpen, options, loading } = this.state
-    const { isDisabled, selected, showSpinner = false } = this.props
+    const {
+      isDisabled,
+      selected,
+      showSpinner = false,
+      direction = "down",
+      isCreatable,
+      createText,
+    } = this.props
     const selectOptions = options.map((option) => {
       return <SelectOption value={option.label} description={option.description} />
     })
@@ -105,6 +112,10 @@ class AsyncSelect extends React.Component {
             onSelect={this.onSelection}
             selections={selected}
             isDisabled={isDisabled}
+            direction={direction}
+            isCreatable={isCreatable}
+            createText={createText}
+            onCreateOption={() => {}}
           >
             {selectOptions}
           </Select>
@@ -124,6 +135,9 @@ AsyncSelect.propTypes = {
   isDisabled: PropTypes.bool,
   selected: PropTypes.string,
   showSpinner: PropTypes.bool,
+  direction: PropTypes.string,
+  isCreatable: PropTypes.bool,
+  createText: PropTypes.string,
 }
 
 export default AsyncSelect

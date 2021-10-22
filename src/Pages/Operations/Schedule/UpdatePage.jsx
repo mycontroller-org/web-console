@@ -16,7 +16,7 @@ import {
 import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
 import { CustomVariableType, CustomVariableTypeOptions } from "../../../Constants/Schedule"
 import { validate } from "../../../Util/Validator"
-
+import { FieldHandlersList } from "../../../Util/Common"
 
 class UpdatePage extends React.Component {
   render() {
@@ -264,13 +264,7 @@ const getFormItems = (rootObject, id) => {
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
-    {
-      label: "",
-      fieldId: "handlers",
-      fieldType: FieldType.DynamicArray,
-      dataType: DataType.ArrayString,
-      value: [],
-    }
+    { ...FieldHandlersList }
   )
 
   return items

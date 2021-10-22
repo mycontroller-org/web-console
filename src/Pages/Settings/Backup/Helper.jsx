@@ -3,6 +3,8 @@ import React from "react"
 import Editor from "../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../Constants/Form"
+import { Operator } from "../../../Constants/Filter"
+import { HandlerType } from "../../../Constants/Handler"
 import { StorageExportTypeOptions } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { validate } from "../../../Util/Validator"
@@ -134,13 +136,21 @@ const getRunExportItems = (_rootObject = {}, locationOptions = []) => {
     {
       label: "Handler",
       fieldId: "handler",
-      fieldType: FieldType.Text,
+      fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Invalid handler name. chars: min=2, max=100",
-      validated: "default",
-      validator: { isLength: { min: 2, max: 100 }, isKey: {} },
+      validator: { isNotEmpty: {} },
+      apiOptions: api.handler.list,
+      getFiltersFunc: (value) => {
+        return [
+          { k: "id", o: Operator.Regex, v: value },
+          { k: "type", o: Operator.Equal, v: HandlerType.Backup },
+        ]
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.description
+      },
     },
   ]
 }

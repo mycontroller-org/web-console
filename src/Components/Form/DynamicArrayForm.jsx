@@ -3,6 +3,7 @@ import {
   Button,
   Grid,
   GridItem,
+  SelectVariant,
   Split,
   Text,
   TextInput,
@@ -13,6 +14,9 @@ import React from "react"
 import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import Select from "./Select"
+import { DataType } from "../../Constants/Form"
+import AsyncSelect from "../Select/AsyncSelect"
 
 class DynamicArrayForm extends React.Component {
   state = {
@@ -91,7 +95,7 @@ class DynamicArrayForm extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateValueFunc, valueLabel } = this.props
+    const { validateValueFunc, valueLabel, isSelectTypeAheadAsync, selectOptions = {} } = this.props
     const values = []
 
     const formItems = items.map((item, index) => {
@@ -115,19 +119,37 @@ class DynamicArrayForm extends React.Component {
           <AddCircleOIcon key={"add-btn" + index} onClick={this.onAdd} className="btn-add icon-btn" />
         ) : null
 
+      const inputComponent = isSelectTypeAheadAsync ? (
+        <AsyncSelect
+          isDisabled={false}
+          apiOptions={selectOptions.apiOptions}
+          getFiltersFunc={selectOptions.getFiltersFunc}
+          optionValueKey={selectOptions.optionValueKey}
+          optionValueFunc={selectOptions.optionValueFunc}
+          getOptionsDescriptionFunc={selectOptions.getOptionsDescriptionFunc}
+          onSelectionFunc={(newValue) => {
+            this.onChange(index, newValue)
+          }}
+          selected={item}
+          direction={selectOptions.direction}
+          isCreatable={selectOptions.isCreatable}
+          createText={selectOptions.createText}
+        />
+      ) : (
+        <TextInput
+          id={"value_" + index}
+          key={"value_" + index}
+          value={item}
+          validated={validatedValue}
+          onChange={(newValue) => {
+            this.onChange(index, newValue)
+          }}
+        />
+      )
+
       return (
         <>
-          <GridItem span={11}>
-            <TextInput
-              id={"value_" + index}
-              key={"value_" + index}
-              value={item}
-              validated={validatedValue}
-              onChange={(newValue) => {
-                this.onChange(index, newValue)
-              }}
-            />
-          </GridItem>
+          <GridItem span={11}>{inputComponent}</GridItem>
           <GridItem span={1}>
             <Bullseye className="btn-layout">
               <Split hasGutter className="btn-split">
@@ -170,6 +192,18 @@ DynamicArrayForm.propTypes = {
   valueLabel: PropTypes.string,
   valuesList: PropTypes.array,
   validateValueFunc: PropTypes.func,
+  isSelectTypeAheadAsync: PropTypes.bool,
+  selectOptions: PropTypes.object,
 }
+
+// selectOptions:
+//  apiOptions: PropTypes.func,
+//  getFiltersFunc: PropTypes.func,
+//  optionValueKey: PropTypes.string,
+//  optionValueFunc: PropTypes.func,
+//  getOptionsDescriptionFunc: PropTypes.func,
+//  direction: PropTypes.string,
+//  isCreatable: PropTypes.bool,
+//  createText: PropTypes.string,
 
 export default DynamicArrayForm
