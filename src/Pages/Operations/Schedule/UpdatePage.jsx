@@ -357,7 +357,7 @@ const updateSimpleJob = (rootObject, items = []) => {
         fieldId: "spec.date",
         fieldType: FieldType.DatePicker,
         dataType: DataType.String,
-        value: {},
+        value: "",
         isRequired: true,
         helperTextInvalid: "Invalid date",
         validated: "default",

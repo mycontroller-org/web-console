@@ -286,9 +286,10 @@ const getField = (item, onChange) => {
       return (
         <DatePicker
           key={item.fieldId}
-          value={item.value !== "" ? item.value : null}
+          value={item.value}
           onChange={onChange}
           isDisabled={item.isDisabled}
+          placeholder="yyyy-mm-dd"
         />
       )
 
@@ -307,7 +308,7 @@ const getField = (item, onChange) => {
       return (
         <TimePicker
           key={item.fieldId}
-          defaultTime={item.value}
+          time={item.value}
           onChange={onChange}
           validated={item.validated}
           isDisabled={item.isDisabled}
