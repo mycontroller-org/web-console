@@ -21,7 +21,7 @@ jobs:
           tx_token: ${{ secrets.TRANSIFEX_TOKEN_MC_V2 }}
           git_flow: true
           github_token: ${{ secrets.GH_TOKEN }}
-          translations_folder: src/i18n/locale/
+          translations_folder: public/locales/
           pull_translations: true
           pull_sources: true
           push_translations: true
