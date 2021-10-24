@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: "Merge and push to transifex"
+        uses: docker://sergioisidoro/github-transifex-action:latest
         with:
           tx_token: ${{ secrets.TRANSIFEX_TOKEN_MC_V2 }}
           git_flow: true
