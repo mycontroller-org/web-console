@@ -1,0 +1,27 @@
+name: "Translations Sync"
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  push-strings-to-transifex:
+    if: github.event.label.name == 'ready_for_translation'
+    name: push-strings-to-transifex
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@master
+
+      - name: "Merge and push to transifex"
+          with:
+            tx_token: ${{ secrets.TRANSIFEX_TOKEN_MC_V2 }}
+            git_flow: true
+            github_token: ${{ secrets.GH_TOKEN }}
+            translations_folder: src/i18n/locale/
+            pull_translations: true
+            pull_sources: true
+            push_translations: true
+            push_sources: true
