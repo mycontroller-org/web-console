@@ -35,6 +35,7 @@ name_key: Name Key
 new: New
 nodes: Nodes
 operations: Operations
+others: Others
 profile: Profile
 refresh_interval: Refresh Interval
 resource: Resource
