@@ -20,6 +20,7 @@ import {
   Text,
   TextContent,
   TextVariants,
+  Tooltip,
 } from "@patternfly/react-core"
 // make sure you've installed @patternfly/patternfly
 //import accessibleStyles from "@patternfly/react-styles/css/utilities/Accessibility/accessibility";
@@ -33,6 +34,7 @@ import {
   GithubIcon,
   HelpIcon,
   InfoAltIcon,
+  LanguageIcon,
   PowerOffIcon,
   UserIcon,
 } from "@patternfly/react-icons"
@@ -40,6 +42,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { Redirect, Route, Switch } from "react-router-dom"
+import { withTranslation } from "react-i18next"
 import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
 import { HeaderSpinner } from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
@@ -54,11 +57,12 @@ import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
-
+import { languageList } from "../i18n/i18n"
 class PageLayoutExpandableNav extends React.Component {
   state = {
     isDropdownOpen: false,
     isKebabDropdownOpen: false,
+    isLanguageDropdownOpen: false,
     activeGroup: "grp-1",
     activeItem: "grp-1_itm-1",
   }
@@ -77,7 +81,7 @@ class PageLayoutExpandableNav extends React.Component {
     })
   }
 
-  onDropdownSelect = (event) => {
+  onDropdownSelect = (_event) => {
     this.setState({
       isDropdownOpen: !this.state.isDropdownOpen,
     })
@@ -92,6 +96,18 @@ class PageLayoutExpandableNav extends React.Component {
   onKebabDropdownSelect = (_event) => {
     this.setState({
       isKebabDropdownOpen: !this.state.isKebabDropdownOpen,
+    })
+  }
+
+  onLanguageDropdownToggle = (isLanguageDropdownOpen) => {
+    this.setState({
+      isLanguageDropdownOpen,
+    })
+  }
+
+  onLanguageDropdownSelect = (_event) => {
+    this.setState({
+      isLanguageDropdownOpen: !this.state.isLanguageDropdownOpen,
     })
   }
 
@@ -137,7 +153,7 @@ class PageLayoutExpandableNav extends React.Component {
   }
 
   render() {
-    const { location } = this.props
+    const { location, t } = this.props
 
     // selected menu
     let menuSelection = ""
@@ -173,7 +189,7 @@ class PageLayoutExpandableNav extends React.Component {
               isActive={menuSelection === m.id}
               preventDefault={true}
             >
-              {m.title}
+              {t(m.title)}
             </NavItem>
           )
         }
@@ -187,7 +203,7 @@ class PageLayoutExpandableNav extends React.Component {
           {routes.map((m) => {
             if (m.children && m.children.length > 0) {
               return (
-                <NavExpandable key={m.id} groupId={m.id} title={m.title}>
+                <NavExpandable key={m.id} groupId={m.id} title={t(m.title)}>
                   {getSubMenu(m.children)}
                 </NavExpandable>
               )
@@ -200,7 +216,7 @@ class PageLayoutExpandableNav extends React.Component {
                   isActive={menuSelection === m.id}
                   preventDefault={true}
                 >
-                  {m.title}
+                  {t(m.title)}
                 </NavItem>
               )
             }
@@ -218,22 +234,32 @@ class PageLayoutExpandableNav extends React.Component {
           r(this.props.history, rMap.settings.system)
         }}
       >
-        <CogIcon /> Settings
+        <CogIcon /> {t("settings")}
       </DropdownItem>,
       <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
-        <BookIcon /> Documentation
+        <BookIcon /> {t("documentation")}
       </DropdownItem>,
       <DropdownItem key="source-code" href={URL_SOURCE_CODE} target="_blank">
-        <GithubIcon /> Source Code
+        <GithubIcon /> {t("source_code")}
       </DropdownItem>,
       <DropdownItem key="forum" href={URL_FORUM} target="_blank">
-        <ChatIcon /> Forum
+        <ChatIcon /> {t("forum")}
       </DropdownItem>,
       <DropdownItem key="about" onClick={this.props.showAbout}>
-        <InfoAltIcon /> About
+        <InfoAltIcon /> {t("about")}
       </DropdownItem>,
     ]
 
+    const languages = languageList.map((l) => {
+      return (
+        <DropdownItem key={`lang_${l.lng}`}>
+          <Tooltip position="left" content={l.country_code}>
+            <span>{l.flag} </span>
+          </Tooltip>
+          {l.title}
+        </DropdownItem>
+      )
+    })
     const userDropdownItems = [
       <DropdownGroup key="group2">
         <DropdownItem
@@ -242,10 +268,10 @@ class PageLayoutExpandableNav extends React.Component {
             r(this.props.history, rMap.settings.profile)
           }}
         >
-          <UserIcon /> Profile
+          <UserIcon /> {t("profile")}
         </DropdownItem>
         <DropdownItem key="group2_logout" onClick={this.props.doLogout}>
-          <PowerOffIcon /> Logout
+          <PowerOffIcon /> {t("logout")}
         </DropdownItem>
       </DropdownGroup>,
     ]
@@ -255,6 +281,7 @@ class PageLayoutExpandableNav extends React.Component {
         <PageHeaderToolsGroup key="spinner">
           {this.props.showGlobalSpinner ? <HeaderSpinner size="lg" /> : null}
         </PageHeaderToolsGroup>
+
         <PageHeaderToolsGroup key="others">
           <PageHeaderToolsItem visibility={{ default: "visible" }} isSelected={this.props.isDrawerExpanded}>
             <NotificationBadge
@@ -280,6 +307,23 @@ class PageLayoutExpandableNav extends React.Component {
               }
               isOpen={this.state.isKebabDropdownOpen}
               dropdownItems={kebabDropdownItems}
+            />
+          </PageHeaderToolsItem>
+          <PageHeaderToolsItem>
+            <Dropdown
+              isPlain
+              position="right"
+              onSelect={this.onLanguageDropdownSelect}
+              isOpen={this.state.isLanguageDropdownOpen}
+              toggle={
+                <DropdownToggle
+                  className="language_icon"
+                  toggleIndicator={null}
+                  onToggle={this.onLanguageDropdownToggle}
+                  icon={<LanguageIcon size="md" />}
+                />
+              }
+              dropdownItems={languages}
             />
           </PageHeaderToolsItem>
           <PageHeaderToolsItem>
@@ -370,4 +414,6 @@ const mapDispatchToProps = (dispatch) => ({
   doLogout: () => dispatch(clearAuth()),
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageLayoutExpandableNav))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(withTranslation()(PageLayoutExpandableNav))
+)

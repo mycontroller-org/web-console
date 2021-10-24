@@ -1,0 +1,57 @@
+---
+actions: Actions
+add_widget: Add Widget
+backup_and_restore: Backup and Restore
+cancel: Cancel
+chart_config: Chart Config
+color: Color
+configure_via: Configure via
+dashboard: Dashboard
+data_repository: Data Repository
+delete: Delete
+description: Description
+display_name: Display Name
+duration: Duration
+edit: Edit
+edit_dashboard_settings: Edit Dashboard Settings
+favorite: Favorite
+fields: Fields
+fill_opacity_%: Fill Opacity (%)
+firmwares: Firmwares
+form_view: Form View
+forward_payload: Forward Payload
+gateways: Gateways
+handlers: Handlers
+height_px: Height (px)
+interpolation: Interpolation
+interval: Interval
+is_static: Is Static
+loading: Loading
+max_y_axis: Max (Y Axis)
+metric_config: Metric Config
+metric_function: Metric Function
+min_y_axis: Min (Y Axis)
+name_key: Name Key
+new: New
+nodes: Nodes
+operations: Operations
+profile: Profile
+refresh_interval: Refresh Interval
+resource: Resource
+resource_filters: Resource Filters
+resources: Resources
+round_decimal: Round Decimal
+save: Save
+schedules: Schedules
+settings: Settings
+show_title: Show Title
+sources: Sources
+stroke_width_px: Stroke Width (px)
+system: System
+tasks: Tasks
+timestamp_key: Timestamp Key
+title: Title
+type: Type
+unit: Unit
+value_key: Value Key
+yaml_view: YAML View

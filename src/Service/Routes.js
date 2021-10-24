@@ -115,12 +115,12 @@ const routeMap = {
 const routes = [
   {
     id: "dashboard",
-    title: "Dashboard",
+    title: "dashboard",
     icon: <TachometerAltIcon />,
     children: [
       {
         id: "dashboardMain",
-        title: "Dashboard",
+        title: "dashboard",
         to: "/dashboard/main",
         component: Dashboard,
         icon: <TachometerAltIcon />,
