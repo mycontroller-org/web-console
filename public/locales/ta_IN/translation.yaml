@@ -1,0 +1,95 @@
+---
+about: என்னை பற்றி
+actions: நடவடிக்கைகள்
+add_widget: விட்ஜெட்டைச் சேர்க்கவும்
+alerts_empty_message: There are currently no alerts.
+alerts_empty_title: No alerts found
+backup_and_restore: காப்பு மற்றும் மீட்பு
+build_date: Build Date
+cancel: ரத்து செய்
+chart_config: விளக்கப்படம் கட்டமைப்பு
+clear_all: அனைத்தையும் அழி
+color: நிறம்
+configure_via: வழியாக உள்ளமைக்கவும்
+create_new: புதிதாக உருவாக்கு
+dashboard: டாஷ்போர்டு
+data_repository: தரவு களஞ்சியம்
+delete: அழி
+description: விளக்கம்
+details: Details
+disable: முடக்கு
+discover_nodes: Discover Nodes
+display_name: காட்சி பெயர்
+documentation: Documentation
+duration: காலம்
+edit: தொகு
+edit_dashboard_settings: டாஷ்போர்டு அமைப்புகளைத் திருத்தவும்
+enable: செயல்படுத்த
+error_on_getting_login_message: Error on fetching login message
+favorite: பிடித்தவை
+fields: Fields
+fill_opacity_%: ஒளிபுகாநிலையை நிரப்பவும் (%)
+firmware_update: Firmware Update
+firmwares: மென்பொருள்
+form_generic_error_message: பிழை மற்றும்/அல்லது கட்டாய (*) புலங்களை சரிபார்க்கவும்
+form_view: படிவ பார்வை
+forum: மன்றம்
+forward_payload: Forward Payload
+forward_payload_details: Forward Payload Details
+gateways: Gateways
+git_commit: ஜிட் கமிட்
+golang_version: கோலாங் பதிப்பு
+handlers: கையாளுபவர்கள்
+heartbeat_request: Heartbeat Request
+height_px: உயரம் (px)
+host_id: Host ID
+interpolation: இடைக் கணிப்பு
+interval: இடைவெளி
+is_static: நிலையானது
+loading: ஏற்றுகிறது
+logout: வெளியேறு
+mark_all_read: எல்லாவற்றையும் படித்ததாகக் குறிக்கவும்
+max_y_axis: அதிகபட்சம் (Y அச்சு)
+metric_config: மெட்ரிக் கட்டமைப்பு
+metric_function: மெட்ரிக் செயல்பாடு
+metrics_database_disabled: 'WARNING: Metrics database disabled'
+min_y_axis: குறைந்தபட்சம் (Y அச்சு)
+name_key: பெயர் Key
+new: புதிய
+no_dashboard_message: ஏற்றுவதற்கு டாஷ்போர்டு எதுவும் இல்லை.
+no_dashboard_title: டாஷ்போர்டுகள் இல்லை
+nodes: Nodes
+notifications: அறிவிப்புகள்
+operations: செயல்பாடுகள்
+panel_title: Panel Title
+profile: சுயவிவரம்
+react_version: React பதிப்பு
+reboot: மறுதொடக்கம்
+refresh_interval: இடைவெளியைப் புதுப்பிக்கவும்
+refresh_node_info: Refresh Node Info
+reload: Reload
+reset: மீட்டமை
+resource: Resource
+resource_filters: Resource வடிப்பான்கள்
+resources: Resources
+restore: மீட்க
+round_decimal: Round Decimal
+save: சேமிக்க
+schedules: அட்டவணைகள்
+server: சர்வர்
+settings: அமைப்புகள்
+show_title: தலைப்பைக் காட்டு
+source_code: Source Code
+sources: ஆதாரங்கள்
+stroke_width_px: Stroke Width (px)
+system: அமைப்பு
+tasks: பணிகள்
+the_open_source_controller: The Open Source Controller
+timestamp_key: Timestamp Key
+title: தலைப்பு
+type: வகை
+unit: அலகு
+value_key: Value Key
+version: பதிப்பு
+web_console: வெப் கன்சோல்
+yaml_view: YAML பார்வை

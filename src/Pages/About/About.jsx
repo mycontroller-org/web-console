@@ -5,13 +5,14 @@ import {
   TextContent,
   TextList,
   TextListItem,
-  TextVariants
+  TextVariants,
 } from "@patternfly/react-core"
 import React from "react"
 import { connect } from "react-redux"
 import brandImg from "../../Logo/mc-white-full.svg"
 import { api } from "../../Service/Api"
 import { aboutHide } from "../../store/entities/about"
+import { withTranslation } from "react-i18next"
 import "./About.scss"
 class AboutPage extends React.Component {
   state = {
@@ -32,6 +33,7 @@ class AboutPage extends React.Component {
 
   render() {
     const bk = this.state.backend
+    const { t } = this.props
     return (
       <AboutModal
         className="mc-about"
@@ -43,31 +45,33 @@ class AboutPage extends React.Component {
         //productName="MYCONTROLLER.ORG"
       >
         <TextContent>
-          <Text component={TextVariants.h2}>Server</Text>
+          <Text component={TextVariants.h2}>{t("server")}</Text>
           <Divider component="hr" />
           <TextList component="dl">
-            <TextListItem component="dt">Host ID</TextListItem>
+            <TextListItem component="dt">{t("host_id")}</TextListItem>
             <TextListItem component="dd">{bk.hostId}</TextListItem>
-            <TextListItem component="dt">Version</TextListItem>
+            <TextListItem component="dt">{t("version")}</TextListItem>
             <TextListItem component="dd">{bk.version}</TextListItem>
-            <TextListItem component="dt">Git Commit</TextListItem>
+            <TextListItem component="dt">{t("git_commit")}</TextListItem>
             <TextListItem component="dd">{bk.gitCommit}</TextListItem>
-            <TextListItem component="dt">Build Date</TextListItem>
+            <TextListItem component="dt">{t("build_date")}</TextListItem>
             <TextListItem component="dd">{bk.buildDate}</TextListItem>
-            <TextListItem component="dt">GoLang Version</TextListItem>
-            <TextListItem component="dd">{bk.goLang} ({bk.platform}, {bk.arch})</TextListItem>
+            <TextListItem component="dt">{t("golang_version")}</TextListItem>
+            <TextListItem component="dd">
+              {bk.goLang} ({bk.platform}, {bk.arch})
+            </TextListItem>
           </TextList>
 
-          <Text component={TextVariants.h2}>Web Console</Text>
+          <Text component={TextVariants.h2}>{t("web_console")}</Text>
           <Divider component="hr" />
           <TextList component="dl">
-            <TextListItem component="dt">Version</TextListItem>
+            <TextListItem component="dt">{t("version")}</TextListItem>
             <TextListItem component="dd">{process.env.REACT_APP_GIT_BRANCH}</TextListItem>
-            <TextListItem component="dt">Git Commit</TextListItem>
+            <TextListItem component="dt">{t("git_commit")}</TextListItem>
             <TextListItem component="dd">{process.env.REACT_APP_GIT_SHA}</TextListItem>
-            <TextListItem component="dt">Build Date</TextListItem>
+            <TextListItem component="dt">{t("build_date")}</TextListItem>
             <TextListItem component="dd">{process.env.REACT_APP_BUILD_DATE}</TextListItem>
-            <TextListItem component="dt">React Version</TextListItem>
+            <TextListItem component="dt">{t("react_version")}</TextListItem>
             <TextListItem component="dd">{React.version}</TextListItem>
           </TextList>
         </TextContent>
@@ -84,4 +88,4 @@ const mapDispatchToProps = (dispatch) => ({
   hideAbout: () => dispatch(aboutHide()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AboutPage)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AboutPage))

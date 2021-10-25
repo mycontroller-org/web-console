@@ -17,6 +17,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/forwardPayload"
+import { withTranslation } from "react-i18next"
 
 class List extends ListBase {
   state = {
@@ -61,9 +62,10 @@ class List extends ListBase {
   ]
 
   render() {
+    const { t } = this.props
     return (
       <>
-        <PageTitle title="Forward Payload" />
+        <PageTitle title={t("forward_payload")} />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -146,4 +148,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

@@ -7,6 +7,8 @@ import { Banner } from "@patternfly/react-core"
 import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
 import { api } from "../Service/Api"
 import { URL_DOCUMENTATION } from "../Constants/Common"
+import { withTranslation } from "react-i18next"
+import t from "typy"
 
 class IndexPage extends React.Component {
   componentDidMount() {
@@ -19,7 +21,7 @@ class IndexPage extends React.Component {
         this.props.updateMetricsDB({ metricsDBDisabled: res.data.metricsDBDisabled })
       })
       .catch((_e) => {
-        this.setState({ loginData: { message: "Error on fetching login message" } })
+        this.setState({ loginData: { message: t("error_on_getting_login_message") } })
       })
   }
 
@@ -27,7 +29,7 @@ class IndexPage extends React.Component {
     const component = this.props.isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
     const banner = this.props.metricsDBDisabled ? (
       <Banner key="banner-metrics-database" variant="warning">
-        <strong>WARNING: Metrics database disabled!</strong>
+        <strong>{t("metrics_database_disabled")}</strong>
       </Banner>
     ) : null
     return (
@@ -49,4 +51,4 @@ const mapDispatchToProps = (dispatch) => ({
   updateMetricsDB: (data) => dispatch(updateMetricsDBStatus(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(IndexPage)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(IndexPage))

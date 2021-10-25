@@ -13,7 +13,7 @@ import {
   NotificationDrawerListItem,
   NotificationDrawerListItemBody,
   NotificationDrawerListItemHeader,
-  Title
+  Title,
 } from "@patternfly/react-core"
 import { SearchIcon } from "@patternfly/react-icons"
 import moment from "moment"
@@ -23,8 +23,9 @@ import {
   notificationClearAll,
   notificationDrawerToggle,
   notificationMarkAllRead,
-  notificationMarkAsRead
+  notificationMarkAsRead,
 } from "../store/entities/notification"
+import { withTranslation } from "react-i18next"
 
 class NotificationContainer extends React.Component {
   state = {
@@ -39,15 +40,16 @@ class NotificationContainer extends React.Component {
 
   notificationDrawerActions = [
     <DropdownItem key="markAllRead" onClick={this.props.markAllRead} component="button">
-      Mark all read
+      {this.props.t("mark_all_read")}
     </DropdownItem>,
     <DropdownItem key="clearAll" onClick={this.props.clearAll} component="button">
-      Clear all
+      {this.props.t("clear_all")}
     </DropdownItem>,
   ]
 
   render() {
     const elements = []
+    const { t } = this.props
     if (this.props.items.length > 0) {
       for (let index = this.props.items.length - 1; index >= 0; index--) {
         const a = this.props.items[index]
@@ -73,14 +75,14 @@ class NotificationContainer extends React.Component {
         <EmptyState key="empty" variant={EmptyStateVariant.full}>
           <EmptyStateIcon icon={SearchIcon} />
           <Title headingLevel="h2" size="lg">
-            No alerts found
+            {t("alerts_empty_title")}
           </Title>
-          <EmptyStateBody>There are currently no alerts.</EmptyStateBody>
+          <EmptyStateBody>{t("alerts_empty_message")}</EmptyStateBody>
         </EmptyState>
       )
     }
     return (
-      <NotificationDrawer >
+      <NotificationDrawer>
         <NotificationDrawerHeader count={this.props.unreadCount} onClose={this.props.onNotificationClose}>
           <Dropdown
             onSelect={this.toggleOptions}
@@ -110,4 +112,4 @@ const mapDispatchToProps = (dispatch) => ({
   onNotificationClose: () => dispatch(notificationDrawerToggle()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(NotificationContainer))

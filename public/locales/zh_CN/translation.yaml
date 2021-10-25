@@ -1,6 +1,6 @@
 ---
 about: About
-actions: Actions
+actions: 行动
 add_widget: Add Widget
 alerts_empty_message: There are currently no alerts.
 alerts_empty_title: No alerts found
@@ -12,7 +12,7 @@ clear_all: Clear All
 color: Color
 configure_via: Configure via
 create_new: Create New
-dashboard: Dashboard
+dashboard: 仪表盘
 data_repository: Data Repository
 delete: Delete
 description: Description

@@ -11,7 +11,8 @@ import objectPath from "object-path"
 import Loading from "../Loading/Loading"
 import { DownloadIcon } from "@patternfly/react-icons"
 import { toObject, toString } from "../../Util/Language"
-const { v4: uuidv4 } = require("uuid")
+import { withTranslation } from "react-i18next"
+import { v4 as uuidv4 } from "uuid"
 
 class Editor extends React.Component {
   state = {
@@ -155,7 +156,7 @@ class Editor extends React.Component {
 
   getUpdatedFormItems = (rootObject, inValidItems) => {
     if (this.props.getFormItems) {
-      const formItems = this.props.getFormItems(rootObject)
+      const formItems = this.props.getFormItems(rootObject, this.props.t)
       updateItems(rootObject, formItems)
       updateValidations(formItems, inValidItems) // update validations
       return formItems
@@ -165,7 +166,7 @@ class Editor extends React.Component {
 
   render() {
     const { loading, rootObject, formView, isReloadable, inValidItems } = this.state
-    const { saveButtonText, isWidthLimited = true, disableEditor = false } = this.props
+    const { saveButtonText, isWidthLimited = true, disableEditor = false, t } = this.props
     if (loading) {
       return <Loading />
     }
@@ -218,7 +219,7 @@ class Editor extends React.Component {
       saveDisabled = true
     }
 
-    const saveText = saveButtonText ? saveButtonText : "Save"
+    const saveText = saveButtonText ? saveButtonText : t("save")
 
     const actionButtons = [
       { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
@@ -226,7 +227,7 @@ class Editor extends React.Component {
 
     if (isReloadable) {
       actionButtons.push({
-        text: "Reload",
+        text: t("reload"),
         variant: "secondary",
         onClickFunc: this.onReloadClick,
         isDisabled: false,
@@ -235,7 +236,7 @@ class Editor extends React.Component {
 
     if (this.props.onCancelFunc) {
       actionButtons.push({
-        text: "Cancel",
+        text: t("cancel"),
         variant: "secondary",
         onClickFunc: this.props.onCancelFunc,
         isDisabled: false,
@@ -246,7 +247,7 @@ class Editor extends React.Component {
       ? []
       : [
           {
-            text: "Download",
+            text: t("download"),
             icon: DownloadIcon,
             variant: "secondary",
             onClickFunc: this.onDownloadClick,
@@ -256,7 +257,7 @@ class Editor extends React.Component {
 
     let errorMessage = null
     if (formView && inValidItems.length > 0) {
-      errorMessage = <Alert variant="danger" isInline title="Check the error and/or mandatory(*) fields" />
+      errorMessage = <Alert variant="danger" isInline title={t("form_generic_error_message")} />
       if (isWidthLimited) {
         errorMessage = (
           <Grid lg={7} md={9} sm={12}>
@@ -273,7 +274,7 @@ class Editor extends React.Component {
             <Flex>
               <FlexItem>
                 <span>
-                  <strong>Configure via:</strong>
+                  <strong>{t("configure_via")}:</strong>
                 </span>
               </FlexItem>
               <FlexItem>
@@ -325,7 +326,7 @@ Editor.propTypes = {
   saveButtonText: PropTypes.string,
 }
 
-export default Editor
+export default withTranslation()(Editor)
 
 // helper functions
 

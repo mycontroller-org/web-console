@@ -19,6 +19,7 @@ import Loading from "../../Components/Loading/Loading"
 import { connect } from "react-redux"
 import { updateSelectionId } from "../../store/entities/dashboard"
 import { GridBreakPoints, GridColumns } from "../../Constants/Dashboard"
+import { withTranslation } from "react-i18next"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -138,7 +139,7 @@ class Dashboard extends React.Component {
   onNewDashboardClick = () => {
     this.setState((prevState) => {
       const { dashboards } = prevState
-      const dashboard = getNewDashboard()
+      const dashboard = getNewDashboard(this.props.t)
       dashboards.push(dashboard)
       this.props.updateSelectionId(dashboard.id)
       return {
@@ -231,7 +232,7 @@ class Dashboard extends React.Component {
     this.setState((prevState) => {
       const { dashboardOnEdit } = prevState
       const clonedDashboard = cloneDeep(dashboardOnEdit)
-      const newWidget = getNewWidget()
+      const newWidget = getNewWidget(this.props.t)
       clonedDashboard.widgets.push(newWidget)
       return { dashboardOnEdit: clonedDashboard }
     })
@@ -272,7 +273,7 @@ class Dashboard extends React.Component {
       showDeleteDialog,
     } = this.state
 
-    const { selectionId } = this.props
+    const { selectionId, t } = this.props
 
     const pageContent = []
     let title = ""
@@ -285,9 +286,9 @@ class Dashboard extends React.Component {
       pageContent.push(
         <EmptyState
           key="empty-state"
-          title="No dashboards available"
-          message="There is no dashboard available to load."
-          primaryAction={{ text: "Create New", onClick: this.onNewDashboardClick }}
+          title={t("no_dashboard_title")}
+          message={t("no_dashboard_message")}
+          primaryAction={{ text: t("create_new"), onClick: this.onNewDashboardClick }}
         />
       )
     } else {
@@ -358,10 +359,20 @@ class Dashboard extends React.Component {
 
     if (editEnabled) {
       actions.push(
-        <LinkButton key="btn-settings" text="Settings" icon={EditIcon} onClick={this.onEditSettingsClick} />,
-        <LinkButton key="btn-widgets" text="Add Widget" icon={AddCircleOIcon} onClick={this.onAddWidgetClick} />,
-        <LinkButton key="btn-save" text="Save" icon={CheckIcon} onClick={this.onSaveClick} />,
-        <LinkButton key="btn-cancel" text="Cancel" icon={CloseIcon} onClick={this.onCancelClick} />
+        <LinkButton
+          key="btn-settings"
+          text={t("settings")}
+          icon={EditIcon}
+          onClick={this.onEditSettingsClick}
+        />,
+        <LinkButton
+          key="btn-widgets"
+          text={t("add_widget")}
+          icon={AddCircleOIcon}
+          onClick={this.onAddWidgetClick}
+        />,
+        <LinkButton key="btn-save" text={t("save")} icon={CheckIcon} onClick={this.onSaveClick} />,
+        <LinkButton key="btn-cancel" text={t("cancel")} icon={CloseIcon} onClick={this.onCancelClick} />
       )
     } else {
       const disableButtons = dashboards.length === 0
@@ -430,7 +441,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateSelectionId: (data) => dispatch(updateSelectionId(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard))
 
 // helper functions
 
@@ -444,9 +455,9 @@ const getItemById = (items, value, key = "id") => {
 }
 
 // creates new default dashboard
-const getNewDashboard = () => {
+const getNewDashboard = (t) => {
   const randomId = getRandomId(5)
-  const widget = getNewWidget()
+  const widget = getNewWidget(t)
   const dashboard = {
     id: randomId,
     type: "desktop",
@@ -459,10 +470,10 @@ const getNewDashboard = () => {
   return dashboard
 }
 
-const getNewWidget = () => {
+const getNewWidget = (t = () => {}) => {
   const newWidget = {
     id: getRandomId(),
-    title: "Panel Title",
+    title: t("panel_title"),
     showTitle: true,
     type: WidgetType.EmptyPanel,
     static: false,

@@ -57,7 +57,8 @@ import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
-import { languageList } from "../i18n/i18n"
+import i18n, { languageList } from "../i18n/i18n"
+import { updateLocale } from "../store/entities/locale"
 class PageLayoutExpandableNav extends React.Component {
   state = {
     isDropdownOpen: false,
@@ -152,8 +153,13 @@ class PageLayoutExpandableNav extends React.Component {
     )
   }
 
+  onLanguageChange = (lng) => {
+    i18n.changeLanguage(lng)
+    this.props.updateLocale({ language: lng })
+  }
+
   render() {
-    const { location, t } = this.props
+    const { location, t, languageSelected } = this.props
 
     // selected menu
     let menuSelection = ""
@@ -251,8 +257,13 @@ class PageLayoutExpandableNav extends React.Component {
     ]
 
     const languages = languageList.map((l) => {
+      const lngSelected = l.lng === languageSelected ? "language_selected" : ""
       return (
-        <DropdownItem key={`lang_${l.lng}`}>
+        <DropdownItem
+          key={`lang_${l.lng}`}
+          className={lngSelected}
+          onClick={() => this.onLanguageChange(l.lng)}
+        >
           <Tooltip position="left" content={l.country_code}>
             <span>{l.flag} </span>
           </Tooltip>
@@ -287,7 +298,7 @@ class PageLayoutExpandableNav extends React.Component {
             <NotificationBadge
               variant={this.props.notificationDisplayVariant}
               onClick={this.props.onNotificationBadgeClick}
-              aria-label="Notifications"
+              aria-label={t("notifications")}
               count={this.props.notificationCount}
             >
               <BellIcon />
@@ -360,7 +371,7 @@ class PageLayoutExpandableNav extends React.Component {
                     fontWeight: "100",
                   }}
                 >
-                  The Open Source Controller
+                  {t("the_open_source_controller")}
                 </div>
               </Text>
             </TextContent>
@@ -406,12 +417,14 @@ const mapStateToProps = (state) => ({
   showGlobalSpinner: state.entities.spinner.show,
   userDetail: state.entities.auth.user,
   documentationUrl: state.entities.about.documentationUrl,
+  languageSelected: state.entities.locale.language,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onNotificationBadgeClick: () => dispatch(notificationDrawerToggle()),
   showAbout: () => dispatch(aboutShow()),
   doLogout: () => dispatch(clearAuth()),
+  updateLocale: (data) => dispatch(updateLocale(data)),
 })
 
 export default withRouter(

@@ -135,29 +135,29 @@ const routes = [
   },
   {
     id: "resources",
-    title: "Resources",
+    title: "resources",
     children: [
       {
         id: "gateway",
-        title: "Gateways",
+        title: "gateways",
         to: routeMap.resources.gateway.list,
         component: GatewayListPage,
       },
       {
         id: "node",
-        title: "Nodes",
+        title: "nodes",
         to: routeMap.resources.node.list,
         component: NodeListPage,
       },
       {
         id: "source",
-        title: "Sources",
+        title: "sources",
         to: routeMap.resources.source.list,
         component: SourceListPage,
       },
       {
         id: "field",
-        title: "Fields",
+        title: "fields",
         to: routeMap.resources.field.list,
         component: FieldListPage,
       },
@@ -167,13 +167,13 @@ const routes = [
       },
       {
         id: "firmware",
-        title: "Firmwares",
+        title: "firmwares",
         to: routeMap.resources.firmware.list,
         component: FirmwareListPage,
       },
       {
         id: "dataRepository",
-        title: "Data Repository",
+        title: "data_repository",
         to: routeMap.resources.dataRepository.list,
         component: DataRepositoryListPage,
       },
@@ -181,29 +181,29 @@ const routes = [
   },
   {
     id: "operations",
-    title: "Operations",
+    title: "operations",
     children: [
       {
         id: "task",
-        title: "Tasks",
+        title: "tasks",
         to: routeMap.operations.task.list,
         component: TaskListPage,
       },
       {
         id: "scheduler",
-        title: "Schedules",
+        title: "schedules",
         to: routeMap.operations.scheduler.list,
         component: ScheduleListPage,
       },
       {
         id: "handler",
-        title: "Handlers",
+        title: "handlers",
         to: routeMap.operations.handler.list,
         component: HandlerListPage,
       },
       {
         id: "forwardpayload",
-        title: "Forward Payload",
+        title: "forward_payload",
         to: routeMap.operations.forwardPayload.list,
         component: ForwardPayloadListPage,
       },
@@ -211,23 +211,23 @@ const routes = [
   },
   {
     id: "settings",
-    title: "Settings",
+    title: "settings",
     children: [
       {
         id: "profile",
-        title: "Profile",
+        title: "profile",
         to: routeMap.settings.profile,
         component: ProfilePage,
       },
       {
         id: "system",
-        title: "System",
+        title: "system",
         to: routeMap.settings.system,
         component: SettingsSystemPage,
       },
       {
         id: "backup-restore",
-        title: "Backup and Restore",
+        title: "backup_and_restore",
         to: routeMap.settings.backup,
         component: SystemBackupPage,
       },

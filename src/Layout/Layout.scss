@@ -72,3 +72,7 @@ Removes the gray color of bottom page
 .language_icon {
   padding: 1px;
 }
+
+.language_selected {
+  background-color: var(--pf-global--palette--blue-100);
+}

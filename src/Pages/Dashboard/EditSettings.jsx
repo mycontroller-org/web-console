@@ -2,12 +2,15 @@ import React from "react"
 import { Modal, ModalVariant } from "@patternfly/react-core"
 import { DataType, FieldType } from "../../Constants/Form"
 import Editor from "../../Components/Editor/Editor"
+import { useTranslation } from "react-i18next"
 
 const EditSettings = ({ showEditSettings, dashboard, onCancel, /*onChange,*/ onSave }) => {
+  const { t } = useTranslation()
+
   return (
     <Modal
       key="edit-settings"
-      title="Edit dashboard settings"
+      title={t("edit_dashboard_settings")}
       variant={ModalVariant.medium}
       position="top"
       isOpen={showEditSettings}
@@ -33,10 +36,10 @@ export default EditSettings
 
 // support functions
 
-const getFormItems = (_rootObject) => {
+const getFormItems = (_rootObject, t = () => {}) => {
   const items = [
     {
-      label: "Title",
+      label: t("title"),
       fieldId: "title",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -48,7 +51,7 @@ const getFormItems = (_rootObject) => {
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Description",
+      label: t("description"),
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -56,7 +59,7 @@ const getFormItems = (_rootObject) => {
       isRequired: false,
     },
     {
-      label: "Favorite",
+      label: t("favorite"),
       fieldId: "favorite",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,

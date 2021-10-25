@@ -16,9 +16,11 @@ import {
   AddCircleOIcon,
   FileImportIcon,
 } from "@patternfly/react-icons"
+import { withTranslation } from "react-i18next"
+
 import DeleteDialog from "../Dialog/Dialog"
 
-export default class Actions extends React.Component {
+class Actions extends React.Component {
   state = {
     isOpen: false,
   }
@@ -32,44 +34,44 @@ export default class Actions extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { items, isDisabled, rowsSelectionCount = 1 } = this.props
+    const { items, isDisabled, rowsSelectionCount = 1, t } = this.props
 
     const dropdownItems = items.map((item, index) => {
       switch (item.type) {
         case "new":
-          return drawItem(item.type, "New", AddCircleOIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("new"), AddCircleOIcon, item.disabled, item.onClick)
         case "enable":
-          return drawItem(item.type, "Enable", CircleIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("enable"), CircleIcon, item.disabled, item.onClick)
         case "disable":
-          return drawItem(item.type, "Disable", OutlinedCircleIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("disable"), OutlinedCircleIcon, item.disabled, item.onClick)
         case "reload":
-          return drawItem(item.type, "Reload", RetweetIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("reload"), RetweetIcon, item.disabled, item.onClick)
         case "discover_nodes":
-          return drawItem(item.type, "Discover Nodes", SearchIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("discover_nodes"), SearchIcon, item.disabled, item.onClick)
         case "edit":
           return drawItem(
             item.type,
-            "Edit",
+            t("edit"),
             EditIcon,
             rowsSelectionCount !== 1 || item.disabled,
             item.onClick
           )
         case "delete":
-          return drawItem(item.type, "Delete", OutlinedTrashAltIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("delete"), OutlinedTrashAltIcon, item.disabled, item.onClick)
         case "reboot":
-          return drawItem(item.type, "Reboot", RebootingIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("reboot"), RebootingIcon, item.disabled, item.onClick)
         case "heartbeat_request":
-          return drawItem(item.type, "Request Heartbeat", HeartbeatIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("request_heartbeat"), HeartbeatIcon, item.disabled, item.onClick)
         case "refresh_node_info":
-          return drawItem(item.type, "Fetch Info", InfoAltIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("fetch_info"), InfoAltIcon, item.disabled, item.onClick)
         case "firmware_update":
-          return drawItem(item.type, "Update Firmware", UploadIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("update_firmware"), UploadIcon, item.disabled, item.onClick)
         case "reset":
-          return drawItem(item.type, "Reset", EraserIcon, item.disabled, item.onClick)
+          return drawItem(item.type, t("reset"), EraserIcon, item.disabled, item.onClick)
         case "restore":
           return drawItem(
             item.type,
-            "Restore",
+            t("restore"),
             FileImportIcon,
             rowsSelectionCount !== 1 || item.disabled,
             item.onClick
@@ -93,7 +95,7 @@ export default class Actions extends React.Component {
               onToggle={this.onToggle}
               toggleIndicator={CaretDownIcon}
             >
-              Actions
+              {t("actions")}
             </DropdownToggle>
           }
           isOpen={isOpen}
@@ -110,6 +112,8 @@ export default class Actions extends React.Component {
     )
   }
 }
+
+export default withTranslation()(Actions)
 
 const drawItem = (key, text, icon, disabled, onClickFn) => {
   const Icon = icon
