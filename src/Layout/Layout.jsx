@@ -57,8 +57,9 @@ import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
-import i18n, { languageList } from "../i18n/i18n"
+import i18n from "../i18n/i18n"
 import { updateLocale } from "../store/entities/locale"
+import { languages } from "../i18n/languages"
 class PageLayoutExpandableNav extends React.Component {
   state = {
     isDropdownOpen: false,
@@ -154,6 +155,9 @@ class PageLayoutExpandableNav extends React.Component {
   }
 
   onLanguageChange = (lng) => {
+    if (lng === this.props.languageSelected) {
+      return
+    }
     i18n.changeLanguage(lng)
     this.props.updateLocale({ language: lng })
   }
@@ -256,12 +260,12 @@ class PageLayoutExpandableNav extends React.Component {
       </DropdownItem>,
     ]
 
-    const languages = languageList.map((l) => {
+    const languageItems = languages.map((l) => {
       const lngSelected = l.lng === languageSelected ? "language_selected" : ""
       return (
         <DropdownItem
           key={`lang_${l.lng}`}
-          className={lngSelected}
+          className={`language_item ${lngSelected}`}
           onClick={() => this.onLanguageChange(l.lng)}
         >
           <Tooltip position="left" content={l.country_code}>
@@ -334,7 +338,7 @@ class PageLayoutExpandableNav extends React.Component {
                   icon={<LanguageIcon size="md" />}
                 />
               }
-              dropdownItems={languages}
+              dropdownItems={languageItems}
             />
           </PageHeaderToolsItem>
           <PageHeaderToolsItem>

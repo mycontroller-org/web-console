@@ -73,6 +73,12 @@ Removes the gray color of bottom page
   padding: 1px;
 }
 
+.language_item {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .language_selected {
   background-color: var(--pf-global--palette--blue-100);
 }
