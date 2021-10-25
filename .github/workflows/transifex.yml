@@ -26,3 +26,4 @@ jobs:
           pull_sources: true
           push_translations: true
           push_sources: true
+          commit_to_pr: true
