@@ -20,7 +20,7 @@ jobs:
         with:
           tx_token: ${{ secrets.TRANSIFEX_TOKEN_MC_V2 }}
           git_flow: true
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GH_BOT_TOKEN }}
           translations_folder: public/locales/
           pull_translations: true
           pull_sources: true
