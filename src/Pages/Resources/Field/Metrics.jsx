@@ -183,13 +183,18 @@ class Metrics extends React.Component {
     const gaugeConfig = this.props.metricConfigGauge
     const binaryConfig = this.props.metricConfigBinary
 
+    // update i18n translation
+    const durationOptionsUpdated = DurationOptions.map((item) => {
+      return { ...item, label: t(item.label) }
+    })
+
     if (isBinaryMetric) {
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
           <Select
             key="duration-selection"
             defaultValue={binaryConfig.duration}
-            options={DurationOptions}
+            options={durationOptionsUpdated}
             title=""
             onSelectionFunc={(newDuration) => {
               this.onChangeFunc(gaugeConfig, { ...binaryConfig, duration: newDuration })
@@ -198,6 +203,19 @@ class Metrics extends React.Component {
         </div>
       )
     } else {
+      // update i18n translation
+      const aggregationIntervalOptionsUpdated = AggregationIntervalOptions.map((item) => {
+        return { ...item, label: t(item.label) }
+      })
+
+      const metricFunctionTypeOptionsUpdated = MetricFunctionTypeOptions.map((item) => {
+        return { ...item, label: t(item.label) }
+      })
+
+      const interpolationTypeLineOptionsUpdated = InterpolationTypeLineOptions.map((item) => {
+        return { ...item, label: t(item.label) }
+      })
+
       metricsToolbox.push(
         <div style={{ marginBottom: "5px" }}>
           <MetricDropdown
@@ -207,7 +225,7 @@ class Metrics extends React.Component {
               <Select
                 key="duration-selection"
                 defaultValue={gaugeConfig.duration}
-                options={DurationOptions}
+                options={durationOptionsUpdated}
                 title=""
                 onSelectionFunc={(newDuration) => {
                   const newInterval = getRecommendedInterval(newDuration)
@@ -227,7 +245,7 @@ class Metrics extends React.Component {
             <Select
               key="interval-selection"
               defaultValue={gaugeConfig.interval}
-              options={AggregationIntervalOptions}
+              options={aggregationIntervalOptionsUpdated}
               title=""
               onSelectionFunc={(newInterval) => {
                 this.onChangeFunc({ ...gaugeConfig, interval: newInterval }, binaryConfig)
@@ -242,7 +260,7 @@ class Metrics extends React.Component {
             <Select
               key="function-selection"
               defaultValue={gaugeConfig.func}
-              options={MetricFunctionTypeOptions}
+              options={metricFunctionTypeOptionsUpdated}
               title=""
               onSelectionFunc={(newMetricFn) => {
                 this.onChangeFunc({ ...gaugeConfig, func: newMetricFn }, binaryConfig)
@@ -257,7 +275,7 @@ class Metrics extends React.Component {
             <Select
               key="interpolation-selection"
               defaultValue={gaugeConfig.interpolationType}
-              options={InterpolationTypeLineOptions}
+              options={interpolationTypeLineOptionsUpdated}
               title=""
               onSelectionFunc={(newInterpolationType) => {
                 this.onChangeFunc({ ...gaugeConfig, interpolationType: newInterpolationType }, binaryConfig)
