@@ -18,7 +18,7 @@ address: விலாசம்
 alerts_empty_message: There are currently no alerts.
 alerts_empty_title: No alerts found
 alive_check_interval: Alive Check Interval
-all_rights_reserved: All Rights Reserved
+all_rights_reserved: அனைத்து உரிமைகளும் காப்புடைமையானவை
 allow_overwrite: Allow Overwrite
 apache_license_2: அப்பாச்சி உரிமம் 2.0
 api: API
@@ -60,6 +60,7 @@ connection_timeout: Connection Timeout
 control_config: Control Config
 control_type: Control Type
 corner_smoothing: Corner Smoothing
+cpu: CPU
 cpu_disabled: CPU Disabled
 create_new: புதிதாக உருவாக்கு
 cron_expression: Cron Expression
@@ -103,6 +104,7 @@ display_text: Display Text
 display_value: காட்சி மதிப்பு
 do_update: நிரப்பவும்
 documentation: ஆவணங்கள்
+down: Down
 download: பதிவிறக்க
 drop_down_position: Drop Down Position
 duration: காலம்
@@ -246,6 +248,7 @@ keep_me_logged_in_30_days: Keep me logged in for 30 days.
 key: Key
 key_path: Key Path
 labels: லேபிள்கள்
+language: மொழி
 last_evaluation: Last Evaluation
 last_modified: Last Modified
 last_run: Last Run
@@ -647,6 +650,7 @@ rgb: RGB
 rgb_component: RGB Component
 rotation: Rotation
 round_decimal: Round Decimal
+rule: Rule
 run_a_backup: Run a Backup
 run_backup: Run Backup
 saturation: Saturation
@@ -712,6 +716,7 @@ transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
 type: வகை
 unit: அலகு
+up: UP
 update: Update
 update_data: Update Data
 update_firmware: Update Firmware

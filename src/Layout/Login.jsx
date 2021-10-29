@@ -11,6 +11,7 @@ import React from "react"
 import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import {
+  DEFAULT_LANGUAGE,
   MAXIMUM_LOGIN_EXPIRES_IN_DAYS,
   MINIMUM_LOGIN_EXPIRES_IN_DAYS,
   URL_DOCUMENTATION,
@@ -20,6 +21,7 @@ import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
 import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
 import { authSuccess } from "../store/entities/auth"
+import { updateLocale } from "../store/entities/locale"
 import { getValue } from "../Util/Util"
 import "./Login.scss"
 
@@ -40,10 +42,16 @@ class SimpleLoginPage extends React.Component {
     api.status
       .get()
       .then((res) => {
+        const { documentationUrl, language } = res.data
         // update documentation url
-        const docUrl = res.data.documentationUrl
-        this.props.updateDocUrl({ documentationUrl: docUrl !== "" ? docUrl : URL_DOCUMENTATION })
+        this.props.updateDocUrl({
+          documentationUrl: documentationUrl !== "" ? documentationUrl : URL_DOCUMENTATION,
+        })
         this.props.updateMetricsDB({ metricsDBDisabled: res.data.metricsDBDisabled })
+
+        // update locale
+        const lng = language && language !== "" ? language : DEFAULT_LANGUAGE
+        this.props.updateLocale({ language: lng })
 
         const loginData = getValue(res.data, "login", { message: t("no_login_message") })
         this.setState({ loginData: loginData })
@@ -176,6 +184,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateSuccessLogin: (data) => dispatch(authSuccess(data)),
   updateDocUrl: (data) => dispatch(updateDocumentationUrl(data)),
   updateMetricsDB: (data) => dispatch(updateMetricsDBStatus(data)),
+  updateLocale: (data) => dispatch(updateLocale(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SimpleLoginPage))

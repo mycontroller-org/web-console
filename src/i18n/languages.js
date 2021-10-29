@@ -1,3 +1,5 @@
+import { DEFAULT_LANGUAGE } from "../Constants/Common"
+
 // flags unicode, https://emojipedia.org/flags/
 export const languages = [
   {
@@ -91,3 +93,18 @@ export const languages = [
     flag: "🇹🇼",
   },
 ]
+
+export const LanguageOptions = () => {
+  return languages.map((l) => {
+    return { value: l.lng, label: `${l.flag} ${l.title}` }
+  })
+}
+
+export const getLanguage = (lng = DEFAULT_LANGUAGE) => {
+  for (let index = 0; index < languages.length; index++) {
+    const l = languages[0]
+    if (l.lng === lng) {
+      return `${l.flag} ${l.title}`
+    }
+  }
+}

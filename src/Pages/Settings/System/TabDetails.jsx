@@ -1,6 +1,7 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { KeyValueMap } from "../../../Components/DataDisplay/Label"
+import { getLanguage } from "../../../i18n/languages"
 import { api } from "../../../Service/Api"
 
 const tabDetails = ({ resourceId, history }) => {
@@ -24,6 +25,7 @@ const getDetailsFuncImpl = (data) => {
 
   fieldsList1.push({ key: "geo_location", value: <KeyValueMap data={data.spec.geoLocation} /> })
   fieldsList2.push({ key: "login", value: <KeyValueMap data={data.spec.login} /> })
+  fieldsList2.push({ key: "language", value: getLanguage(data.spec.language) })
 
   return {
     "list-1": fieldsList1,

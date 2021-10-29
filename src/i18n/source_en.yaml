@@ -60,6 +60,7 @@ connection_timeout: Connection Timeout
 control_config: Control Config
 control_type: Control Type
 corner_smoothing: Corner Smoothing
+cpu: CPU
 cpu_disabled: CPU Disabled
 create_new: Create New
 cron_expression: Cron Expression
@@ -103,6 +104,7 @@ display_text: Display Text
 display_value: Display Value
 do_update: Do Update
 documentation: Documentation
+down: Down
 download: Download
 drop_down_position: Drop Down Position
 duration: Duration
@@ -246,6 +248,7 @@ keep_me_logged_in_30_days: Keep me logged in for 30 days.
 key: Key
 key_path: Key Path
 labels: Labels
+language: Language
 last_evaluation: Last Evaluation
 last_modified: Last Modified
 last_run: Last Run
@@ -647,6 +650,7 @@ rgb: RGB
 rgb_component: RGB Component
 rotation: Rotation
 round_decimal: Round Decimal
+rule: Rule
 run_a_backup: Run a Backup
 run_backup: Run Backup
 saturation: Saturation
@@ -712,6 +716,7 @@ transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
 type: Type
 unit: Unit
+up: UP
 update: Update
 update_data: Update Data
 update_firmware: Update Firmware

@@ -41,8 +41,8 @@ export const DropDownPositionType = {
 }
 
 export const DropDownPositionTypeOptions = [
-  { value: DropDownPositionType.DOWN, label: "Down" },
-  { value: DropDownPositionType.UP, label: "UP" },
+  { value: DropDownPositionType.DOWN, label: "down" },
+  { value: DropDownPositionType.UP, label: "up" },
 ]
 
 export const FIELD_NAME = "fieldname"

@@ -3,6 +3,7 @@ import LanguageDetector from "i18next-browser-languagedetector"
 import backend from "i18next-http-backend"
 import YAML from "js-yaml"
 import { initReactI18next } from "react-i18next"
+import { DEFAULT_LANGUAGE } from "../Constants/Common"
 import { reduxLanguageDetector } from "./languageDetector"
 
 const languageDetector = new LanguageDetector()
@@ -14,7 +15,7 @@ i18n
   .use(backend)
   .init({
     ns: "translation",
-    fallbackLng: "en_GB",
+    fallbackLng: DEFAULT_LANGUAGE,
     // lng: "en_GB",
     // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
     // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage

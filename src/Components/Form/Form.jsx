@@ -72,15 +72,17 @@ export const Form = ({ isHorizontal = false, isWidthLimited = true, items = [], 
       item.helperTextInvalid = t(itemRaw.helperTextInvalid)
     }
 
-    // translate options list
-    if (Array.isArray(itemRaw.options)) {
-      item.options = itemRaw.options.map((opt) => {
-        let desc = ""
-        if (opt.description !== "" && opt.description !== undefined) {
-          desc = t(opt.description)
-        }
-        return { ...opt, label: t(opt.label), description: desc }
-      })
+    // translate options list if it is not disabled
+    if (!itemRaw.OptionsTranslationDisabled) {
+      if (Array.isArray(itemRaw.options)) {
+        item.options = itemRaw.options.map((opt) => {
+          let desc = ""
+          if (opt.description !== "" && opt.description !== undefined) {
+            desc = t(opt.description)
+          }
+          return { ...opt, label: t(opt.label), description: desc }
+        })
+      }
     }
 
     const onChangeWithItem = (data) => {
@@ -420,6 +422,7 @@ const getField = (item, onChange) => {
           selected={item.value}
           isDisabled={item.isDisabled}
           disableClear={item.disableClear}
+          direction={item.direction}
         />
       )
 
