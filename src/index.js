@@ -1,13 +1,12 @@
 import "@patternfly/react-core/dist/styles/base.css"
-import "react-grid-layout/css/styles.css"
-import "react-resizable/css/styles.css"
-import "./index.scss"
-
 import React from "react"
 import ReactDOM from "react-dom"
+import "react-grid-layout/css/styles.css"
+import "react-resizable/css/styles.css"
 import { HashRouter as Router } from "react-router-dom"
-import "./i18n/i18n"
 import App from "./App"
+import "./i18n/i18n"
+import "./index.scss"
 import * as serviceWorker from "./serviceWorker"
 
 ReactDOM.render(

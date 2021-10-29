@@ -102,7 +102,7 @@ export const LanguageOptions = () => {
 
 export const getLanguage = (lng = DEFAULT_LANGUAGE) => {
   for (let index = 0; index < languages.length; index++) {
-    const l = languages[0]
+    const l = languages[index]
     if (l.lng === lng) {
       return `${l.flag} ${l.title}`
     }

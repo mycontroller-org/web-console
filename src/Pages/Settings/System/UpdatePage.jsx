@@ -7,9 +7,8 @@ import { DataType, FieldType } from "../../../Constants/Form"
 import { LanguageOptions } from "../../../i18n/languages"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { getValue } from "../../../Util/Util"
 import { updateLocale } from "../../../store/entities/locale"
-import i18n from "../../../i18n/i18n"
+import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   render() {
@@ -24,13 +23,7 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.settings.updateSystem}
         minimapEnabled
         onSaveRedirectFunc={(data) => {
-          // update language in the web UI
-          const lng = data.spec.language
-          if (lng !== this.props.languageSelected) {
-            i18n.changeLanguage(lng)
-            this.props.updateLocale({ language: lng })
-          }
-
+          this.props.updateLocale({ language: data.spec.language })
           r(this.props.history, rMap.dashboard)
         }}
         onCancelFunc={() => {

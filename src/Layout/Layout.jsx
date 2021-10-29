@@ -39,27 +39,26 @@ import {
   UserIcon,
 } from "@patternfly/react-icons"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { Redirect, Route, Switch } from "react-router-dom"
-import { withTranslation } from "react-i18next"
 import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
 import { HeaderSpinner } from "../Components/Spinner/Spinner"
 import Toaster from "../Components/Toaster/Toaster"
+import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
+import { languages } from "../i18n/languages"
 import logoMain from "../Logo/mc-white.svg"
 import AboutPage from "../Pages/About/About"
 import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Service/Routes"
+import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
+import { updateLocale } from "../store/entities/locale"
 import { notificationDrawerToggle } from "../store/entities/notification"
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
-import { wsConnect, wsDisconnect } from "../Service/Websocket"
-import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
-import i18n from "../i18n/i18n"
-import { updateLocale } from "../store/entities/locale"
-import { languages } from "../i18n/languages"
 class PageLayoutExpandableNav extends React.Component {
   state = {
     isDropdownOpen: false,
@@ -152,14 +151,6 @@ class PageLayoutExpandableNav extends React.Component {
         <Redirect from="*" to="/" key="default-route" />
       </Switch>
     )
-  }
-
-  onLanguageChange = (lng) => {
-    if (lng === this.props.languageSelected) {
-      return
-    }
-    i18n.changeLanguage(lng)
-    this.props.updateLocale({ language: lng })
   }
 
   render() {
@@ -266,7 +257,7 @@ class PageLayoutExpandableNav extends React.Component {
         <DropdownItem
           key={`lang_${l.lng}`}
           className={`language_item ${lngSelected}`}
-          onClick={() => this.onLanguageChange(l.lng)}
+          onClick={() => this.props.updateLocale({ language: l.lng })}
         >
           <Tooltip position="left" content={l.country_code}>
             <span>{l.flag} </span>

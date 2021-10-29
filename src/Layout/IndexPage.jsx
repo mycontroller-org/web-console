@@ -1,14 +1,15 @@
+import { Banner } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
+import t from "typy"
+import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
+import { URL_DOCUMENTATION } from "../Constants/Common"
+import i18n from "../i18n/i18n"
+import { api } from "../Service/Api"
+import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
 import PageLayoutExpandableNav from "./Layout"
 import PageLayoutLogin from "./Login"
-import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary"
-import { Banner } from "@patternfly/react-core"
-import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
-import { api } from "../Service/Api"
-import { URL_DOCUMENTATION } from "../Constants/Common"
-import { withTranslation } from "react-i18next"
-import t from "typy"
 
 class IndexPage extends React.Component {
   componentDidMount() {
@@ -25,7 +26,17 @@ class IndexPage extends React.Component {
       })
   }
 
+  // listens language change event from redux and updates
+  updateLocale = () => {
+    const { languageSelected } = this.props
+    if (i18n.language !== languageSelected) {
+      i18n.changeLanguage(languageSelected)
+    }
+  }
+
   render() {
+    // update locale
+    this.updateLocale()
     const component = this.props.isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
     const banner = this.props.metricsDBDisabled ? (
       <Banner key="banner-metrics-database" variant="warning">
@@ -44,6 +55,7 @@ class IndexPage extends React.Component {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.entities.auth.authenticated,
   metricsDBDisabled: state.entities.about.metricsDBDisabled,
+  languageSelected: state.entities.locale.language,
 })
 
 const mapDispatchToProps = (dispatch) => ({
