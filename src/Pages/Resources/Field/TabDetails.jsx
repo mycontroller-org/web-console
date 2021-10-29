@@ -27,24 +27,23 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Gateway ID", value: data.gatewayId })
-  fieldsList1.push({ key: "Node ID", value: data.nodeId })
-  fieldsList1.push({ key: "Source ID", value: data.sourceId })
-  fieldsList1.push({ key: "Field ID", value: data.fieldId })
-  fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Last Seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
-
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "Others", value: <KeyValueMap data={data.others} /> })
-  fieldsList2.push({ key: "Metric Type", value: getItem(data.metricType, MetricTypeOptions).label })
-  fieldsList2.push({ key: "Unit", value: data.unit })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "gateway_id", value: data.gatewayId })
+  fieldsList1.push({ key: "node_id", value: data.nodeId })
+  fieldsList1.push({ key: "source_id", value: data.sourceId })
+  fieldsList1.push({ key: "field_id", value: data.fieldId })
+  fieldsList1.push({ key: "name", value: data.name })
+  fieldsList1.push({ key: "last_seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
+  fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "others", value: <KeyValueMap data={data.others} /> })
+  fieldsList2.push({ key: "metric_type", value: getItem(data.metricType, MetricTypeOptions).label })
+  fieldsList2.push({ key: "unit", value: data.unit })
   fieldsList2.push({
-    key: "No Change Since",
+    key: "no_change_since",
     value: <LastSeen date={data.noChangeSince} tooltipPosition="top" />,
   })
   fieldsList2.push({
-    key: "Value",
+    key: "value",
     value: (
       <DisplayFieldValue
         value={getValue(data, "current.value", "")}
@@ -53,7 +52,7 @@ const getDetailsFuncImpl = (data) => {
     ),
   })
   fieldsList2.push({
-    key: "Previous Value",
+    key: "previous_value",
     value: (
       <DisplayFieldValue
         value={getValue(data, "previous.value", "")}

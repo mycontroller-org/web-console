@@ -1,14 +1,14 @@
 import { Button, Modal, ModalVariant, TextInput } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
 import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import PropTypes from "prop-types"
-import DiskConfigPicker from "./DiskConfigPicker"
-import { validate } from "../../../../Util/Validator"
 import { DataUnitType, DataUnitTypeOptions } from "../../../../Constants/Metric"
+import { validate } from "../../../../Util/Validator"
+import DiskConfigPicker from "./DiskConfigPicker"
 import ProcessConfigPicker from "./ProcessConfigPicker"
 
 class NodeConfigPicker extends React.Component {
@@ -100,7 +100,7 @@ const getItems = (rootObject) => {
 
   const items = [
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -108,12 +108,12 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Memory",
+      label: "memory",
       fieldId: "!memory",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Memory Disabled",
+      label: "memory_disabled",
       fieldId: "memory.memoryDisabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -121,7 +121,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Swap Disabled",
+      label: "swap_disabled",
       fieldId: "memory.swapDisabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -129,7 +129,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "memory.unit",
       fieldType: FieldType.Select,
       dataType: DataType.String,
@@ -138,7 +138,7 @@ const getItems = (rootObject) => {
       options: DataUnitTypeOptions,
     },
     {
-      label: "Metric Interval",
+      label: "metric_interval",
       fieldId: "memory.interval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -146,12 +146,12 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "CPU",
+      label: "cpu",
       fieldId: "!cpu",
       fieldType: FieldType.Divider,
     },
     {
-      label: "CPU Disabled",
+      label: "cpu_disabled",
       fieldId: "cpu.cpuDisabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -159,7 +159,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Per CPU Disabled",
+      label: "per_cpu_disabled",
       fieldId: "cpu.perCpuDisabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -168,7 +168,7 @@ const getItems = (rootObject) => {
     },
 
     {
-      label: "Metric Interval",
+      label: "metric_interval",
       fieldId: "cpu.interval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -176,12 +176,12 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Temperature",
+      label: "temperature",
       fieldId: "!temperature",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Disabled All",
+      label: "disabled_all",
       fieldId: "temperature.disabledAll",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -189,7 +189,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Metric Interval",
+      label: "metric_interval",
       fieldId: "temperature.interval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -197,7 +197,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "temperature.enabled",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
@@ -205,12 +205,12 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Disk",
+      label: "disk",
       fieldId: "!disk",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disk.disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -218,7 +218,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Metric Interval",
+      label: "metric_interval",
       fieldId: "disk.interval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -226,7 +226,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Disks",
+      label: "disks",
       fieldId: "disk.data",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
@@ -245,12 +245,12 @@ const getItems = (rootObject) => {
         diskConfigUpdateButtonCallback(cbIndex, cbItem, cbOnChange),
     },
     {
-      label: "Process",
+      label: "process",
       fieldId: "!process",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "process.disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -258,7 +258,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Metric Interval",
+      label: "metric_interval",
       fieldId: "process.interval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -266,7 +266,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Processes",
+      label: "processes",
       fieldId: "process.data",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,

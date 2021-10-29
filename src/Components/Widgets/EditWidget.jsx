@@ -1,20 +1,22 @@
-import React from "react"
 import { Modal, ModalVariant } from "@patternfly/react-core"
+import React from "react"
+import { useTranslation } from "react-i18next"
 import { DataType, FieldType } from "../../Constants/Form"
 import { WidgetType, WidgetTypeOptions } from "../../Constants/Widgets/Widgets"
 import Editor from "../Editor/Editor"
-import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
-import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
-import { updateFormItemsLightPanel } from "./LightPanel/Edit"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
-import { updateFormItemsImagePanel } from "./ImagePanel/Edit"
 import { updateFormItemsChartsPanel } from "./ChartsPanel/Edit"
+import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
+import { updateFormItemsImagePanel } from "./ImagePanel/Edit"
+import { updateFormItemsLightPanel } from "./LightPanel/Edit"
+import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
 
 const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }) => {
+  const { t } = useTranslation()
   return (
     <Modal
       key="edit-widget"
-      title="Edit widget settings"
+      title={t("edit_widget_settings")}
       variant={ModalVariant.medium}
       position="top"
       isOpen={showEditWidget}
@@ -80,33 +82,33 @@ const getFormItems = (rootObject) => {
 const getPanelSettingsItems = (_rootObject) => {
   const items = [
     {
-      label: "Title",
+      label: "title",
       fieldId: "title",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid title. chars: min=2 and max=100",
+      helperTextInvalid: "helper_text.invalid_title",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Show Title",
+      label: "show_title",
       fieldId: "showTitle",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Is Static",
+      label: "is_static",
       fieldId: "static",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "type",
       fieldType: FieldType.SelectTypeAhead,
       direction: "down",

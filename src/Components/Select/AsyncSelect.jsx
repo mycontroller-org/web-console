@@ -1,6 +1,6 @@
 import { Grid, GridItem, Select, SelectOption, Spinner } from "@patternfly/react-core"
-import React from "react"
 import PropTypes from "prop-types"
+import React from "react"
 import { getDynamicFilter } from "../../Util/Filter"
 
 const itemsLimit = 10

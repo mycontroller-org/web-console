@@ -1,12 +1,11 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
 import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import PropTypes from "prop-types"
-import { getValue } from "../../../../Util/Util"
 
 class NodeConfigPicker extends React.Component {
   state = {
@@ -53,7 +52,7 @@ class NodeConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={getItems}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -81,7 +80,7 @@ const getItems = (rootObject) => {
 
   const items = [
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -89,7 +88,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Address",
+      label: "address",
       fieldId: "address",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -97,7 +96,7 @@ const getItems = (rootObject) => {
       isRequired: true,
       isDisabled: false,
       helperText: "",
-      helperTextInvalid: "Invalid address, example: node1.local:6053",
+      helperTextInvalid: "helper_text.invalid_address_esphome",
       validated: "default",
       validator: {
         isURL: {
@@ -109,7 +108,7 @@ const getItems = (rootObject) => {
       },
     },
     {
-      label: "Password",
+      label: "password",
       fieldId: "password",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -117,7 +116,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Connection Timeout",
+      label: "connection_timeout",
       fieldId: "timeout",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -125,7 +124,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Alive Check Interval",
+      label: "alive_check_interval",
       fieldId: "aliveCheckInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -133,7 +132,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Reconnect Delay",
+      label: "reconnect_delay",
       fieldId: "reconnectDelay",
       fieldType: FieldType.Text,
       dataType: DataType.String,

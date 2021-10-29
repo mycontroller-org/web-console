@@ -1,25 +1,25 @@
-import { DataType, FieldType } from "../../../Constants/Form"
-import {
-  LightTypeOptions,
-  RGBComponentType,
-  RGBComponentOptions,
-  LightType,
-} from "../../../Constants/Widgets/LightPanel"
 import objectPath from "object-path"
-import { api } from "../../../Service/Api"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
+import {
+  LightType,
+  LightTypeOptions,
+  RGBComponentOptions,
+  RGBComponentType,
+} from "../../../Constants/Widgets/LightPanel"
+import { api } from "../../../Service/Api"
 import { getDynamicFilter } from "../../../Util/Filter"
 
 // Light Panel items
 export const updateFormItemsLightPanel = (rootObject, items) => {
   items.push(
     {
-      label: "Light",
+      label: "light",
       fieldId: "!light",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "config.lightType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -35,7 +35,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
 
   if (lightType === LightType.RGB || lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
     items.push({
-      label: "RGB Component",
+      label: "rgb_component",
       fieldId: "config.rgbComponent",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -49,12 +49,12 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
 
   items.push(
     {
-      label: "Fields",
+      label: "fields",
       fieldId: "!fields",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Power",
+      label: "power",
       fieldId: "config.fieldIds.power",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -67,7 +67,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
-      label: "Brightness",
+      label: "brightness",
       fieldId: "config.fieldIds.brightness",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -84,7 +84,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
   // update CW, WW and RGB components
   if (lightType === LightType.CWWW || lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
     items.push({
-      label: "Color Temperature",
+      label: "color_temperature",
       fieldId: "config.fieldIds.colorTemperature",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -100,7 +100,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
 
   if (lightType === LightType.RGB || lightType === LightType.RGBCW || lightType === LightType.RGBCWWW) {
     const rgbComponent = objectPath.get(rootObject, "config.rgbComponent", "")
-    const label = rgbComponent === RGBComponentType.ColorPickerQuick ? "RGB" : "Hue"
+    const label = rgbComponent === RGBComponentType.ColorPickerQuick ? "rgb" : "hue"
     const fieldId =
       rgbComponent === RGBComponentType.ColorPickerQuick ? "config.fieldIds.rgb" : "config.fieldIds.hue"
 
@@ -122,7 +122,7 @@ export const updateFormItemsLightPanel = (rootObject, items) => {
 
     // add alpha component
     items.push({
-      label: "Saturation",
+      label: "saturation",
       fieldId: "config.fieldIds.saturation",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,

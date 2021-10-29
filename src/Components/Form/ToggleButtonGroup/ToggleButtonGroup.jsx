@@ -1,9 +1,14 @@
 import { ToggleGroup, ToggleGroupItem } from "@patternfly/react-core"
 import React from "react"
 
-const ToggleButtonGroup = ({ selected = "", options = [], onSelectionFunc = () => {}, isDisabled = false }) => {
+const ToggleButtonGroup = ({
+  selected = "",
+  options = [],
+  onSelectionFunc = () => {},
+  isDisabled = false,
+}) => {
   const toggleItems = options.map((item) => {
-      // item = [{value: "abc", label:"ABC text", disabled: false}]
+    // item = [{value: "abc", label:"ABC text", disabled: false}]
     return (
       <ToggleGroupItem
         text={item.label}

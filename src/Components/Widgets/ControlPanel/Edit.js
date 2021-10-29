@@ -2,10 +2,10 @@ import objectPath from "object-path"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { ResourceType, ResourceTypeOptions } from "../../../Constants/ResourcePicker"
 import {
-  ControlType,
-  ControlTypeOptions,
   ButtonType,
   ButtonTypeOptions,
+  ControlType,
+  ControlTypeOptions,
 } from "../../../Constants/Widgets/ControlPanel"
 
 // Control Panel items
@@ -24,12 +24,12 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
 
   items.push(
     {
-      label: "Control Config",
+      label: "control_config",
       fieldId: "!control_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "config.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -38,7 +38,7 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
       isRequired: true,
     },
     {
-      label: "Table View",
+      label: "table_view",
       fieldId: "config.tableView",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -48,7 +48,7 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
 
   if (tableView) {
     items.push({
-      label: "Hide Header",
+      label: "hide_header",
       fieldId: "config.hideHeader",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -57,7 +57,7 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
   }
 
   items.push({
-    label: "Hide Border",
+    label: "hide_border",
     fieldId: "config.hideBorder",
     fieldType: FieldType.Switch,
     dataType: DataType.Boolean,
@@ -93,7 +93,7 @@ const getToggleSwitchItems = (rootObject) => {
 
     items.push(
       {
-        label: "ON Button",
+        label: "on_button",
         fieldId: "config.onButtonType",
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
@@ -102,38 +102,38 @@ const getToggleSwitchItems = (rootObject) => {
         isRequired: true,
       },
       {
-        label: "ON Text",
+        label: "on_text",
         fieldId: "config.onText",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid text. chars: min=1 and max=100",
+        helperTextInvalid: "helper_text.invalid_text",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       },
       {
-        label: "OFF Text",
+        label: "off_text",
         fieldId: "config.offText",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid text. chars: min=1 and max=100",
+        helperTextInvalid: "helper_text.invalid_text",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       },
       {
-        label: "Minimum Width",
+        label: "minimum_width",
         fieldId: "config.minWidth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid width",
+        helperTextInvalid: "helper_text.invalid_width",
         validated: "default",
         validator: { isInteger: { min: 1 } },
       }
@@ -145,51 +145,47 @@ const getToggleSwitchItems = (rootObject) => {
   objectPath.set(rootObject, "config.resource.limit", 10, true)
   items.push(
     {
-      label: "Resource Config",
+      label: "resource_config",
       fieldId: "!resource_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Resource Type",
+      label: "resource_type",
       fieldId: "config.resource.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
       options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Source),
       validator: { isNotEmpty: {} },
       resetFields: { "config.resource.filters": {} },
     },
     {
-      label: "Name Key",
+      label: "name_key",
       fieldId: "config.resource.nameKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_key",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Limit",
+      label: "limit",
       fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Items limit.",
+      helperTextInvalid: "helper_text.invalid_limit",
       validated: "default",
       validator: { isInteger: {} },
     },
     {
-      label: "Resource Filters",
+      label: "resource_filters",
       fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },
@@ -209,7 +205,7 @@ const getMixedControlItems = (_rootObject) => {
 
   items.push(
     {
-      label: "Resources",
+      label: "resources",
       fieldId: "!resources",
       fieldType: FieldType.Divider,
     },

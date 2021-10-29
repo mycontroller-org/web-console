@@ -1,11 +1,11 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
 import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import PropTypes from "prop-types"
 import { DataUnitType, DataUnitTypeOptions } from "../../../../Constants/Metric"
 
 class ProcessConfigPicker extends React.Component {
@@ -79,7 +79,7 @@ const getItems = (rootObject, sourceId) => {
 
   const items = [
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -87,7 +87,7 @@ const getItems = (rootObject, sourceId) => {
       isRequired: false,
     },
     {
-      label: "Name",
+      label: "name",
       fieldId: "name",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -95,7 +95,7 @@ const getItems = (rootObject, sourceId) => {
       isRequired: false,
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "unit",
       fieldType: FieldType.Select,
       dataType: DataType.String,
@@ -104,7 +104,7 @@ const getItems = (rootObject, sourceId) => {
       options: DataUnitTypeOptions,
     },
     {
-      label: "Filters",
+      label: "filters",
       fieldId: "!filters_process",
       fieldType: FieldType.Divider,
     },

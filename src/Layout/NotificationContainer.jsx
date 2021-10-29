@@ -83,7 +83,11 @@ class NotificationContainer extends React.Component {
     }
     return (
       <NotificationDrawer>
-        <NotificationDrawerHeader count={this.props.unreadCount} onClose={this.props.onNotificationClose}>
+        <NotificationDrawerHeader
+          title={t("notifications")}
+          count={this.props.unreadCount}
+          onClose={this.props.onNotificationClose}
+        >
           <Dropdown
             onSelect={this.toggleOptions}
             toggle={<KebabToggle onToggle={this.toggleOptions} id="toggle-id-0" />}

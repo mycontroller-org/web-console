@@ -1,23 +1,22 @@
-import React from "react"
-import { DropdownItem, DropdownSeparator, Dropdown, DropdownToggle } from "@patternfly/react-core"
+import { Dropdown, DropdownItem, DropdownSeparator, DropdownToggle } from "@patternfly/react-core"
 import {
+  AddCircleOIcon,
   CaretDownIcon,
   CircleIcon,
-  OutlinedCircleIcon,
-  RetweetIcon,
   EditIcon,
-  OutlinedTrashAltIcon,
-  HeartbeatIcon,
   EraserIcon,
-  InfoAltIcon,
-  RebootingIcon,
-  UploadIcon,
-  SearchIcon,
-  AddCircleOIcon,
   FileImportIcon,
+  HeartbeatIcon,
+  InfoAltIcon,
+  OutlinedCircleIcon,
+  OutlinedTrashAltIcon,
+  RebootingIcon,
+  RetweetIcon,
+  SearchIcon,
+  UploadIcon,
 } from "@patternfly/react-icons"
+import React from "react"
 import { withTranslation } from "react-i18next"
-
 import DeleteDialog from "../Dialog/Dialog"
 
 class Actions extends React.Component {

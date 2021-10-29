@@ -1,12 +1,12 @@
+import objectPath from "object-path"
 import React from "react"
+import { v4 as uuidv4 } from "uuid"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { v4 as uuidv4 } from "uuid"
-import objectPath from "object-path"
 
 class UpdatePage extends React.Component {
   state = {
@@ -49,7 +49,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Node" />
+          <PageTitle key="page-title" title="add_a_node" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -68,7 +68,7 @@ const getFormItems = (rootObject) => {
   objectPath.set(rootObject, "id", newID, true)
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -81,7 +81,7 @@ const getFormItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Gateway",
+      label: "gateway",
       fieldId: "gatewayId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -97,31 +97,31 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Node ID",
+      label: "node_id",
       fieldId: "nodeId",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Node ID. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_node_id",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
-      label: "Name",
+      label: "name",
       fieldId: "name",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=4 and max=100",
+      helperTextInvalid: "helper_text.invalid_name",
       validated: "default",
-      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {} },
+      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Assigned Firmware",
+      label: "assigned_firmware",
       fieldId: "labels.assigned_firmware",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -137,7 +137,7 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },

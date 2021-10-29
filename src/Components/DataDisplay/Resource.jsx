@@ -1,5 +1,6 @@
 import { Label, Tooltip } from "@patternfly/react-core"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { FieldDataType } from "../../Constants/ResourcePicker"
 import { getRootObject } from "../Form/ResourcePicker/ResourceUtils"
 import "./Resource.scss"
@@ -7,12 +8,13 @@ import "./Resource.scss"
 const DefaultType = "variable"
 
 export const ResourceVariables = ({ data = [], originalType = DefaultType }) => {
+  const { t } = useTranslation()
   if (data === undefined || data === null) {
-    return <span>No data</span>
+    return <span>{t("no_data")}</span>
   }
   const names = Object.keys(data)
   if (names.length === 0) {
-    return <span>No data</span>
+    return <span>{t("no_data")}</span>
   }
 
   names.sort()
@@ -22,21 +24,21 @@ export const ResourceVariables = ({ data = [], originalType = DefaultType }) => 
     return (
       <div className="mc-resource-variables" key={name + index}>
         <span className="key">{name}</span>
-        <span className="value">{getResource(rootObject, originalType)}</span>
+        <span className="value">{getResource(rootObject, originalType, t)}</span>
       </div>
     )
   })
   return elements
 }
 
-const getResource = (rootObject = {}, originalType) => {
+const getResource = (rootObject = {}, originalType, t = () => {}) => {
   const data = rootObject.data
   switch (rootObject.type) {
     case FieldDataType.TypeString:
       return (
         <>
           <Label variant="outline" color="orange" icon={<IconType />}>
-            String
+            {t("string")}
           </Label>
           <Label variant="outline" color="grey" icon={<IconValue />}>
             {rootObject.string}
@@ -45,13 +47,13 @@ const getResource = (rootObject = {}, originalType) => {
       )
 
     case FieldDataType.TypeResourceByQuickId:
-      return getResourceByQuickId(data, originalType)
+      return getResourceByQuickId(data, originalType, t)
 
     case FieldDataType.TypeTelegram:
       return (
         <>
           <Label variant="outline" color="blue" icon={<IconType />}>
-            Telegram
+            {t("telegram")}
           </Label>
           <Label variant="outline" icon={<IconParseMode />}>
             {data.parseMode}
@@ -66,7 +68,7 @@ const getResource = (rootObject = {}, originalType) => {
       return (
         <>
           <Label variant="outline" color="cyan" icon={<IconType />}>
-            Backup
+            {t("backup")}
           </Label>
           <Label variant="outline" icon={<IconPrefix />}>
             {data.spec.prefix}
@@ -84,7 +86,7 @@ const getResource = (rootObject = {}, originalType) => {
       return (
         <>
           <Label variant="outline" color="cyan" icon={<IconType />}>
-            Webhook
+            {t("webhook")}
           </Label>
           <Label variant="outline" icon={<IconServer />}>
             {data.server}
@@ -99,7 +101,7 @@ const getResource = (rootObject = {}, originalType) => {
       return (
         <>
           <Label variant="outline" color="cyan" icon={<IconType />}>
-            Email
+            {t("email")}
           </Label>
           <Label variant="outline" icon={<IconSubject />}>
             {data.subject}
@@ -115,10 +117,10 @@ const getResource = (rootObject = {}, originalType) => {
   }
 }
 
-const getResourceByQuickId = (data, originalType) => {
+const getResourceByQuickId = (data, originalType, t = () => {}) => {
   const items = [
     <Label variant="outline" color="orange" icon={<IconType />}>
-      Resource
+      {t("resource")}
     </Label>,
     <Label variant="outline" icon={<IconQuickID />}>
       {`${data.resourceType}:${data.quickId}`}

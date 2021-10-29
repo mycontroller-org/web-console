@@ -1,17 +1,5 @@
-import { DataType, FieldType } from "../../../Constants/Form"
 import objectPath from "object-path"
-import {
-  ChartGroupType,
-  ChartGroupTypeOptions,
-  LegendPositionTypeOptions,
-  LegendOrientationTypeOptions,
-  LegendPositionType,
-  LegendOrientationType,
-  ChartTypeOptions,
-  ChartType,
-  ThemeColor,
-  ThemeColorOptions,
-} from "../../../Constants/Widgets/ChartsPanel"
+import { DataType, FieldType } from "../../../Constants/Form"
 import {
   AggregationIntervalOptions,
   Duration,
@@ -24,13 +12,25 @@ import {
   RefreshIntervalType,
   RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
-import { getValue } from "../../../Util/Util"
 import { ResourceType, ResourceTypeOptions } from "../../../Constants/ResourcePicker"
+import {
+  ChartGroupType,
+  ChartGroupTypeOptions,
+  ChartType,
+  ChartTypeOptions,
+  LegendOrientationType,
+  LegendOrientationTypeOptions,
+  LegendPositionType,
+  LegendPositionTypeOptions,
+  ThemeColor,
+  ThemeColorOptions,
+} from "../../../Constants/Widgets/ChartsPanel"
+import { getValue } from "../../../Util/Util"
 
 // Charts Panel items
 export const updateFormItemsChartsPanel = (rootObject, items = []) => {
   items.push({
-    label: "Sub Type",
+    label: "sub_type",
     fieldId: "config.subType",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
@@ -87,12 +87,12 @@ const getGlobalConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "Global Config",
+      label: "global_config",
       fieldId: "!global_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Fill Opacity (%)",
+      label: "fill_opacity_%",
       fieldId: "config.chart.fillOpacity",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -102,7 +102,7 @@ const getGlobalConfigItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Stroke Width (px)",
+      label: "stroke_width_px",
       fieldId: "config.chart.strokeWidth",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Float,
@@ -112,7 +112,7 @@ const getGlobalConfigItems = (rootObject) => {
       step: 0.5,
     },
     {
-      label: "Round Decimal",
+      label: "round_decimal",
       fieldId: "config.chart.roundDecimal",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -122,7 +122,7 @@ const getGlobalConfigItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Interpolation",
+      label: "interpolation",
       fieldId: "config.chart.interpolation",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -138,30 +138,22 @@ const getGlobalConfigItems = (rootObject) => {
     objectPath.set(rootObject, "config.chart.themeColor", ThemeColor.MultiOrdered, true)
     items.push(
       {
-        label: "Chart Type",
+        label: "chart_type",
         fieldId: "config.chart.chartType",
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
         value: "",
         isRequired: true,
-        isDisabled: false,
-        helperText: "",
-        helperTextInvalid: "Invalid type",
-        validated: "default",
         options: ChartTypeOptions.filter((opt) => opt.value !== ChartType.PieChart),
         validator: { isNotEmpty: {} },
       },
       {
-        label: "Theme Color",
+        label: "theme_color",
         fieldId: "config.chart.themeColor",
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
         value: "",
         isRequired: true,
-        isDisabled: false,
-        helperText: "",
-        helperTextInvalid: "Invalid theme color",
-        validated: "default",
         options: ThemeColorOptions,
         validator: { isNotEmpty: {} },
       }
@@ -185,12 +177,12 @@ const getMetricConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "Metric Config",
+      label: "metric_config",
       fieldId: "!metric_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Duration",
+      label: "duration",
       fieldId: "config.chart.duration",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -205,7 +197,7 @@ const getMetricConfigItems = (rootObject) => {
       },
     },
     {
-      label: "Interval",
+      label: "interval",
       fieldId: "config.chart.interval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -215,7 +207,7 @@ const getMetricConfigItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Metric Function",
+      label: "metric_function",
       fieldId: "config.chart.metricFunction",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -226,7 +218,7 @@ const getMetricConfigItems = (rootObject) => {
     },
 
     {
-      label: "Refresh Interval",
+      label: "refresh_interval",
       fieldId: "config.chart.refreshInterval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.Integer,
@@ -256,52 +248,52 @@ const getChartConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "Chart Config",
+      label: "chart_config",
       fieldId: "!chart_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Show Grid X",
+      label: "show_grid_x",
       fieldId: "config.chart.showGridX",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Show Grid Y",
+      label: "show_grid_y",
       fieldId: "config.chart.showGridY",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Cursor Tooltip",
+      label: "cursor_tooltip",
       fieldId: "config.chart.cursorTooltip",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Stack Charts",
+      label: "stack_charts",
       fieldId: "config.chart.stackCharts",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Height (px)",
+      label: "height_px",
       fieldId: "config.chart.height",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid height",
+      helperTextInvalid: "helper_text.invalid_height",
       validated: "default",
       validator: { isNotEmpty: {}, isInteger: { min: 1 } },
     },
     {
-      label: "Legend Position",
+      label: "legend_position",
       fieldId: "config.chart.legendPosition",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -311,7 +303,7 @@ const getChartConfigItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Legend Orientation",
+      label: "legend_orientation",
       fieldId: "config.chart.legendOrientation",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -321,7 +313,7 @@ const getChartConfigItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Padding Top (px)",
+      label: "padding_top_px",
       fieldId: "config.chart.padding.top",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -331,7 +323,7 @@ const getChartConfigItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Padding Right (px)",
+      label: "padding_right_px",
       fieldId: "config.chart.padding.right",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -341,7 +333,7 @@ const getChartConfigItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Padding Bottom (px)",
+      label: "padding_bottom_px",
       fieldId: "config.chart.padding.bottom",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -351,7 +343,7 @@ const getChartConfigItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Padding Left (px)",
+      label: "padding_left_px",
       fieldId: "config.chart.padding.left",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -370,7 +362,7 @@ const getAxisYConfigItems = (rootObject, isSingleAxis = false) => {
 
   const items = [
     {
-      label: "Y Axis Config",
+      label: "y_axis_config",
       fieldId: "!y_axis_config",
       fieldType: FieldType.Divider,
     },
@@ -378,7 +370,7 @@ const getAxisYConfigItems = (rootObject, isSingleAxis = false) => {
 
   if (!isSingleAxis) {
     items.push({
-      label: "Number of Axis",
+      label: "number_of_axis",
       fieldId: "config.axisYCount",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -395,8 +387,8 @@ const getAxisYConfigItems = (rootObject, isSingleAxis = false) => {
     fieldType: FieldType.ChartYAxisConfigMap,
     dataType: DataType.Object,
     value: "",
-    saveButtonText: "Update",
-    updateButtonText: "Update",
+    saveButtonText: "update",
+    updateButtonText: "update",
     language: "yaml",
     minimapEnabled: true,
     isRequired: false,
@@ -408,18 +400,18 @@ const getResourceConfigItems = (rootObject) => {
   const yAxisConfig = getValue(rootObject, "config.axisY", {})
   const items = [
     {
-      label: "Resources",
+      label: "resources",
       fieldId: "!resources",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Config",
+      label: "config",
       fieldId: "config.resources",
       fieldType: FieldType.ChartMixedResourceConfig,
       dataType: DataType.ArrayObject,
       value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update",
+      saveButtonText: "update",
+      updateButtonText: "update",
       language: "yaml",
       minimapEnabled: true,
       isRequired: false,
@@ -439,40 +431,36 @@ const getGroupChartResourceConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "Resource Config",
+      label: "resource_config",
       fieldId: "!resource_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Resource Type",
+      label: "resource_type",
       fieldId: "config.resource.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
       options: ResourceTypeOptions.filter(
         (r) => r.value === ResourceType.Node || r.value === ResourceType.Field
       ),
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Name Key",
+      label: "name_key",
       fieldId: "config.resource.nameKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_key",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "config.resource.unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -480,19 +468,19 @@ const getGroupChartResourceConfigItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Limit",
+      label: "limit",
       fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Items limit.",
+      helperTextInvalid: "helper_text.invalid_limit",
       validated: "default",
       validator: { isInteger: {} },
     },
     {
-      label: "Resource Filters",
+      label: "resource_filters",
       fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },

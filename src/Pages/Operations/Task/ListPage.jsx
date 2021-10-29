@@ -1,10 +1,12 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { getStatusBool } from "../../../Components/Icons/Icons"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import {
@@ -17,7 +19,6 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/task"
-import { LastSeen } from "../../../Components/Time/Time"
 
 class List extends ListBase {
   state = {
@@ -64,7 +65,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Tasks" />
+        <PageTitle title="tasks" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -74,15 +75,15 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Description", fieldKey: "description", sortable: true },
-  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
-  { title: "Ignore Duplicate", fieldKey: "ignoreDuplicate", sortable: true },
-  { title: "Auto Disable", fieldKey: "autoDisable", sortable: true },
-  { title: "Trigger On Event", fieldKey: "triggerOnEvent", sortable: true },
-  { title: "Last Evaluation", fieldKey: "state.lastEvaluation", sortable: true },
-  { title: "Last Success", fieldKey: "state.lastSuccess", sortable: true },
-  { title: "Message", fieldKey: "state.message", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
+  { title: "description", fieldKey: "description", sortable: true },
+  { title: "enabled", fieldKey: "enabled", sortable: true },
+  { title: "ignore_duplicate", fieldKey: "ignoreDuplicate", sortable: true },
+  { title: "auto_disable", fieldKey: "autoDisable", sortable: true },
+  { title: "trigger_on_event", fieldKey: "triggerOnEvent", sortable: true },
+  { title: "last_evaluation", fieldKey: "state.lastEvaluation", sortable: true },
+  { title: "last_success", fieldKey: "state.lastSuccess", sortable: true },
+  { title: "message", fieldKey: "state.message", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -115,23 +116,23 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "id", categoryName: "id", fieldType: "input", dataType: "string" },
+  { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "enabled", fieldType: "enabled", dataType: "boolean" },
   {
     category: "ignoreDuplicate",
-    categoryName: "Ignore Duplicate",
+    categoryName: "ignore_duplicate",
     fieldType: "enabled",
     dataType: "boolean",
   },
-  { category: "autoDisable", categoryName: "Auto Disable", fieldType: "enabled", dataType: "boolean" },
+  { category: "autoDisable", categoryName: "auto_disable", fieldType: "enabled", dataType: "boolean" },
   {
     category: "triggerOnEvent",
-    categoryName: "Trigger On Event",
+    categoryName: "trigger_on_event",
     fieldType: "enabled",
     dataType: "boolean",
   },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -166,4 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

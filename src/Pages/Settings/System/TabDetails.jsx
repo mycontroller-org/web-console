@@ -22,8 +22,8 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "GEO Location", value: <KeyValueMap data={data.spec.geoLocation} /> })
-  fieldsList2.push({ key: "Login", value: <KeyValueMap data={data.spec.login} /> })
+  fieldsList1.push({ key: "geo_location", value: <KeyValueMap data={data.spec.geoLocation} /> })
+  fieldsList2.push({ key: "login", value: <KeyValueMap data={data.spec.login} /> })
 
   return {
     "list-1": fieldsList1,

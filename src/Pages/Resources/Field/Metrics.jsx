@@ -12,8 +12,9 @@ import {
 } from "@patternfly/react-core"
 import moment from "moment"
 import React from "react"
-import { connect } from "react-redux"
+import { withTranslation } from "react-i18next"
 import Measure from "react-measure"
+import { connect } from "react-redux"
 import { RefreshButton } from "../../../Components/Buttons/Buttons"
 import { LineChart } from "../../../Components/Graphs/Graphs"
 import Loading from "../../../Components/Loading/Loading"
@@ -31,8 +32,8 @@ import {
   MetricType,
 } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
+import { updateMetricConfigBinary, updateMetricConfigGauge } from "../../../store/entities/resources/field"
 import { getItem } from "../../../Util/Util"
-import { updateMetricConfigGauge, updateMetricConfigBinary } from "../../../store/entities/resources/field"
 
 const defaultDuration = Duration.LastHour
 const defaultInterval = AggregationInterval.Minute_1
@@ -164,6 +165,7 @@ class Metrics extends React.Component {
 
   render() {
     const { metricType } = this.props.data
+    const { t } = this.props
     const showMetrics =
       metricType === MetricType.Binary ||
       metricType === MetricType.Gauge ||
@@ -200,7 +202,7 @@ class Metrics extends React.Component {
         <div style={{ marginBottom: "5px" }}>
           <MetricDropdown
             key="metric-dropdown-duration"
-            label="Duration"
+            label={t("duration")}
             dropdown={
               <Select
                 key="duration-selection"
@@ -220,7 +222,7 @@ class Metrics extends React.Component {
         </div>,
         <MetricDropdown
           key="metric-dropdown-interval"
-          label="Interval"
+          label={t("interval")}
           dropdown={
             <Select
               key="interval-selection"
@@ -235,7 +237,7 @@ class Metrics extends React.Component {
         />,
         <MetricDropdown
           key="metric-dropdown-func"
-          label="Function"
+          label={t("function")}
           dropdown={
             <Select
               key="function-selection"
@@ -250,7 +252,7 @@ class Metrics extends React.Component {
         />,
         <MetricDropdown
           key="metric-dropdown-interpolation"
-          label="Interpolation"
+          label={t("interpolation")}
           dropdown={
             <Select
               key="interpolation-selection"
@@ -272,7 +274,7 @@ class Metrics extends React.Component {
       graphs.push(<Loading key="loading" />)
     } else {
       if (metrics.length === 0) {
-        graphs.push(<span key="no data">No data</span>)
+        graphs.push(<span key="no data">{t("no_data")}</span>)
       } else {
         // update minimum value
         let updateMinValue = isBinaryMetric ? 0 : minValue
@@ -334,7 +336,7 @@ class Metrics extends React.Component {
       <Card isFlat={false} style={{ height: "100%" }}>
         <CardTitle>
           <Level>
-            <LevelItem>Metrics</LevelItem>
+            <LevelItem>{t("metrics")}</LevelItem>
             <LevelItem>
               <Flex>
                 {metricsToolbox}
@@ -364,7 +366,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateMetricConfigGauge: (data) => dispatch(updateMetricConfigGauge(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Metrics)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Metrics))
 
 // helper functions
 

@@ -8,11 +8,11 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import brandImg from "../../Logo/mc-white-full.svg"
 import { api } from "../../Service/Api"
 import { aboutHide } from "../../store/entities/about"
-import { withTranslation } from "react-i18next"
 import "./About.scss"
 class AboutPage extends React.Component {
   state = {
@@ -39,7 +39,7 @@ class AboutPage extends React.Component {
         className="mc-about"
         isOpen={this.props.showModel}
         onClose={this.props.hideAbout}
-        trademark="© 2021 MyController.org. All Rights Reserved. Apache License 2.0"
+        trademark={`© 2021 MyController.org. ${t("all_rights_reserved")}. ${t("apache_license_2")}`}
         brandImageSrc={brandImg}
         brandImageAlt="MyController.org"
         //productName="MYCONTROLLER.ORG"

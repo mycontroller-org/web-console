@@ -9,15 +9,31 @@ export const Provider = {
 
 // Providers options list
 export const ProviderOptions = [
-  { value: Provider.ESPHome, label: "ESPHome", description: "esphome.io" },
-  { value: Provider.MySensorsV2, label: "MySensors v2", description: "MySensors.org Version 2.x" },
-  { value: Provider.PhilipsHue, label: "PhilipsHue", description: "developers.meethue.com" },
+  {
+    value: Provider.ESPHome,
+    label: "opts.gw_provider.label_esphome",
+    description: "opts.gw_provider.desc_esphome",
+  },
+  {
+    value: Provider.MySensorsV2,
+    label: "opts.gw_provider.label_mysensors_v2",
+    description: "opts.gw_provider.desc_mysensors_v2",
+  },
+  {
+    value: Provider.PhilipsHue,
+    label: "opts.gw_provider.label_philips_hue",
+    description: "opts.gw_provider.desc_philips_hue",
+  },
   {
     value: Provider.SystemMonitoring,
-    label: "System Monitoring",
-    description: "Capture system resources and reports",
+    label: "opts.gw_provider.label_system_monitoring",
+    description: "opts.gw_provider.desc_system_monitoring",
   },
-  { value: Provider.Tasmota, label: "Tasmota", description: "tasmota.github.io" },
+  {
+    value: Provider.Tasmota,
+    label: "opts.gw_provider.label_tasmota",
+    description: "opts.gw_provider.desc_tasmota",
+  },
 ]
 
 // Protocol values
@@ -29,9 +45,21 @@ export const Protocol = {
 
 // Protocol options list
 export const ProtocolOptions = [
-  { value: Protocol.MQTT, label: "MQTT", description: "MQTT Protocol" },
-  { value: Protocol.Serial, label: "Serial", description: "Serial Protocol" },
-  { value: Protocol.Ethernet, label: "Ethernet", description: "Ethernet Protocol" },
+  {
+    value: Protocol.MQTT,
+    label: "opts.gw_protocol.label_mqtt",
+    description: "opts.gw_protocol.desc_mqtt",
+  },
+  {
+    value: Protocol.Serial,
+    label: "opts.gw_protocol.label_serial",
+    description: "opts.gw_protocol.desc_serial",
+  },
+  {
+    value: Protocol.Ethernet,
+    label: "opts.gw_protocol.label_ethernet",
+    description: "opts.gw_protocol.desc_ethernet",
+  },
 ]
 
 export const filterProtocolOptions = (providerType) => {
@@ -66,6 +94,14 @@ export const MessageLogger = {
 
 // Message logger options list
 export const MessageLoggerOptions = [
-  { value: MessageLogger.None, label: "None", description: "Messages will not be logged" },
-  { value: MessageLogger.FileLogger, label: "File Logger", description: "Messages will be logged in a file" },
+  {
+    value: MessageLogger.None,
+    label: "opts.gw_msg_logger.label_none",
+    description: "opts.gw_msg_logger.desc_none",
+  },
+  {
+    value: MessageLogger.FileLogger,
+    label: "opts.gw_msg_logger.label_file_logger",
+    description: "opts.gw_msg_logger.desc_file_logger",
+  },
 ]

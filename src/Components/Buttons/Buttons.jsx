@@ -1,10 +1,12 @@
 import { Button, ButtonVariant } from "@patternfly/react-core"
 import { PlusIcon, SyncAltIcon } from "@patternfly/react-icons"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { redirect as r } from "../../Service/Routes"
 
 export const AddButton = ({ onClick }) => {
-  return button("Add", ButtonVariant.primary, PlusIcon, onClick)
+  const { t } = useTranslation()
+  return button(t("add"), ButtonVariant.primary, PlusIcon, onClick)
 }
 
 export const RefreshButton = ({ onClick }) => {

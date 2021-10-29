@@ -10,10 +10,11 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import React from "react"
+import { withTranslation } from "react-i18next"
+import "./Form.scss"
 
 class KeyValueMapForm extends React.Component {
   state = {
@@ -135,6 +136,7 @@ class KeyValueMapForm extends React.Component {
       valueField = getValueField,
       isKeyDisabled = false,
       isValueDisabled = false,
+      t,
     } = this.props
     const keys = []
 
@@ -210,7 +212,7 @@ class KeyValueMapForm extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd} isDisabled={isActionDisabled}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -219,13 +221,13 @@ class KeyValueMapForm extends React.Component {
       <Grid className="mc-key-value-map-items">
         <GridItem span={4}>
           <Text className="field-title" component={TextVariants.h4}>
-            {keyLabel ? keyLabel : "Key"}
+            {t(keyLabel ? keyLabel : "key")}
           </Text>
         </GridItem>
 
         <GridItem span={8 - actionSpan}>
           <Text className="field-title" component={TextVariants.h4}>
-            {valueLabel ? valueLabel : "Value"}
+            {t(valueLabel ? valueLabel : "value")}
           </Text>
         </GridItem>
         <GridItem span={actionSpan}></GridItem>
@@ -251,7 +253,7 @@ KeyValueMapForm.propTypes = {
   forceSync: PropTypes.bool,
 }
 
-export default KeyValueMapForm
+export default withTranslation()(KeyValueMapForm)
 
 // helper functions
 

@@ -1,5 +1,6 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -52,7 +53,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Fields" />
+        <PageTitle title="fields" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -61,16 +62,16 @@ class List extends ListBase {
 
 // Properties definition
 const tableColumns = [
-  { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
-  { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Source ID", fieldKey: "sourceId", sortable: true },
-  { title: "Field ID", fieldKey: "fieldId", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Metric Type", fieldKey: "metricType", sortable: true },
-  { title: "Value", fieldKey: "current.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previous.value", sortable: true },
-  { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
+  { title: "gateway_id", fieldKey: "gatewayId", sortable: true },
+  { title: "node_id", fieldKey: "nodeId", sortable: true },
+  { title: "source_id", fieldKey: "sourceId", sortable: true },
+  { title: "field_id", fieldKey: "fieldId", sortable: true },
+  { title: "name", fieldKey: "name", sortable: true },
+  { title: "metric_type", fieldKey: "metricType", sortable: true },
+  { title: "value", fieldKey: "current.value", sortable: true },
+  { title: "previous_value", fieldKey: "previous.value", sortable: true },
+  { title: "unit", fieldKey: "unit", sortable: true },
+  { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -144,12 +145,12 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
-  { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
-  { category: "sourceId", categoryName: "Source ID", fieldType: "input", dataType: "string" },
-  { category: "fieldId", categoryName: "Filed ID", fieldType: "input", dataType: "string" },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
+  { category: "gatewayId", categoryName: "gateway_id", fieldType: "input", dataType: "string" },
+  { category: "nodeId", categoryName: "node_id", fieldType: "input", dataType: "string" },
+  { category: "sourceId", categoryName: "source_id", fieldType: "input", dataType: "string" },
+  { category: "fieldId", categoryName: "field_id", fieldType: "input", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -184,4 +185,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

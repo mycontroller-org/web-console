@@ -1,13 +1,17 @@
-import React from "react"
 import moment from "moment"
-
+import React from "react"
 import "./LastUpdate.scss"
+import { useTranslation } from "react-i18next"
 
 const LastUpdate = ({ time }) => {
+  const { t } = useTranslation()
   const lastUpdate = moment(time)
   return (
     <span className="mc-last-update">
-      Last sync with server: <i>{lastUpdate.fromNow()} ({lastUpdate.format('MMM Do YYYY, HH:mm:ss')})</i>
+      {t("last_sync_with_server")}:{" "}
+      <i>
+        {lastUpdate.fromNow()} ({lastUpdate.format("MMM Do YYYY, HH:mm:ss")})
+      </i>
     </span>
   )
 }

@@ -1,12 +1,13 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
+import { DataType, FieldType } from "../../../../Constants/Form"
+import { ColorsSetBig } from "../../../../Constants/Widgets/Color"
 import Editor from "../../../Editor/Editor"
 import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../../Constants/Form"
-import PropTypes from "prop-types"
-import { ColorsSetBig } from "../../../../Constants/Widgets/Color"
+import { withTranslation } from "react-i18next"
 
 class ChartYAxisConfigMap extends React.Component {
   state = {
@@ -23,7 +24,7 @@ class ChartYAxisConfigMap extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, name, onChange } = this.props
+    const { value, id, name, onChange, t } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -31,7 +32,7 @@ class ChartYAxisConfigMap extends React.Component {
         </Button>
         <Modal
           key={"edit-field-data" + id}
-          title={"Update Y Axis: " + name}
+          title={`${t("update_y_axis")}: ${name}`}
           variant={ModalVariant.medium}
           position="top"
           isOpen={isOpen}
@@ -53,7 +54,7 @@ class ChartYAxisConfigMap extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={getItems}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -69,7 +70,7 @@ ChartYAxisConfigMap.propTypes = {
   onChange: PropTypes.func,
 }
 
-export default ChartYAxisConfigMap
+export default withTranslation()(ChartYAxisConfigMap)
 
 const getItems = (rootObject) => {
   // set default values
@@ -80,7 +81,7 @@ const getItems = (rootObject) => {
 
   const items = [
     {
-      label: "Offset Y (%)",
+      label: "offset_y_%",
       fieldId: "offsetY",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -90,7 +91,7 @@ const getItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Color",
+      label: "color",
       fieldId: "color",
       fieldType: FieldType.ColorBox,
       dataType: DataType.String,
@@ -100,7 +101,7 @@ const getItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Round Decimal",
+      label: "round_decimal",
       fieldId: "roundDecimal",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -110,7 +111,7 @@ const getItems = (rootObject) => {
       step: 1,
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,

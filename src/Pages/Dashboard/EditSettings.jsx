@@ -1,8 +1,8 @@
-import React from "react"
 import { Modal, ModalVariant } from "@patternfly/react-core"
-import { DataType, FieldType } from "../../Constants/Form"
-import Editor from "../../Components/Editor/Editor"
+import React from "react"
 import { useTranslation } from "react-i18next"
+import Editor from "../../Components/Editor/Editor"
+import { DataType, FieldType } from "../../Constants/Form"
 
 const EditSettings = ({ showEditSettings, dashboard, onCancel, /*onChange,*/ onSave }) => {
   const { t } = useTranslation()
@@ -36,22 +36,22 @@ export default EditSettings
 
 // support functions
 
-const getFormItems = (_rootObject, t = () => {}) => {
+const getFormItems = (_rootObject) => {
   const items = [
     {
-      label: t("title"),
+      label: "title",
       fieldId: "title",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid title. chars: min=2 and max=100",
+      helperTextInvalid: "helper_text.invalid_title",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: t("description"),
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -59,7 +59,7 @@ const getFormItems = (_rootObject, t = () => {}) => {
       isRequired: false,
     },
     {
-      label: t("favorite"),
+      label: "favorite",
       fieldId: "favorite",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,

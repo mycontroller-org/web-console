@@ -15,9 +15,9 @@ import {
   createContainer,
 } from "@patternfly/react-charts"
 import React from "react"
+import v from "validator"
 import { ChartType } from "../../../Constants/Widgets/ChartsPanel"
 import { getValue } from "../../../Util/Util"
-import v from "validator"
 
 const CursorVoronoiContainer = createContainer("voronoi", "cursor")
 

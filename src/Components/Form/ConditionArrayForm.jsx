@@ -10,12 +10,13 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
-import Select from "./Select"
+import React from "react"
+import { withTranslation } from "react-i18next"
 import { Operator, OperatorOptions } from "../../Constants/Filter"
+import "./Form.scss"
+import Select from "./Select"
 
 class ConditionArrayMapForm extends React.Component {
   state = {
@@ -118,6 +119,7 @@ class ConditionArrayMapForm extends React.Component {
       operatorLabel,
       valueLabel,
       direction = "",
+      t,
     } = this.props
     const variables = []
 
@@ -199,7 +201,7 @@ class ConditionArrayMapForm extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -208,18 +210,18 @@ class ConditionArrayMapForm extends React.Component {
       <Grid className="mc-key-value-map-items">
         <GridItem span={4}>
           <Text className="field-title" component={TextVariants.h4}>
-            {variableLabel ? variableLabel : "Variable"}
+            {t(variableLabel ? variableLabel : "variable")}
           </Text>
         </GridItem>
         <GridItem span={2}>
           <Text className="field-title" component={TextVariants.h4}>
-            {operatorLabel ? operatorLabel : "Operator"}
+            {t(operatorLabel ? operatorLabel : "operator")}
           </Text>
         </GridItem>
 
         <GridItem span={5}>
           <Text className="field-title" component={TextVariants.h4}>
-            {valueLabel ? valueLabel : "Value"}
+            {t(valueLabel ? valueLabel : "value")}
           </Text>
         </GridItem>
         <GridItem span={1}></GridItem>
@@ -240,4 +242,4 @@ ConditionArrayMapForm.propTypes = {
   direction: PropTypes.string,
 }
 
-export default ConditionArrayMapForm
+export default withTranslation()(ConditionArrayMapForm)

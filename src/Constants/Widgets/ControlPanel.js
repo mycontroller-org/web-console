@@ -7,9 +7,9 @@ export const ControlType = {
 
 // utilization panel type options
 export const ControlTypeOptions = [
-  { value: ControlType.SwitchToggle, label: "Toggle Switch" },
-  { value: ControlType.SwitchButton, label: "Button Switch" },
-  { value: ControlType.MixedControl, label: "Mixed Control" },
+  { value: ControlType.SwitchToggle, label: "opts.control_type.label_switch_toggle" },
+  { value: ControlType.SwitchButton, label: "opts.control_type.label_switch_button" },
+  { value: ControlType.MixedControl, label: "opts.control_type.label_mixed_control" },
 ]
 
 // switch panel button types
@@ -22,10 +22,10 @@ export const ButtonType = {
 
 // switch panel button type options
 export const ButtonTypeOptions = [
-  { value: ButtonType.Primary, label: "Primary (blue)" },
-  { value: ButtonType.Secondary, label: "Secondary (blue)" },
-  { value: ButtonType.Warning, label: "Warning (yellow)" },
-  { value: ButtonType.Danger, label: "Danger (red)" },
+  { value: ButtonType.Primary, label: "opts.button_type.label_primary" },
+  { value: ButtonType.Secondary, label: "opts.button_type.label_secondary" },
+  { value: ButtonType.Warning, label: "opts.button_type.label_warning" },
+  { value: ButtonType.Danger, label: "opts.button_type.label_danger" },
 ]
 
 // mixed control types
@@ -41,11 +41,11 @@ export const MixedControlType = {
 
 // mixed control type options
 export const MixedControlTypeOptions = [
-  { value: MixedControlType.ToggleSwitch, label: "Toggle Switch" },
-  { value: MixedControlType.ButtonSwitch, label: "Button Switch" },
-  { value: MixedControlType.PushButton, label: "Push Button" },
-  { value: MixedControlType.SelectOptions, label: "Select Options" },
-  { value: MixedControlType.TabOptions, label: "Tab Options" },
-  { value: MixedControlType.Input, label: "Input" },
-  { value: MixedControlType.Slider, label: "Slider" },
+  { value: MixedControlType.ToggleSwitch, label: "opts.control_type_mixed.label_switch_toggle" },
+  { value: MixedControlType.ButtonSwitch, label: "opts.control_type_mixed.label_switch_button" },
+  { value: MixedControlType.PushButton, label: "opts.control_type_mixed.label_button_push" },
+  { value: MixedControlType.SelectOptions, label: "opts.control_type_mixed.label_options_select" },
+  { value: MixedControlType.TabOptions, label: "opts.control_type_mixed.label_options_tab" },
+  { value: MixedControlType.Input, label: "opts.control_type_mixed.label_input" },
+  { value: MixedControlType.Slider, label: "opts.control_type_mixed.label_slider" },
 ]

@@ -1,5 +1,5 @@
-import React from "react"
 import { TextInput } from "@patternfly/react-core"
+import React from "react"
 import ChartYAxisConfigMap from "./ChartYAxisConfigMap"
 
 // displayYAxisConfig displays Y Axis config details in readable way
@@ -14,7 +14,6 @@ export const displayYAxisConfig = (index, value = {}, _onChange, validated, _isD
     />
   )
 }
-
 
 // calls the model to update the axis config details
 export const chartYAxisConfigUpdateButtonCallback = (index = 0, item = {}, onChange) => {

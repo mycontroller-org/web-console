@@ -1,11 +1,12 @@
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
+import Loading from "../../../Components/Loading/Loading"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { MetricTypeOptions } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { MetricTypeOptions } from "../../../Constants/Metric"
 
 class UpdatePage extends React.Component {
   state = {
@@ -18,7 +19,7 @@ class UpdatePage extends React.Component {
     const { loading } = this.state
 
     if (loading) {
-      return <span>Loading...</span>
+      return <Loading key="loading" />
     }
 
     const { id } = this.props.match.params
@@ -46,7 +47,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Field" />
+          <PageTitle key="page-title" title="add_a_field" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -60,11 +61,10 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject) => {
-
   // do not set id, new id will be updated on the server side
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -73,7 +73,7 @@ const getFormItems = (rootObject) => {
       isDisabled: true,
     },
     {
-      label: "Gateway",
+      label: "gateway",
       fieldId: "gatewayId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -89,7 +89,7 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Node ID",
+      label: "node_id",
       fieldId: "nodeId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -110,7 +110,7 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Source ID",
+      label: "source_id",
       fieldId: "sourceId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -132,31 +132,31 @@ const getFormItems = (rootObject) => {
       },
     },
     {
-      label: "Field ID",
+      label: "field_id",
       fieldId: "fieldId",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Field ID. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_field_id",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Name",
+      label: "name",
       fieldId: "name",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid name. chars: min=2 and max=100",
+      helperTextInvalid: "helper_text.invalid_name",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -164,7 +164,7 @@ const getFormItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Metric Type",
+      label: "metric_type",
       fieldId: "metricType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -174,7 +174,7 @@ const getFormItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -188,18 +188,18 @@ const getFormItems = (rootObject) => {
       validator: { isLabel: {} },
     },
     {
-      label: "Value Formatter",
+      label: "value_formatter",
       fieldId: "!value_formatter",
       fieldType: FieldType.Divider,
     },
     {
-      label: "On Receive",
+      label: "on_receive",
       fieldId: "formatter.onReceive",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.String,
       value: "",
-      saveButtonText: "Update",
-      updateButtonText: "Update Javascript",
+      saveButtonText: "update",
+      updateButtonText: "update_script",
       language: "javascript",
       minimapEnabled: true,
       isRequired: false,

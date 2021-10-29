@@ -39,19 +39,19 @@ const getFormItems = (rootObject) => {
   const autoUpdate = getValue(rootObject, "spec.geoLocation.autoUpdate", false)
   const items = [
     {
-      label: "GEO Location",
+      label: "geo_location",
       fieldId: "!geo_location",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Auto Update",
+      label: "auto_update",
       fieldId: "spec.geoLocation.autoUpdate",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Location Name",
+      label: "location_name",
       fieldId: "spec.geoLocation.locationName",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -60,7 +60,7 @@ const getFormItems = (rootObject) => {
       isDisabled: autoUpdate,
     },
     {
-      label: "Latitude",
+      label: "latitude",
       fieldId: "spec.geoLocation.latitude",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
@@ -68,12 +68,12 @@ const getFormItems = (rootObject) => {
       value: "",
       isDisabled: autoUpdate,
       helperText: "",
-      helperTextInvalid: "Invalid latitude.",
+      helperTextInvalid: "helper_text.invalid_latitude",
       validated: "default",
       validator: autoUpdate ? {} : { isFloat: {}, isNotEmpty: {} },
     },
     {
-      label: "Longitude",
+      label: "longitude",
       fieldId: "spec.geoLocation.longitude",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
@@ -81,17 +81,17 @@ const getFormItems = (rootObject) => {
       value: "",
       isDisabled: autoUpdate,
       helperText: "",
-      helperTextInvalid: "Invalid longitude.",
+      helperTextInvalid: "helper_text.invalid_longitude",
       validated: "default",
       validator: autoUpdate ? {} : { isFloat: {}, isNotEmpty: {} },
     },
     {
-      label: "Login Page",
+      label: "login_page",
       fieldId: "!login_page",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Message",
+      label: "message",
       fieldId: "spec.login.message",
       fieldType: FieldType.TextArea,
       dataType: DataType.String,

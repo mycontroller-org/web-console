@@ -12,29 +12,30 @@ import {
   TimePicker,
 } from "@patternfly/react-core"
 import React from "react"
-import KeyValueMapForm from "./KeyValueMapForm"
+import { useTranslation } from "react-i18next"
 import { DataType, FieldType } from "../../Constants/Form"
-import "./Form.scss"
-import Select from "./Select"
-import AsyncSelect from "../Select/AsyncSelect"
+import { getRandomId } from "../../Util/Util"
 import { validate } from "../../Util/Validator"
-import ThresholdsColorForm from "./ThresholdsColorForm"
-import DynamicArrayForm from "./DynamicArrayForm"
+import ColorBox from "../Color/ColorBox/ColorBox"
+import AsyncSelect from "../Select/AsyncSelect"
 import ConditionArrayMapForm from "./ConditionArrayForm"
+import DynamicArrayForm from "./DynamicArrayForm"
+import "./Form.scss"
+import KeyValueMapForm from "./KeyValueMapForm"
 import DateRangePicker from "./RangePicker/DateRangePicker"
 import TimeRangePicker from "./RangePicker/TimeRangePicker"
-import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
-import ScriptEditor from "./ScriptEditor/ScriptEditor"
-import SimpleSlider from "./Slider/Simple"
-import ColorBox from "../Color/ColorBox/ColorBox"
-import MixedControlListForm from "./Widget/MixedControlList"
 import { getResourceDisplayValue, resourceUpdateButtonCallback } from "./ResourcePicker/ResourceUtils"
+import ScriptEditor from "./ScriptEditor/ScriptEditor"
+import Select from "./Select"
+import SimpleSlider from "./Slider/Simple"
+import ThresholdsColorForm from "./ThresholdsColorForm"
+import ToggleButtonGroup from "./ToggleButtonGroup/ToggleButtonGroup"
 import {
   chartYAxisConfigUpdateButtonCallback,
   displayYAxisConfig,
 } from "./Widget/ChartsPanel/ChartYAxisConfigMapUtils"
 import MixedResourceConfigList from "./Widget/ChartsPanel/MixedResourceConfigList/MixedResourceConfigList"
-import { getRandomId } from "../../Util/Util"
+import MixedControlListForm from "./Widget/MixedControlList"
 
 // item sample
 // const item = {
@@ -52,8 +53,36 @@ import { getRandomId } from "../../Util/Util"
 // }
 
 export const Form = ({ isHorizontal = false, isWidthLimited = true, items = [], onChange = () => {} }) => {
+  const { t } = useTranslation()
   const formGroups = []
-  items.forEach((item, index) => {
+  items.forEach((itemRaw, index) => {
+    const item = { ...itemRaw }
+    // translate label
+    if (itemRaw.label !== "" && itemRaw.label !== undefined) {
+      item.label = t(itemRaw.label)
+    }
+
+    // translate helper text
+    if (itemRaw.helperText !== "" && itemRaw.helperText !== undefined) {
+      item.helperText = t(itemRaw.helperText)
+    }
+
+    // translate invalid helper text
+    if (itemRaw.helperTextInvalid !== "" && itemRaw.helperTextInvalid !== undefined) {
+      item.helperTextInvalid = t(itemRaw.helperTextInvalid)
+    }
+
+    // translate options list
+    if (Array.isArray(itemRaw.options)) {
+      item.options = itemRaw.options.map((opt) => {
+        let desc = ""
+        if (opt.description !== "" && opt.description !== undefined) {
+          desc = t(opt.description)
+        }
+        return { ...opt, label: t(opt.label), description: desc }
+      })
+    }
+
     const onChangeWithItem = (data) => {
       onChange(item, data)
     }
@@ -193,8 +222,8 @@ const getField = (item, onChange) => {
         <KeyValueMapForm
           key={item.fieldId}
           keyValueMap={item.value}
-          keyLabel={"Axis"}
-          valueLabel={"Config"}
+          keyLabel={"axis"}
+          valueLabel={"config"}
           isKeyDisabled={true}
           isValueDisabled={true}
           actionSpan={0}

@@ -1,23 +1,26 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
-import Editor from "../../Editor/Editor"
-import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
+import { withTranslation } from "react-i18next"
 import { DataType, FieldType } from "../../../Constants/Form"
 import {
-  ResourceTypeOptions,
+  BackupProviderType,
+  BackupProviderTypeOptions,
   CallerType,
   FieldDataType,
   FieldDataTypeOptions,
-  TelegramParseModeOptions,
-  BackupProviderTypeOptions,
-  StorageExportTypeOptions,
-  BackupProviderType,
   ResourceType,
+  ResourceTypeOptions,
+  StorageExportTypeOptions,
+  TelegramParseModeOptions,
   WebhookMethodType,
   WebhookMethodTypeOptions,
 } from "../../../Constants/ResourcePicker"
+import { validate } from "../../../Util/Validator"
+import Editor from "../../Editor/Editor"
+import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,
@@ -26,8 +29,6 @@ import {
   getRootObject,
   updateValue,
 } from "./ResourceUtils"
-import { validate } from "../../../Util/Validator"
-import PropTypes from "prop-types"
 
 class ResourcePicker extends React.Component {
   state = {
@@ -44,7 +45,7 @@ class ResourcePicker extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, name, onChange, callerType } = this.props
+    const { value, id, name, onChange, callerType, t } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -52,7 +53,7 @@ class ResourcePicker extends React.Component {
         </Button>
         <Modal
           key={"edit-field-data" + id}
-          title={"Update value: " + name}
+          title={`${t("update_value")}: ${name}`}
           variant={ModalVariant.medium}
           position="top"
           isOpen={isOpen}
@@ -73,7 +74,7 @@ class ResourcePicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={(rootObject) => getItems(rootObject, callerType)}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -90,7 +91,7 @@ ResourcePicker.propTypes = {
   callerType: PropTypes.string,
 }
 
-export default ResourcePicker
+export default withTranslation()(ResourcePicker)
 
 const getItems = (rootObject, callerType) => {
   const FieldTypes = FieldDataTypeOptions.filter((t) => {
@@ -113,7 +114,7 @@ const getItems = (rootObject, callerType) => {
 
   if (callerType === CallerType.Parameter) {
     items.push({
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -124,7 +125,7 @@ const getItems = (rootObject, callerType) => {
   }
 
   items.push({
-    label: "Data Type",
+    label: "data_type",
     fieldId: "type",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
@@ -132,7 +133,7 @@ const getItems = (rootObject, callerType) => {
     isRequired: true,
     isDisabled: false,
     helperText: "",
-    helperTextInvalid: "Invalid type",
+    helperTextInvalid: "helper_text.invalid_type",
     validated: "default",
     options: FieldTypes,
     validator: { isNotEmpty: {} },
@@ -170,7 +171,7 @@ const getItems = (rootObject, callerType) => {
 
     default:
       items.push({
-        label: "Value",
+        label: "value",
         fieldId: "string",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -184,16 +185,12 @@ const getItems = (rootObject, callerType) => {
 const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
   const items = []
   items.push({
-    label: "Resource Type",
+    label: "resource_type",
     fieldId: "data.resourceType",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
     value: "",
     isRequired: true,
-    isDisabled: false,
-    helperText: "",
-    helperTextInvalid: "Invalid type",
-    validated: "default",
     options: ResourceTypeOptions,
     validator: { isNotEmpty: {} },
   })
@@ -208,7 +205,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
         const resourceFilterFunc = getResourceFilterFunc(resourceType)
         const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
         items.push({
-          label: "Resource",
+          label: "resource",
           fieldId: "data.quickId",
           apiOptions: resourceAPI,
           optionValueFunc: resourceOptionValueFunc,
@@ -218,10 +215,6 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
           dataType: DataType.String,
           value: "",
           isRequired: true,
-          isDisabled: false,
-          helperText: "",
-          helperTextInvalid: "Invalid type",
-          validated: "default",
           options: [],
           validator: { isNotEmpty: {} },
         })
@@ -231,7 +224,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
 
     case FieldDataType.TypeResourceByLabels:
       items.push({
-        label: "Labels",
+        label: "labels",
         fieldId: "data.labels",
         fieldType: FieldType.Labels,
         dataType: DataType.Object,
@@ -245,14 +238,14 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
 
   if (callerType === CallerType.Variable || resourceType === ResourceType.DataRepository) {
     items.push({
-      label: "Key Path",
+      label: "key_path",
       fieldId: "data.keyPath",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Key Path can not be empty",
+      helperTextInvalid: "helper_text.invalid_key_path",
       validated: "default",
       validator: { isNotEmpty: {} },
     })
@@ -261,14 +254,14 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
   if (callerType === CallerType.Parameter) {
     items.push(
       {
-        label: "Payload",
+        label: "payload",
         fieldId: "data.payload",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
       },
       {
-        label: "Pre Delay",
+        label: "pre_delay",
         fieldId: "data.preDelay",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -283,7 +276,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
 const getEmailDataItems = (_rootObject) => {
   const items = [
     {
-      label: "From",
+      label: "from",
       fieldId: "data.from",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -291,7 +284,7 @@ const getEmailDataItems = (_rootObject) => {
       // validator: { isEmail: {} },
     },
     {
-      label: "To",
+      label: "to",
       fieldId: "data.to",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
@@ -301,14 +294,14 @@ const getEmailDataItems = (_rootObject) => {
       value: [],
     },
     {
-      label: "Subject",
+      label: "subject",
       fieldId: "data.subject",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Body",
+      label: "body",
       fieldId: "data.body",
       fieldType: FieldType.TextArea,
       dataType: DataType.String,
@@ -321,14 +314,14 @@ const getEmailDataItems = (_rootObject) => {
 const getTelegramDataItems = (_rootObject) => {
   const items = [
     {
-      label: "Chat IDs",
+      label: "chat_ids",
       fieldId: "data.chatIds",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
       value: [],
     },
     {
-      label: "Parse Mode",
+      label: "parse_mode",
       fieldId: "data.parseMode",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -336,14 +329,14 @@ const getTelegramDataItems = (_rootObject) => {
       options: TelegramParseModeOptions,
     },
     {
-      label: "Text",
+      label: "text",
       fieldId: "data.text",
       fieldType: FieldType.TextArea,
       dataType: DataType.String,
       isRequired: true,
       value: "",
       helperText: "",
-      helperTextInvalid: "Enter a valid text",
+      helperTextInvalid: "helper_text.invalid_text",
       validated: "default",
       validator: { isNotEmpty: {} },
     },
@@ -354,7 +347,7 @@ const getTelegramDataItems = (_rootObject) => {
 const getBackupItems = (rootObject) => {
   const items = []
   items.push({
-    label: "Provider Type",
+    label: "provider_type",
     fieldId: "data.providerType",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
@@ -370,7 +363,7 @@ const getBackupItems = (rootObject) => {
     case BackupProviderType.Disk:
       items.push(
         {
-          label: "Storage Export Type",
+          label: "storage_export_type",
           fieldId: "data.spec.storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
@@ -379,7 +372,7 @@ const getBackupItems = (rootObject) => {
           isRequired: false,
         },
         {
-          label: "Target Directory",
+          label: "target_directory",
           fieldId: "data.spec.targetDirectory",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -387,7 +380,7 @@ const getBackupItems = (rootObject) => {
           isRequired: false,
         },
         {
-          label: "Prefix",
+          label: "prefix",
           fieldId: "data.spec.prefix",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -395,13 +388,13 @@ const getBackupItems = (rootObject) => {
           isRequired: false,
         },
         {
-          label: "Retention Count",
+          label: "retention_count",
           fieldId: "data.spec.retentionCount",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a retention count, 0 for no limit",
+          helperTextInvalid: "helper_text.invalid_backup_retention_count",
           validated: "default",
           validator: { isInteger: {} },
         }
@@ -423,19 +416,19 @@ const getWebhookItems = (rootObject, callerType) => {
     objectPath.set(rootObject, "data.method", WebhookMethodType.GET, true)
     items.push(
       {
-        label: "URL",
+        label: "url",
         fieldId: "data.server",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid URL",
+        helperTextInvalid: "helper_text.invalid_url",
         validated: "default",
         validator: { isNotEmpty: {}, isURL: {} },
       },
       {
-        label: "Insecure Skip Verify",
+        label: "insecure_skip_verify",
         fieldId: "data.insecureSkipVerify",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
@@ -446,7 +439,7 @@ const getWebhookItems = (rootObject, callerType) => {
     objectPath.set(rootObject, "data.method", WebhookMethodType.POST, true)
     items.push(
       {
-        label: "Server",
+        label: "server",
         fieldId: "data.server",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -454,7 +447,7 @@ const getWebhookItems = (rootObject, callerType) => {
         isRequired: false,
       },
       {
-        label: "API",
+        label: "api",
         fieldId: "data.api",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -466,7 +459,7 @@ const getWebhookItems = (rootObject, callerType) => {
 
   items.push(
     {
-      label: "Method",
+      label: "method",
       fieldId: "data.method",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -475,18 +468,18 @@ const getWebhookItems = (rootObject, callerType) => {
       isRequired: false,
     },
     {
-      label: "Response Code",
+      label: "response_code",
       fieldId: "data.responseCode",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Enter a response code, enter 0 to ignore",
+      helperTextInvalid: "helper_text.invalid_response_code",
       validated: "default",
       validator: { isInteger: {} },
     },
     {
-      label: "Headers",
+      label: "headers",
       fieldId: "data.headers",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.ArrayObject,
@@ -495,12 +488,12 @@ const getWebhookItems = (rootObject, callerType) => {
       validateValueFunc: (value) => validate("isNotEmpty", value, {}),
     },
     {
-      label: "Query Parameters",
+      label: "query_parameters",
       fieldId: "data.queryParameters",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
-      updateButtonText: "Update Query Parameters",
+      updateButtonText: "update_query_parameters",
       value: {},
       isRequired: false,
     }
@@ -510,7 +503,7 @@ const getWebhookItems = (rootObject, callerType) => {
 
   if (methodType !== WebhookMethodType.GET) {
     items.push({
-      label: "Custom Data",
+      label: "custom_data",
       fieldId: "data.customData",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -521,12 +514,12 @@ const getWebhookItems = (rootObject, callerType) => {
     const customData = objectPath.get(rootObject, "data.customData", false)
     if (customData) {
       items.push({
-        label: "Data",
+        label: "data",
         fieldId: "data.data",
         fieldType: FieldType.ScriptEditor,
         dataType: DataType.Object,
         language: "yaml",
-        updateButtonText: "Update Data",
+        updateButtonText: "update_data",
         value: {},
         isRequired: false,
       })

@@ -9,13 +9,13 @@ export const MetricType = {
 }
 
 export const MetricTypeOptions = [
-  { value: MetricType.None, label: "None" },
-  { value: MetricType.String, label: "String" },
-  { value: MetricType.Binary, label: "Binary" },
-  { value: MetricType.Gauge, label: "Gauge" },
-  { value: MetricType.GaugeFloat, label: "Gauge Float" },
-  { value: MetricType.Counter, label: "Counter" },
-  { value: MetricType.GEO, label: "GEO" },
+  { value: MetricType.None, label: "opts.metric_type.label_none" },
+  { value: MetricType.String, label: "opts.metric_type.label_string" },
+  { value: MetricType.Binary, label: "opts.metric_type.label_binary" },
+  { value: MetricType.Gauge, label: "opts.metric_type.label_gauge" },
+  { value: MetricType.GaugeFloat, label: "opts.metric_type.label_gauge_float" },
+  { value: MetricType.Counter, label: "opts.metric_type.label_counter" },
+  { value: MetricType.GEO, label: "opts.metric_type.label_geo" },
 ]
 
 export const Duration = {
@@ -36,20 +36,20 @@ export const Duration = {
 }
 
 export const DurationOptions = [
-  { value: Duration.Last30Minutes, tsFormat: "HH:mm", label: "Last 30 minutes" },
-  { value: Duration.LastHour, tsFormat: "HH:mm", label: "Last 1 hour" },
-  { value: Duration.Last2Hours, tsFormat: "HH:mm", label: "Last 2 hours" },
-  { value: Duration.Last3Hours, tsFormat: "HH:mm", label: "Last 3 hours" },
-  { value: Duration.Last6Hours, tsFormat: "HH:mm", label: "Last 6 hours" },
-  { value: Duration.Last12Hours, tsFormat: "HH:mm", label: "Last 12 hours" },
-  { value: Duration.Last24Hours, tsFormat: "HH:mm", label: "Last 24 hours" },
-  { value: Duration.Last2Days, tsFormat: "Do HH:mm", label: "Last 2 days" },
-  { value: Duration.Last7Days, tsFormat: "Do HH:mm", label: "Last 7 days" },
-  { value: Duration.Last30Days, tsFormat: "MMM Do HH:mm", label: "Last 30 days" },
-  { value: Duration.Last60Days, tsFormat: "MMM Do HH:mm", label: "Last 60 days" },
-  { value: Duration.Last90Days, tsFormat: "MMM Do HH:mm", label: "Last 90 days" },
-  { value: Duration.Last180Days, tsFormat: "MMM Do HH:mm", label: "Last 180 days" },
-  { value: Duration.Last365Days, tsFormat: "YYYY MMM Do HH:mm", label: "Last 365 days" },
+  { value: Duration.Last30Minutes, tsFormat: "HH:mm", label: "opts.metric_duration.label_minute_30" },
+  { value: Duration.LastHour, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_01" },
+  { value: Duration.Last2Hours, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_02" },
+  { value: Duration.Last3Hours, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_03" },
+  { value: Duration.Last6Hours, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_06" },
+  { value: Duration.Last12Hours, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_12" },
+  { value: Duration.Last24Hours, tsFormat: "HH:mm", label: "opts.metric_duration.label_hour_24" },
+  { value: Duration.Last2Days, tsFormat: "Do HH:mm", label: "opts.metric_duration.label_day_002" },
+  { value: Duration.Last7Days, tsFormat: "Do HH:mm", label: "opts.metric_duration.label_day_007" },
+  { value: Duration.Last30Days, tsFormat: "MMM Do HH:mm", label: "opts.metric_duration.label_day_030" },
+  { value: Duration.Last60Days, tsFormat: "MMM Do HH:mm", label: "opts.metric_duration.label_day_060" },
+  { value: Duration.Last90Days, tsFormat: "MMM Do HH:mm", label: "opts.metric_duration.label_day_090" },
+  { value: Duration.Last180Days, tsFormat: "MMM Do HH:mm", label: "opts.metric_duration.label_day_180" },
+  { value: Duration.Last365Days, tsFormat: "YYYY MMM Do HH:mm", label: "opts.metric_duration.label_day_365" },
 ]
 
 export const AggregationInterval = {
@@ -67,17 +67,17 @@ export const AggregationInterval = {
 }
 
 export const AggregationIntervalOptions = [
-  { value: AggregationInterval.Minute_1, label: "1 Minute" },
-  { value: AggregationInterval.Minute_2, label: "2 Minutes" },
-  { value: AggregationInterval.Minute_3, label: "3 Minutes" },
-  { value: AggregationInterval.Minute_5, label: "5 Minutes" },
-  { value: AggregationInterval.Minute_10, label: "10 Minutes" },
-  { value: AggregationInterval.Minute_15, label: "15 Minutes" },
-  { value: AggregationInterval.Minute_30, label: "30 Minutes" },
-  { value: AggregationInterval.Hour_1, label: "1 Hour" },
-  { value: AggregationInterval.Hour_3, label: "3 Hours" },
-  { value: AggregationInterval.Hour_6, label: "6 Hours" },
-  { value: AggregationInterval.Day_1, label: "1 Day" },
+  { value: AggregationInterval.Minute_1, label: "opts.interval.label_minute_01" },
+  { value: AggregationInterval.Minute_2, label: "opts.interval.label_minute_02" },
+  { value: AggregationInterval.Minute_3, label: "opts.interval.label_minute_03" },
+  { value: AggregationInterval.Minute_5, label: "opts.interval.label_minute_05" },
+  { value: AggregationInterval.Minute_10, label: "opts.interval.label_minute_10" },
+  { value: AggregationInterval.Minute_15, label: "opts.interval.label_minute_15" },
+  { value: AggregationInterval.Minute_30, label: "opts.interval.label_minute_30" },
+  { value: AggregationInterval.Hour_1, label: "opts.interval.label_hour_01" },
+  { value: AggregationInterval.Hour_3, label: "opts.interval.label_hour_03" },
+  { value: AggregationInterval.Hour_6, label: "opts.interval.label_hour_06" },
+  { value: AggregationInterval.Day_1, label: "opts.interval.label_day_01" },
 ]
 
 export const getRecommendedInterval = (durationValue) => {
@@ -135,16 +135,16 @@ export const MetricFunctionType = {
 }
 
 export const MetricFunctionTypeOptions = [
-  { value: MetricFunctionType.Mean, label: "Mean" },
-  { value: MetricFunctionType.Min, label: "Min" },
-  { value: MetricFunctionType.Max, label: "Max" },
-  { value: MetricFunctionType.Median, label: "Median" },
-  { value: MetricFunctionType.Percentile50, label: "50th Percentile" },
-  { value: MetricFunctionType.Percentile75, label: "75th Percentile" },
-  { value: MetricFunctionType.Percentile95, label: "95th Percentile" },
-  { value: MetricFunctionType.Percentile99, label: "99th Percentile" },
-  { value: MetricFunctionType.Sum, label: "Sum" },
-  { value: MetricFunctionType.Count, label: "Count" },
+  { value: MetricFunctionType.Mean, label: "opts.metric_function.label_mean" },
+  { value: MetricFunctionType.Min, label: "opts.metric_function.label_minimum" },
+  { value: MetricFunctionType.Max, label: "opts.metric_function.label_maximum" },
+  { value: MetricFunctionType.Median, label: "opts.metric_function.label_median" },
+  { value: MetricFunctionType.Percentile50, label: "opts.metric_function.label_percentile_50" },
+  { value: MetricFunctionType.Percentile75, label: "opts.metric_function.label_percentile_75" },
+  { value: MetricFunctionType.Percentile95, label: "opts.metric_function.label_percentile_95" },
+  { value: MetricFunctionType.Percentile99, label: "opts.metric_function.label_percentile_99" },
+  { value: MetricFunctionType.Sum, label: "opts.metric_function.label_sum" },
+  { value: MetricFunctionType.Count, label: "opts.metric_function.label_count" },
 ]
 
 export const InterpolationType = {
@@ -161,16 +161,16 @@ export const InterpolationType = {
 }
 
 export const InterpolationTypeLineOptions = [
-  { value: InterpolationType.Basis, label: "Basis" },
-  { value: InterpolationType.Cardinal, label: "Cardinal" },
-  { value: InterpolationType.CatmullRom, label: "CatmullRom" },
-  { value: InterpolationType.Linear, label: "Linear" },
-  { value: InterpolationType.MonotoneX, label: "Monotone X" },
-  { value: InterpolationType.MonotoneY, label: "Monotone Y" },
-  { value: InterpolationType.Natural, label: "Natural" },
-  { value: InterpolationType.Step, label: "Step" },
-  { value: InterpolationType.StepAfter, label: "Step After" },
-  { value: InterpolationType.StepBefore, label: "Step Before" },
+  { value: InterpolationType.Basis, label: "opts.chart_interpolation.label_basis" },
+  { value: InterpolationType.Cardinal, label: "opts.chart_interpolation.label_cardinal" },
+  { value: InterpolationType.CatmullRom, label: "opts.chart_interpolation.label_catmull_rom" },
+  { value: InterpolationType.Linear, label: "opts.chart_interpolation.label_linear" },
+  { value: InterpolationType.MonotoneX, label: "opts.chart_interpolation.label_monotone_x" },
+  { value: InterpolationType.MonotoneY, label: "opts.chart_interpolation.label_monotone_y" },
+  { value: InterpolationType.Natural, label: "opts.chart_interpolation.label_natural" },
+  { value: InterpolationType.Step, label: "opts.chart_interpolation.label_step" },
+  { value: InterpolationType.StepAfter, label: "opts.chart_interpolation.label_step_after" },
+  { value: InterpolationType.StepBefore, label: "opts.chart_interpolation.label_step_before" },
 ]
 
 export const RefreshIntervalType = {
@@ -187,16 +187,16 @@ export const RefreshIntervalType = {
 }
 
 export const RefreshIntervalTypeOptions = [
-  { value: RefreshIntervalType.None, label: "Never" },
-  { value: RefreshIntervalType.Seconds_5, label: "5 Seconds" },
-  { value: RefreshIntervalType.Seconds_10, label: "10 Seconds" },
-  { value: RefreshIntervalType.Seconds_15, label: "15 Seconds" },
-  { value: RefreshIntervalType.Seconds_30, label: "30 Seconds" },
-  { value: RefreshIntervalType.Seconds_45, label: "45 Seconds" },
-  { value: RefreshIntervalType.Minutes_1, label: "1 Minute" },
-  { value: RefreshIntervalType.Minutes_5, label: "5 Minutes" },
-  { value: RefreshIntervalType.Minutes_15, label: "15 Minutes" },
-  { value: RefreshIntervalType.Minutes_30, label: "30 Minutes" },
+  { value: RefreshIntervalType.None, label: "opts.interval.label_never" },
+  { value: RefreshIntervalType.Seconds_5, label: "opts.interval.label_second_05" },
+  { value: RefreshIntervalType.Seconds_10, label: "opts.interval.label_second_10" },
+  { value: RefreshIntervalType.Seconds_15, label: "opts.interval.label_second_15" },
+  { value: RefreshIntervalType.Seconds_30, label: "opts.interval.label_second_30" },
+  { value: RefreshIntervalType.Seconds_45, label: "opts.interval.label_second_45" },
+  { value: RefreshIntervalType.Minutes_1, label: "opts.interval.label_minute_01" },
+  { value: RefreshIntervalType.Minutes_5, label: "opts.interval.label_minute_05" },
+  { value: RefreshIntervalType.Minutes_15, label: "opts.interval.label_minute_15" },
+  { value: RefreshIntervalType.Minutes_30, label: "opts.interval.label_minute_30" },
 ]
 
 export const DataUnitType = {
@@ -210,11 +210,11 @@ export const DataUnitType = {
 }
 
 export const DataUnitTypeOptions = [
-  { value: DataUnitType.Bytes, label: "Bytes" },
-  { value: DataUnitType.KiB, label: "Kibi Bytes (KiB)" },
-  { value: DataUnitType.MiB, label: "Mibi Bytes (MiB)" },
-  { value: DataUnitType.GiB, label: "Gibi Bytes (GiB)" },
-  { value: DataUnitType.TiB, label: "Tebi Bytes (TiB)" },
-  { value: DataUnitType.PiB, label: "Pebi Bytes (PiB)" },
-  { value: DataUnitType.EiB, label: "Exbi Bytes (EiB)" },
+  { value: DataUnitType.Bytes, label: "opts.data_unit.label_bytes" },
+  { value: DataUnitType.KiB, label: "opts.data_unit.label_kib" },
+  { value: DataUnitType.MiB, label: "opts.data_unit.label_mib" },
+  { value: DataUnitType.GiB, label: "opts.data_unit.label_gib" },
+  { value: DataUnitType.TiB, label: "opts.data_unit.label_tib" },
+  { value: DataUnitType.PiB, label: "opts.data_unit.label_pib" },
+  { value: DataUnitType.EiB, label: "opts.data_unit.label_eib" },
 ]

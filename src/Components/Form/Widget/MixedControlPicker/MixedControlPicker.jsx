@@ -1,27 +1,28 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
-import React from "react"
-import Editor from "../../../Editor/Editor"
-import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../../Constants/Form"
-import { ResourceTypeOptions, ResourceType } from "../../../../Constants/ResourcePicker"
-import { validate } from "../../../../Util/Validator"
 import PropTypes from "prop-types"
-import {
-  getOptionsDescriptionFunc,
-  getResourceFilterFunc,
-  getResourceOptionsAPI,
-  getResourceOptionValueFunc,
-} from "../../ResourcePicker/ResourceUtils"
+import React from "react"
+import { withTranslation } from "react-i18next"
+import { DropDownPositionType, DropDownPositionTypeOptions } from "../../../../Constants/Common"
+import { DataType, FieldType } from "../../../../Constants/Form"
+import { ResourceType, ResourceTypeOptions } from "../../../../Constants/ResourcePicker"
 import {
   ButtonType,
   ButtonTypeOptions,
   MixedControlType,
-  MixedControlTypeOptions,
+  MixedControlTypeOptions
 } from "../../../../Constants/Widgets/ControlPanel"
 import { getValue } from "../../../../Util/Util"
-import { DropDownPositionType, DropDownPositionTypeOptions } from "../../../../Constants/Common"
+import { validate } from "../../../../Util/Validator"
+import Editor from "../../../Editor/Editor"
+import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
+import {
+  getOptionsDescriptionFunc,
+  getResourceFilterFunc,
+  getResourceOptionsAPI,
+  getResourceOptionValueFunc
+} from "../../ResourcePicker/ResourceUtils"
 
 class MixedControlPicker extends React.Component {
   state = {
@@ -38,7 +39,7 @@ class MixedControlPicker extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, onChange } = this.props
+    const { value, id, onChange, t } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -46,7 +47,7 @@ class MixedControlPicker extends React.Component {
         </Button>
         <Modal
           key={"edit-field-data" + id}
-          title={"Update Resource"}
+          title={t("update_resource")}
           variant={ModalVariant.medium}
           position="top"
           isOpen={isOpen}
@@ -68,7 +69,7 @@ class MixedControlPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={(rootObject) => getItems(rootObject)}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -85,21 +86,17 @@ MixedControlPicker.propTypes = {
   callerType: PropTypes.string,
 }
 
-export default MixedControlPicker
+export default withTranslation()(MixedControlPicker)
 
 const getItems = (rootObject) => {
   const items = []
   items.push({
-    label: "Resource Type",
+    label: "resource_type",
     fieldId: "resource.type",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
     value: "",
     isRequired: true,
-    isDisabled: false,
-    helperText: "",
-    helperTextInvalid: "Invalid type",
-    validated: "default",
     options: ResourceTypeOptions,
     validator: { isNotEmpty: {} },
   })
@@ -113,7 +110,7 @@ const getItems = (rootObject) => {
     const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
     items.push(
       {
-        label: "Resource",
+        label: "resource",
         fieldId: "resource.quickId",
         apiOptions: resourceAPI,
         optionValueFunc: resourceOptionValueFunc,
@@ -123,27 +120,23 @@ const getItems = (rootObject) => {
         dataType: DataType.String,
         value: "",
         isRequired: true,
-        isDisabled: false,
-        helperText: "",
-        helperTextInvalid: "Invalid type",
-        validated: "default",
         options: [],
         validator: { isNotEmpty: {} },
       },
       {
-        label: "Name Key",
+        label: "name_key",
         fieldId: "resource.nameKey",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+        helperTextInvalid: "helper_text.invalid_key",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       },
       {
-        label: "Timestamp Key",
+        label: "timestamp_key",
         fieldId: "resource.valueTimestampKey",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -155,14 +148,14 @@ const getItems = (rootObject) => {
 
   if (resourceType === ResourceType.DataRepository) {
     items.push({
-      label: "Key Path",
+      label: "key_path",
       fieldId: "resource.keyPath",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Key Path can not be empty",
+      helperTextInvalid: "helper_text.invalid_key_path",
       validated: "default",
       validator: { isNotEmpty: {} },
     })
@@ -170,21 +163,17 @@ const getItems = (rootObject) => {
 
   items.push(
     {
-      label: "Control Type",
+      label: "control_type",
       fieldId: "control.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
       options: MixedControlTypeOptions,
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Ask Confirmation",
+      label: "ask_confirmation",
       fieldId: "control.askConfirmation",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -195,7 +184,7 @@ const getItems = (rootObject) => {
   const askConfirmation = getValue(rootObject, "control.askConfirmation", false)
   if (askConfirmation) {
     items.push({
-      label: "Confirmation Message",
+      label: "confirmation_message",
       fieldId: "control.confirmationMessage",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -221,14 +210,14 @@ const getItems = (rootObject) => {
     case MixedControlType.Input:
       objectPath.set(rootObject, "control.config.input.minWidth", 70, true)
       items.push({
-        label: "Width (px)",
+        label: "width_px",
         fieldId: "control.config.input.minWidth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid width",
+        helperTextInvalid: "helper_text.invalid_width",
         validated: "default",
         validator: { isInteger: { min: 1 } },
       })
@@ -257,26 +246,26 @@ const getToggleSwitchItems = (rootObject, controlType) => {
 
   const items = [
     {
-      label: "Payload ON",
+      label: "payload_on",
       fieldId: "control.config.payloadOn",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid payload",
+      helperTextInvalid: "helper_text.invalid_payload",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Payload OFF",
+      label: "payload_off",
       fieldId: "control.config.payloadOff",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid payload",
+      helperTextInvalid: "helper_text.invalid_payload",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
@@ -288,50 +277,47 @@ const getToggleSwitchItems = (rootObject, controlType) => {
     objectPath.set(rootObject, "control.config.button.minWidth", 70, true)
     items.push(
       {
-        label: "ON Text",
+        label: "on_text",
         fieldId: "control.config.button.onText",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid text",
+        helperTextInvalid: "helper_text.invalid_text",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       },
       {
-        label: "OFF Text",
+        label: "off_text",
         fieldId: "control.config.button.offText",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid text",
+        helperTextInvalid: "helper_text.invalid_text",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       },
       {
-        label: "ON Button",
+        label: "on_button",
         fieldId: "control.config.button.onButtonType",
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,
         value: "",
         options: ButtonTypeOptions,
         isRequired: true,
-        helperText: "",
-        validated: "default",
-        helperTextInvalid: "Select a ON button type",
       },
       {
-        label: "Width (px)",
+        label: "width_px",
         fieldId: "control.config.button.minWidth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid width",
+        helperTextInvalid: "helper_text.invalid_width",
         validated: "default",
         validator: { isInteger: { min: 1 } },
       }
@@ -347,51 +333,48 @@ const getPushButtonItems = (rootObject) => {
 
   const items = [
     {
-      label: "Payload",
+      label: "payload",
       fieldId: "control.config.payload",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid payload",
+      helperTextInvalid: "helper_text.invalid_payload",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
 
     {
-      label: "Button Text",
+      label: "button_text",
       fieldId: "control.config.button.text",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid text",
+      helperTextInvalid: "helper_text.invalid_text",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Button",
+      label: "button",
       fieldId: "control.config.button.buttonType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       options: ButtonTypeOptions,
       isRequired: true,
-      helperText: "",
-      validated: "default",
-      helperTextInvalid: "Select a button type",
     },
     {
-      label: "Width (px)",
+      label: "width_px",
       fieldId: "control.config.button.minWidth",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid width",
+      helperTextInvalid: "helper_text.invalid_width",
       validated: "default",
       validator: { isInteger: { min: 1 } },
     },
@@ -407,7 +390,7 @@ const getSelectOptionItems = (rootObject, controlType) => {
     objectPath.set(rootObject, "control.config.dropDownPosition", DropDownPositionType.DOWN, true)
 
     items.push({
-      label: "Drop Down Position",
+      label: "drop_down_position",
       fieldId: "control.config.dropDownPosition",
       fieldType: FieldType.Select,
       dataType: DataType.String,
@@ -418,13 +401,13 @@ const getSelectOptionItems = (rootObject, controlType) => {
   }
 
   items.push({
-    label: "Options",
+    label: "options",
     fieldId: "control.config.options",
     fieldType: FieldType.KeyValueMap,
     dataType: DataType.Object,
     value: {},
-    keyLabel: "Value",
-    valueLabel: "Display Text",
+    keyLabel: "value",
+    valueLabel: "display_text",
     validateKeyFunc: (value) => {
       return validate("isNotEmpty", value)
     },
@@ -442,50 +425,50 @@ const getSliderItems = (rootObject) => {
 
   items.push(
     {
-      label: "Minimum",
+      label: "minimum",
       fieldId: "control.config.slider.min",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid value",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isFloat: {} },
     },
     {
-      label: "Maximum",
+      label: "maximum",
       fieldId: "control.config.slider.max",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid value",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isFloat: {} },
     },
     {
-      label: "Step",
+      label: "step",
       fieldId: "control.config.slider.step",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid value",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isFloat: {} },
     },
     {
-      label: "Width (px)",
+      label: "width_px",
       fieldId: "control.config.slider.minWidth",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid width",
+      helperTextInvalid: "helper_text.invalid_width",
       validated: "default",
       validator: { isInteger: { min: 1 } },
     }

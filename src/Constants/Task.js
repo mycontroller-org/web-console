@@ -24,10 +24,10 @@ export const EventType = {
 
 // event type options
 export const EventTypeOptions = [
-  { value: EventType.Created, label: "Created" },
-  { value: EventType.Updated, label: "Updated" },
-  { value: EventType.Deleted, label: "Deleted" },
-  { value: EventType.Requested, label: "Requested" },
+  { value: EventType.Created, label: "opts.event_type.label_created" },
+  { value: EventType.Updated, label: "opts.event_type.label_updated" },
+  { value: EventType.Deleted, label: "opts.event_type.label_deleted" },
+  { value: EventType.Requested, label: "opts.event_type.label_requested" },
 ]
 
 // Entity types
@@ -41,11 +41,11 @@ export const EntityType = {
 
 // Entity type options
 export const EntityTypeOptions = [
-  { value: EntityType.Gateway, label: "Gateway" },
-  { value: EntityType.Node, label: "Node" },
-  { value: EntityType.Source, label: "Source" },
-  { value: EntityType.Field, label: "Field" },
-  { value: EntityType.DataRepository, label: "Data Repository" },
+  { value: EntityType.Gateway, label: "gateway" },
+  { value: EntityType.Node, label: "node" },
+  { value: EntityType.Source, label: "source" },
+  { value: EntityType.Field, label: "field" },
+  { value: EntityType.DataRepository, label: "data_repository" },
 ]
 
 // Evaluation Types
@@ -57,7 +57,7 @@ export const EvaluationType = {
 
 // Evaluation type options
 export const EvaluationTypeOptions = [
-  { value: EvaluationType.Rule, label: "Rule" },
-  { value: EvaluationType.Javascript, label: "Javascript" },
-  { value: EvaluationType.Webhook, label: "Webhook" },
+  { value: EvaluationType.Rule, label: "rule" },
+  { value: EvaluationType.Javascript, label: "javascript" },
+  { value: EvaluationType.Webhook, label: "webhook" },
 ]

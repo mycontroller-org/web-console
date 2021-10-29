@@ -1,22 +1,22 @@
 import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
-import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
 import {
   Dampening,
   DampeningOptions,
+  EntityTypeOptions,
   EvaluationType,
   EvaluationTypeOptions,
   EventTypeOptions,
-  EntityTypeOptions,
 } from "../../../Constants/Task"
-import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
-import { validate } from "../../../Util/Validator"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { FieldHandlersList } from "../../../Util/Common"
+import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
   render() {
@@ -45,7 +45,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Task" />
+          <PageTitle key="page-title" title="add_a_task" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -61,7 +61,7 @@ export default UpdatePage
 const getFormItems = (rootObject, id) => {
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -69,40 +69,40 @@ const getFormItems = (rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Ignore Duplicate",
+      label: "ignore_duplicate",
       fieldId: "ignoreDuplicate",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Auto Disable",
+      label: "auto_disable",
       fieldId: "autoDisable",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -114,12 +114,12 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Execution Mode",
+      label: "execution_mode",
       fieldId: "execution_mode",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Trigger On Event",
+      label: "trigger_on_event",
       fieldId: "triggerOnEvent",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -130,12 +130,12 @@ const getFormItems = (rootObject, id) => {
   if (rootObject.triggerOnEvent) {
     items.push(
       {
-        label: "Event Filters",
+        label: "event_filters",
         fieldId: "!event_filters",
         fieldType: FieldType.Divider,
       },
       {
-        label: "Entities",
+        label: "entities",
         fieldId: "eventFilter.entityTypes",
         isRequired: false,
         fieldType: FieldType.SelectTypeAhead,
@@ -145,7 +145,7 @@ const getFormItems = (rootObject, id) => {
         value: [],
       },
       {
-        label: "Events",
+        label: "events",
         fieldId: "eventFilter.eventTypes",
         isRequired: false,
         fieldType: FieldType.SelectTypeAhead,
@@ -155,7 +155,7 @@ const getFormItems = (rootObject, id) => {
         value: [],
       },
       {
-        label: "Filters",
+        label: "filters",
         fieldId: "eventFilter.filters",
         fieldType: FieldType.KeyValueMap,
         dataType: DataType.Object,
@@ -164,14 +164,14 @@ const getFormItems = (rootObject, id) => {
     )
   } else {
     items.push({
-      label: "Execution Interval (0h0m0s)",
+      label: "execution_interval_0h0m0s",
       fieldId: "executionInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "execution interval can not be empty",
+      helperTextInvalid: "helper_text.invalid_execution_interval_empty",
       validated: "default",
       validator: { isNotEmpty: {} },
     })
@@ -179,17 +179,17 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Dampening",
+      label: "dampening",
       fieldId: "!dampening",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "dampening.type",
       fieldType: FieldType.Select,
       dataType: DataType.String,
       options: DampeningOptions,
-      isDisabled: true, // Enable this when this feature is implemented
+      isDisabled: true, // enable this when this feature is implemented also include i18n translations
       value: "",
       resetFields: { "dampening.occurrences": 0, "dampening.evaluations": 0, "dampening.activeTime": "" },
     }
@@ -200,7 +200,7 @@ const getFormItems = (rootObject, id) => {
   switch (dampeningType) {
     case Dampening.Consecutive:
       items.push({
-        label: "Occurrences",
+        label: "occurrences",
         fieldId: "dampening.occurrences",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
@@ -211,14 +211,14 @@ const getFormItems = (rootObject, id) => {
     case Dampening.LastNEvaluations:
       items.push(
         {
-          label: "Evaluations",
+          label: "evaluations",
           fieldId: "dampening.evaluations",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
         },
         {
-          label: "Occurrences",
+          label: "occurrences",
           fieldId: "dampening.occurrences",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
@@ -228,7 +228,7 @@ const getFormItems = (rootObject, id) => {
       break
     case Dampening.ActiveTime:
       items.push({
-        label: "Active Time",
+        label: "active_time",
         fieldId: "dampening.activeTime",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -241,7 +241,7 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Variables",
+      label: "variables",
       fieldId: "!variables",
       fieldType: FieldType.Divider,
     },
@@ -249,7 +249,7 @@ const getFormItems = (rootObject, id) => {
       label: "",
       fieldId: "variables",
       fieldType: FieldType.VariablesMap,
-      keyLabel: "Variable Name",
+      keyLabel: "variable_name",
       dataType: DataType.Object,
       showUpdateButton: true,
       callerType: CallerType.Variable,
@@ -265,12 +265,12 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Evaluation",
+      label: "evaluation",
       fieldId: "!evaluation",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "evaluationType",
       fieldType: FieldType.ToggleButtonGroup,
       dataType: DataType.String,
@@ -284,14 +284,14 @@ const getFormItems = (rootObject, id) => {
     case EvaluationType.Rule:
       items.push(
         {
-          label: "Match All",
+          label: "match_all",
           fieldId: "evaluationConfig.rule.matchAll",
           fieldType: FieldType.Switch,
           dataType: DataType.Boolean,
           value: false,
         },
         {
-          label: "Conditions",
+          label: "conditions",
           fieldId: "evaluationConfig.rule.conditions",
           fieldType: FieldType.ConditionsArrayMap,
           dataType: DataType.ArrayObject,
@@ -303,18 +303,18 @@ const getFormItems = (rootObject, id) => {
 
     case EvaluationType.Javascript:
       items.push({
-        label: "Script",
+        label: "script",
         fieldId: "evaluationConfig.javascript",
         fieldType: FieldType.ScriptEditor,
         dataType: DataType.String,
         value: "",
-        saveButtonText: "Update",
-        updateButtonText: "Update Script",
+        saveButtonText: "update",
+        updateButtonText: "update_script",
         language: "javascript",
         minimapEnabled: true,
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "script should not be empty",
+        helperTextInvalid: "helper_text.invalid_script_empty",
         validated: "default",
         validator: { isNotEmpty: {} },
       })
@@ -330,7 +330,7 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Parameters to Handler",
+      label: "parameters_to_handler",
       fieldId: "!parameters",
       fieldType: FieldType.Divider,
     },
@@ -338,14 +338,14 @@ const getFormItems = (rootObject, id) => {
       label: "",
       fieldId: "handlerParameters",
       fieldType: FieldType.VariablesMap,
-      keyLabel: "Name",
+      keyLabel: "name",
       showUpdateButton: true,
       callerType: CallerType.Parameter,
       dataType: DataType.Object,
       value: {},
     },
     {
-      label: "Handlers",
+      label: "handlers",
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
@@ -358,38 +358,36 @@ const getFormItems = (rootObject, id) => {
 const getWebhookItems = (_rootObject) => {
   const items = [
     {
-      label: "URL",
+      label: "url",
       fieldId: "evaluationConfig.webhook.url",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid URL",
+      helperTextInvalid: "helper_text.invalid_url",
       validated: "default",
       validator: { isNotEmpty: {}, isURL: {} },
     },
     {
-      label: "Method",
+      label: "method",
       fieldId: "evaluationConfig.webhook.method",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: WebhookMethodTypeOptions,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Select a method",
-      validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Insecure Skip Verify",
+      label: "insecure_skip_verify",
       fieldId: "evaluationConfig.webhook.insecureSkipVerify",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Headers",
+      label: "headers",
       fieldId: "evaluationConfig.webhook.headers",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.ArrayObject,
@@ -398,17 +396,17 @@ const getWebhookItems = (_rootObject) => {
       validateValueFunc: (value) => validate("isNotEmpty", value, {}),
     },
     {
-      label: "Query Parameters",
+      label: "query_parameters",
       fieldId: "evaluationConfig.webhook.queryParameters",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
-      updateButtonText: "Update Query Parameters",
+      updateButtonText: "update_query_parameters",
       value: {},
       isRequired: false,
     },
     {
-      label: "Include Config",
+      label: "include_config",
       fieldId: "evaluationConfig.webhook.includeConfig",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,

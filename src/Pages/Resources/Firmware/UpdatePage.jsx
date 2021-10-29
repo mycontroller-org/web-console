@@ -1,11 +1,11 @@
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
+import Loading from "../../../Components/Loading/Loading"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import Loading from "../../../Components/Loading/Loading"
 
 class UpdatePage extends React.Component {
   state = {
@@ -48,7 +48,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Firmware" />
+          <PageTitle key="page-title" title="add_a_firmware" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -64,7 +64,7 @@ export default UpdatePage
 const getFormItems = (_rootObject, id) => {
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -72,19 +72,19 @@ const getFormItems = (_rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=3 and max=100",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
-      validator: { isLength: { min: 3, max: 100 }, isNotEmpty: {}, isID: {} },
+      validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },

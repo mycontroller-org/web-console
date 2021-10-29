@@ -10,8 +10,7 @@ import LastUpdate from "../LastUpdate/LastUpdate"
 import Loading from "../Loading/Loading"
 import Toolbar from "../Toolbar/Toolbar"
 import "./ListBase.scss"
-
-export default class ListPage extends React.Component {
+class ListPage extends React.Component {
   state = {
     rows: [],
     showDeleteDialog: false,
@@ -249,24 +248,31 @@ export default class ListPage extends React.Component {
 
   render() {
     const elements = []
+    const { filterTypeOpen, filterType, rows, showDeleteDialog } = this.state
+    const { loading, pagination, filters, tableColumns, filtersDefinition, sortBy, t } = this.props
 
     // update table headers
-    const tableColumns = this.props.tableColumns.map((tc) => {
-      const header = { title: tc.title }
+    const tableColumnsUpdated = tableColumns.map((tc) => {
+      const header = { title: t(tc.title) }
       if (tc.sortable) {
         header.transforms = [sortable]
       }
       return header
     })
 
-    if (this.props.loading) {
+    // update filter locale
+    const filtersDefinitionUpdated = filtersDefinition.map((f) => {
+      return { ...f, categoryName: t(f.categoryName) }
+    })
+
+    if (loading) {
       elements.push(<Loading key="loading" />)
     } else {
       elements.push(
         <Toolbar
           key="tb1"
           rowsSelectionCount={this.getSelectedRowIDs().length}
-          refreshFn={() => this.fetchRecords(this.props.pagination, this.state.filters)}
+          refreshFn={() => this.fetchRecords(pagination, this.state.filters)}
           items={this.toolbar}
           groupAlignment={{ right1: "alignRight" }}
           resourceName={this.resourceName}
@@ -274,16 +280,17 @@ export default class ListPage extends React.Component {
           //filters={this.props.filters(this.onFilterToggle, this.state.filterOpen)}
           filters={
             <Filters
-              filters={this.props.filtersDefinition}
-              selectedCategory={this.state.filterType}
-              chips={this.props.filters}
-              isTypeOpen={this.state.filterTypeOpen}
+              filters={filtersDefinitionUpdated}
+              selectedCategory={filterType}
+              chips={filters}
+              isTypeOpen={filterTypeOpen}
               typeToggleFunc={this.onFilterTypeToggle}
               onTypeChangeFunc={this.onFilterTypeChange}
               deleteChipFunc={this.onDeleteChipFunc}
               deleteChipGroupFunc={this.onDeleteChipGroupFunc}
               key="filters"
               onFilterUpdate={this.onFilterUpdate}
+              t={t}
             />
           }
         />
@@ -293,13 +300,13 @@ export default class ListPage extends React.Component {
           <Table
             aria-label="Compact Table"
             variant={TableVariant.compact}
-            cells={tableColumns}
-            rows={this.state.rows}
+            cells={tableColumnsUpdated}
+            rows={rows}
             rowLabeledBy="rowIndex"
             canSelectAll={true}
             onSelect={this.onSelect}
             className="mc-table"
-            sortBy={this.props.sortBy}
+            sortBy={sortBy}
             onSort={this.onSortBy}
             rowWrapper={(props) => {
               // console.log(props)
@@ -331,7 +338,7 @@ export default class ListPage extends React.Component {
           </Flex>
           <DeleteDialog
             resourceName={this.props.resourceName}
-            show={this.state.showDeleteDialog}
+            show={showDeleteDialog}
             onCloseFn={this.onDeleteActionCloseClick}
             onOkFn={this.onDeleteActionOkClick}
           />
@@ -356,6 +363,8 @@ export default class ListPage extends React.Component {
     return elements
   }
 }
+
+export default ListPage
 
 ListPage.propTypes = {
   apiGetRecords: PropTypes.func,

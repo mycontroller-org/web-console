@@ -8,15 +8,15 @@ class GatewayDetailPage extends React.Component {
     const { id } = this.props.match.params
     const tabs = [
       {
-        name: "Details",
+        name: "details",
         content: <TabDetails resourceId={id} history={this.props.history} />,
       },
       {
-        name: "Edit",
+        name: "edit",
         content: <UpdatePage match={this.props.match} history={this.props.history} />,
       },
     ]
-    return <DetailRootPage pageHeader="Data Repository: Modify an entry" tabs={tabs} />
+    return <DetailRootPage pageHeader="data_repository_modify_an_entry" tabs={tabs} />
   }
 }
 

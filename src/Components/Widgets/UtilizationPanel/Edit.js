@@ -1,8 +1,5 @@
-import { ResourceType, ResourceTypeOptions } from "../../../Constants/Resource"
-import { DataType, FieldType } from "../../../Constants/Form"
-import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
 import objectPath from "object-path"
-import { getValue } from "../../../Util/Util"
+import { DataType, FieldType } from "../../../Constants/Form"
 import {
   AggregationIntervalOptions,
   Duration,
@@ -14,7 +11,10 @@ import {
   MetricFunctionTypeOptions,
   RefreshIntervalTypeOptions,
 } from "../../../Constants/Metric"
+import { ResourceType, ResourceTypeOptions } from "../../../Constants/Resource"
 import { ColorsSetBig } from "../../../Constants/Widgets/Color"
+import { ChartType, ChartTypeOptions } from "../../../Constants/Widgets/UtilizationPanel"
+import { getValue } from "../../../Util/Util"
 
 // UtilizationPanel items
 export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
@@ -27,7 +27,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     chartType === ChartType.CircleSize100
   ) {
     items.push({
-      label: "Column Display",
+      label: "column_display",
       fieldId: "config.chart.columnDisplay",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -38,7 +38,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
   }
 
   items.push({
-    label: "Type",
+    label: "chart_type",
     fieldId: "config.chart.type",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
@@ -82,12 +82,12 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
   items.push(
     {
-      label: "Resource",
+      label: "resource",
       fieldId: "!resource",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "config.resource.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -97,7 +97,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Display Name",
+      label: "display_name",
       fieldId: "config.resource.displayName",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -108,14 +108,14 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
   if (objectPath.get(rootObject, "config.resource.displayName", false)) {
     items.push({
-      label: "Name Key",
+      label: "name_key",
       fieldId: "config.resource.nameKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_key",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     })
@@ -123,31 +123,31 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
   items.push(
     {
-      label: "Value Key",
+      label: "value_key",
       fieldId: "config.resource.valueKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Value Key. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_key",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Timestamp Key",
+      label: "timestamp_key",
       fieldId: "config.resource.valueTimestampKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Timestamp Key. chars: min=1 and max=100",
+      helperTextInvalid: "helper_text.invalid_key",
       validated: "default",
       validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Round Decimal",
+      label: "round_decimal",
       fieldId: "config.resource.roundDecimal",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
@@ -155,7 +155,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
       isRequired: false,
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "config.resource.unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -172,14 +172,14 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
     objectPath.set(rootObject, "config.resource.limit", 1, false)
   } else {
     items.push({
-      label: "Limit",
+      label: "limit",
       fieldId: "config.resource.limit",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid limit.",
+      helperTextInvalid: "helper_text.invalid_limit",
       validated: "default",
       validator: { isInteger: {} },
     })
@@ -187,7 +187,7 @@ export const updateFormItemsUtilizationPanel = (rootObject, items = []) => {
 
   items.push(
     {
-      label: "Resource Filters",
+      label: "resource_filters",
       fieldId: "!resource_filters",
       fieldType: FieldType.Divider,
     },
@@ -212,31 +212,31 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
 
   const items = [
     {
-      label: "Config",
+      label: "config",
       fieldId: "!config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Minimum Value",
+      label: "minimum_value",
       fieldId: "config.chart.minimumValue",
       fieldType: FieldType.Text,
       dataType: DataType.Number,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Maximum Value.",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isDecimal: { decimal_digits: 2 } },
     },
     {
-      label: "Maximum Value",
+      label: "maximum_value",
       fieldId: "config.chart.maximumValue",
       fieldType: FieldType.Text,
       dataType: DataType.Number,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid Maximum Value.",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isDecimal: { decimal_digits: 2 } },
     },
@@ -245,21 +245,21 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
   if (chartType === ChartType.Table) {
     items.push(
       {
-        label: "Display Percentage",
+        label: "display_percentage",
         fieldId: "config.chart.displayStatusPercentage",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
       },
       {
-        label: "Hide Value Column",
+        label: "hide_value_column",
         fieldId: "config.chart.hideValueColumn",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
       },
       {
-        label: "Hide Border",
+        label: "hide_border",
         fieldId: "config.hideBorder",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
@@ -269,7 +269,7 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
   } else {
     items.push(
       {
-        label: "Thickness",
+        label: "thickness",
         fieldId: "config.chart.thickness",
         fieldType: FieldType.SliderSimple,
         dataType: DataType.Integer,
@@ -279,7 +279,7 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
         step: 1,
       },
       {
-        label: "Corner Smoothing",
+        label: "corner_smoothing",
         fieldId: "config.chart.cornerSmoothing",
         fieldType: FieldType.SliderSimple,
         dataType: DataType.Integer,
@@ -293,7 +293,7 @@ const getCircleAndTableItems = (rootObject = {}, chartType = "") => {
 
   items.push(
     {
-      label: "Thresholds Color",
+      label: "thresholds_color",
       fieldId: "!thresholds",
       fieldType: FieldType.Divider,
     },
@@ -325,12 +325,12 @@ const getSparkLineItems = (rootObject) => {
 
   const items = [
     {
-      label: "Metric Config",
+      label: "metric_config",
       fieldId: "!metric_config",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Duration",
+      label: "duration",
       fieldId: "config.chart.duration",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -345,7 +345,7 @@ const getSparkLineItems = (rootObject) => {
       },
     },
     {
-      label: "Interval",
+      label: "interval",
       fieldId: "config.chart.interval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -355,7 +355,7 @@ const getSparkLineItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Metric Function",
+      label: "metric_function",
       fieldId: "config.chart.metricFunction",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -365,7 +365,7 @@ const getSparkLineItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Refresh Interval",
+      label: "refresh_interval",
       fieldId: "config.chart.refreshInterval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.Integer,
@@ -375,7 +375,7 @@ const getSparkLineItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Chart Config",
+      label: "chart_config",
       fieldId: "!chart_config",
       fieldType: FieldType.Divider,
     },
@@ -386,7 +386,7 @@ const getSparkLineItems = (rootObject) => {
   if (chartType !== ChartType.SparkBar) {
     objectPath.set(rootObject, "config.chart.interpolation", InterpolationType.Basis, true)
     items.push({
-      label: "Interpolation",
+      label: "interpolation",
       fieldId: "config.chart.interpolation",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -400,19 +400,19 @@ const getSparkLineItems = (rootObject) => {
   objectPath.set(rootObject, "config.chart.color", "#0066cc", true)
   items.push(
     {
-      label: "Height (px)",
+      label: "height_px",
       fieldId: "config.chart.height",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid height",
+      helperTextInvalid: "helper_text.invalid_value",
       validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Color",
+      label: "color",
       fieldId: "config.chart.color",
       fieldType: FieldType.ColorBox,
       dataType: DataType.String,
@@ -424,7 +424,7 @@ const getSparkLineItems = (rootObject) => {
   if (chartType !== ChartType.SparkLine) {
     objectPath.set(rootObject, "config.chart.fillOpacity", 15, true)
     items.push({
-      label: "Fill Opacity (%)",
+      label: "fill_opacity_%",
       fieldId: "config.chart.fillOpacity",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Integer,
@@ -439,7 +439,7 @@ const getSparkLineItems = (rootObject) => {
 
   items.push(
     {
-      label: "Stroke Width (px)",
+      label: "stroke_width_px",
       fieldId: "config.chart.strokeWidth",
       fieldType: FieldType.SliderSimple,
       dataType: DataType.Float,
@@ -449,7 +449,7 @@ const getSparkLineItems = (rootObject) => {
       step: 0.5,
     },
     {
-      label: "Min (Y Axis)",
+      label: "min_y_axis",
       fieldId: "config.chart.yAxisMinValue",
       fieldType: FieldType.Text,
       dataType: DataType.Float,
@@ -457,7 +457,7 @@ const getSparkLineItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Max (Y Axis)",
+      label: "max_y_axis",
       fieldId: "config.chart.yAxisMaxValue",
       fieldType: FieldType.Text,
       dataType: DataType.Float,

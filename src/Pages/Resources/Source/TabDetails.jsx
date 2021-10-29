@@ -16,7 +16,7 @@ const tabDetails = ({ resourceId, history }) => {
       history={history}
       apiGetRecord={api.source.get}
       apiListTablesRecord={api.field.list}
-      tableTitle="Fields"
+      tableTitle="fields"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
@@ -33,14 +33,14 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Gateway ID", value: data.gatewayId })
-  fieldsList1.push({ key: "Node ID", value: data.nodeId })
-  fieldsList1.push({ key: "Source ID", value: data.sourceId })
-  fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Last Seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "Others", value: <KeyValueMap data={data.others} /> })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "gateway_id", value: data.gatewayId })
+  fieldsList1.push({ key: "node_id", value: data.nodeId })
+  fieldsList1.push({ key: "source_id", value: data.sourceId })
+  fieldsList1.push({ key: "name", value: data.name })
+  fieldsList1.push({ key: "last_seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
+  fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "others", value: <KeyValueMap data={data.others} /> })
 
   return {
     "list-1": fieldsList1,
@@ -50,13 +50,13 @@ const getDetailsFuncImpl = (data) => {
 
 // Properties definition
 const tableColumns = [
-  { title: "Field ID", fieldKey: "fieldId", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Metric Type", fieldKey: "metricType", sortable: true },
-  { title: "Value", fieldKey: "current.value", sortable: true },
-  { title: "Previous Value", fieldKey: "previous.value", sortable: true },
-  { title: "Unit", fieldKey: "unit", sortable: true },
-  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
+  { title: "field_id", fieldKey: "fieldId", sortable: true },
+  { title: "name", fieldKey: "name", sortable: true },
+  { title: "metric_type", fieldKey: "metricType", sortable: true },
+  { title: "value", fieldKey: "current.value", sortable: true },
+  { title: "previous_value", fieldKey: "previous.value", sortable: true },
+  { title: "unit", fieldKey: "unit", sortable: true },
+  { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {

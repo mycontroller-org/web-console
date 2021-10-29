@@ -3,20 +3,18 @@ import {
   Button,
   Grid,
   GridItem,
-  SelectVariant,
   Split,
   Text,
   TextInput,
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
-import Select from "./Select"
-import { DataType } from "../../Constants/Form"
+import React from "react"
+import { withTranslation } from "react-i18next"
 import AsyncSelect from "../Select/AsyncSelect"
+import "./Form.scss"
 
 class DynamicArrayForm extends React.Component {
   state = {
@@ -95,7 +93,7 @@ class DynamicArrayForm extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateValueFunc, valueLabel, isSelectTypeAheadAsync, selectOptions = {} } = this.props
+    const { validateValueFunc, valueLabel, isSelectTypeAheadAsync, selectOptions = {}, t } = this.props
     const values = []
 
     const formItems = items.map((item, index) => {
@@ -169,7 +167,7 @@ class DynamicArrayForm extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -178,7 +176,7 @@ class DynamicArrayForm extends React.Component {
       <Grid className="mc-key-value-map-items">
         <GridItem span={11}>
           <Text className="field-title" component={TextVariants.h4}>
-            {valueLabel ? valueLabel : ""}
+            {valueLabel ? t(valueLabel) : ""}
           </Text>
         </GridItem>
         <GridItem span={1}></GridItem>
@@ -206,4 +204,4 @@ DynamicArrayForm.propTypes = {
 //  isCreatable: PropTypes.bool,
 //  createText: PropTypes.string,
 
-export default DynamicArrayForm
+export default withTranslation()(DynamicArrayForm)

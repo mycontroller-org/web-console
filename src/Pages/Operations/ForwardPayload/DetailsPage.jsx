@@ -2,24 +2,23 @@ import React from "react"
 import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import TabDetails from "./TabDetails"
 import UpdatePage from "./UpdatePage"
-import { withTranslation } from "react-i18next"
 
 class GatewayDetailPage extends React.Component {
   render() {
     const { id } = this.props.match.params
-    const { t } = this.props
+    const { history, match } = this.props
     const tabs = [
       {
-        name: t("details"),
-        content: <TabDetails resourceId={id} history={this.props.history} />,
+        name: "details",
+        content: <TabDetails resourceId={id} history={history} />,
       },
       {
-        name: t("edit"),
-        content: <UpdatePage match={this.props.match} history={this.props.history} />,
+        name: "edit",
+        content: <UpdatePage match={match} history={history} />,
       },
     ]
-    return <DetailRootPage pageHeader={t("forward_payload_details")} tabs={tabs} />
+    return <DetailRootPage pageHeader="forward_payload_details" tabs={tabs} />
   }
 }
 
-export default withTranslation()(GatewayDetailPage)
+export default GatewayDetailPage

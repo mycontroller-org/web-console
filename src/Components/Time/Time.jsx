@@ -1,7 +1,7 @@
-import React from "react"
-import moment from "moment"
-import Moment from "react-moment"
 import { Tooltip } from "@patternfly/react-core"
+import moment from "moment"
+import React from "react"
+import Moment from "react-moment"
 
 // pooled timer enabled on App.js
 // read more on: https://github.com/headzoo/react-moment#pooled-timer

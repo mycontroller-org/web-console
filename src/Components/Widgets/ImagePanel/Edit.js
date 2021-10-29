@@ -8,7 +8,7 @@ import {
   ImageSourceType,
   ImageSourceTypeOptions,
   ImageType,
-  ImageTypeOptions
+  ImageTypeOptions,
 } from "../../../Constants/Widgets/ImagePanel"
 import { api } from "../../../Service/Api"
 import { getDynamicFilter } from "../../../Util/Filter"
@@ -18,12 +18,12 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
   objectPath.set(rootObject, "config.rotation", ImageRotationType.Rotate_0, true)
   items.push(
     {
-      label: "Image Source",
+      label: "image_source",
       fieldId: "!source_type",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "config.sourceType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -34,7 +34,7 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
       resetFields: { "config.field": {} },
     },
     {
-      label: "Rotation",
+      label: "rotation",
       fieldId: "config.rotation",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -71,7 +71,7 @@ export const updateFormItemsImagePanel = (rootObject, items = []) => {
 const getFieldItems = (rootObject) => {
   const items = [
     {
-      label: "Field",
+      label: "field",
       fieldId: "config.field.id",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -84,7 +84,7 @@ const getFieldItems = (rootObject) => {
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
-      label: "Name Key",
+      label: "name_key",
       fieldId: "config.field.nameKey",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -92,7 +92,7 @@ const getFieldItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Image Type",
+      label: "image_type",
       fieldId: "config.field.type",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
@@ -103,7 +103,7 @@ const getFieldItems = (rootObject) => {
       resetFields: { "config.field.custom_mapping": {} },
     },
     {
-      label: "Display Value",
+      label: "display_value",
       fieldId: "config.field.displayValue",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -116,14 +116,14 @@ const getFieldItems = (rootObject) => {
   if (fieldType === ImageType.CustomMapping) {
     items.push(
       {
-        label: "Threshold Mode",
+        label: "threshold_mode",
         fieldId: "config.field.thresholdMode",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
       },
       {
-        label: "Custom Mapping",
+        label: "custom_mapping",
         fieldId: "!custom_mapping",
         fieldType: FieldType.Divider,
       },
@@ -133,8 +133,8 @@ const getFieldItems = (rootObject) => {
         fieldType: FieldType.KeyValueMap,
         dataType: DataType.ArrayObject,
         value: "",
-        keyLabel: "Value",
-        valueLabel: "Icon or Image Location",
+        keyLabel: "value",
+        valueLabel: "icon_or_image_location",
       }
     )
   }
@@ -145,7 +145,7 @@ const getURLItems = (rootObject) => {
   objectPath.set(rootObject, "config.refreshInterval", RefreshIntervalType.None, true)
   const items = [
     {
-      label: "Refresh Interval",
+      label: "refresh_interval",
       fieldId: "config.refreshInterval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.Integer,
@@ -155,14 +155,14 @@ const getURLItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "URL",
+      label: "url",
       fieldId: "config.imageURL",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid url.",
+      helperTextInvalid: "helper_text.invalid_url",
       validated: "default",
       validator: { isURL: {}, isNotEmpty: {} },
     },
@@ -174,7 +174,7 @@ const getDiskItems = (rootObject) => {
   objectPath.set(rootObject, "config.refreshInterval", RefreshIntervalType.None, true)
   const items = [
     {
-      label: "Refresh Interval",
+      label: "refresh_interval",
       fieldId: "config.refreshInterval",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.Integer,
@@ -184,14 +184,14 @@ const getDiskItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Location",
+      label: "location",
       fieldId: "config.imageLocation",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid location.",
+      helperTextInvalid: "helper_text.invalid_location",
       validated: "default",
       validator: { isNotEmpty: {} },
     },

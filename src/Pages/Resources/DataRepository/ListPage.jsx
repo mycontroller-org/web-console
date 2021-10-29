@@ -1,5 +1,6 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { DisplayTrue } from "../../../Components/DataDisplay/Miscellaneous"
@@ -50,7 +51,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Data Repository" />
+        <PageTitle title="data_repository" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -60,10 +61,10 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Description", fieldKey: "description", sortable: true },
-  { title: "Read Only", fieldKey: "readOnly", sortable: true },
-  { title: "Modified On", fieldKey: "modifiedOn", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
+  { title: "description", fieldKey: "description", sortable: true },
+  { title: "read_only", fieldKey: "readOnly", sortable: true },
+  { title: "modified_on", fieldKey: "modifiedOn", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -91,10 +92,10 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "readOnly", categoryName: "Read Only", fieldType: "enabled", dataType: "boolean" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
+  { category: "readOnly", categoryName: "read_only", fieldType: "enabled", dataType: "boolean" },
+  { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -129,4 +130,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

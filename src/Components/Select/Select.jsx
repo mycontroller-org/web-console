@@ -1,6 +1,7 @@
-import React from "react"
 import { Select as PfSelect, SelectOption, SelectVariant } from "@patternfly/react-core"
 import PropTypes from "prop-types"
+import React from "react"
+import { withTranslation } from "react-i18next"
 
 class Select extends React.Component {
   state = {
@@ -28,13 +29,13 @@ class Select extends React.Component {
   }
 
   render() {
-    const { title, disabled, options, direction = "", defaultValue } = this.props
+    const { title, disabled, options, direction = "", defaultValue, t } = this.props
     return (
       <div>
         <span id="select-title">{title}</span>
         <PfSelect
           variant={SelectVariant.single}
-          placeholderText="Select an option"
+          placeholderText={t("select_an_option")}
           //aria-label="Select Input with descriptions"
           onToggle={this.onToggle}
           onSelect={this.onSelect}
@@ -63,4 +64,4 @@ Select.propTypes = {
   disabled: PropTypes.bool,
 }
 
-export default Select
+export default withTranslation()(Select)

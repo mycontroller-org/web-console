@@ -8,16 +8,17 @@ import {
   DescriptionListTerm,
   Divider,
   Grid,
-  GridItem
+  GridItem,
 } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import Metrics from "../../Pages/Resources/Field/Metrics"
 import Loading from "../Loading/Loading"
 import PageContent from "../PageContent/PageContent"
 import Table from "../Table/Table"
 
-export default class TabDetailsBase extends React.Component {
+class TabDetailsBase extends React.Component {
   state = {
     loading: true,
     data: {},
@@ -47,26 +48,34 @@ export default class TabDetailsBase extends React.Component {
   }
 
   getTable = (data) => {
+    const { tableTitle, apiListTablesRecord, tableColumns, getTableFilterFunc, history, t } = this.props
+    // update table headers
+    const tableColumnsUpdated = tableColumns.map((tc) => {
+      const header = { ...tc }
+      header.title = t(tc.title)
+      return header
+    })
     return (
       <Table
-        title={this.props.tableTitle}
-        apiGetRecords={this.props.apiListTablesRecord}
-        tableColumns={this.props.tableColumns}
+        title={t(tableTitle)}
+        apiGetRecords={apiListTablesRecord}
+        tableColumns={tableColumnsUpdated}
         toRowFunc={this.tableRowFuncCellWrapper}
-        history={this.props.history}
-        filters={this.props.getTableFilterFunc(data)}
+        history={history}
+        filters={getTableFilterFunc(data)}
       />
     )
   }
 
   render() {
     const { data, loading } = this.state
+    const { t } = this.props
 
     if (loading) {
       return <Loading />
     }
 
-    const content = wrapCard("Details", this.props.getDetailsFunc(data))
+    const content = wrapCard("details", this.props.getDetailsFunc(data), t)
     const metrics = this.props.showMetrics ? <Metrics data={data} /> : null
     return (
       <>
@@ -84,6 +93,8 @@ export default class TabDetailsBase extends React.Component {
   }
 }
 
+export default withTranslation()(TabDetailsBase)
+
 TabDetailsBase.propTypes = {
   resourceId: PropTypes.string,
   apiGetRecord: PropTypes.func,
@@ -98,20 +109,20 @@ TabDetailsBase.propTypes = {
 
 // helper functions
 
-const wrapField = (key, value) => {
+const wrapField = (key, value, t) => {
   return (
     <DescriptionListGroup key={key}>
-      <DescriptionListTerm>{key}</DescriptionListTerm>
+      <DescriptionListTerm>{t(key)}</DescriptionListTerm>
       <DescriptionListDescription>{value}</DescriptionListDescription>
     </DescriptionListGroup>
   )
 }
 
-const wrapCard = (title, fieldsMap) => {
+const wrapCard = (title, fieldsMap, t) => {
   const content = []
   const fieldMapKeys = Object.keys(fieldsMap)
   fieldMapKeys.forEach((key) => {
-    const fieldsList = fieldsMap[key].map(({ key, value }) => wrapField(key, value))
+    const fieldsList = fieldsMap[key].map(({ key, value }) => wrapField(key, value, t))
     content.push(
       <DescriptionList key={key} isHorizontal={false}>
         {fieldsList}
@@ -123,7 +134,7 @@ const wrapCard = (title, fieldsMap) => {
     <GridItem key={title}>
       <Card isFlat={false}>
         <CardTitle>
-          {title} <Divider />
+          {t(title)} <Divider />
         </CardTitle>
         <CardBody>
           <Grid hasGutter sm={12} md={12} lg={6} xl={6}>

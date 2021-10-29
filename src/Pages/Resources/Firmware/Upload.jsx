@@ -1,7 +1,7 @@
 import { Alert, Button, FileUpload, Form, FormGroup, Grid, Stack } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { api } from "../../../Service/Api"
-
 import "./Upload.scss"
 
 const defaultSettings = {
@@ -91,8 +91,9 @@ class FirmwareFileUpload extends React.Component {
 
   render() {
     const { loading, value, filename, disableUpload, rejected, uploadSuccess } = this.state
+    const { t } = this.props
     const successMessage = uploadSuccess ? (
-      <Alert variant="success" isInline title="File uploaded successfully" />
+      <Alert variant="success" isInline title={t("file_uploaded_successfully")} />
     ) : null
     return (
       <Grid lg={7} md={9} sm={12}>
@@ -100,9 +101,9 @@ class FirmwareFileUpload extends React.Component {
           <Stack hasGutter>
             <Form isHorizontal>
               <FormGroup
-                label="Firmware File"
+                label={t("firmware_file")}
                 fieldId="firmware-file"
-                helperTextInvalid="Invalid file"
+                helperTextInvalid={t("invalid_file")}
                 validated={rejected ? "error" : "default"}
               >
                 <FileUpload
@@ -113,6 +114,9 @@ class FirmwareFileUpload extends React.Component {
                   onChange={this.onFileChange}
                   onDrop={this.onDrop}
                   dropzoneProps={defaultSettings}
+                  browseButtonText={`${t("browse")}...`}
+                  clearButtonText={t("clear")}
+                  filenamePlaceholder={t("filename_placeholder")}
                 />
               </FormGroup>
             </Form>
@@ -123,7 +127,7 @@ class FirmwareFileUpload extends React.Component {
                 onClick={() => this.onUpload(value, filename)}
                 isDisabled={disableUpload || rejected || loading}
               >
-                Upload
+                {t("upload")}
               </Button>
             </div>
           </Stack>
@@ -133,4 +137,4 @@ class FirmwareFileUpload extends React.Component {
   }
 }
 
-export default FirmwareFileUpload
+export default withTranslation()(FirmwareFileUpload)

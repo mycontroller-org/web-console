@@ -1,18 +1,18 @@
 import { Alert, Divider, Flex, FlexItem, Grid, Radio, Stack, StackItem } from "@patternfly/react-core"
+import { DownloadIcon } from "@patternfly/react-icons"
+import objectPath from "object-path"
 import PropTypes from "prop-types"
 import React from "react"
-import ActionBar from "../ActionBar/ActionBar"
-import { updateItems, updateRootObject } from "../Form/Functions"
-import CodeEditorBasic from "../CodeEditor/CodeEditorBasic"
-import { Form } from "../Form/Form"
-import "./Editor.scss"
-import { validate, validateItem } from "../../Util/Validator"
-import objectPath from "object-path"
-import Loading from "../Loading/Loading"
-import { DownloadIcon } from "@patternfly/react-icons"
-import { toObject, toString } from "../../Util/Language"
 import { withTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
+import { toObject, toString } from "../../Util/Language"
+import { validate, validateItem } from "../../Util/Validator"
+import ActionBar from "../ActionBar/ActionBar"
+import CodeEditorBasic from "../CodeEditor/CodeEditorBasic"
+import { Form } from "../Form/Form"
+import { updateItems, updateRootObject } from "../Form/Functions"
+import Loading from "../Loading/Loading"
+import "./Editor.scss"
 
 class Editor extends React.Component {
   state = {
@@ -219,7 +219,7 @@ class Editor extends React.Component {
       saveDisabled = true
     }
 
-    const saveText = saveButtonText ? saveButtonText : t("save")
+    const saveText = t(saveButtonText ? saveButtonText : "save")
 
     const actionButtons = [
       { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
@@ -281,7 +281,7 @@ class Editor extends React.Component {
                 <Radio
                   isChecked={formView}
                   onChange={this.onViewChange}
-                  label="Form View"
+                  label={t("form_view")}
                   id={"form_view_" + uuidv4()}
                 />
               </FlexItem>
@@ -290,7 +290,7 @@ class Editor extends React.Component {
                   isChecked={!formView}
                   isDisabled={disableEditor}
                   onChange={this.onViewChange}
-                  label="YAML View"
+                  label={t("yaml_view")}
                   id={"yaml_view_" + uuidv4()}
                 />
               </FlexItem>

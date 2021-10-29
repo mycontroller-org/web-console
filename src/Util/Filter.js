@@ -20,7 +20,7 @@ export const getDynamicFilter = (key, value, existingFilter = []) => {
   // add if additional filters supplied
   finalFilters.push(...existingFilter)
 
-  console.log(JSON.stringify(finalFilters))
+  //console.log(JSON.stringify(finalFilters))
 
   return finalFilters
 }

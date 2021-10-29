@@ -14,7 +14,7 @@ const tabDetails = ({ resourceId, history }) => {
       history={history}
       apiGetRecord={api.firmware.get}
       apiListTablesRecord={api.node.list}
-      tableTitle="Assigned Nodes"
+      tableTitle="assigned_nodes"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
@@ -31,12 +31,11 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Description", value: data.description })
-  fieldsList1.push({ key: "Modified On", value: <LastSeen date={data.modifiedOn} /> })
-  fieldsList1.push({ key: "Labels", value: <Labels data={data.labels} /> })
-
-  fieldsList2.push({ key: "File Details", value: <KeyValueMap data={data.file} /> })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "description", value: data.description })
+  fieldsList1.push({ key: "modified_on", value: <LastSeen date={data.modifiedOn} /> })
+  fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "file_details", value: <KeyValueMap data={data.file} /> })
 
   return {
     "list-1": fieldsList1,
@@ -45,12 +44,12 @@ const getDetailsFuncImpl = (data) => {
 }
 
 const tableColumns = [
-  { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Version", fieldKey: "labels.version", sortable: true },
-  { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
-  { title: "Status", fieldKey: "state.status", sortable: true },
-  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
+  { title: "node_id", fieldKey: "nodeId", sortable: true },
+  { title: "name", fieldKey: "name", sortable: true },
+  { title: "version", fieldKey: "labels.version", sortable: true },
+  { title: "library_version", fieldKey: "labels.library_version", sortable: true },
+  { title: "status", fieldKey: "state.status", sortable: true },
+  { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {

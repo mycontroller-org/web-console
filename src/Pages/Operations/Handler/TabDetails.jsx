@@ -23,13 +23,13 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Description", value: data.description })
-  fieldsList1.push({ key: "Enabled", value: <DisplayTrue data={data} field="enabled" /> })
-  fieldsList1.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList1.push({ key: "Type", value: data.type })
-  fieldsList1.push({ key: "State", value: <KeyValueMap data={data.state} /> })
-  fieldsList2.push({ key: "Spec", value: <KeyValueMap data={data.spec} /> })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "description", value: data.description })
+  fieldsList1.push({ key: "enabled", value: <DisplayTrue data={data} field="enabled" /> })
+  fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList1.push({ key: "type", value: data.type })
+  fieldsList1.push({ key: "state", value: <KeyValueMap data={data.state} /> })
+  fieldsList2.push({ key: "spec", value: <KeyValueMap data={data.spec} /> })
 
   return {
     "list-1": fieldsList1,

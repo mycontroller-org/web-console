@@ -1,5 +1,6 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { NodeRebootDialog, NodeResetDialog } from "../../../Components/Dialog/Dialog"
@@ -105,7 +106,7 @@ class List extends ListBase {
     const { showDialogReboot, showDialogReset } = this.state
     return (
       <>
-        <PageTitle title="Nodes" />
+        <PageTitle title="nodes" />
         <PageContent>
           {super.render()}
           <NodeRebootDialog
@@ -132,14 +133,14 @@ class List extends ListBase {
 
 // Properties definition
 const tableColumns = [
-  { title: "Gateway ID", fieldKey: "gatewayId", sortable: true },
-  { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Version", fieldKey: "labels.version", sortable: true },
-  { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
-  { title: "Battery", fieldKey: "others.battery_level", sortable: true },
-  { title: "Status", fieldKey: "state.status", sortable: true },
-  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
+  { title: "gateway_id", fieldKey: "gatewayId", sortable: true },
+  { title: "node_id", fieldKey: "nodeId", sortable: true },
+  { title: "name", fieldKey: "name", sortable: true },
+  { title: "version", fieldKey: "labels.version", sortable: true },
+  { title: "library_version", fieldKey: "labels.library_version", sortable: true },
+  { title: "battery", fieldKey: "others.battery_level", sortable: true },
+  { title: "status", fieldKey: "state.status", sortable: true },
+  { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -195,17 +196,17 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "Name", fieldType: "input", dataType: "string" },
-  { category: "gatewayId", categoryName: "Gateway ID", fieldType: "input", dataType: "string" },
-  { category: "nodeId", categoryName: "Node ID", fieldType: "input", dataType: "string" },
-  { category: "labels.version", categoryName: "Version", fieldType: "input", dataType: "string" },
+  { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
+  { category: "gatewayId", categoryName: "gateway_id", fieldType: "input", dataType: "string" },
+  { category: "nodeId", categoryName: "node_id", fieldType: "input", dataType: "string" },
+  { category: "labels.version", categoryName: "version", fieldType: "input", dataType: "string" },
   {
     category: "labels.library_version",
-    categoryName: "Library Version",
+    categoryName: "library_version",
     fieldType: "input",
     dataType: "string",
   },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -240,4 +241,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

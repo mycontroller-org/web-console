@@ -10,10 +10,34 @@ export const HandlerType = {
 
 // Handler type options
 export const HandlerTypeOptions = [
-  { value: HandlerType.Noop, label: "Noop", description: "No Operation Handler" },
-  { value: HandlerType.Resource, label: "Resource", description: "Internal resource related actions" },
-  { value: HandlerType.Email, label: "Email", description: "Sends email" },
-  { value: HandlerType.Telegram, label: "Telegram", description: "Sends text to telegram" },
-  { value: HandlerType.Webhook, label: "Webhook", description: "Calls a webhook url" },
-  { value: HandlerType.Backup, label: "Backup", description: "Perform backup of the server" },
+  {
+    value: HandlerType.Noop,
+    label: "opts.handler_type.label_noop",
+    description: "opts.handler_type.desc_noop",
+  },
+  {
+    value: HandlerType.Resource,
+    label: "opts.handler_type.label_resource",
+    description: "opts.handler_type.desc_resource",
+  },
+  {
+    value: HandlerType.Email,
+    label: "opts.handler_type.label_email",
+    description: "opts.handler_type.desc_email",
+  },
+  {
+    value: HandlerType.Telegram,
+    label: "opts.handler_type.label_telegram",
+    description: "opts.handler_type.desc_telegram",
+  },
+  {
+    value: HandlerType.Webhook,
+    label: "opts.handler_type.label_webhook",
+    description: "opts.handler_type.desc_webhook",
+  },
+  {
+    value: HandlerType.Backup,
+    label: "opts.handler_type.label_backup",
+    description: "opts.handler_type.desc_backup",
+  },
 ]

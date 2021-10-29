@@ -1,8 +1,8 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
 import { RouteLink } from "../../../Components/Buttons/Buttons"
-import { getStatus } from "../../../Components/Icons/Icons"
 import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { getStatus } from "../../../Components/Icons/Icons"
 import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
@@ -15,7 +15,7 @@ const tabDetails = ({ resourceId, history }) => {
       history={history}
       apiGetRecord={api.gateway.get}
       apiListTablesRecord={api.node.list}
-      tableTitle="Nodes"
+      tableTitle="nodes"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
@@ -32,13 +32,13 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Name", value: data.name })
-  fieldsList1.push({ key: "Enabled", value: data.enabled ? "true" : "false" })
-  fieldsList1.push({ key: "Status", value: getStatus(data.state ? data.state.status : "unavailable") })
-  fieldsList1.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "Provider", value: data.provider.type })
-  fieldsList2.push({ key: "Protocol", value: <KeyValueMap data={data.provider.protocol} /> })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "name", value: data.name })
+  fieldsList1.push({ key: "enabled", value: data.enabled ? "true" : "false" })
+  fieldsList1.push({ key: "status", value: getStatus(data.state ? data.state.status : "unavailable") })
+  fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "provider", value: data.provider.type })
+  fieldsList2.push({ key: "protocol", value: <KeyValueMap data={data.provider.protocol} /> })
 
   return {
     "list-1": fieldsList1,
@@ -47,13 +47,13 @@ const getDetailsFuncImpl = (data) => {
 }
 
 const tableColumns = [
-  { title: "Node ID", fieldKey: "nodeId", sortable: true },
-  { title: "Name", fieldKey: "name", sortable: true },
-  { title: "Version", fieldKey: "labels.version", sortable: true },
-  { title: "Library Version", fieldKey: "labels.library_version", sortable: true },
-  { title: "Battery", fieldKey: "others.battery_level", sortable: true },
-  { title: "Status", fieldKey: "state.status", sortable: true },
-  { title: "Last Seen", fieldKey: "lastSeen", sortable: true },
+  { title: "node_id", fieldKey: "nodeId", sortable: true },
+  { title: "name", fieldKey: "name", sortable: true },
+  { title: "version", fieldKey: "labels.version", sortable: true },
+  { title: "library_version", fieldKey: "labels.library_version", sortable: true },
+  { title: "battery", fieldKey: "others.battery_level", sortable: true },
+  { title: "status", fieldKey: "state.status", sortable: true },
+  { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {

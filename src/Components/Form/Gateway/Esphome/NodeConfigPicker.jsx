@@ -1,11 +1,12 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
+import { withTranslation } from "react-i18next"
+import { DataType, FieldType } from "../../../../Constants/Form"
 import Editor from "../../../Editor/Editor"
 import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../../Constants/Form"
-import PropTypes from "prop-types"
 
 class NodeConfigPicker extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class NodeConfigPicker extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, name, onChange } = this.props
+    const { value, id, name, onChange, t } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -30,7 +31,7 @@ class NodeConfigPicker extends React.Component {
         </Button>
         <Modal
           key={"edit-field-data" + id}
-          title={"Update node: " + name}
+          title={`${t("update_node")}: ${name}`}
           variant={ModalVariant.medium}
           position="top"
           isOpen={isOpen}
@@ -52,7 +53,7 @@ class NodeConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={getItems}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -68,7 +69,7 @@ NodeConfigPicker.propTypes = {
   onChange: PropTypes.func,
 }
 
-export default NodeConfigPicker
+export default withTranslation()(NodeConfigPicker)
 
 const getItems = (rootObject) => {
   objectPath.set(rootObject, "disabled", false, true)
@@ -80,7 +81,7 @@ const getItems = (rootObject) => {
 
   const items = [
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -88,7 +89,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Address",
+      label: "address",
       fieldId: "address",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -96,7 +97,7 @@ const getItems = (rootObject) => {
       isRequired: true,
       isDisabled: false,
       helperText: "",
-      helperTextInvalid: "Invalid address, example: node1.local:6053",
+      helperTextInvalid: "helper_text.invalid_address_esphome",
       validated: "default",
       validator: {
         isURL: {
@@ -108,7 +109,7 @@ const getItems = (rootObject) => {
       },
     },
     {
-      label: "Password",
+      label: "password",
       fieldId: "password",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -116,7 +117,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Connection Timeout",
+      label: "connection_timeout",
       fieldId: "timeout",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -124,7 +125,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Alive Check Interval",
+      label: "alive_check_interval",
       fieldId: "aliveCheckInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -132,7 +133,7 @@ const getItems = (rootObject) => {
       isRequired: false,
     },
     {
-      label: "Reconnect Delay",
+      label: "reconnect_delay",
       fieldId: "reconnectDelay",
       fieldType: FieldType.Text,
       dataType: DataType.String,

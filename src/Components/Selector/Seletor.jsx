@@ -1,16 +1,8 @@
-import {
-  Divider,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  Split,
-  SplitItem,
-} from "@patternfly/react-core"
+import { Divider, Dropdown, DropdownItem, DropdownToggle, Split, SplitItem } from "@patternfly/react-core"
 import { CaretDownIcon, MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons"
+import PropTypes from "prop-types"
 import React from "react"
 import "./Selector.scss"
-
-import PropTypes from "prop-types"
 
 // Sample data
 // {

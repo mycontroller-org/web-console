@@ -10,11 +10,12 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "../Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import React from "react"
+import "../Form.scss"
 import MixedControlPicker from "./MixedControlPicker/MixedControlPicker"
+import { withTranslation } from "react-i18next"
 
 class MixedControlList extends React.Component {
   state = {
@@ -93,7 +94,7 @@ class MixedControlList extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateValueFunc, valueLabel } = this.props
+    const { validateValueFunc, valueLabel, t } = this.props
     const values = []
 
     const formItems = items.map((item, index) => {
@@ -125,7 +126,7 @@ class MixedControlList extends React.Component {
                 <TextInput
                   id={"value_" + index}
                   key={"value_" + index}
-                  value={getItemDetails(item)}
+                  value={getItemDetails(item, t)}
                   validated={validatedValue}
                   onChange={() => {}}
                   isDisabled={true}
@@ -162,7 +163,7 @@ class MixedControlList extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -187,13 +188,13 @@ MixedControlList.propTypes = {
   validateValueFunc: PropTypes.func,
 }
 
-export default MixedControlList
+export default withTranslation()(MixedControlList)
 
 // helper functions
-const getItemDetails = (item) => {
+const getItemDetails = (item, t) => {
   if (item && item.resource) {
     const { type: rt, quickId: qid } = item.resource
     return `resource=${rt}:${qid}, control=${item.control.type}`
   }
-  return "do update"
+  return t("do_update")
 }

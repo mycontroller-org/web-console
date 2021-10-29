@@ -1,13 +1,15 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
+import { DisplaySuccess } from "../../../Components/DataDisplay/Miscellaneous"
 import { getStatusBool } from "../../../Components/Icons/Icons"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { getLastSeen, LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { getValue } from "../../../Util/Util"
 import {
   deleteAllFilter,
   deleteFilterCategory,
@@ -18,8 +20,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/scheduler"
-import { getLastSeen, LastSeen } from "../../../Components/Time/Time"
-import { DisplaySuccess } from "../../../Components/DataDisplay/Miscellaneous"
+import { getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
@@ -66,7 +67,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Schedules" />
+        <PageTitle title="schedules" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -76,14 +77,14 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Description", fieldKey: "description", sortable: true },
-  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
-  { title: "Type", fieldKey: "type", sortable: true },
-  { title: "Executed Count", fieldKey: "state.executedCount", sortable: true },
-  { title: "Last Run", fieldKey: "state.lastRun", sortable: true },
-  { title: "Last Status", fieldKey: "state.lastStatus", sortable: true },
-  { title: "Message", fieldKey: "state.message", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
+  { title: "description", fieldKey: "description", sortable: true },
+  { title: "enabled", fieldKey: "enabled", sortable: true },
+  { title: "type", fieldKey: "type", sortable: true },
+  { title: "executed_count", fieldKey: "state.executedCount", sortable: true },
+  { title: "last_run", fieldKey: "state.lastRun", sortable: true },
+  { title: "last_status", fieldKey: "state.lastStatus", sortable: true },
+  { title: "message", fieldKey: "state.message", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -117,10 +118,10 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "id", categoryName: "id", fieldType: "input", dataType: "string" },
+  { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -155,4 +156,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

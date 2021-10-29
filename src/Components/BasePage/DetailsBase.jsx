@@ -1,6 +1,7 @@
 import { Divider, Tab, Tabs, TabTitleText } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import PageContent from "../PageContent/PageContent"
 import PageTitle from "../PageTitle/PageTitle"
 import "./DetailsBase.scss"
@@ -36,12 +37,18 @@ class DetailsPage extends React.Component {
   render() {
     let tabsData = null
     let tabContent = null
+    const { t, pageHeader } = this.props
 
     if (this.state.tabs.length > 0) {
       const tabElements = []
       this.state.tabs.forEach((tab) => {
         tabElements.push(
-          <Tab key={tab.key} id={tab.key} eventKey={tab.key} title={<TabTitleText>{tab.name}</TabTitleText>}></Tab>
+          <Tab
+            key={tab.key}
+            id={tab.key}
+            eventKey={tab.key}
+            title={<TabTitleText>{t(tab.name)}</TabTitleText>}
+          ></Tab>
         )
         if (this.state.activeTabKey === tab.key) {
           tabContent = tab.content
@@ -65,7 +72,7 @@ class DetailsPage extends React.Component {
 
     return (
       <>
-        <PageTitle title={this.props.pageHeader} hideDivider={true} />
+        <PageTitle title={pageHeader} hideDivider={true} />
         <PageContent>
           <Divider component="hr" />
           {tabsData}
@@ -82,4 +89,4 @@ DetailsPage.propTypes = {
   tabs: PropTypes.array,
 }
 
-export default DetailsPage
+export default withTranslation()(DetailsPage)

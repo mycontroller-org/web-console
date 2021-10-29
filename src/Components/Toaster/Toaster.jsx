@@ -1,8 +1,8 @@
+import { Alert, AlertActionCloseButton, AlertGroup } from "@patternfly/react-core"
 import React from "react"
-import { AlertGroup, Alert, AlertActionCloseButton } from "@patternfly/react-core"
 import { connect } from "react-redux"
-import { toasterRemove } from "../../store/entities/toaster"
 import { TOAST_ALERT_TIMEOUT } from "../../Constants/Common"
+import { toasterRemove } from "../../store/entities/toaster"
 
 class Toaster extends React.Component {
   render() {

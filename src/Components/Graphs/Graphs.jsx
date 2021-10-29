@@ -1,19 +1,17 @@
-import React from "react"
 import {
   Chart,
-  ChartAxis,
   ChartArea,
+  ChartAxis,
   ChartGroup,
-  ChartVoronoiContainer,
   ChartThemeColor,
-  getCustomTheme,
   ChartThemeVariant,
   ChartTooltip,
+  ChartVoronoiContainer,
+  getCustomTheme,
 } from "@patternfly/react-charts"
-
-import { areaTheme } from "./Themes"
-
+import React from "react"
 import "./Graphs.scss"
+import { areaTheme } from "./Themes"
 
 const theme = getCustomTheme(ChartThemeColor.blue, ChartThemeVariant.light, areaTheme)
 

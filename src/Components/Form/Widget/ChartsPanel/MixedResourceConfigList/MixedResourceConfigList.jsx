@@ -10,10 +10,11 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "../../../Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
+import React from "react"
+import { withTranslation } from "react-i18next"
+import "../../../Form.scss"
 import MixedResourceConfigPicker from "./MixedResourceConfigPicker"
 
 class MixedResourceConfigList extends React.Component {
@@ -93,7 +94,7 @@ class MixedResourceConfigList extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateValueFunc, valueLabel, yAxisConfig } = this.props
+    const { validateValueFunc, valueLabel, yAxisConfig, t } = this.props
     const values = []
 
     const formItems = items.map((item, index) => {
@@ -125,7 +126,7 @@ class MixedResourceConfigList extends React.Component {
                 <TextInput
                   id={"value_" + index}
                   key={"value_" + index}
-                  value={getItemDetails(item)}
+                  value={getItemDetails(item, t)}
                   validated={validatedValue}
                   onChange={() => {}}
                   isDisabled={true}
@@ -163,7 +164,7 @@ class MixedResourceConfigList extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button key="btn-add-an-item" variant="secondary" onClick={this.onAdd}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -189,13 +190,13 @@ MixedResourceConfigList.propTypes = {
   yAxisConfig: PropTypes.object,
 }
 
-export default MixedResourceConfigList
+export default withTranslation()(MixedResourceConfigList)
 
 // helper functions
-const getItemDetails = (item) => {
+const getItemDetails = (item, t) => {
   if (item) {
     const { resourceType: rt, quickId: qid, chartType } = item
     return `resource=${rt}:${qid}, chartType=${chartType}`
   }
-  return "do update"
+  return t("do_update")
 }

@@ -1,5 +1,6 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import PageContent from "../../../Components/PageContent/PageContent"
@@ -49,7 +50,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="Firmwares" />
+        <PageTitle title="firmwares" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -58,10 +59,10 @@ class List extends ListBase {
 
 // Properties definition
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Description", fieldKey: "description", sortable: true },
-  { title: "File Name", fieldKey: "file.name", sortable: true },
-  { title: "Last Modified", fieldKey: "lastModified", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
+  { title: "description", fieldKey: "description", sortable: true },
+  { title: "filename", fieldKey: "file.name", sortable: true },
+  { title: "last_modified", fieldKey: "lastModified", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -89,9 +90,9 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
+  { category: "id", categoryName: "id", fieldType: "input", dataType: "string" },
+  { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
@@ -126,4 +127,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

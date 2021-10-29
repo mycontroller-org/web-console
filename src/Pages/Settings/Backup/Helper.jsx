@@ -2,12 +2,13 @@ import { Modal, ModalVariant } from "@patternfly/react-core"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../Components/ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../Constants/Form"
 import { Operator } from "../../../Constants/Filter"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { HandlerType } from "../../../Constants/Handler"
 import { StorageExportTypeOptions } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { validate } from "../../../Util/Validator"
+import { useTranslation } from "react-i18next"
 
 const CustomModal = ({
   isOpen,
@@ -16,8 +17,10 @@ const CustomModal = ({
   saveBackupLocationsFunc = () => {},
   backupLocations = [],
 }) => {
+  const { t } = useTranslation()
+
   const isBackupLocations = modalType === "backup_locations"
-  const modalTitle = isBackupLocations ? "Backup Locations" : "Run a Backup"
+  const modalTitle = isBackupLocations ? "backup_locations" : "run_a_backup"
 
   const editor = isBackupLocations
     ? getBackupLocationsEditor(backupLocations, onClose, saveBackupLocationsFunc)
@@ -26,7 +29,7 @@ const CustomModal = ({
   return (
     <Modal
       key="edit-widget-backup-settings"
-      title={modalTitle}
+      title={t(modalTitle)}
       variant={ModalVariant.medium}
       position="top"
       isOpen={isOpen}
@@ -63,7 +66,7 @@ const getRunOnDemandBackupEditor = (backupLocations, onClose) => {
     <Editor
       key="import-export-editor"
       language="yaml"
-      saveButtonText="Run Backup"
+      saveButtonText="run_backup"
       rootObject={{}}
       onChangeFunc={() => {}}
       onSaveFunc={(rootObject) => {
@@ -99,42 +102,38 @@ const getBackupLocations = (locations = {}) => {
 const getRunExportItems = (_rootObject = {}, locationOptions = []) => {
   return [
     {
-      label: "Prefix",
+      label: "prefix",
       fieldId: "prefix",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Invalid prefix name. chars: min=2, max=100",
+      helperTextInvalid: "helper_text.invalid_prefix",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isKey: {} },
     },
     {
-      label: "Storage Export Type",
+      label: "storage_export_type",
       fieldId: "storageExportType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: StorageExportTypeOptions,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Select a storage export type",
-      validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Target Location",
+      label: "target_location",
       fieldId: "targetLocation",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: locationOptions,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Select a target location",
-      validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Handler",
+      label: "handler",
       fieldId: "handler",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -159,7 +158,7 @@ const getRunExportItems = (_rootObject = {}, locationOptions = []) => {
 const getBackupLocationsItems = (_rootObject) => {
   const items = [
     {
-      label: "Locations",
+      label: "locations",
       fieldId: "!locations",
       fieldType: FieldType.Divider,
     },
@@ -169,8 +168,8 @@ const getBackupLocationsItems = (_rootObject) => {
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: {},
-      keyLabel: "Name",
-      valueLabel: "Location",
+      keyLabel: "name",
+      valueLabel: "location",
       validateKeyFunc: (value) => {
         return validate("isKey", value)
       },

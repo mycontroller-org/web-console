@@ -1,23 +1,22 @@
 import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
+import PropTypes from "prop-types"
 import React from "react"
+import { DataType, FieldType } from "../../../../../Constants/Form"
+import { InterpolationType, InterpolationTypeLineOptions } from "../../../../../Constants/Metric"
+import { ResourceType, ResourceTypeOptions } from "../../../../../Constants/ResourcePicker"
+import { ChartType, ChartTypeOptions } from "../../../../../Constants/Widgets/ChartsPanel"
+import { ColorsSetBig } from "../../../../../Constants/Widgets/Color"
+import { getValue } from "../../../../../Util/Util"
 import Editor from "../../../../Editor/Editor"
 import ErrorBoundary from "../../../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../../../Constants/Form"
-import { ResourceTypeOptions, ResourceType } from "../../../../../Constants/ResourcePicker"
-import PropTypes from "prop-types"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,
   getResourceOptionsAPI,
   getResourceOptionValueFunc,
 } from "../../../ResourcePicker/ResourceUtils"
-
-import { getValue } from "../../../../../Util/Util"
-import { ChartType, ChartTypeOptions } from "../../../../../Constants/Widgets/ChartsPanel"
-import { InterpolationType, InterpolationTypeLineOptions } from "../../../../../Constants/Metric"
-import { ColorsSetBig } from "../../../../../Constants/Widgets/Color"
 
 class MixedResourceConfigPicker extends React.Component {
   state = {
@@ -71,7 +70,7 @@ class MixedResourceConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={(rootObject) => getItems(rootObject, yAxisOptions)}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -109,23 +108,19 @@ const getItems = (rootObject, yAxisOptions = []) => {
   const items = []
   items.push(
     {
-      label: "Disabled",
+      label: "disabled",
       fieldId: "disabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Resource Type",
+      label: "resource_type",
       fieldId: "resourceType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
       options: ResourceTypeOptions.filter(
         (opt) => opt.value === ResourceType.Field || opt.value === ResourceType.Node
       ),
@@ -142,7 +137,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
     const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
     items.push(
       {
-        label: "Resource",
+        label: "resource",
         fieldId: "quickId",
         apiOptions: resourceAPI,
         optionValueFunc: resourceOptionValueFunc,
@@ -152,22 +147,18 @@ const getItems = (rootObject, yAxisOptions = []) => {
         dataType: DataType.String,
         value: "",
         isRequired: true,
-        isDisabled: false,
-        helperText: "",
-        helperTextInvalid: "Invalid type",
-        validated: "default",
         options: [],
         validator: { isNotEmpty: {} },
       },
       {
-        label: "Name Key",
+        label: "name_key",
         fieldId: "nameKey",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "Invalid Name Key. chars: min=1 and max=100",
+        helperTextInvalid: "helper_text.invalid_key",
         validated: "default",
         validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
       }
@@ -176,35 +167,27 @@ const getItems = (rootObject, yAxisOptions = []) => {
 
   items.push(
     {
-      label: "Chart Type",
+      label: "chart_type",
       fieldId: "chartType",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid type",
-      validated: "default",
       options: ChartTypeOptions.filter((opt) => opt.value !== ChartType.PieChart),
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Y Axis",
+      label: "y_axis",
       fieldId: "yAxis",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      isDisabled: false,
-      helperText: "",
-      helperTextInvalid: "Invalid axis",
-      validated: "default",
       options: yAxisOptions,
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Color",
+      label: "color",
       fieldId: "color",
       fieldType: FieldType.ColorBox,
       dataType: DataType.String,
@@ -214,7 +197,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Unit",
+      label: "unit",
       fieldId: "unit",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -222,7 +205,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
       isRequired: false,
     },
     {
-      label: "Use Global Style",
+      label: "use_global_style",
       fieldId: "useGlobalStyle",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -235,12 +218,12 @@ const getItems = (rootObject, yAxisOptions = []) => {
   if (!useGlobalStyle) {
     items.push(
       {
-        label: "Style",
+        label: "style",
         fieldId: "!style_config",
         fieldType: FieldType.Divider,
       },
       {
-        label: "Fill Opacity (%)",
+        label: "fill_opacity_%",
         fieldId: "style.fillOpacity",
         fieldType: FieldType.SliderSimple,
         dataType: DataType.Integer,
@@ -250,7 +233,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
         step: 1,
       },
       {
-        label: "Stroke Width (px)",
+        label: "stroke_width_px",
         fieldId: "style.strokeWidth",
         fieldType: FieldType.SliderSimple,
         dataType: DataType.Float,
@@ -260,7 +243,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
         step: 0.5,
       },
       {
-        label: "Round Decimal",
+        label: "round_decimal",
         fieldId: "style.roundDecimal",
         fieldType: FieldType.SliderSimple,
         dataType: DataType.Integer,
@@ -270,7 +253,7 @@ const getItems = (rootObject, yAxisOptions = []) => {
         step: 1,
       },
       {
-        label: "Interpolation",
+        label: "interpolation",
         fieldId: "style.interpolation",
         fieldType: FieldType.SelectTypeAhead,
         dataType: DataType.String,

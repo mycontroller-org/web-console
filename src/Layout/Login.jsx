@@ -6,21 +6,22 @@ import {
   LoginPage,
 } from "@patternfly/react-core"
 import { ExclamationCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import { connect } from "react-redux"
 import htmlParser from "html-react-parser"
+import React from "react"
+import { withTranslation } from "react-i18next"
+import { connect } from "react-redux"
+import {
+  MAXIMUM_LOGIN_EXPIRES_IN_DAYS,
+  MINIMUM_LOGIN_EXPIRES_IN_DAYS,
+  URL_DOCUMENTATION,
+} from "../Constants/Common"
 import logoBackground from "../Logo/mc-black-login-page.svg"
 import displayLogo from "../Logo/mc-white-full.svg"
 import { api } from "../Service/Api"
-import { authSuccess } from "../store/entities/auth"
-import "./Login.scss"
-import {
-  MINIMUM_LOGIN_EXPIRES_IN_DAYS,
-  MAXIMUM_LOGIN_EXPIRES_IN_DAYS,
-  URL_DOCUMENTATION,
-} from "../Constants/Common"
-import { getValue } from "../Util/Util"
 import { updateDocumentationUrl, updateMetricsDBStatus } from "../store/entities/about"
+import { authSuccess } from "../store/entities/auth"
+import { getValue } from "../Util/Util"
+import "./Login.scss"
 
 class SimpleLoginPage extends React.Component {
   state = {
@@ -31,10 +32,11 @@ class SimpleLoginPage extends React.Component {
     isValidPassword: true,
     isRememberMeChecked: false,
     isLoginButtonDisabled: false,
-    loginData: { message: "Fetching...", serverMessage: "" },
+    loginData: { message: `${this.props.t("fetching")}...`, serverMessage: "" },
   }
 
   componentDidMount() {
+    const { t } = this.props
     api.status
       .get()
       .then((res) => {
@@ -43,11 +45,11 @@ class SimpleLoginPage extends React.Component {
         this.props.updateDocUrl({ documentationUrl: docUrl !== "" ? docUrl : URL_DOCUMENTATION })
         this.props.updateMetricsDB({ metricsDBDisabled: res.data.metricsDBDisabled })
 
-        const loginData = getValue(res.data, "login", { message: "No message set for login" })
+        const loginData = getValue(res.data, "login", { message: t("no_login_message") })
         this.setState({ loginData: loginData })
       })
       .catch((_e) => {
-        this.setState({ loginData: { message: "Error on fetching login message" } })
+        this.setState({ loginData: { message: t("error.console.login_msg_loading_failed") } })
       })
   }
 
@@ -92,11 +94,12 @@ class SimpleLoginPage extends React.Component {
 
   render() {
     const { message: loginMessage, serverMessage } = this.state.loginData
+    const { t } = this.props
     let loginText = loginMessage
     if (serverMessage !== undefined && serverMessage !== "") {
       loginText = `
         <p>${loginMessage}</p><br>
-        <p><b>System Message</b></p>
+        <p><b>${t("system_message")}</b></p>
         <p>${serverMessage}</p>
       `
     }
@@ -105,20 +108,20 @@ class SimpleLoginPage extends React.Component {
     const helperText = (
       <React.Fragment>
         <ExclamationCircleIcon />
-        &nbsp;Invalid login credentials.
+        &nbsp;{t("error.console.invalid_login_credentials")}
       </React.Fragment>
     )
 
     const forgotCredentials = (
       <LoginMainFooterBandItem>
-        <a href="#">Forgot username or password?</a>
+        <a href="#">{t("forgot_username_or_password")}</a>
       </LoginMainFooterBandItem>
     )
 
     const listItem = (
       <React.Fragment>
         <ListItem>
-          <LoginFooterItem href={this.props.documentationUrl}>Documentation</LoginFooterItem>
+          <LoginFooterItem href={this.props.documentationUrl}>{t("documentation")}</LoginFooterItem>
         </ListItem>
       </React.Fragment>
     )
@@ -128,19 +131,20 @@ class SimpleLoginPage extends React.Component {
         showHelperText={this.state.showHelperText}
         helperText={helperText}
         //helperTextIcon={<ExclamationCircleIcon />}
-        usernameLabel="Username"
+        usernameLabel={t("username")}
         usernameValue={this.state.usernameValue}
         onChangeUsername={this.handleUsernameChange}
         isValidUsername={this.state.isValidUsername}
-        passwordLabel="Password"
+        passwordLabel={t("password")}
         passwordValue={this.state.passwordValue}
         onChangePassword={this.handlePasswordChange}
         isValidPassword={this.state.isValidPassword}
-        rememberMeLabel="Keep me logged in for 30 days."
+        rememberMeLabel={t("keep_me_logged_in_30_days")}
         isRememberMeChecked={this.state.isRememberMeChecked}
         onChangeRememberMe={this.onRememberMeClick}
         onLoginButtonClick={this.onLoginButtonClick}
         isLoginButtonDisabled={this.state.isLoginButtonDisabled}
+        loginButtonLabel={t("log_in")}
       />
     )
 
@@ -154,8 +158,8 @@ class SimpleLoginPage extends React.Component {
         backgroundImgAlt="Images"
         footerListItems={listItem}
         textContent={loginText}
-        loginTitle="Welcome to MyController"
-        loginSubtitle="Login to your account"
+        loginTitle={t("welcome_to_mycontroller")}
+        loginSubtitle={t("login_to_your_account")}
         // forgotCredentials={forgotCredentials}
       >
         {loginForm}
@@ -174,4 +178,4 @@ const mapDispatchToProps = (dispatch) => ({
   updateMetricsDB: (data) => dispatch(updateMetricsDBStatus(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleLoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SimpleLoginPage))

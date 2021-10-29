@@ -1,14 +1,14 @@
-import React from "react"
 import {
-  ToolbarFilter,
   Select,
   SelectOption,
-  TextInput,
-  ToolbarGroup,
   Split,
   SplitItem,
+  TextInput,
+  ToolbarFilter,
+  ToolbarGroup,
 } from "@patternfly/react-core"
 import { FilterIcon } from "@patternfly/react-icons"
+import React from "react"
 
 const Filters = ({
   filters = [],
@@ -20,6 +20,7 @@ const Filters = ({
   onTypeChangeFunc,
   isTypeOpen = false,
   onFilterUpdate,
+  t = () => {},
 }) => {
   let selectedFilter = null
   for (let index = 0; index < filters.length; index++) {
@@ -29,7 +30,7 @@ const Filters = ({
       break
     }
   }
-  const filterList = getFilterList(filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, selectedCategory)
+  const filterList = getFilterList(filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, selectedCategory, t)
   const inputField = getFilterInputField(selectedFilter, onFilterUpdate)
   const inputComponent = (
     <Split>
@@ -66,7 +67,7 @@ const Filters = ({
   return <ToolbarGroup variant="filter-group">{rootComponent}</ToolbarGroup>
 }
 
-const getFilterList = (filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, selectedCategory) => {
+const getFilterList = (filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, selectedCategory, t) => {
   let selectedCategoryName = selectedCategory
   const options = filters.map((f) => {
     if (f.category === selectedCategory) {
@@ -85,7 +86,7 @@ const getFilterList = (filters, typeToggleFunc, isTypeOpen, onTypeChangeFunc, se
       onSelect={onTypeChangeFunc}
       placeholderText={
         <span>
-          <FilterIcon /> {selectedCategoryName ? selectedCategoryName : "Filter"}
+          <FilterIcon /> {selectedCategoryName ? selectedCategoryName : t("filter")}
         </span>
       }
     >

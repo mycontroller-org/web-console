@@ -23,11 +23,11 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
-  fieldsList1.push({ key: "ID", value: data.id })
-  fieldsList1.push({ key: "Description", value: data.description })
-  fieldsList1.push({ key: "Read Only", value: data.enabled ? "true" : "false" })
-  fieldsList2.push({ key: "Labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "Modified On", value: <LastSeen date={data.modifiedOn} tooltipPosition="top" /> })
+  fieldsList1.push({ key: "id", value: data.id })
+  fieldsList1.push({ key: "description", value: data.description })
+  fieldsList1.push({ key: "read_only", value: data.enabled ? "true" : "false" })
+  fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "modified_on", value: <LastSeen date={data.modifiedOn} tooltipPosition="top" /> })
 
   return {
     "list-1": fieldsList1,

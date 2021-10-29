@@ -1,13 +1,13 @@
-import React from "react"
 import {
-  CircleIcon,
-  OutlinedCircleIcon,
-  OkIcon,
-  HelpIcon,
-  ErrorCircleOIcon,
   ChevronCircleRightIcon,
+  CircleIcon,
   EditAltIcon,
+  ErrorCircleOIcon,
+  HelpIcon,
+  OkIcon,
+  OutlinedCircleIcon,
 } from "@patternfly/react-icons"
+import React from "react"
 
 const iconFn = (Icon, color, onClickFn) => {
   return <Icon color={color} onClick={onClickFn} />

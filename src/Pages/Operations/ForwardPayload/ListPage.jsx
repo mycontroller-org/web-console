@@ -1,5 +1,6 @@
 import { Button } from "@patternfly/react-core"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { getStatusBool } from "../../../Components/Icons/Icons"
@@ -17,7 +18,6 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/forwardPayload"
-import { withTranslation } from "react-i18next"
 
 class List extends ListBase {
   state = {
@@ -62,10 +62,9 @@ class List extends ListBase {
   ]
 
   render() {
-    const { t } = this.props
     return (
       <>
-        <PageTitle title={t("forward_payload")} />
+        <PageTitle title="forward_payload" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -75,11 +74,11 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "ID", fieldKey: "id", sortable: true },
-  { title: "Description", fieldKey: "description", sortable: true },
-  { title: <div className="align-center">Enabled</div>, fieldKey: "enabled", sortable: true },
-  { title: "Source Field", fieldKey: "srcFieldId", sortable: true },
-  { title: "Destination Field", fieldKey: "dstFieldId", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
+  { title: "description", fieldKey: "description", sortable: true },
+  { title: "enabled", fieldKey: "enabled", sortable: true },
+  { title: "source_field", fieldKey: "srcFieldId", sortable: true },
+  { title: "destination_field", fieldKey: "dstFieldId", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
@@ -108,12 +107,12 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "id", categoryName: "ID", fieldType: "input", dataType: "string" },
-  { category: "enabled", categoryName: "Enabled", fieldType: "enabled", dataType: "boolean" },
-  { category: "description", categoryName: "Description", fieldType: "input", dataType: "string" },
-  { category: "labels", categoryName: "Labels", fieldType: "label", dataType: "string" },
-  { category: "srcFieldId", categoryName: "Source Field", fieldType: "input", dataType: "string" },
-  { category: "dstFieldId", categoryName: "Destination Field", fieldType: "input", dataType: "string" },
+  { category: "id", categoryName: "id", fieldType: "input", dataType: "string" },
+  { category: "enabled", categoryName: "enabled", fieldType: "enabled", dataType: "boolean" },
+  { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
+  { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
+  { category: "srcFieldId", categoryName: "source_field", fieldType: "input", dataType: "string" },
+  { category: "dstFieldId", categoryName: "destination_field", fieldType: "input", dataType: "string" },
 ]
 
 // supply required properties

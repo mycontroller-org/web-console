@@ -1,7 +1,6 @@
-import React from "react"
-import { Modal, Button, ModalVariant } from "@patternfly/react-core"
+import { Button, Modal, ModalVariant } from "@patternfly/react-core"
 import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons"
-
+import React from "react"
 import "./IFrame.scss"
 
 class IFrame extends React.Component {

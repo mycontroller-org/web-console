@@ -6,12 +6,12 @@ export const getPhilipsHueItems = (rootObject) => {
   objectPath.set(rootObject, "provider.syncInterval", "15m", true)
   const items = [
     {
-      label: "Configuration",
+      label: "configuration",
       fieldId: "!provider.configuration",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Bridge",
+      label: "bridge",
       fieldId: "provider.host",
       isRequired: true,
       fieldType: FieldType.Text,
@@ -22,22 +22,22 @@ export const getPhilipsHueItems = (rootObject) => {
           protocols: ["http", "https"],
         },
       },
-      helperTextInvalid: "Invalid Bridge URL.",
+      helperTextInvalid: "helper_text.invalid_url",
     },
     {
-      label: "Username",
+      label: "username",
       fieldId: "provider.username",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
       helperText: "",
-      helperTextInvalid: "Invalid username. chars: min=2 and max=100",
+      helperTextInvalid: "helper_text.invalid_username",
       validated: "default",
-      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
+      validator: { isLength: { min: 1, max: 100 }, isNotEmpty: {} },
     },
     {
-      label: "Sync Interval",
+      label: "sync_interval",
       fieldId: "provider.syncInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,

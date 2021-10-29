@@ -1,7 +1,7 @@
 import { Split, SplitItem, TimePicker } from "@patternfly/react-core"
 import React from "react"
-
 import "./TimeRangePicker.scss"
+
 
 const TimeRangePicker = ({ value = {}, onChange = () => {}, is24Hour = true }) => {
   return (

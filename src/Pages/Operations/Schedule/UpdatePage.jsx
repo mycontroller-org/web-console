@@ -1,22 +1,23 @@
 import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
-import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
 import {
-  WeekDayOptions,
+  CustomVariableType,
+  CustomVariableTypeOptions,
   ScheduleFrequency,
   ScheduleFrequencyOptions,
   ScheduleType,
   ScheduleTypeOptions,
+  WeekDayOptions,
 } from "../../../Constants/Schedule"
-import { CallerType, WebhookMethodTypeOptions } from "../../../Constants/ResourcePicker"
-import { CustomVariableType, CustomVariableTypeOptions } from "../../../Constants/Schedule"
-import { validate } from "../../../Util/Validator"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { FieldHandlersList } from "../../../Util/Common"
+import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
   render() {
@@ -45,7 +46,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Schedule" />
+          <PageTitle key="page-title" title="add_a_schedule" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -63,7 +64,7 @@ const getFormItems = (rootObject, id) => {
 
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -71,26 +72,26 @@ const getFormItems = (rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -102,12 +103,12 @@ const getFormItems = (rootObject, id) => {
       value: {},
     },
     {
-      label: "Validity",
+      label: "validity",
       fieldId: "!validity",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "validity.enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -121,7 +122,7 @@ const getFormItems = (rootObject, id) => {
   if (validityEnabled) {
     items.push(
       {
-        label: "Date (yyyy-mm-dd)",
+        label: "date_yyyy_mm_dd",
         fieldId: "validity.date",
         fieldType: FieldType.DateRangePicker,
         dataType: DataType.Object,
@@ -132,7 +133,7 @@ const getFormItems = (rootObject, id) => {
         //validator: { isNotEmpty: {} },
       },
       {
-        label: "Time (hh:mm:ss)",
+        label: "time_hh_mm_ss",
         fieldId: "validity.time",
         fieldType: FieldType.TimeRangePicker,
         dataType: DataType.Object,
@@ -143,7 +144,7 @@ const getFormItems = (rootObject, id) => {
         // validator: { isNotEmpty: {} },
       },
       {
-        label: "Validate Time Everyday",
+        label: "validate_time_everyday",
         fieldId: "validity.validateTimeEveryday",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
@@ -154,12 +155,12 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Schedule",
+      label: "schedule",
       fieldId: "!schedule",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Schedule Type",
+      label: "schedule_type",
       fieldId: "type",
       isRequired: true,
       fieldType: FieldType.SelectTypeAhead,
@@ -177,7 +178,7 @@ const getFormItems = (rootObject, id) => {
     case ScheduleType.Repeat:
       items.push(
         {
-          label: "Interval (0h0m0s)",
+          label: "interval_0h0m0s",
           fieldId: "spec.interval",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -186,13 +187,13 @@ const getFormItems = (rootObject, id) => {
           validator: { isNotEmpty: {} },
         },
         {
-          label: "Repeat Count",
+          label: "repeat_count",
           fieldId: "spec.repeatCount",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Invalid repeat count",
+          helperTextInvalid: "helper_text.invalid_repeat_count",
           validated: "default",
           validator: { isInt: {}, isNotEmpty: {} },
         }
@@ -201,7 +202,7 @@ const getFormItems = (rootObject, id) => {
 
     case ScheduleType.Cron:
       items.push({
-        label: "Cron Expression",
+        label: "cron_expression",
         fieldId: "spec.cronExpression",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -223,7 +224,7 @@ const getFormItems = (rootObject, id) => {
   // add notify handlers
   items.push(
     {
-      label: "Variables",
+      label: "variables",
       fieldId: "!variables",
       fieldType: FieldType.Divider,
     },
@@ -233,7 +234,7 @@ const getFormItems = (rootObject, id) => {
       showUpdateButton: true,
       callerType: CallerType.Variable,
       fieldType: FieldType.VariablesMap,
-      keyLabel: "Variable Name",
+      keyLabel: "variable_name",
       dataType: DataType.Object,
       value: {},
     }
@@ -245,7 +246,7 @@ const getFormItems = (rootObject, id) => {
 
   items.push(
     {
-      label: "Parameters to Handler",
+      label: "parameters_to_handler",
       fieldId: "!parameters",
       fieldType: FieldType.Divider,
     },
@@ -255,12 +256,12 @@ const getFormItems = (rootObject, id) => {
       showUpdateButton: true,
       callerType: CallerType.Parameter,
       fieldType: FieldType.VariablesMap,
-      keyLabel: "Name",
+      keyLabel: "name",
       dataType: DataType.Object,
       value: {},
     },
     {
-      label: "Handlers",
+      label: "handlers",
       fieldId: "!handlers",
       fieldType: FieldType.Divider,
     },
@@ -270,7 +271,7 @@ const getFormItems = (rootObject, id) => {
   return items
 }
 
-const updateOneTimeJobDependencies = (rootObject, newValue) => {
+const updateOneTimeJobDependencies = (rootObject, _newValue) => {
   const validity = objectPath.get(rootObject, "validity", {})
   const frequency = objectPath.get(rootObject, "spec.frequency", "")
   if (frequency === ScheduleFrequency.OnDate) {
@@ -292,7 +293,7 @@ const updateOneTimeJobDependencies = (rootObject, newValue) => {
 
 const updateSimpleJob = (rootObject, items = []) => {
   items.push({
-    label: "Frequency",
+    label: "frequency",
     fieldId: "spec.frequency",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
@@ -312,7 +313,7 @@ const updateSimpleJob = (rootObject, items = []) => {
   switch (frequency) {
     case ScheduleFrequency.Daily:
       items.push({
-        label: "Days of Week",
+        label: "day_of_week",
         fieldId: "spec.dayOfWeek",
         isRequired: true,
         fieldType: FieldType.SelectTypeAhead,
@@ -326,7 +327,7 @@ const updateSimpleJob = (rootObject, items = []) => {
 
     case ScheduleFrequency.Weekly:
       items.push({
-        label: "Day of Week",
+        label: "day_of_week",
         fieldId: "spec.dayOfWeek",
         isRequired: true,
         fieldType: FieldType.SelectTypeAhead,
@@ -339,13 +340,13 @@ const updateSimpleJob = (rootObject, items = []) => {
 
     case ScheduleFrequency.Monthly:
       items.push({
-        label: "Date of Month",
+        label: "day_of_month",
         fieldId: "spec.dateOfMonth",
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
         value: "",
         isRequired: true,
-        helperTextInvalid: "Invalid date of month",
+        helperTextInvalid: "helper_text.invalid_day_of_month",
         validated: "default",
         validator: { isNotEmpty: {}, isInt: { gt: 0, lt: 32 } },
       })
@@ -353,13 +354,13 @@ const updateSimpleJob = (rootObject, items = []) => {
 
     case ScheduleFrequency.OnDate:
       items.push({
-        label: "Date (yyyy-mm-dd)",
+        label: "date_yyyy_mm_dd",
         fieldId: "spec.date",
         fieldType: FieldType.DatePicker,
         dataType: DataType.String,
         value: "",
         isRequired: true,
-        helperTextInvalid: "Invalid date",
+        helperTextInvalid: "helper_text.invalid_date",
         validated: "default",
         validator: { isNotEmpty: {} },
       })
@@ -372,26 +373,26 @@ const updateSimpleJob = (rootObject, items = []) => {
 
   if (scheduleType === ScheduleType.Simple) {
     items.push({
-      label: "Time (hh:mm:ss)",
+      label: "time_hh_mm_ss",
       fieldId: "spec.time",
       fieldType: FieldType.TimePicker,
       dataType: DataType.String,
       value: "",
       placeholder: "hh:mm:ss",
       isRequired: true,
-      helperTextInvalid: "Invalid time",
+      helperTextInvalid: "helper_text.invalid_time",
       validated: "default",
       validator: { isNotEmpty: {} },
     })
   } else if (scheduleType !== "") {
     items.push({
-      label: "Offset(0h0m0s)",
+      label: "offset_0h0m0s",
       fieldId: "spec.offset",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Invalid time",
+      helperTextInvalid: "helper_text.invalid_offset",
       validated: "default",
       validator: { isNotEmpty: {} },
     })
@@ -407,12 +408,12 @@ const loadCustomVariablesItems = (rootObject) => {
 
   const items = [
     {
-      label: "Custom Variables",
+      label: "custom_variables",
       fieldId: "!custom_variables",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "customVariableType",
       fieldType: FieldType.ToggleButtonGroup,
       dataType: DataType.String,
@@ -429,18 +430,18 @@ const loadCustomVariablesItems = (rootObject) => {
 
     case CustomVariableType.Javascript:
       items.push({
-        label: "Script",
+        label: "script",
         fieldId: "customVariableConfig.javascript",
         fieldType: FieldType.ScriptEditor,
         dataType: DataType.String,
         value: "",
-        saveButtonText: "Update",
-        updateButtonText: "Update Script",
+        saveButtonText: "update",
+        updateButtonText: "update_script",
         language: "javascript",
         minimapEnabled: true,
         isRequired: true,
         helperText: "",
-        helperTextInvalid: "script should not be empty",
+        helperTextInvalid: "helper_text.invalid_script_empty",
         validated: "default",
         validator: { isNotEmpty: {} },
       })
@@ -460,7 +461,7 @@ const loadCustomVariablesItems = (rootObject) => {
 const getWebhookItems = (_rootObject) => {
   const items = [
     {
-      label: "URL",
+      label: "url",
       fieldId: "customVariableConfig.webhook.url",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -472,26 +473,24 @@ const getWebhookItems = (_rootObject) => {
       validator: { isNotEmpty: {}, isURL: {} },
     },
     {
-      label: "Method",
+      label: "method",
       fieldId: "customVariableConfig.webhook.method",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: WebhookMethodTypeOptions,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Select a method",
-      validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Insecure Skip Verify",
+      label: "insecure_skip_verify",
       fieldId: "customVariableConfig.webhook.insecureSkipVerify",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Headers",
+      label: "headers",
       fieldId: "customVariableConfig.webhook.headers",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.ArrayObject,
@@ -500,17 +499,17 @@ const getWebhookItems = (_rootObject) => {
       validateValueFunc: (value) => validate("isNotEmpty", value, {}),
     },
     {
-      label: "Query Parameters",
+      label: "query_parameters",
       fieldId: "customVariableConfig.webhook.queryParameters",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
-      updateButtonText: "Update Query Parameters",
+      updateButtonText: "update_query_parameters",
       value: {},
       isRequired: false,
     },
     {
-      label: "Include Config",
+      label: "include_config",
       fieldId: "customVariableConfig.webhook.includeConfig",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,

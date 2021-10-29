@@ -1,11 +1,12 @@
 import { Button, Modal, ModalVariant, Stack, StackItem } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
-import React from "react"
-import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 import PropTypes from "prop-types"
+import React from "react"
+import { withTranslation } from "react-i18next"
+import { toObject, toString } from "../../../Util/Language"
 import ActionBar from "../../ActionBar/ActionBar"
 import CodeEditorBasic from "../../CodeEditor/CodeEditorBasic"
-import { toObject, toString } from "../../../Util/Language"
+import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
 
 class ScriptEditor extends React.Component {
   state = {
@@ -47,6 +48,7 @@ class ScriptEditor extends React.Component {
       options,
       minimapEnabled,
       readOnly,
+      t,
     } = this.props
 
     const otherOptions = options ? options : {}
@@ -78,14 +80,14 @@ class ScriptEditor extends React.Component {
 
     const errorMessage = ""
 
-    const saveText = saveButtonText ? saveButtonText : "Save"
-    const updateBtnText = updateButtonText ? updateButtonText : "Update Script"
+    const saveText = saveButtonText ? saveButtonText : "save"
+    const updateBtnText = updateButtonText ? updateButtonText : "update_script"
 
     const actionButtons = [
       { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: false },
     ]
     actionButtons.push({
-      text: "Cancel",
+      text: "cancel",
       variant: "secondary",
       onClickFunc: this.onClose,
       isDisabled: false,
@@ -94,7 +96,7 @@ class ScriptEditor extends React.Component {
     return (
       <ErrorBoundary>
         <Button key={"edit-btn-" + id} variant="secondary" isBlock onClick={this.onOpen}>
-          {updateBtnText} &nbsp;
+          {t(updateBtnText)} &nbsp;
           <EditIcon />
         </Button>
         <Modal
@@ -131,4 +133,4 @@ ScriptEditor.propTypes = {
   options: PropTypes.object,
 }
 
-export default ScriptEditor
+export default withTranslation()(ScriptEditor)

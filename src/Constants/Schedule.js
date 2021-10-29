@@ -8,20 +8,36 @@ export const ScheduleFrequency = {
 
 // Schedule Frequency options
 export const ScheduleFrequencyOptions = [
-  { value: ScheduleFrequency.Daily, label: "Daily", description: "Runs every day" },
-  { value: ScheduleFrequency.Weekly, label: "Weekly", description: "Runs weekly once" },
-  { value: ScheduleFrequency.Monthly, label: "Monthly", description: "Runs monthly once" },
-  { value: ScheduleFrequency.OnDate, label: "On Date", description: "Runs once at the specified date, time" },
+  {
+    value: ScheduleFrequency.Daily,
+    label: "opts.schedule_frequency.label_daily",
+    description: "opts.schedule_frequency.desc_daily",
+  },
+  {
+    value: ScheduleFrequency.Weekly,
+    label: "opts.schedule_frequency.label_weekly",
+    description: "opts.schedule_frequency.desc_weekly",
+  },
+  {
+    value: ScheduleFrequency.Monthly,
+    label: "opts.schedule_frequency.label_monthly",
+    description: "opts.schedule_frequency.desc_monthly",
+  },
+  {
+    value: ScheduleFrequency.OnDate,
+    label: "opts.schedule_frequency.label_on_date",
+    description: "opts.schedule_frequency.desc_on_date",
+  },
 ]
 
 export const WeekDayOptions = [
-  { value: "sun", label: "Sunday" },
-  { value: "mon", label: "Monday" },
-  { value: "tue", label: "Tuesday" },
-  { value: "wed", label: "Wednesday" },
-  { value: "thu", label: "Thursday" },
-  { value: "fri", label: "Friday" },
-  { value: "sat", label: "Saturday" },
+  { value: "sun", label: "opts.week_day.label_sunday" },
+  { value: "mon", label: "opts.week_day.label_monday" },
+  { value: "tue", label: "opts.week_day.label_tuesday" },
+  { value: "wed", label: "opts.week_day.label_wednesday" },
+  { value: "thu", label: "opts.week_day.label_thursday" },
+  { value: "fri", label: "opts.week_day.label_friday" },
+  { value: "sat", label: "opts.week_day.label_saturday" },
 ]
 
 // Schedule type values
@@ -35,11 +51,31 @@ export const ScheduleType = {
 
 // Schedule type options
 export const ScheduleTypeOptions = [
-  { value: ScheduleType.Repeat, label: "Repeat", description: "Repeat with an interval" },
-  { value: ScheduleType.Cron, label: "Cron", description: "Cron Expression" },
-  { value: ScheduleType.Simple, label: "Simple", description: "daily, weekly, monthly schedule" },
-  { value: ScheduleType.Sunrise, label: "Sunrise", description: "On Sunrise time" },
-  { value: ScheduleType.Sunset, label: "Sunset", description: "On Sunset time" },
+  {
+    value: ScheduleType.Repeat,
+    label: "opts.schedule_type.label_repeat",
+    description: "opts.schedule_type.desc_repeat",
+  },
+  {
+    value: ScheduleType.Cron,
+    label: "opts.schedule_type.label_cron",
+    description: "opts.schedule_type.desc_cron",
+  },
+  {
+    value: ScheduleType.Simple,
+    label: "opts.schedule_type.label_simple",
+    description: "opts.schedule_type.desc_simple",
+  },
+  {
+    value: ScheduleType.Sunrise,
+    label: "opts.schedule_type.label_sunrise",
+    description: "opts.schedule_type.desc_sunrise",
+  },
+  {
+    value: ScheduleType.Sunset,
+    label: "opts.schedule_type.label_sunset",
+    description: "opts.schedule_type.desc_sunset",
+  },
 ]
 
 // CustomVariable Types
@@ -51,7 +87,7 @@ export const CustomVariableType = {
 
 // CustomVariable type options
 export const CustomVariableTypeOptions = [
-  { value: CustomVariableType.None, label: "None" },
-  { value: CustomVariableType.Javascript, label: "Javascript" },
-  { value: CustomVariableType.Webhook, label: "Webhook" },
+  { value: CustomVariableType.None, label: "none" },
+  { value: CustomVariableType.Javascript, label: "javascript" },
+  { value: CustomVariableType.Webhook, label: "webhook" },
 ]

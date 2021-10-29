@@ -1,4 +1,5 @@
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
 import { FileSize } from "../../../Components/DataDisplay/Miscellaneous"
@@ -144,7 +145,7 @@ class List extends ListBase {
     const { showModel, modalType, backupLocations, showRestoreWarning, backupFileName } = this.state
     return (
       <>
-        <PageTitle title="Backup and Restore" />
+        <PageTitle title="backup_and_restore" />
         <PageContent>{super.render()}</PageContent>
         <CustomModal
           isOpen={showModel}
@@ -167,10 +168,10 @@ class List extends ListBase {
 // Properties definition
 
 const tableColumns = [
-  { title: "Location Name", fieldKey: "locationName", sortable: true },
-  { title: "File Name", fieldKey: "fileName", sortable: true },
-  { title: "Size", fieldKey: "fileSize", sortable: true },
-  { title: "Modified On", fieldKey: "modifiedOn", sortable: true },
+  { title: "location_name", fieldKey: "locationName", sortable: true },
+  { title: "filename", fieldKey: "fileName", sortable: true },
+  { title: "size", fieldKey: "fileSize", sortable: true },
+  { title: "modified_on", fieldKey: "modifiedOn", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, _history) => {
@@ -186,8 +187,8 @@ const toRowFuncImpl = (rawData, _history) => {
 }
 
 const filtersDefinition = [
-  { category: "fileName", categoryName: "File Name", fieldType: "input", dataType: "string" },
-  { category: "locationName", categoryName: "Location Name", fieldType: "input", dataType: "string" },
+  { category: "fileName", categoryName: "filename", fieldType: "input", dataType: "string" },
+  { category: "locationName", categoryName: "location_name", fieldType: "input", dataType: "string" },
 ]
 
 // supply required properties
@@ -222,4 +223,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSortByFunc: (data) => dispatch(onSortBy(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(List))

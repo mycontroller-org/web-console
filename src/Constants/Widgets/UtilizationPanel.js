@@ -11,11 +11,11 @@ export const ChartType = {
 
 // utilization panel chart type options
 export const ChartTypeOptions = [
-  { value: ChartType.CircleSize50, label: "Half Circle" },
-  { value: ChartType.CircleSize75, label: "3/4 Circle" },
-  { value: ChartType.CircleSize100, label: "Full Circle" },
-  { value: ChartType.SparkArea, label: "Spark Area" },
-  { value: ChartType.SparkLine, label: "Spark Line" },
-  { value: ChartType.SparkBar, label: "Spark Bar" },
-  { value: ChartType.Table, label: "Table" },
+  { value: ChartType.CircleSize50, label: "opts.utilization_chart.label_circle_050" },
+  { value: ChartType.CircleSize75, label: "opts.utilization_chart.label_circle_075" },
+  { value: ChartType.CircleSize100, label: "opts.utilization_chart.label_circle_100" },
+  { value: ChartType.SparkArea, label: "opts.utilization_chart.label_spark_area" },
+  { value: ChartType.SparkLine, label: "opts.utilization_chart.label_spark_line" },
+  { value: ChartType.SparkBar, label: "opts.utilization_chart.label_spark_bar" },
+  { value: ChartType.Table, label: "opts.utilization_chart.label_table" },
 ]

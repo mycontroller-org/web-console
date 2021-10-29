@@ -9,13 +9,13 @@ import {
   TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, MinusCircleIcon } from "@patternfly/react-icons"
-import React from "react"
-import "./Form.scss"
 import _ from "lodash"
 import PropTypes from "prop-types"
-
-import ColorBox from "../Color/ColorBox/ColorBox"
+import React from "react"
+import { withTranslation } from "react-i18next"
 import { ColorsSetBig } from "../../Constants/Widgets/Color"
+import ColorBox from "../Color/ColorBox/ColorBox"
+import "./Form.scss"
 
 const defaultColor = "#0066CC"
 
@@ -118,7 +118,7 @@ class ThresholdsColorForm extends React.Component {
 
   render() {
     const { items } = this.state
-    const { validateKeyFunc } = this.props
+    const { validateKeyFunc, t } = this.props
     const keys = []
 
     const formItems = items.map((item, index) => {
@@ -179,7 +179,7 @@ class ThresholdsColorForm extends React.Component {
     if (!items || items.length === 0) {
       formItems.push(
         <Button variant="secondary" onClick={this.onAdd}>
-          Add an item
+          {t("add_an_item")}
         </Button>
       )
     }
@@ -187,11 +187,11 @@ class ThresholdsColorForm extends React.Component {
     return (
       <Grid className="mc-key-value-map-items">
         <GridItem span={5}>
-          <Text component={TextVariants.h4}>Value</Text>
+          <Text component={TextVariants.h4}>{t("value")}</Text>
         </GridItem>
 
         <GridItem span={5}>
-          <Text component={TextVariants.h4}>Color</Text>
+          <Text component={TextVariants.h4}>{t("color")}</Text>
         </GridItem>
         <GridItem span={2}></GridItem>
 
@@ -206,4 +206,4 @@ ThresholdsColorForm.propTypes = {
   validateKeyFunc: PropTypes.func,
 }
 
-export default ThresholdsColorForm
+export default withTranslation()(ThresholdsColorForm)

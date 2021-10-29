@@ -11,15 +11,19 @@ export const ChartGroupType = {
 export const ChartGroupTypeOptions = [
   {
     value: ChartGroupType.GroupChart,
-    label: "Group Chart",
-    description: "Single axis with multiple resources",
+    label: "opts.chart_group_type.label_group_chart",
+    description: "opts.chart_group_type.desc_group_chart",
   },
   {
     value: ChartGroupType.MixedChart,
-    label: "Mixed Chart",
-    description: "Multiple axis with multiple resources",
+    label: "opts.chart_group_type.label_mixed_chart",
+    description: "opts.chart_group_type.desc_mixed_chart",
   },
-  { value: ChartGroupType.PieChart, label: "Pie Chart", description: "Single pie chart" },
+  {
+    value: ChartGroupType.PieChart,
+    label: "opts.chart_group_type.label_pie_chart",
+    description: "opts.chart_group_type.desc_pie_chart",
+  },
 ]
 
 // Charts types
@@ -33,11 +37,31 @@ export const ChartType = {
 
 // charts type options
 export const ChartTypeOptions = [
-  { value: ChartType.AreaChart, label: "Area Chart", description: "Area chart" },
-  { value: ChartType.BarChart, label: "Bar Chart", description: "Bar chart" },
-  { value: ChartType.LineChart, label: "Line Chart", description: "Line chart" },
-  { value: ChartType.PieChart, label: "Pie Chart", description: "Pie chart" },
-  { value: ChartType.ScatterChart, label: "Scatter Chart", description: "Scatter chart" },
+  {
+    value: ChartType.AreaChart,
+    label: "opts.chart_type.label_area_chart",
+    description: "opts.chart_type.desc_area_chart",
+  },
+  {
+    value: ChartType.BarChart,
+    label: "opts.chart_type.label_bar_chart",
+    description: "opts.chart_type.desc_bar_chart",
+  },
+  {
+    value: ChartType.LineChart,
+    label: "opts.chart_type.label_line_chart",
+    description: "opts.chart_type.desc_line_chart",
+  },
+  {
+    value: ChartType.PieChart,
+    label: "opts.chart_type.label_pie_chart",
+    description: "opts.chart_type.desc_pie_chart",
+  },
+  {
+    value: ChartType.ScatterChart,
+    label: "opts.chart_type.label_scatter_chart",
+    description: "opts.chart_type.desc_scatter_chart",
+  },
 ]
 
 // legend position types
@@ -50,10 +74,26 @@ export const LegendPositionType = {
 
 // legend position types options
 export const LegendPositionTypeOptions = [
-  { value: LegendPositionType.BottomLeft, label: "Bottom Left", description: "Left side of bottom" },
-  { value: LegendPositionType.Bottom, label: "Bottom Center", description: "Center of bottom" },
-  { value: LegendPositionType.Top, label: "Top Left", description: "Left side of top" },
-  { value: LegendPositionType.Right, label: "Right", description: "Right side" },
+  {
+    value: LegendPositionType.BottomLeft,
+    label: "opts.legend_position.label_bottom_left",
+    description: "opts.legend_position.desc_bottom_left",
+  },
+  {
+    value: LegendPositionType.Bottom,
+    label: "opts.legend_position.label_bottom_center",
+    description: "opts.legend_position.desc_bottom_center",
+  },
+  {
+    value: LegendPositionType.Top,
+    label: "opts.legend_position.label_top_left",
+    description: "opts.legend_position.desc_top_left",
+  },
+  {
+    value: LegendPositionType.Right,
+    label: "opts.legend_position.label_right",
+    description: "opts.legend_position.desc_right",
+  },
 ]
 
 // legend orientation types
@@ -66,10 +106,14 @@ export const LegendOrientationType = {
 export const LegendOrientationTypeOptions = [
   {
     value: LegendOrientationType.Horizontal,
-    label: "Horizontal",
-    description: "Place in horizontal position",
+    label: "opts.legend_orientation.label_horizontal",
+    description: "opts.legend_orientation.desc_horizontal",
   },
-  { value: LegendOrientationType.Vertical, label: "Vertical", description: "Place in vertical position" },
+  {
+    value: LegendOrientationType.Vertical,
+    label: "opts.legend_orientation.label_vertical",
+    description: "opts.legend_orientation.desc_vertical",
+  },
 ]
 
 // ThemeColor used on the chart
@@ -87,12 +131,12 @@ export const ThemeColor = {
 
 // ThemeColorOptions used on the chart
 export const ThemeColorOptions = [
-  { value: ThemeColor.Blue, label: "Blue" },
-  { value: ThemeColor.Cyan, label: "Cyan" },
-  { value: ThemeColor.Gold, label: "Gold" },
-  { value: ThemeColor.Green, label: "Green" },
-  { value: ThemeColor.Orange, label: "Orange" },
-  { value: ThemeColor.Purple, label: "Purple" },
-  { value: ThemeColor.MultiOrdered, label: "Multiple Ordered" },
-  { value: ThemeColor.MultiUnordered, label: "Multiple Unordered" },
+  { value: ThemeColor.Blue, label: "opts.theme_color.label_blue" },
+  { value: ThemeColor.Cyan, label: "opts.theme_color.label_cyan" },
+  { value: ThemeColor.Gold, label: "opts.theme_color.label_gold" },
+  { value: ThemeColor.Green, label: "opts.theme_color.label_green" },
+  { value: ThemeColor.Orange, label: "opts.theme_color.label_orange" },
+  { value: ThemeColor.Purple, label: "opts.theme_color.label_purple" },
+  { value: ThemeColor.MultiOrdered, label: "opts.theme_color.label_multiple_ordered" },
+  { value: ThemeColor.MultiUnordered, label: "opts.theme_color.label_multiple_unordered" },
 ]

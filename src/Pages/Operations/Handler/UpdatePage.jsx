@@ -1,11 +1,9 @@
 import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
-import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { HandlerType, HandlerTypeOptions } from "../../../Constants/Handler"
 import {
   BackupProviderType,
@@ -13,6 +11,8 @@ import {
   StorageExportTypeOptions,
   WebhookMethodTypeOptions,
 } from "../../../Constants/ResourcePicker"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
@@ -42,7 +42,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Handler" />
+          <PageTitle key="page-title" title="add_a_handler" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -60,7 +60,7 @@ const getFormItems = (rootObject, id) => {
 
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -68,26 +68,26 @@ const getFormItems = (rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -104,7 +104,7 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "Handler Type",
+      label: "handler_type",
       fieldId: "type",
       isRequired: true,
       fieldType: FieldType.SelectTypeAhead,
@@ -122,36 +122,36 @@ const getFormItems = (rootObject, id) => {
     case HandlerType.Email:
       items.push(
         {
-          label: "Host",
+          label: "host",
           fieldId: "spec.host",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Invalid host name. chars: min=2, max=100",
+          helperTextInvalid: "helper_text.invalid_host",
           validated: "default",
           validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
         },
         {
-          label: "Port",
+          label: "port",
           fieldId: "spec.port",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Invalid port number",
+          helperTextInvalid: "helper_text.invalid_port",
           validated: "default",
           validator: { isPort: {}, isNotEmpty: {} },
         },
         {
-          label: "Insecure Skip Verify",
+          label: "insecure_skip_verify",
           fieldId: "spec.insecureSkipVerify",
           fieldType: FieldType.Switch,
           dataType: DataType.Boolean,
           value: false,
         },
         {
-          label: "Username",
+          label: "username",
           fieldId: "spec.username",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -159,7 +159,7 @@ const getFormItems = (rootObject, id) => {
           isRequired: false,
         },
         {
-          label: "Password",
+          label: "password",
           fieldId: "spec.password",
           fieldType: FieldType.Password,
           dataType: DataType.String,
@@ -167,7 +167,7 @@ const getFormItems = (rootObject, id) => {
           isRequired: false,
         },
         {
-          label: "From Email",
+          label: "from_email",
           fieldId: "spec.fromEmail",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -175,7 +175,7 @@ const getFormItems = (rootObject, id) => {
           isRequired: false,
         },
         {
-          label: "To Emails",
+          label: "to_emails",
           fieldId: "spec.toEmails",
           fieldType: FieldType.Text,
           dataType: DataType.String,
@@ -188,18 +188,18 @@ const getFormItems = (rootObject, id) => {
     case HandlerType.Telegram:
       items.push(
         {
-          label: "Token",
+          label: "token",
           fieldId: "spec.token",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a telegram token",
+          helperTextInvalid: "helper_text.invalid_token",
           validated: "default",
           validator: { isNotEmpty: {} },
         },
         {
-          label: "Chat IDs",
+          label: "chat_ids",
           fieldId: "spec.chatIds",
           fieldType: FieldType.DynamicArray,
           dataType: DataType.ArrayString,
@@ -230,59 +230,57 @@ const getWebhookItems = (rootObject) => {
 
   const items = [
     {
-      label: "Server",
+      label: "server",
       fieldId: "spec.server",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Enter a server url",
+      helperTextInvalid: "helper_text.invalid_url",
       validated: "default",
       validator: { isNotEmpty: {}, isURL: {} },
     },
     {
-      label: "API",
+      label: "api",
       fieldId: "spec.api",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Enter a api",
+      helperTextInvalid: "helper_text.invalid_api",
       validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Method",
+      label: "method",
       fieldId: "spec.method",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: WebhookMethodTypeOptions,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Select a method",
-      validated: "default",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Skip Insecure Verify",
+      label: "insecure_skip_verify",
       fieldId: "spec.skipInsecureVerify",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
     },
     {
-      label: "Response Code",
+      label: "response_code",
       fieldId: "spec.responseCode",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       isRequired: true,
-      helperTextInvalid: "Enter a response code, enter 0 to ignore",
+      helperTextInvalid: "helper_text.invalid_response_code",
       validated: "default",
       validator: { isInteger: {} },
     },
     {
-      label: "Headers",
+      label: "headers",
       fieldId: "spec.headers",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.ArrayObject,
@@ -291,17 +289,17 @@ const getWebhookItems = (rootObject) => {
       validateValueFunc: (value) => validate("isNotEmpty", value, {}),
     },
     {
-      label: "Query Parameters",
+      label: "query_parameters",
       fieldId: "spec.queryParameters",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
-      updateButtonText: "Update Query Parameters",
+      updateButtonText: "update_query_parameters",
       value: {},
       isRequired: false,
     },
     {
-      label: "Allow Overwrite",
+      label: "allow_overwrite",
       fieldId: "spec.allowOverwrite",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -315,7 +313,7 @@ const getWebhookItems = (rootObject) => {
 const getBackupItems = (rootObject) => {
   const items = []
   items.push({
-    label: "Provider Type",
+    label: "provider_type",
     fieldId: "spec.providerType",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
@@ -332,47 +330,45 @@ const getBackupItems = (rootObject) => {
     case BackupProviderType.Disk:
       items.push(
         {
-          label: "Export Type",
+          label: "export_type",
           fieldId: "spec.spec.storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
           options: StorageExportTypeOptions,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Select a storage export type",
-          validated: "default",
           validator: { isNotEmpty: {} },
         },
         {
-          label: "Target Directory",
+          label: "target_directory",
           fieldId: "spec.spec.targetDirectory",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a directory",
+          helperTextInvalid: "helper_text.invalid_directory",
           validated: "default",
           validator: { isNotEmpty: {} },
         },
         {
-          label: "Prefix",
+          label: "prefix",
           fieldId: "spec.spec.prefix",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a prefix",
+          helperTextInvalid: "helper_text.invalid_prefix",
           validated: "default",
           validator: { isNotEmpty: {}, isKey: {} },
         },
         {
-          label: "Retention Count",
+          label: "retention_count",
           fieldId: "spec.spec.retentionCount",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
           isRequired: true,
-          helperTextInvalid: "Enter a retention count, 0 for no limit",
+          helperTextInvalid: "helper_text.invalid_backup_retention_count",
           validated: "default",
           validator: { isInteger: {} },
         }

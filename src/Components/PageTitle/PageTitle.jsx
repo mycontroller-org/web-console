@@ -8,9 +8,12 @@ import {
   Title,
 } from "@patternfly/react-core"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import "./PageTitle.scss"
 
 const PageTitle = ({ title, description, actions, hideDivider = false }) => {
+  const { t } = useTranslation()
+
   const divider = hideDivider ? null : (
     <GridItem span={12}>
       <Divider component="hr" />
@@ -21,7 +24,7 @@ const PageTitle = ({ title, description, actions, hideDivider = false }) => {
   const titleComponent =
     typeof title === "string" ? (
       <Title headingLevel="h2" size="xl">
-        {title}
+        {t(title)}
       </Title>
     ) : (
       title
@@ -33,7 +36,7 @@ const PageTitle = ({ title, description, actions, hideDivider = false }) => {
           {titleComponent}
           {description ? (
             <Text>
-              <small>{description}</small>
+              <small>{t(description)}</small>
             </Text>
           ) : null}
         </GridItem>

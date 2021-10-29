@@ -1,8 +1,8 @@
 import { Flex, FlexItem, Label as PfLabel } from "@patternfly/react-core"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import IFrame from "../IFrame/IFrame"
 import { LastSeen } from "../Time/Time"
-
 import "./Label.scss"
 import { DisplayImage, FileSize } from "./Miscellaneous"
 
@@ -18,13 +18,14 @@ export const Label = ({ name, value, index = 0 }) => {
 }
 
 export const Labels = ({ data = {} }) => {
+  const { t } = useTranslation()
   if (data === null) {
-    return <span>No labels</span>
+    return <span>{t("no_labels")}</span>
   }
   const names = Object.keys(data)
 
   if (names.length === 0) {
-    return <span>No labels</span>
+    return <span>{t("no_labels")}</span>
   }
 
   names.sort()
@@ -75,12 +76,14 @@ export const KeyValue = ({ name, value, index = 0 }) => {
 }
 
 export const KeyValueMap = ({ data = {} }) => {
+  const { t } = useTranslation()
+
   if (data === undefined || data === null) {
-    return <span>No data</span>
+    return <span>{t("no_data")}</span>
   }
   const names = Object.keys(data)
   if (names.length === 0) {
-    return <span>No data</span>
+    return <span>{t("no_data")}</span>
   }
 
   names.sort()

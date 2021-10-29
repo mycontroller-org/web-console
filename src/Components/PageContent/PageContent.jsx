@@ -1,6 +1,5 @@
 import { PageSection, PageSectionVariants } from "@patternfly/react-core"
 import React from "react"
-
 import "./PageContent.scss"
 
 const PageContent = ({ children, hasNoPaddingTop = false }) => {

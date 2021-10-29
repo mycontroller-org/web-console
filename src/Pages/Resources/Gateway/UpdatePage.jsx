@@ -1,22 +1,22 @@
 import objectPath from "object-path"
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
-import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
+import { DataType, FieldType } from "../../../Constants/Form"
 import {
-  Provider,
-  ProviderOptions,
-  Protocol,
+  filterProtocolOptions,
   MessageLogger,
   MessageLoggerOptions,
-  filterProtocolOptions,
+  Protocol,
+  Provider,
+  ProviderOptions,
 } from "../../../Constants/Gateway"
+import { api } from "../../../Service/Api"
+import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { getESPHomeItems } from "./EspHome/Update"
-import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
 import { getPhilipsHueItems } from "./PhilipsHue/Update"
+import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
 
 class UpdatePage extends React.Component {
   render() {
@@ -45,7 +45,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Gateway" />
+          <PageTitle key="page-title" title="add_a_gateway" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -64,7 +64,7 @@ const getFormItems = (rootObject, id) => {
   objectPath.set(rootObject, "labels", { location: "server" }, true)
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -72,12 +72,12 @@ const getFormItems = (rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=2 and max=100",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isID: {}, isNotEmpty: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -85,28 +85,28 @@ const getFormItems = (rootObject, id) => {
       isRequired: false,
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Reconnect Delay",
+      label: "reconnect_delay",
       fieldId: "reconnectDelay",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Queue Failed Messages",
+      label: "queue_failed_messages",
       fieldId: "queueFailedMessages",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -119,12 +119,12 @@ const getFormItems = (rootObject, id) => {
       validator: { isLabel: {} },
     },
     {
-      label: "Provider",
+      label: "provider",
       fieldId: "!provider.type",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Type",
+      label: "type",
       fieldId: "provider.type",
       isRequired: true,
       fieldType: FieldType.SelectTypeAhead,
@@ -161,12 +161,12 @@ const getFormItems = (rootObject, id) => {
 
     items.push(
       {
-        label: "Protocol",
+        label: "protocol",
         fieldId: "!provider.protocol.type",
         fieldType: FieldType.Divider,
       },
       {
-        label: "Type",
+        label: "type",
         fieldId: "provider.protocol.type",
         isRequired: true,
         fieldType: FieldType.SelectTypeAhead,
@@ -175,7 +175,7 @@ const getFormItems = (rootObject, id) => {
         value: "",
       },
       {
-        label: "Transmit Pre Delay",
+        label: "transmit_pre_delay",
         fieldId: "provider.protocol.transmitPreDelay",
         fieldType: FieldType.Text,
         dataType: DataType.String,
@@ -216,12 +216,12 @@ const getFormItems = (rootObject, id) => {
     objectPath.set(rootObject, "messageLogger.type", MessageLogger.None, true)
     items.push(
       {
-        label: "Message Logger",
+        label: "message_logger",
         fieldId: "!messageLogger.type",
         fieldType: FieldType.Divider,
       },
       {
-        label: "Type",
+        label: "type",
         fieldId: "messageLogger.type",
         isRequired: true,
         fieldType: FieldType.SelectTypeAhead,
@@ -265,30 +265,30 @@ const getMySensorsItems = (rootObject) => {
   objectPath.set(rootObject, "provider.timeout", "500ms", true)
   const items = [
     {
-      label: "Internal Message Ack",
+      label: "internal_message_ack",
       fieldId: "provider.enableInternalMessageAck",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
     },
     {
-      label: "Stream Message Ack",
+      label: "stream_message_ack",
       fieldId: "provider.enableStreamMessageAck",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
     },
     {
-      label: "Retry Count",
+      label: "retry_count",
       fieldId: "provider.retryCount",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       validator: { isInt: { min: 0 } },
-      helperTextInvalid: "Invalid Retry count. int, min=0",
+      helperTextInvalid: "helper_text.invalid_retry_count",
     },
     {
-      label: "Timeout",
+      label: "timeout",
       fieldId: "provider.timeout",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -304,7 +304,7 @@ const getProtocolMqttItems = (rootObject) => {
   objectPath.set(rootObject, "provider.protocol.qos", 0, true)
   const items = [
     {
-      label: "Broker",
+      label: "broker",
       fieldId: "provider.protocol.broker",
       isRequired: true,
       fieldType: FieldType.Text,
@@ -315,51 +315,51 @@ const getProtocolMqttItems = (rootObject) => {
           protocols: ["ws", "wss", "unix", "mqtt", "tcp", "ssl", "tls", "mqtts", "mqtt+ssl", "tcps"],
         },
       },
-      helperTextInvalid: "Invalid Broker URL.",
+      helperTextInvalid: "helper_text.invalid_broker_url",
     },
     {
-      label: "Insecure Skip Verify",
+      label: "insecure_skip_verify",
       fieldId: "provider.protocol.insecureSkipVerify",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
     },
     {
-      label: "Username",
+      label: "username",
       fieldId: "provider.protocol.username",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Password",
+      label: "password",
       fieldId: "provider.protocol.password",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Subscribe",
+      label: "subscribe",
       fieldId: "provider.protocol.subscribe",
       isRequired: true,
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      helperTextInvalid: "Invalid Topic",
+      helperTextInvalid: "helper_text.invalid_topic",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "Publish",
+      label: "publish",
       fieldId: "provider.protocol.publish",
       isRequired: true,
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
-      helperTextInvalid: "Invalid Topic",
+      helperTextInvalid: "helper_text.invalid_topic",
       validator: { isNotEmpty: {} },
     },
     {
-      label: "QoS",
+      label: "qos",
       fieldId: "provider.protocol.qos",
       isRequired: true,
       fieldType: FieldType.SelectTypeAhead,
@@ -381,7 +381,7 @@ const getProtocolSerialItems = (rootObject) => {
   objectPath.set(rootObject, "provider.protocol.baudrate", 115200, true)
   const items = [
     {
-      label: "Port Name",
+      label: "port_name",
       fieldId: "provider.protocol.portname",
       isRequired: true,
       fieldType: FieldType.Text,
@@ -389,14 +389,14 @@ const getProtocolSerialItems = (rootObject) => {
       value: "",
     },
     {
-      label: "Baud Rate",
+      label: "baud_rate",
       fieldId: "provider.protocol.baudrate",
       isRequired: true,
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       validator: { isBaudRate: {} },
-      helperTextInvalid: "Invalid Baud rate.",
+      helperTextInvalid: "helper_text.invalid_baud_rate",
     },
   ]
   return items
@@ -406,7 +406,7 @@ const getProtocolSerialItems = (rootObject) => {
 const getProtocolEthernetItems = (_rootObject) => {
   const items = [
     {
-      label: "Server",
+      label: "server",
       fieldId: "provider.protocol.server",
       isRequired: true,
       fieldType: FieldType.Text,
@@ -417,10 +417,10 @@ const getProtocolEthernetItems = (_rootObject) => {
           protocols: ["tcp", "tcps", "ssl", "tls"],
         },
       },
-      helperTextInvalid: "Invalid Server URL.",
+      helperTextInvalid: "helper_text.invalid_server_url",
     },
     {
-      label: "Insecure Skip Verify",
+      label: "insecure_skip_verify",
       fieldId: "provider.protocol.insecureSkipVerify",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
@@ -440,41 +440,41 @@ const getLoggerFileItems = (rootObject) => {
   objectPath.set(rootObject, "messageLogger.maxBackup", 7, true)
   const items = [
     {
-      label: "Flush Interval",
+      label: "flush_interval",
       fieldId: "messageLogger.flushInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Log Rotate Interval",
+      label: "log_rotate_interval",
       fieldId: "messageLogger.logRotateInterval",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Maximum Size",
+      label: "maximum_size",
       fieldId: "messageLogger.maxSize",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Maximum Age",
+      label: "maximum_age",
       fieldId: "messageLogger.maxAge",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Maximum Backup",
+      label: "maximum_backup",
       fieldId: "messageLogger.maxBackup",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
       validator: { isInt: { min: 0 } },
-      helperTextInvalid: "Invalid Maximum Backup. int, min=0",
+      helperTextInvalid: "helper_text.invalid_maximum_backup",
     },
   ]
   return items

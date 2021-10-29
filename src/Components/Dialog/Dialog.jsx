@@ -1,73 +1,83 @@
+import { Button, List, ListItem, Modal, ModalVariant } from "@patternfly/react-core"
 import React from "react"
-import { Modal, ModalVariant, Button, List, ListItem } from "@patternfly/react-core"
+import { Trans, useTranslation } from "react-i18next"
 import "./Dialog.scss"
 
 const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
+  const { t } = useTranslation()
   return (
     <Modal
       className="mc-model"
       variant={ModalVariant.small}
-      title={"Delete " + resourceName + "?"}
+      title={<Trans i18nKey="dialog.delete_resource_heading">Delete {{ resourceName }}?</Trans>}
       isOpen={show}
       onClose={onCloseFn}
       showClose={false}
       actions={[
         <Button key="cancel" variant="secondary" onClick={onCloseFn}>
-          Cancel
+          {t("cancel")}
         </Button>,
         <Button key="confirm" variant="danger" onClick={onOkFn}>
-          Delete
+          {t("delete")}
         </Button>,
       ]}
     >
-      Are you sure want to delete the selected resource?
-      <br />
-      Resource name: {resourceName}
+      <Trans i18nKey="dialog.delete_resource_msg">
+        Are you sure want to delete the selected resource?
+        <br />
+        Resource name: {{ resourceName }}
+      </Trans>
     </Modal>
   )
 }
 
 export const NodeRebootDialog = ({ show, onCloseFn, onOkFn }) => {
+  const { t } = useTranslation()
   return dialog(
-    "Reboot Node(s)?",
+    t("dialog.reboot_nodes_heading"),
     show,
     onCloseFn,
     onOkFn,
-    "Reboot",
-    "Are you sure want to reboot the selected node(s)?"
+    t("reboot"),
+    t("dialog.reboot_nodes_msg"),
+    t
   )
 }
 
 export const NodeResetDialog = ({ show, onCloseFn, onOkFn }) => {
+  const { t } = useTranslation()
   const message = (
-    <>
+    <Trans i18nKey="dialog.node_reset_msg">
       Are you sure want to reset the selected node(s)?
       <br />
       After this operation:
       <List>
         <ListItem>Configuration will be restored to factory settings.</ListItem>
-        <ListItem> you may lose access to the selected node(s) from MyController!</ListItem>
+        <ListItem>you may lose access to the selected node(s) from MyController!</ListItem>
       </List>
-    </>
+    </Trans>
   )
-  return dialog("Reset Node(s)?", show, onCloseFn, onOkFn, "Reset", message)
+  return dialog(t("dialog.node_reset_heading"), show, onCloseFn, onOkFn, t("reset"), message, t)
 }
 
 export const RestoreDialog = ({ show, fileName, onCloseFn, onOkFn }) => {
+  const { t } = useTranslation()
   const message = (
-    <>
+    <Trans i18nKey="dialog.restore_msg">
       Are you sure want to restore to selected backup file?
       <br />
       After this operation:
       <List>
-        <ListItem>Server data will be restored to <b>{fileName}</b></ListItem>
+        <ListItem>
+          Server data will be restored to <b>{{ fileName }}</b>
+        </ListItem>
         <ListItem>You cannot rollback this operation</ListItem>
         <ListItem>Always take a backup before performing a restore operation</ListItem>
         <ListItem>You may need to start the server manually</ListItem>
       </List>
-    </>
+    </Trans>
   )
-  return dialog("Confirm to perform a restore operation?", show, onCloseFn, onOkFn, "Restore", message)
+  return dialog(t("dialog.restore_heading"), show, onCloseFn, onOkFn, t("restore"), message, t)
 }
 
 const dialog = (
@@ -76,7 +86,8 @@ const dialog = (
   onCloseFn = () => {},
   onOkFn = () => {},
   okBtnName = "NoName",
-  message = ""
+  message = "",
+  t = () => {}
 ) => {
   return (
     <Modal
@@ -89,7 +100,7 @@ const dialog = (
       showClose={false}
       actions={[
         <Button key="cancel" variant="secondary" onClick={onCloseFn}>
-          Cancel
+          {t("cancel")}
         </Button>,
         <Button key="confirm" variant="danger" onClick={onOkFn}>
           {okBtnName}

@@ -1,8 +1,10 @@
 import { Stack, StackItem } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
+import { withTranslation } from "react-i18next"
 import { toObject, toString } from "../../Util/Language"
 import ActionBar from "../ActionBar/ActionBar"
+import Loading from "../Loading/Loading"
 import CodeEditorBasic from "./CodeEditorBasic"
 
 class CodeEditor extends React.Component {
@@ -57,9 +59,10 @@ class CodeEditor extends React.Component {
 
   render() {
     const { loading, dataOriginal } = this.state
+    const { t } = this.props
 
     if (loading) {
-      return <div>Loading</div>
+      return <Loading key="loading" />
     }
 
     const codeString = toString(this.props.language, dataOriginal)
@@ -77,20 +80,20 @@ class CodeEditor extends React.Component {
     }
 
     const actionButtons = [
-      { text: "Save", variant: "primary", onClickFunc: this.onSaveClick, isDisabled: false },
-      { text: "Reload", variant: "secondary", onClickFunc: this.onReloadClick, isDisabled: false },
+      { text: t("save"), variant: "primary", onClickFunc: this.onSaveClick, isDisabled: false },
+      { text: t("reload"), variant: "secondary", onClickFunc: this.onReloadClick, isDisabled: false },
     ]
 
     if (this.props.onCancelFunc) {
       actionButtons.push({
-        text: "Cancel",
+        text: t("cancel"),
         variant: "secondary",
         onClickFunc: this.props.onCancelFunc,
         isDisabled: false,
       })
     }
 
-    const rightBar = [{ text: "Download", variant: "secondary", onClickFunc: () => {}, isDisabled: true }]
+    const rightBar = [{ text: t("download"), variant: "secondary", onClickFunc: () => {}, isDisabled: true }]
 
     return (
       <Stack hasGutter>
@@ -122,4 +125,4 @@ CodeEditor.propTypes = {
   otherOptions: PropTypes.object,
 }
 
-export default CodeEditor
+export default withTranslation()(CodeEditor)

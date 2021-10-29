@@ -1,11 +1,11 @@
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { DataType, FieldType } from "../../../Constants/Form"
+import { ResourceType } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import {ResourceType} from "../../../Constants/ResourcePicker"
 
 class UpdatePage extends React.Component {
   render() {
@@ -34,7 +34,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Add a Forward Payload" />
+          <PageTitle key="page-title" title="add_a_forward_payload" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -50,7 +50,7 @@ export default UpdatePage
 const getFormItems = (_rootObject, id) => {
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -58,26 +58,26 @@ const getFormItems = (_rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Enabled",
+      label: "enabled",
       fieldId: "enabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -90,12 +90,12 @@ const getFormItems = (_rootObject, id) => {
       validator: { isLabel: {} },
     },
     {
-      label: "Mapping",
+      label: "mapping",
       fieldId: "!mapping",
       fieldType: FieldType.Divider,
     },
     {
-      label: "Source Field",
+      label: "source_field",
       fieldId: "srcFieldId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -110,7 +110,7 @@ const getFormItems = (_rootObject, id) => {
       getOptionsDescriptionFunc: getOptionsDescriptionFuncImpl,
     },
     {
-      label: "Destination Field",
+      label: "destination_field",
       fieldId: "dstFieldId",
       fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.String,
@@ -133,7 +133,6 @@ const getFormItems = (_rootObject, id) => {
 const getOptionsDescriptionFuncImpl = (item) => {
   return item.name
 }
-
 
 const getResourceOptionValueFunc = (item) => {
   return `${ResourceType.Field}:${item.gatewayId}.${item.nodeId}.${item.sourceId}.${item.fieldId}`

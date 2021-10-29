@@ -7,9 +7,21 @@ export const ImageSourceType = {
 
 // image panel options
 export const ImageSourceTypeOptions = [
-  { value: ImageSourceType.Field, label: "Field", description: "Image data from a field resource" },
-  { value: ImageSourceType.URL, label: "URL", description: "Image from a url" },
-  { value: ImageSourceType.Disk, label: "Disk", description: "Image from a disk location" },
+  {
+    value: ImageSourceType.Field,
+    label: "opts.image_source.label_field",
+    description: "opts.image_source.desc_field",
+  },
+  {
+    value: ImageSourceType.URL,
+    label: "opts.image_source.label_url",
+    description: "opts.image_source.desc_url",
+  },
+  {
+    value: ImageSourceType.Disk,
+    label: "opts.image_source.label_disk",
+    description: "opts.image_source.desc_disk",
+  },
 ]
 
 // image types in field
@@ -20,8 +32,16 @@ export const ImageType = {
 
 // image type options
 export const ImageTypeOptions = [
-  { value: ImageType.Image, label: "Raw Image", description: "Base64 encoded image as input" },
-  { value: ImageType.CustomMapping, label: "Custom Mapping", description: "Custom mapping" },
+  {
+    value: ImageType.Image,
+    label: "opts.image_load_type.label_image",
+    description: "opts.image_load_type.desc_image",
+  },
+  {
+    value: ImageType.CustomMapping,
+    label: "opts.image_load_type.label_custom_mapping",
+    description: "opts.image_load_type.desc_custom_mapping",
+  },
 ]
 
 export const ICON_PREFIX = "icon:"
@@ -64,12 +84,24 @@ export const ImageRotationType = {
 
 // image rotation options
 export const ImageRotationTypeOptions = [
-  { value: ImageRotationType.Rotate_0, label: "None", description: "No rotation" },
+  {
+    value: ImageRotationType.Rotate_0,
+    label: "opts.image_rotation.label_rotate_none",
+    description: "opts.image_rotation.desc_rotate_none",
+  },
   {
     value: ImageRotationType.RotateRight_90,
-    label: "Rotate Right 90°",
-    description: "Rotate right side 90°",
+    label: "opts.image_rotation.label_rotate_right_90",
+    description: "opts.image_rotation.desc_rotate_right_90",
   },
-  { value: ImageRotationType.RotateLeft_90, label: "Rotate Left 90°", description: "Rotate left side 90°" },
-  { value: ImageRotationType.Rotate_180, label: "Rotate 180°", description: "Rotate 180°" },
+  {
+    value: ImageRotationType.RotateLeft_90,
+    label: "opts.image_rotation.label_rotate_left_90",
+    description: "opts.image_rotation.desc_rotate_left_90",
+  },
+  {
+    value: ImageRotationType.Rotate_180,
+    label: "opts.image_rotation.label_rotate_180",
+    description: "opts.image_rotation.desc_rotate_180",
+  },
 ]

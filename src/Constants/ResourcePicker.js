@@ -14,13 +14,13 @@ export const FieldDataType = {
 }
 
 export const FieldDataTypeOptions = [
-  { value: FieldDataType.TypeString, label: "String" },
-  { value: FieldDataType.TypeResourceByQuickId, label: "Resource By Quick ID" },
-  { value: FieldDataType.TypeResourceByLabels, label: "Resource By Labels" },
-  { value: FieldDataType.TypeWebhook, label: "Webhook"},
-  { value: FieldDataType.TypeEmail, label: "Email" },
-  { value: FieldDataType.TypeTelegram, label: "Telegram" },
-  { value: FieldDataType.TypeBackup, label: "Backup" },
+  { value: FieldDataType.TypeString, label: "string" },
+  { value: FieldDataType.TypeResourceByQuickId, label: "resource_by_quick_id" },
+  { value: FieldDataType.TypeResourceByLabels, label: "resource_by_labels" },
+  { value: FieldDataType.TypeWebhook, label: "webhook" },
+  { value: FieldDataType.TypeEmail, label: "email" },
+  { value: FieldDataType.TypeTelegram, label: "telegram" },
+  { value: FieldDataType.TypeBackup, label: "backup" },
 ]
 
 export const ResourceType = {
@@ -35,14 +35,14 @@ export const ResourceType = {
 }
 
 export const ResourceTypeOptions = [
-  { value: ResourceType.Gateway, label: "Gateway" },
-  { value: ResourceType.Node, label: "Node" },
-  { value: ResourceType.Source, label: "Source" },
-  { value: ResourceType.Field, label: "Field" },
-  { value: ResourceType.Task, label: "Task" },
-  { value: ResourceType.Schedule, label: "Schedule" },
-  { value: ResourceType.Handler, label: "Handler" },
-  { value: ResourceType.DataRepository, label: "Data Repository" },
+  { value: ResourceType.Gateway, label: "gateway" },
+  { value: ResourceType.Node, label: "node" },
+  { value: ResourceType.Source, label: "source" },
+  { value: ResourceType.Field, label: "field" },
+  { value: ResourceType.Task, label: "task" },
+  { value: ResourceType.Schedule, label: "schedule" },
+  { value: ResourceType.Handler, label: "handler" },
+  { value: ResourceType.DataRepository, label: "data_repository" },
 ]
 
 export const getQuickId = (resourceType = "", resource = {}) => {
@@ -76,10 +76,10 @@ export const TelegramParseMode = {
 }
 
 export const TelegramParseModeOptions = [
-  { value: TelegramParseMode.Text, label: "Text" },
-  { value: TelegramParseMode.Markdown, label: "Markdown" },
-  { value: TelegramParseMode.MarkdownV2, label: "Markdown V2" },
-  { value: TelegramParseMode.HTML, label: "HTML" },
+  { value: TelegramParseMode.Text, label: "text" },
+  { value: TelegramParseMode.Markdown, label: "markdown" },
+  { value: TelegramParseMode.MarkdownV2, label: "markdown_v2" },
+  { value: TelegramParseMode.HTML, label: "html" },
 ]
 
 // Exporter type values
@@ -89,7 +89,11 @@ export const BackupProviderType = {
 
 // Exporter type options
 export const BackupProviderTypeOptions = [
-  { value: BackupProviderType.Disk, label: "Disk", description: "Backup data in to disk" },
+  {
+    value: BackupProviderType.Disk,
+    label: "opts.backup_provider.label_disk",
+    description: "opts.backup_provider.desc_disk",
+  },
 ]
 
 // Storage Export type values
@@ -100,8 +104,8 @@ export const StorageExportType = {
 
 // Storage Export type options
 export const StorageExportTypeOptions = [
-  { value: StorageExportType.YAML, label: "YAML" },
-  { value: StorageExportType.JSON, label: "JSON" },
+  { value: StorageExportType.YAML, label: "yaml" },
+  { value: StorageExportType.JSON, label: "json" },
 ]
 
 // Webhook method type values
@@ -114,8 +118,8 @@ export const WebhookMethodType = {
 
 // Webhook method type options
 export const WebhookMethodTypeOptions = [
-  { value: WebhookMethodType.GET, label: "GET" },
-  { value: WebhookMethodType.POST, label: "POST" },
-  { value: WebhookMethodType.PUT, label: "PUT" },
-  { value: WebhookMethodType.DELETE, label: "DELETE" },
+  { value: WebhookMethodType.GET, label: "opts.http_method.label_get" },
+  { value: WebhookMethodType.POST, label: "opts.http_method.label_post" },
+  { value: WebhookMethodType.PUT, label: "opts.http_method.label_put" },
+  { value: WebhookMethodType.DELETE, label: "opts.http_method.label_delete" },
 ]

@@ -1,8 +1,8 @@
 import React from "react"
 import Editor from "../../../Components/Editor/Editor"
-import { DataType, FieldType } from "../../../Constants/Form"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
+import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 
@@ -33,7 +33,7 @@ class UpdatePage extends React.Component {
     if (isNewEntry) {
       return (
         <>
-          <PageTitle key="page-title" title="Data Repository: Add an entry" />
+          <PageTitle key="page-title" title="data_repository_add_an_entry" />
           <PageContent hasNoPaddingTop>{editor} </PageContent>
         </>
       )
@@ -49,7 +49,7 @@ export default UpdatePage
 const getFormItems = (_rootObject, id) => {
   const items = [
     {
-      label: "ID",
+      label: "id",
       fieldId: "id",
       fieldType: FieldType.Text,
       dataType: DataType.String,
@@ -57,26 +57,26 @@ const getFormItems = (_rootObject, id) => {
       isRequired: true,
       isDisabled: id ? true : false,
       helperText: "",
-      helperTextInvalid: "Invalid id. chars: min=4, max=100, and space not allowed",
+      helperTextInvalid: "helper_text.invalid_id",
       validated: "default",
       validator: { isLength: { min: 4, max: 100 }, isNotEmpty: {}, isID: {} },
     },
     {
-      label: "Description",
+      label: "description",
       fieldId: "description",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
-      label: "Read Only",
+      label: "read_only",
       fieldId: "readOnly",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
     },
     {
-      label: "Labels",
+      label: "labels",
       fieldId: "!labels",
       fieldType: FieldType.Divider,
     },
@@ -94,15 +94,15 @@ const getFormItems = (_rootObject, id) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "Data",
+      label: "data",
       fieldId: "data",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
       minimapEnabled: true,
       value: {},
-      updateButtonText: "Update",
-      saveButtonText: "Update",
+      updateButtonText: "update",
+      saveButtonText: "update",
     },
   ]
 

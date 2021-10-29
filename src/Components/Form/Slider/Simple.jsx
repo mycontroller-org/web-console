@@ -1,6 +1,6 @@
-import React from "react"
-import Slider, { createSliderWithTooltip } from "rc-slider"
 import { Badge, Split, SplitItem } from "@patternfly/react-core"
+import Slider, { createSliderWithTooltip } from "rc-slider"
+import React from "react"
 import "./Simple.scss"
 const SliderWithTooltip = createSliderWithTooltip(Slider)
 
