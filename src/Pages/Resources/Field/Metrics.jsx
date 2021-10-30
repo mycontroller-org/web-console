@@ -323,7 +323,7 @@ class Metrics extends React.Component {
                   <div ref={measureRef}>
                     <LineChart
                       key={m.name}
-                      title={m.name}
+                      title={t(m.name)}
                       unit={m.unit}
                       data={m.data}
                       interpolation={m.interpolation}

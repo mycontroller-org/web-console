@@ -19,63 +19,63 @@ alerts_empty_message: There are currently no alerts.
 alerts_empty_title: No alerts found
 alive_check_interval: Alive Check Interval
 all_rights_reserved: அனைத்து உரிமைகளும் காப்புடைமையானவை
-allow_overwrite: Allow Overwrite
+allow_overwrite: மேலெழுத அனுமதிக்கவும்
 apache_license_2: அப்பாச்சி உரிமம் 2.0
 api: API
 ask_confirmation: உறுதிப்பாடு
-assigned_firmware: Assigned Firmware
-assigned_nodes: Assigned Nodes
+assigned_firmware: ஒதுக்கப்பட்ட ஃபார்ம்வேர்
+assigned_nodes: ஒதுக்கப்பட்ட நோடுகள்
 auto_disable: தானாக முடக்கு
-auto_update: Auto Update
+auto_update: தானியங்கு மேம்படுத்தல்
 axis: அச்சு
 backup: காப்பு
 backup_and_restore: காப்பு மற்றும் மீட்பு
-backup_locations: Backup Locations
+backup_locations: காப்பு இடங்கள்
 battery: மின்கலம்
-baud_rate: Baud Rate
+baud_rate: பாட் ரேட்
 body: செய்தி
-bridge: Bridge
+bridge: பிரிட்ஜ்
 brightness: பிரகாசம்
-broker: Broker
-browse: Browse
-build_date: Build Date
-button: Button
-button_text: Button Text
+broker: புரோக்கர்
+browse: உலவ
+build_date: அமைப்பு தேதி
+button: பட்டன்
+button_text: பட்டன் உரை
 cancel: ரத்து செய்
 chart_config: விளக்கப்படம் கட்டமைப்பு
-chart_type: Chart Type
-chat_ids: Chat IDs
+chart_type: விளக்கப்பட வகை
+chat_ids: விளக்கப்பட ஐடிகள்
 clear: அழி
 clear_all: அனைத்தையும் அழி
 color: நிறம்
-color_temperature: Color Temperature
-column_display: Column Display
+color_temperature: நிற வெப்பநிலை
+column_display: நெடுவரிசை காட்சி
 conditions: நிபந்தனைகள்
-config: Config
-configuration: Configuration
-configure_via: Configure via
+config: கட்டமைப்பு
+configuration: கட்டமைப்பு
+configure_via: மூலம் கட்டமைக்க
 confirm_password: கடவுச்சொல்லை உறுதிப்படுத்தவும்
-confirmation_message: Confirmation Message
-connection_timeout: Connection Timeout
-control_config: Control Config
-control_type: Control Type
-corner_smoothing: Corner Smoothing
+confirmation_message: உறுதிப்படுத்தல் செய்தி
+connection_timeout: இணைப்பு நேரம் முடிவடையும் கால அவகாசம்
+control_config: கட்டுப்பாட்டு கட்டமைப்பு
+control_type: கட்டுப்பாட்டு வகை
+corner_smoothing: மூலையை மென்மையாக்குதல்
 cpu: CPU
-cpu_disabled: CPU Disabled
+cpu_disabled: CPU முடக்கப்பட்டது
 create_new: புதிதாக உருவாக்கு
-cron_expression: Cron Expression
+cron_expression: கிரான் தகவல்கள்
 current_password: தற்போதைய கடவுச்சொல்
-cursor_tooltip: Cursor Tooltip
-custom_data: Custom Data
-custom_mapping: Custom Mapping
-custom_variables: Custom Variables
+cursor_tooltip: கர்சர் உதவிக்குறிப்பு
+custom_data: கஸ்டம் டாட்டா
+custom_mapping: கஸ்டம் மேப்பிங்
+custom_variables: கஸ்டம் வரைபிள்ஸ்
 dampening: Dampening
 dashboard: டாஷ்போர்டு
 data: தகவல்கள்
 data_repository: தரவு களஞ்சியம்
-data_repository_add_an_entry: 'Data Repository: Add an entry'
-data_repository_modify_an_entry: 'Data Repository: Modify an entry'
-data_type: Data Type
+data_repository_add_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டைச் சேர்க்கவும்'
+data_repository_modify_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டை மாற்றவும்'
+data_type: தரவு வகை
 date_yyyy_mm_dd: தேதி (yyy-mm-dd)
 day_of_month: மாத தேதி
 day_of_week: வாரத்தின் நாட்கள்
@@ -85,10 +85,10 @@ destination_field: இலக்கு (பீல்ட்)
 details: விவரங்கள்
 dialog:
   delete_resource_msg: "தேர்ந்தெடுத்த உருப்படிகளை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
-  delete_title_dashboard: "Delete dashboard?"
-  delete_title_data_repository: "Delete data repositories?"
-  delete_title_field: "Delete fields?"
-  delete_title_firmware: "Delete firmware?"
+  delete_title_dashboard: "டாஷ்போர்டை நீக்கவா?"
+  delete_title_data_repository: "தரவு களஞ்சியங்களை நீக்கவா?"
+  delete_title_field: "பீல்ட்களை நீக்கவா?"
+  delete_title_firmware: "ஃபார்ம்வேரை நீக்கவா?"
   delete_title_forward_payload: "Delete forward payloads?"
   delete_title_gateway: "Delete gateways?"
   delete_title_handler: "Delete handlers?"
@@ -123,11 +123,11 @@ edit_dashboard_settings: டாஷ்போர்டு அமைப்புக
 edit_widget_settings: Edit Widget Settings
 email: மின்னஞ்சல்
 enable: செயல்படுத்த
-enabled: Enabled
+enabled: செயல்படுத்தப்பட்டது
 entities: Entities
 error:
   console:
-    invalid_login_credentials: தவறான உள்நுழைவு ஆதாரச்சான்றுகள்.
+    invalid_login_credentials: தவறான உள்நுழைவு ஆதாரச்சான்றுகள்
     login_msg_loading_failed: Error on fetching login message
 evaluation: Evaluation
 evaluations: Evaluations
@@ -151,10 +151,10 @@ filename_placeholder: Drag a file here or browse to upload
 fill_opacity_%: ஒளிபுகாநிலையை நிரப்பவும் (%)
 filter: வடிகட்டி
 filters: வடிகட்டிகள்
-firmware_details: Firmware Details
-firmware_file: Firmware File
-firmware_update: Firmware Update
-firmwares: மென்பொருள்
+firmware_details: ஃபார்ம்வேரின் விவரங்கள்
+firmware_file: ஃபார்ம்வேர் கோப்பு
+firmware_update: ஃபார்ம்வேரை புதுப்பிப்பு
+firmwares: ஃபார்ம்வேர்கள்
 flush_interval: Flush Interval
 forgot_username_or_password: "பயனர் பெயர் அல்லது கடவுச்சொல் மறந்துவிட்டதா?"
 form_generic_error_message: பிழை மற்றும்/அல்லது கட்டாய (*) புலங்களை சரிபார்க்கவும்
@@ -184,53 +184,53 @@ headers: Headers
 heartbeat_request: Heartbeat Request
 height_px: உயரம் (px)
 helper_text:
-  invalid_address_esphome: 'Invalid address, example: node1.local:6053'
-  invalid_api: Invalid API
-  invalid_backup_retention_count: "Invalid retention count, 0 for no limit"
-  invalid_baud_rate: Invalid baud rate
-  invalid_broker_url: Invalid Broker URL
+  invalid_address_esphome: 'தவறான முகவரி. உதாரணமாக: node1.local:6053'
+  invalid_api: தவறான API
+  invalid_backup_retention_count: தவறான காப்பு தக்கவைப்பு எண்ணிக்கை. 0-க்கு வரம்பு இல்லை
+  invalid_baud_rate: தவறான பாட் ரேட்
+  invalid_broker_url: தவறான புரோக்கர் URL
   invalid_current_password: Enter your current password
-  invalid_date: Invalid date
+  invalid_date: தவறான தேதி
   invalid_day_of_month: தவறான நாள்
-  invalid_directory: Invalid directory
-  invalid_email: Invalid email
+  invalid_directory: தவறான கோப்புறை
+  invalid_email: தவறான மின்னஞ்சல்
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "தவறான பீல்ட் ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
-  invalid_height: Invalid Height
-  invalid_host: Invalid Host
-  invalid_id: "Invalid id. chars, min=4, max=100, and space not allowed"
-  invalid_key: "Invalid key. chars, min=1 and max=100"
+  invalid_height: தவறான உயரம்
+  invalid_host: தவறான ஹோஸ்ட்
+  invalid_id: "தவறான ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=4, அதிகபட்சம்=100"
+  invalid_key: "தவறான கி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
   invalid_key_path: Key path can not be empty
   invalid_latitude: தவறான அட்சரேகை
-  invalid_limit: Invalid limit
-  invalid_location: Invalid location
+  invalid_limit: தவறான வரம்பு
+  invalid_location: தவறான இடம்
   invalid_longitude: தவறான தீர்க்கரேகை
-  invalid_maximum_backup: "Invalid maximum backup count. int, min=0"
-  invalid_name: "Invalid name. chars, min=2, max=100"
-  invalid_node_id: "Invalid node ID. chars, min=1 and max=100"
-  invalid_offset: Invalid offset
-  invalid_payload: Invalid payload
-  invalid_port: Invalid port
-  invalid_prefix: Invalid prefix
-  invalid_profile_confirm_password: Invalid confirm password
-  invalid_profile_password: "Invalid password. chars, min=3, max=100"
-  invalid_profile_username: "Invalid username. chars, min=3, max=100, and space not allowed"
-  invalid_repeat_count: Invalid repeat count
+  invalid_maximum_backup: "தவறான காப்பு எண்ணிக்கை. முழு எண், குறைந்தபட்சம்=0"
+  invalid_name: "தவறான பெயர். எழுத்துக்கள், குறைந்தபட்சம்=2, அதிகபட்சம்=100"
+  invalid_node_id: "தவறான நோடு ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
+  invalid_offset: தவறான ஆஃப்செட்
+  invalid_payload: தவறான பேலோட்
+  invalid_port: தவறான போர்ட்
+  invalid_prefix: தவறான முற்சேர்க்கை
+  invalid_profile_confirm_password: தவறான உறுதிப்படுத்தல் கடவுச்சொல்
+  invalid_profile_password: "தவறான கடவுச்சொல். எழுத்துக்கள், குறைந்தபட்சம்=3, அதிகபட்சம்=100"
+  invalid_profile_username: "தவறான பயனர்பெயர். எழுத்துக்கள், குறைந்தபட்சம்=3, அதிகபட்சம்=100 மற்றும் இடைவெளிகளுக்கு அனுமதி இல்லை"
+  invalid_repeat_count: தவறான திரும்பச்செய் எண்ணிக்கை
   invalid_response_code: "Enter a valid response code, enter 0 to ignore"
-  invalid_retry_count: "Invalid retry count. int, min=0"
+  invalid_retry_count: "தவறான மீண்டும் முயற்சி எண்ணிக்கை. முழு எண், குறைந்தபட்சம்=0"
   invalid_script_empty: Script should not be empty
-  invalid_server_url: Invalid server URL
-  invalid_source_id: "Invalid source ID. chars, min=1 and max=100"
-  invalid_text: "Invalid text. chars, min=1 and max=100"
-  invalid_time: Invalid time
-  invalid_title: Invalid title
-  invalid_token: Invalid token
-  invalid_topic: Invalid topic
-  invalid_type: Invalid type
-  invalid_url: Invalid URL
-  invalid_username: Invalid username
-  invalid_value: Invalid value
-  invalid_width: Invalid width
+  invalid_server_url: தவறான சர்வர் URL
+  invalid_source_id: "தவறான சோர்ஸ் ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
+  invalid_text: "தவறான உரை. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
+  invalid_time: தவறான நேரம்
+  invalid_title: தவறான தலைப்பு
+  invalid_token: தவறான டோக்கன்
+  invalid_topic: தவறான டொபிக்
+  invalid_type: தவறான வகை
+  invalid_url: தவறான URL
+  invalid_username: தவறான பயனர்பெயர்
+  invalid_value: தவறான மதிப்பு
+  invalid_width: தவறான அகலம்
 hide_border: Hide Border
 hide_header: Hide Header
 hide_value_column: Hide Value Column
@@ -250,7 +250,7 @@ internal_message_ack: Internal Message Ack
 interpolation: இடைக் கணிப்பு
 interval: இடைவெளி
 interval_0h0m0s: Interval (0h0m0s)
-invalid_file: Invalid file
+invalid_file: தவறான கோப்பு
 is_static: நிலையானது
 javascript: Javascript
 json: JSON
@@ -262,14 +262,14 @@ language: மொழி
 last_evaluation: Last Evaluation
 last_modified: Last Modified
 last_run: Last Run
-last_seen: Last Seen
-last_status: Last Status
+last_seen: இறுதியாக பார்த்தது
+last_status: கடைசி நிலை
 last_success: Last Success
-last_sync_with_server: Last sync with server
+last_sync_with_server: சர்வருடன் கடைசியாக ஒத்திசைவு
 latitude: அட்சரேகை
 legend_orientation: Legend Orientation
 legend_position: Legend Position
-library_version: Library Version
+library_version: நூலக பதிப்பு
 light: Light
 limit: வரம்பு
 loading: ஏற்றுகிறது
@@ -289,32 +289,32 @@ markdown: Markdown
 markdown_v2: Markdown v2
 match_all: Match All
 max_y_axis: அதிகபட்சம் (Y அச்சு)
-maximum: Maximum
-maximum_age: Maximum Age
-maximum_backup: Maximum Backup
-maximum_size: Maximum Size
-maximum_value: Maximum Value
+maximum: அதிகபட்சம்
+maximum_age: அதிகபட்ச வயது
+maximum_backup: அதிகபட்ச காப்புப்பிரதி
+maximum_size: அதிகபட்ச அளவு
+maximum_value: அதிகபட்ச மதிப்பு
 memory: Memory
 memory_disabled: Memory Disabled
 message: செய்தி
 message_logger: Message Logger
 method: Method
-metric_config: Metric Config
-metric_function: Metric Function
-metric_interval: Metric Interval
-metric_type: Metric Type
-metrics: Metrics
-metrics_database_disabled: 'WARNING: Metrics database disabled'
+metric_config: மெட்ரிக் கட்டமைப்பு
+metric_function: மெட்ரிக் செயல்பாடு
+metric_interval: மெட்ரிக் இடைவெளி
+metric_type: மெட்ரிக் வகை
+metrics: மெட்ரிக்ஸ்
+metrics_database_disabled: 'எச்சரிக்கை: மெட்ரிக்ஸ் தரவுத்தளம் முடக்கப்பட்டுள்ளது'
 min_y_axis: குறைந்தபட்சம் (Y அச்சு)
-minimum: Minimum
-minimum_value: Minimum Value
-minimum_width: Minimum Width
+minimum: குறைந்தபட்சம்
+minimum_value: குறைந்தபட்ச மதிப்பு
+minimum_width: குறைந்தபட்ச அகலம்
 modified_on: அன்று மாற்றியமைக்கப்பட்டது
 name: பெயர்
 name_key: பெயர் Key
 new: புதிய
 new_password: புதிய கடவுச்சொல்
-no_change_since: No Change Since
+no_change_since: இருந்து எந்த மாற்றமும் இல்லை
 no_dashboard_message: ஏற்றுவதற்கு டாஷ்போர்டு எதுவும் இல்லை.
 no_dashboard_title: டாஷ்போர்டுகள் இல்லை
 no_data: No data
@@ -407,15 +407,15 @@ opts:
     label_file_logger: File Logger
     label_none: None
   gw_protocol:
-    desc_ethernet: Ethernet Protocol
-    desc_mqtt: MQTT Protocol
-    desc_serial: Serial Protocol
+    desc_ethernet: ஈதர்நெட் ப்ரோடோகால்
+    desc_mqtt: MQTT ப்ரோடோகால்
+    desc_serial: சீரியல் ப்ரோடோகால்
     label_ethernet: Ethernet
     label_mqtt: MQTT
     label_serial: Serial
   gw_provider:
     desc_esphome: esphome.io
-    desc_mysensors_v2: MySensors.org version 2.x
+    desc_mysensors_v2: MySensors.org பதிப்பு 2.x
     desc_philips_hue: developers.meethue.com
     desc_system_monitoring: Capture system resources and reports
     desc_tasmota: tasmota.github.io
@@ -524,10 +524,10 @@ opts:
     label_minute_30: Last 30 minutes
   metric_function:
     label_count: Count
-    label_maximum: Maximum
-    label_mean: Mean
+    label_maximum: அதிகபட்சம்
+    label_mean: சராசரி
     label_median: Median
-    label_minimum: Minimum
+    label_minimum: குறைந்தபட்சம்
     label_percentile_50: 50th Percentile
     label_percentile_75: 75th Percentile
     label_percentile_95: 95th Percentile
@@ -597,7 +597,7 @@ opts:
     desc_empty_panel: Empty Panel
     desc_image_panel: Display image from different sources
     desc_light_panel: Controls a light
-    desc_utilization_panel: Display utilization status
+    desc_utilization_panel: பயன்பாட்டு நிலையைக் காட்டு
     label_chart_panel: Charts Panel
     label_control_panel: Control Panel
     label_empty_panel: Empty Panel
@@ -627,9 +627,9 @@ previous_value: Previous Value
 process: Process
 processes: Processes
 profile: சுயவிவரம்
-protocol: Protocol
-provider: Provider
-provider_type: Provider Type
+protocol: ப்ரோடோகால்
+provider: வழங்குநர்
+provider_type: வழங்குநர் வகை
 publish: Publish
 qos: QoS
 query_parameters: Query Parameters
@@ -637,7 +637,7 @@ queue_failed_messages: Queue Failed Messages
 react_version: React பதிப்பு
 read_only: படிக்க மட்டுமே
 reboot: மறுதொடக்கம்
-reconnect_delay: Reconnect Delay
+reconnect_delay: மீண்டும் இணைக்க காலதாமதம்
 refresh_interval: இடைவெளியைப் புதுப்பிக்கவும்
 refresh_node_info: Refresh Node Info
 reload: Reload
@@ -676,7 +676,7 @@ settings: அமைப்புகள்
 show_grid_x: Show Grid X
 show_grid_y: Show Grid Y
 show_title: தலைப்பைக் காட்டு
-since: Since
+since: இருந்து
 size: Size
 source: Source
 source_code: Source Code
@@ -687,7 +687,7 @@ sources: Sources
 spec: Spec
 stack_charts: Stack Charts
 state: State
-status: Status
+status: நிலை
 status_at: Status At
 step: Step
 storage_export_type: Storage Export Type
@@ -729,7 +729,7 @@ unit: அலகு
 up: UP
 update: Update
 update_data: Update Data
-update_firmware: Update Firmware
+update_firmware: ஃபார்ம்வேரை புதுப்பிக்கவும்
 update_node: Update Node
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
@@ -737,7 +737,7 @@ update_script: Update Script
 update_value: Update Value
 update_y_axis: Update Y Axis
 upload: Upload
-upload_firmware: Upload Firmware
+upload_firmware: ஃபார்ம்வேரை பதிவேற்றவும்
 url: URL
 use_global_style: Use Global Style
 username: பயனர் பெயர்
