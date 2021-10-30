@@ -390,7 +390,7 @@ class Dashboard extends React.Component {
           key="delete-confirmation"
           onCloseFn={this.onDeleteCancel}
           onOkFn={() => this.onDashboardDeleteClick(selectionId)}
-          resourceName={title}
+          dialogTitle="dialog.delete_title_dashboard"
           show={showDeleteDialog}
         />
         <EditSettings

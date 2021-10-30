@@ -102,7 +102,7 @@ class Actions extends React.Component {
         />
         <DeleteDialog
           key="deleteDialog"
-          resourceName={this.props.resourceName}
+          dialogTitle={this.props.deleteDialogTitle}
           show={this.state.showDeleteDialog}
           onCloseFn={this.onCloseDeleteDialog}
           onOkFn={this.onConfirmDeleteDialog}

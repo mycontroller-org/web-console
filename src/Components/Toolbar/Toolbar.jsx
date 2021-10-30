@@ -9,7 +9,7 @@ const Toolbar = ({
   items,
   groupAlignment = {},
   refreshFn = () => {},
-  resourceName,
+  deleteDialogTitle,
   filters = null,
   clearAllFilters,
 }) => {
@@ -24,7 +24,7 @@ const Toolbar = ({
         tbItems[group].push(
           <ToolbarItem key={"tb-items-" + index}>
             <Actions
-              resourceName={resourceName}
+              deleteDialogTitle={deleteDialogTitle}
               rowsSelectionCount={rowsSelectionCount}
               isDisabled={item.disabled}
               items={item.actions}

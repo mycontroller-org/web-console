@@ -121,7 +121,7 @@ List.defaultProps = {
   apiDeleteRecords: api.forwardPayload.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Forward Payload(s)",
+  deleteDialogTitle: "dialog.delete_title_forward_payload",
   filtersDefinition: filtersDefinition,
 }
 

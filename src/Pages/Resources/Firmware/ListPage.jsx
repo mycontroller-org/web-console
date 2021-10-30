@@ -101,7 +101,7 @@ List.defaultProps = {
   apiDeleteRecords: api.firmware.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Firmware(s)",
+  deleteDialogTitle: "dialog.delete_title_firmware",
   filtersDefinition: filtersDefinition,
 }
 

@@ -130,7 +130,7 @@ List.defaultProps = {
   apiDeleteRecords: api.schedule.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Schedule(s)",
+  deleteDialogTitle: "dialog.delete_title_schedule",
   filtersDefinition: filtersDefinition,
 }
 

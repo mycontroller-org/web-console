@@ -129,7 +129,7 @@ List.defaultProps = {
   apiDeleteRecords: api.source.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Source(s)",
+  deleteDialogTitle: "dialog.delete_title_source",
   filtersDefinition: filtersDefinition,
 }
 

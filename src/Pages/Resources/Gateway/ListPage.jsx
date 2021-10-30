@@ -143,7 +143,7 @@ List.defaultProps = {
   apiDeleteRecords: api.gateway.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Gateway(s)",
+  deleteDialogTitle: "dialog.delete_title_gateway",
   filtersDefinition: filtersDefinition,
 }
 

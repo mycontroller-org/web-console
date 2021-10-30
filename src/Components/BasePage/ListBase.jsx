@@ -275,7 +275,7 @@ class ListPage extends React.Component {
           refreshFn={() => this.fetchRecords(pagination, this.state.filters)}
           items={this.toolbar}
           groupAlignment={{ right1: "alignRight" }}
-          resourceName={this.resourceName}
+          deleteDialogTitle={this.deleteDialogTitle}
           clearAllFilters={this.onClearAllFilters}
           //filters={this.props.filters(this.onFilterToggle, this.state.filterOpen)}
           filters={
@@ -337,7 +337,7 @@ class ListPage extends React.Component {
             </FlexItem>
           </Flex>
           <DeleteDialog
-            resourceName={this.props.resourceName}
+            dialogTitle={this.props.deleteDialogTitle}
             show={showDeleteDialog}
             onCloseFn={this.onDeleteActionCloseClick}
             onOkFn={this.onDeleteActionOkClick}
@@ -371,7 +371,7 @@ ListPage.propTypes = {
   apiDeleteRecords: PropTypes.func,
   tableColumns: PropTypes.array,
   toRowFunc: PropTypes.func,
-  resourceName: PropTypes.string,
+  deleteDialogTitle: PropTypes.string,
   filtersDefinition: PropTypes.array,
 
   // load from redux

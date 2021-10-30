@@ -159,7 +159,7 @@ List.defaultProps = {
   apiDeleteRecords: api.field.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  resourceName: "Fields(s)",
+  deleteDialogTitle: "dialog.delete_title_field",
   filtersDefinition: filtersDefinition,
 }
 

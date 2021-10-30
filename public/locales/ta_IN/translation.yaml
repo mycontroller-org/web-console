@@ -3,7 +3,7 @@ about: என்னை பற்றி
 actions: செயல்கள்
 active_time: செயலில் நேரம்
 add: சேர்
-add_a_field: Add a Field
+add_a_field: ஒரு பீல்ட்டை சேர்க்கவும்
 add_a_firmware: Add a Firmware
 add_a_forward_payload: Add a Forward payload
 add_a_gateway: Add a Gateway
@@ -81,15 +81,25 @@ day_of_month: மாத தேதி
 day_of_week: வாரத்தின் நாட்கள்
 delete: அழி
 description: விளக்கம்
-destination_field: Destination Field
+destination_field: இலக்கு (பீல்ட்)
 details: விவரங்கள்
 dialog:
-  delete_resource_heading: "Delete {{resourceName}}?"
-  delete_resource_msg: 'Are you sure want to delete the selected resource?<br/>Resource name: {{resourceName}}'
-  node_reset_heading: "Reset Node(s)?"
-  node_reset_msg: "Are you sure want to reset the selected node(s)?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
-  reboot_nodes_heading: "Reboot Node(s)?"
-  reboot_nodes_msg: "Are you sure want to reboot the selected node(s)?"
+  delete_resource_msg: "தேர்ந்தெடுத்த உருப்படிகளை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
+  delete_title_dashboard: "Delete dashboard?"
+  delete_title_data_repository: "Delete data repositories?"
+  delete_title_field: "Delete fields?"
+  delete_title_firmware: "Delete firmware?"
+  delete_title_forward_payload: "Delete forward payloads?"
+  delete_title_gateway: "Delete gateways?"
+  delete_title_handler: "Delete handlers?"
+  delete_title_node: "Delete nodes?"
+  delete_title_schedule: "Delete schedules?"
+  delete_title_source: "Delete sources?"
+  delete_title_task: "Delete tasks?"
+  node_reset_heading: "Reset Node?"
+  node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
+  reboot_nodes_heading: "Reboot Node?"
+  reboot_nodes_msg: "Are you sure want to reboot the selected nodes?"
   restore_heading: "Confirm to perform a restore operation?"
   restore_msg: "தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி கோப்பில் நிச்சயமாக மீட்டெடுக்க விரும்புகிறீர்களா?<br/>இந்த செயல்பாடுக்குப் பிறகு:<3><0>Server தரவு <4>{{fileName}}</4> க்கு மீட்டமைக்கப்படும் </0><1>இந்த செயல்பாட்டை நீங்கள் திரும்பப் பெற முடியாது</1><2>மீட்பு செயல்பாட்டைச் செய்வதற்கு முன் எப்போதும் காப்புப் பிரதி எடுக்கவும்</2><3>You may need to start the server manually</3></3>"
 disable: முடக்கு
@@ -130,10 +140,10 @@ export_type: Export Type
 favorite: பிடித்தவை
 fetch_info: Fetch Info
 fetching: Fetching
-field: Field
-field_details: Field Details
-field_id: Field ID
-fields: Fields
+field: பீல்ட்
+field_details: பீல்ட்ன் விவரங்கள்
+field_id: பீல்ட் ஐடி
+fields: பீல்ட்கள்
 file_details: File Details
 file_uploaded_successfully: File uploaded successfully
 filename: கோப்பு பெயர்
@@ -185,7 +195,7 @@ helper_text:
   invalid_directory: Invalid directory
   invalid_email: Invalid email
   invalid_execution_interval_empty: Execution interval should not be empty
-  invalid_field_id: "Invalid field id. chars, min=1, max=100"
+  invalid_field_id: "தவறான பீல்ட் ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
   invalid_height: Invalid Height
   invalid_host: Invalid Host
   invalid_id: "Invalid id. chars, min=4, max=100, and space not allowed"
@@ -299,7 +309,7 @@ min_y_axis: குறைந்தபட்சம் (Y அச்சு)
 minimum: Minimum
 minimum_value: Minimum Value
 minimum_width: Minimum Width
-modified_on: Modified On
+modified_on: அன்று மாற்றியமைக்கப்பட்டது
 name: பெயர்
 name_key: பெயர் Key
 new: புதிய
@@ -424,7 +434,7 @@ opts:
     label_backup: Backup
     label_email: Email
     label_noop: Noop
-    label_resource: Resource
+    label_resource: ரிசோர்ஸ்
     label_telegram: Telegram
     label_webhook: Webhook
   http_method:
@@ -433,8 +443,8 @@ opts:
     label_post: POST
     label_put: PUT
   image_load_type:
-    desc_custom_mapping: Displays mapped image from field value
-    desc_image: Base64 encoded image from field value
+    desc_custom_mapping: பீல்ட்லிருந்து வரைபடத்தைக் காண்பி
+    desc_image: பீல்ட் மதிப்பிலிருந்து பேஸ்64 குறியாக்கப்பட்ட படம்
     label_custom_mapping: Custom Mapping
     label_image: Raw Image
   image_rotation:
@@ -448,10 +458,10 @@ opts:
     label_rotate_right_90: Rotate right 90°
   image_source:
     desc_disk: Image from a local disk location
-    desc_field: Image data from a field resource
+    desc_field: பீல்ட் சாதனத்தில் இருந்து பட தரவு
     desc_url: Image from a url
     label_disk: Disk
-    label_field: Field
+    label_field: பீல்ட்
     label_url: URL
   interval:
     label_day_01: 1 days
@@ -582,12 +592,12 @@ opts:
     label_tuesday: Tuesday
     label_wednesday: Wednesday
   widget_type:
-    desc_chart_panel: Displays data in charts
+    desc_chart_panel: Display data in charts
     desc_control_panel: Performs control action on resources
     desc_empty_panel: Empty Panel
-    desc_image_panel: Displays image from different sources
+    desc_image_panel: Display image from different sources
     desc_light_panel: Controls a light
-    desc_utilization_panel: Displays utilization status
+    desc_utilization_panel: Display utilization status
     label_chart_panel: Charts Panel
     label_control_panel: Control Panel
     label_empty_panel: Empty Panel
@@ -634,14 +644,14 @@ reload: Reload
 repeat_count: Repeat Count
 request_heartbeat: Request Heartbeat
 reset: மீட்டமை
-resource: Resource
+resource: ரிசோர்ஸ்
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
-resource_config: Resource Config
-resource_filters: Resource வடிப்பான்கள்
-resource_name: Resource name
-resource_type: Resource Type
-resources: Resources
+resource_config: ரிசோர்ஸ் கட்டமைப்பு
+resource_filters: ரிசோர்ஸ் வடிகட்டிகள்
+resource_name: ரிசோர்ஸின் பெயர்
+resource_type: ரிசோர்ஸின் வகை
+resources: ரிசோர்ஸ்கள்
 response_code: Response Code
 restore: மீட்க
 retention_count: Retention Count

@@ -3,13 +3,13 @@ import React from "react"
 import { Trans, useTranslation } from "react-i18next"
 import "./Dialog.scss"
 
-const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
+const DeleteDialog = ({ dialogTitle, show, onCloseFn, onOkFn }) => {
   const { t } = useTranslation()
   return (
     <Modal
       className="mc-model"
       variant={ModalVariant.small}
-      title={<Trans i18nKey="dialog.delete_resource_heading">Delete {{ resourceName }}?</Trans>}
+      title={<Trans i18nKey="dialog.delete_resource_heading">{t(dialogTitle)}</Trans>}
       isOpen={show}
       onClose={onCloseFn}
       showClose={false}
@@ -22,11 +22,7 @@ const DeleteDialog = ({ resourceName, show, onCloseFn, onOkFn }) => {
         </Button>,
       ]}
     >
-      <Trans i18nKey="dialog.delete_resource_msg">
-        Are you sure want to delete the selected resource?
-        <br />
-        Resource name: {{ resourceName }}
-      </Trans>
+      {t("dialog.delete_resource_msg")}
     </Modal>
   )
 }
