@@ -704,7 +704,7 @@ system_message: System Message
 table_view: Table View
 target_directory: Target Directory
 target_location: Target Location
-task: task
+task: Task
 task_details: Task Details
 tasks: Tasks
 telegram: Telegram

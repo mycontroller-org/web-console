@@ -4,14 +4,14 @@ actions: செயல்கள்
 active_time: செயலில் நேரம்
 add: சேர்
 add_a_field: ஒரு பீல்ட்டை சேர்க்கவும்
-add_a_firmware: Add a Firmware
-add_a_forward_payload: Add a Forward payload
-add_a_gateway: Add a Gateway
-add_a_handler: Add a Handler
-add_a_node: Add a Node
+add_a_firmware: ஒரு ஃபார்ம்வேரை சேர்க்கவும்
+add_a_forward_payload: ஒரு ஃபார்வர்டு பேலோடை சேர்க்கவும்
+add_a_gateway: ஒரு கேட்வேவை சேர்க்கவும்
+add_a_handler: ஒரு ஹேண்ட்லரை சேர்க்கவும்
+add_a_node: ஒரு நோடுயை சேர்க்கவும்
 add_a_schedule: Add a Schedule
-add_a_source: Add a Source
-add_a_task: Add a Task
+add_a_source: ஒரு சோர்ஸ்யை சேர்க்கவும்
+add_a_task: ஒரு டாஸ்க்யை சேர்க்கவும்
 add_an_item: Add an item
 add_widget: விட்ஜெட்டைச் சேர்க்கவும்
 address: விலாசம்
@@ -90,37 +90,37 @@ dialog:
   delete_title_field: "பீல்ட்களை நீக்கவா?"
   delete_title_firmware: "ஃபார்ம்வேரை நீக்கவா?"
   delete_title_forward_payload: "Delete forward payloads?"
-  delete_title_gateway: "Delete gateways?"
+  delete_title_gateway: "கேட்வேவை நீக்கவா?"
   delete_title_handler: "Delete handlers?"
-  delete_title_node: "Delete nodes?"
+  delete_title_node: "நோடுகளை நீக்கவா?"
   delete_title_schedule: "Delete schedules?"
   delete_title_source: "Delete sources?"
   delete_title_task: "Delete tasks?"
   node_reset_heading: "Reset Node?"
   node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
-  reboot_nodes_heading: "Reboot Node?"
-  reboot_nodes_msg: "Are you sure want to reboot the selected nodes?"
+  reboot_nodes_heading: "நோடயை மறுதொடக்கம் செய்யவா?"
+  reboot_nodes_msg: "தேர்ந்தெடுக்கப்பட்ட நோடுகளை நிச்சயமாக மறுதொடக்கம் செய்ய விரும்புகிறீர்களா?"
   restore_heading: "Confirm to perform a restore operation?"
   restore_msg: "தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி கோப்பில் நிச்சயமாக மீட்டெடுக்க விரும்புகிறீர்களா?<br/>இந்த செயல்பாடுக்குப் பிறகு:<3><0>Server தரவு <4>{{fileName}}</4> க்கு மீட்டமைக்கப்படும் </0><1>இந்த செயல்பாட்டை நீங்கள் திரும்பப் பெற முடியாது</1><2>மீட்பு செயல்பாட்டைச் செய்வதற்கு முன் எப்போதும் காப்புப் பிரதி எடுக்கவும்</2><3>You may need to start the server manually</3></3>"
 disable: முடக்கு
 disabled: Disabled
 disabled_all: Disabled All
-discover_nodes: Discover Nodes
+discover_nodes: நோடுகளைக் கண்டறியவும்
 disk: Disk
 disks: Disks
 display_name: காட்சி பெயர்
 display_percentage: காட்சி சதவீதம்
-display_text: Display Text
+display_text: காட்சி உரை
 display_value: காட்சி மதிப்பு
 do_update: நிரப்பவும்
 documentation: ஆவணங்கள்
-down: Down
+down: கீழ்
 download: பதிவிறக்க
-drop_down_position: Drop Down Position
+drop_down_position: டிராப் டவுன் நிலை
 duration: காலம்
 edit: திருத்து
 edit_dashboard_settings: டாஷ்போர்டு அமைப்புகளைத் திருத்தவும்
-edit_widget_settings: Edit Widget Settings
+edit_widget_settings: விட்ஜெட் அமைப்புகளைத் திருத்து
 email: மின்னஞ்சல்
 enable: செயல்படுத்த
 enabled: செயல்படுத்தப்பட்டது
@@ -128,26 +128,26 @@ entities: Entities
 error:
   console:
     invalid_login_credentials: தவறான உள்நுழைவு ஆதாரச்சான்றுகள்
-    login_msg_loading_failed: Error on fetching login message
+    login_msg_loading_failed: உள்நுழைவு செய்தியைப் பெறுவதில் பிழை
 evaluation: Evaluation
 evaluations: Evaluations
 event_filters: Event Filters
 events: Events
-executed_count: Executed Count
+executed_count: செயல்படுத்தப்பட்ட எண்ணிக்கை
 execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 export_type: Export Type
 favorite: பிடித்தவை
-fetch_info: Fetch Info
+fetch_info: தகவலைப் பெறவும்
 fetching: Fetching
 field: பீல்ட்
 field_details: பீல்ட்ன் விவரங்கள்
 field_id: பீல்ட் ஐடி
 fields: பீல்ட்கள்
-file_details: File Details
-file_uploaded_successfully: File uploaded successfully
+file_details: கோப்பு விவரங்கள்
+file_uploaded_successfully: கோப்பு பதிவேற்றப்பட்டது
 filename: கோப்பு பெயர்
-filename_placeholder: Drag a file here or browse to upload
+filename_placeholder: ஒரு கோப்பை இங்கே இழுக்கவும் அல்லது பதிவேற்ற உலாவவும்
 fill_opacity_%: ஒளிபுகாநிலையை நிரப்பவும் (%)
 filter: வடிகட்டி
 filters: வடிகட்டிகள்
@@ -167,10 +167,10 @@ from: இருந்து
 from_email: மின்னஞ்சலில் இருந்து
 full_name: முழு பெயர்
 function: Function
-gateway: Gateway
-gateway_details: Gateway Details
-gateway_id: Gateway ID
-gateways: Gateways
+gateway: கேட்வே
+gateway_details: கேட்வேவின் விவரங்கள்
+gateway_id: கேட்வே ஐடி
+gateways: கேட்வேக்கள்
 geo_location: GEO Location
 git_commit: ஜிட் கமிட்
 global_config: Global Config
@@ -189,7 +189,7 @@ helper_text:
   invalid_backup_retention_count: தவறான காப்பு தக்கவைப்பு எண்ணிக்கை. 0-க்கு வரம்பு இல்லை
   invalid_baud_rate: தவறான பாட் ரேட்
   invalid_broker_url: தவறான புரோக்கர் URL
-  invalid_current_password: Enter your current password
+  invalid_current_password: உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்
   invalid_date: தவறான தேதி
   invalid_day_of_month: தவறான நாள்
   invalid_directory: தவறான கோப்புறை
@@ -252,19 +252,19 @@ interval: இடைவெளி
 interval_0h0m0s: Interval (0h0m0s)
 invalid_file: தவறான கோப்பு
 is_static: நிலையானது
-javascript: Javascript
+javascript: ஜாவாஸ்கிரிப்ட்
 json: JSON
-keep_me_logged_in_30_days: Keep me logged in for 30 days.
+keep_me_logged_in_30_days: 30 நாட்களுக்கு என்னை நினைவில் வைக்கவும்.
 key: Key
 key_path: Key Path
 labels: லேபிள்கள்
 language: மொழி
-last_evaluation: Last Evaluation
-last_modified: Last Modified
-last_run: Last Run
+last_evaluation: கடைசி மதிப்பீடு
+last_modified: கடைசியாக மாற்றப்பட்டது
+last_run: கடைசி ஓட்டம்
 last_seen: இறுதியாக பார்த்தது
 last_status: கடைசி நிலை
-last_success: Last Success
+last_success: கடைசி வெற்றி
 last_sync_with_server: சர்வருடன் கடைசியாக ஒத்திசைவு
 latitude: அட்சரேகை
 legend_orientation: Legend Orientation
@@ -276,7 +276,7 @@ loading: ஏற்றுகிறது
 location: இடம்
 location_name: Location Name
 locations: Locations
-log_in: Log In
+log_in: உள்நுழைய
 log_rotate_interval: Log Rotate Interval
 login: Login
 login_page: உள்நுழைவு பக்கம்
@@ -317,15 +317,15 @@ new_password: புதிய கடவுச்சொல்
 no_change_since: இருந்து எந்த மாற்றமும் இல்லை
 no_dashboard_message: ஏற்றுவதற்கு டாஷ்போர்டு எதுவும் இல்லை.
 no_dashboard_title: டாஷ்போர்டுகள் இல்லை
-no_data: No data
+no_data: தகவல் இல்லை
 no_labels: லேபிள்கள் இல்லை
 no_login_message: உள்நுழைவதற்கான செய்தி எதுவும் அமைக்கப்படவில்லை
-node: Node
-node_config: Node Config
-node_details: Node Details
-node_id: Node ID
-nodes: Nodes
-none: None
+node: நோடு
+node_config: நோடின் கட்டமைப்பு
+node_details: நோடின் விவரங்கள்
+node_id: நோடு ஐடி
+nodes: நோடுகள்
+none: ஏதுமில்லை
 notifications: அறிவிப்புகள்
 number_of_axis: Number of Axis
 occurrences: நிகழ்வுகள்
@@ -405,7 +405,7 @@ opts:
     desc_file_logger: Messages will be logged in a file
     desc_none: Messages will not be logged
     label_file_logger: File Logger
-    label_none: None
+    label_none: ஏதுமில்லை
   gw_protocol:
     desc_ethernet: ஈதர்நெட் ப்ரோடோகால்
     desc_mqtt: MQTT ப்ரோடோகால்
@@ -454,7 +454,7 @@ opts:
     desc_rotate_right_90: Rotate right side 90°
     label_rotate_180: Rotate 180°
     label_rotate_left_90: Rotate left 90°
-    label_rotate_none: None
+    label_rotate_none: ஏதுமில்லை
     label_rotate_right_90: Rotate right 90°
   image_source:
     desc_disk: Image from a local disk location
@@ -508,38 +508,38 @@ opts:
     label_rgb_cw_ww: RGB CW WW
     label_single: Single
   metric_duration:
-    label_day_002: Last 2 days
-    label_day_007: Last 7 days
-    label_day_030: Last 30 days
-    label_day_060: Last 60 days
-    label_day_090: Last 90 days
-    label_day_180: Last 180 days
-    label_day_365: Last 365 days
-    label_hour_01: Last 1 hour
-    label_hour_02: Last 2 hours
-    label_hour_03: Last 3 hours
-    label_hour_06: Last 6 hours
-    label_hour_12: Last 12 hours
-    label_hour_24: Last 24 hours
-    label_minute_30: Last 30 minutes
+    label_day_002: கடந்த 2 நாட்கள்
+    label_day_007: கடந்த 7 நாட்கள்
+    label_day_030: கடந்த 30 நாட்கள்
+    label_day_060: கடந்த 60 நாட்கள்
+    label_day_090: கடந்த 90 நாட்கள்
+    label_day_180: கடந்த 180 நாட்கள்
+    label_day_365: கடந்த 365 நாட்கள்
+    label_hour_01: கடந்த 1 மணிநேரம்
+    label_hour_02: கடந்த 2 மணிநேரம்
+    label_hour_03: கடந்த 3 மணிநேரம்
+    label_hour_06: கடந்த 6 மணிநேரம்
+    label_hour_12: கடந்த 12 மணிநேரம்
+    label_hour_24: கடந்த 24 மணிநேரம்
+    label_minute_30: கடந்த 30 நிமிடங்கள்
   metric_function:
-    label_count: Count
+    label_count: எண்ணிக்கை
     label_maximum: அதிகபட்சம்
     label_mean: சராசரி
-    label_median: Median
+    label_median: மீடியன்
     label_minimum: குறைந்தபட்சம்
-    label_percentile_50: 50th Percentile
-    label_percentile_75: 75th Percentile
-    label_percentile_95: 95th Percentile
-    label_percentile_99: 99th Percentile
-    label_sum: Sum
+    label_percentile_50: 50வது சதவீதம்
+    label_percentile_75: 75வது சதவீதம்
+    label_percentile_95: 95வது சதவீதம்
+    label_percentile_99: 99வது சதவீதம்
+    label_sum: மொத்தம்
   metric_type:
-    label_binary: Binary
-    label_counter: Counter
+    label_binary: பைனரி
+    label_counter: கவுண்டர்
     label_gauge: Gauge
     label_gauge_float: Gauge Float
     label_geo: GEO
-    label_none: None
+    label_none: ஏதுமில்லை
     label_string: String
   rgb_component:
     desc_color_picker: Predefined colors
@@ -547,34 +547,34 @@ opts:
     label_color_picker: Quick Color Picker
     label_hue_slider: Hue Slider
   schedule_frequency:
-    desc_daily: Runs every day
-    desc_monthly: Runs monthly once
-    desc_on_date: "Runs only once at the specified date, time"
-    desc_weekly: Runs weekly once
-    label_daily: Daily
-    label_monthly: Monthly
-    label_on_date: On Date
-    label_weekly: Weekly
+    desc_daily: ஒவ்வொரு நாளும் இயங்கும்
+    desc_monthly: மாதம் ஒருமுறை இயங்கும்
+    desc_on_date: "குறிப்பிட்ட தேதி, நேரத்தில் ஒருமுறை மட்டுமே இயங்கும்"
+    desc_weekly: வாரம் ஒருமுறை இயங்கும்
+    label_daily: தினசரி
+    label_monthly: மாதாந்திர
+    label_on_date: குறித்த நாளில்
+    label_weekly: வாரந்தோறும்
   schedule_type:
-    desc_cron: Cron expression
-    desc_repeat: Repeats on a specified interval
-    desc_simple: "Daily, weekly, monthly schedule"
-    desc_sunrise: Based on the sunrise time
-    desc_sunset: Based on the sunset time
-    label_cron: Cron
-    label_repeat: Repeat
-    label_simple: Simple
-    label_sunrise: Sunrise
-    label_sunset: Sunset
+    desc_cron: கிரான் எக்ஸ்பிரஷன்
+    desc_repeat: ஒரு குறிப்பிட்ட இடைவெளியில் திரும்பச்செய்தள்
+    desc_simple: "தினசரி, வாராந்திர, மாதாந்திர முறைகள்"
+    desc_sunrise: சூரியோதய நேரத்தை அடிப்படையாகக் கொண்டது
+    desc_sunset: சூரியஸ்தமன நேரத்தை அடிப்படையாகக் கொண்டது
+    label_cron: கிரான்
+    label_repeat: திரும்பச்செய்
+    label_simple: எளிய முறை
+    label_sunrise: சூரியோதயம்
+    label_sunset: சூரியஸ்தமம்
   theme_color:
-    label_blue: Blue
-    label_cyan: Cyan
-    label_gold: Gold
-    label_green: Green
+    label_blue: நீலம்
+    label_cyan: சியான்
+    label_gold: பொன்னிறம்
+    label_green: பச்சை
     label_multiple_ordered: Multiple Ordered
     label_multiple_unordered: Multiple Unordered
-    label_orange: Orange
-    label_purple: Purple
+    label_orange: ஆரஞ்சு
+    label_purple: ஊதா
   utilization_chart:
     label_circle_050: Half Circle
     label_circle_075: 3/4 Circle
@@ -582,15 +582,15 @@ opts:
     label_spark_area: Spark Area
     label_spark_bar: Spark Bar
     label_spark_line: Spark Line
-    label_table: Table
+    label_table: அட்டவணை
   week_day:
-    label_friday: Friday
-    label_monday: Monday
-    label_saturday: Saturday
-    label_sunday: Sunday
-    label_thursday: Thursday
-    label_tuesday: Tuesday
-    label_wednesday: Wednesday
+    label_friday: வெள்ளி
+    label_monday: திங்கள்
+    label_saturday: சனி
+    label_sunday: ஞாயிறு
+    label_thursday: வியாழன்
+    label_tuesday: செவ்வாய்
+    label_wednesday: புதன்
   widget_type:
     desc_chart_panel: Display data in charts
     desc_control_panel: Performs control action on resources
@@ -605,22 +605,22 @@ opts:
     label_light_panel: Light Panel
     label_utilization_panel: Utilization Panel
 others: மற்றவைகள்
-padding_bottom_px: Padding Bottom (px)
-padding_left_px: Padding Left (px)
-padding_right_px: Padding Right (px)
-padding_top_px: Padding Top (px)
+padding_bottom_px: பேடிங் கீழே (px)
+padding_left_px: பேடிங் இடது (px)
+padding_right_px: பேடிங் வலது (px)
+padding_top_px: பேடிங் மேல் (px)
 panel_title: Panel Title
 parameters_to_handler: Parameters to Handler
 parse_mode: Parse Mode
 password: கடவுச்சொல்
-path: Path
-payload: Payload
-payload_off: Payload OFF
-payload_on: Payload ON
+path: பாதை
+payload: பேலோட்
+payload_off: பேலோட் ஆஃப்
+payload_on: பேலோட் ஆன்
 per_cpu_disabled: Per CPU Disabled
-port: Port
-port_name: Port Name
-power: Power
+port: போர்ட்
+port_name: போர்டின் பெயர்
+power: ஆற்றல்
 pre_delay: Pre Delay
 prefix: Prefix
 previous_value: Previous Value
@@ -639,7 +639,7 @@ read_only: படிக்க மட்டுமே
 reboot: மறுதொடக்கம்
 reconnect_delay: மீண்டும் இணைக்க காலதாமதம்
 refresh_interval: இடைவெளியைப் புதுப்பிக்கவும்
-refresh_node_info: Refresh Node Info
+refresh_node_info: நோடின் தகவலை புதுப்பிக்க
 reload: Reload
 repeat_count: Repeat Count
 request_heartbeat: Request Heartbeat
@@ -658,9 +658,9 @@ retention_count: Retention Count
 retry_count: Retry Count
 rgb: RGB
 rgb_component: RGB Component
-rotation: Rotation
+rotation: சுழற்சி
 round_decimal: Round Decimal
-rule: Rule
+rule: ரூல்
 run_a_backup: Run a Backup
 run_backup: Run Backup
 saturation: Saturation
@@ -669,32 +669,32 @@ schedule: Schedule
 schedule_details: Schedule Details
 schedule_type: Schedule Type
 schedules: Schedules
-script: Script
-select_an_option: Select an option
+script: ஸ்கிரிப்ட்
+select_an_option: ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்
 server: சர்வர்
 settings: அமைப்புகள்
-show_grid_x: Show Grid X
-show_grid_y: Show Grid Y
+show_grid_x: கட்டம் X காட்டு
+show_grid_y: கட்டம் Y காட்டு
 show_title: தலைப்பைக் காட்டு
 since: இருந்து
-size: Size
-source: Source
-source_code: Source Code
-source_details: Source Details
-source_field: Source Filed
-source_id: Source ID
-sources: Sources
-spec: Spec
-stack_charts: Stack Charts
-state: State
+size: அளவு
+source: சோர்ஸ்
+source_code: சோர்ஸ் கோடு
+source_details: சோர்ஸின் விவரங்கள்
+source_field: சோர்ஸ் பீல்ட்
+source_id: சோர்ஸ் ஐடி
+sources: சோர்ஸ்கள்
+spec: விவரங்கள் 
+stack_charts: விளக்கப்படங்களை அடுக்கவும்
+state: நிலை
 status: நிலை
 status_at: Status At
 step: Step
 storage_export_type: Storage Export Type
 stream_message_ack: Stream Message Ack
-string: String
-stroke_width_px: Stroke Width (px)
-sub_type: Sub Type
+string: ஸ்ட்ரிங்
+stroke_width_px: ஸ்ட்ரோக் அகலம் (px)
+sub_type: துணை வகை
 subject: Subject
 subscribe: Subscribe
 swap_disabled: Swap Disabled
@@ -704,47 +704,47 @@ system_message: System Message
 table_view: Table View
 target_directory: Target Directory
 target_location: Target Location
-task: task
+task: டாஸ்க்
 task_details: Task Details
 tasks: பணிகள்
-telegram: Telegram
-temperature: Temperature
-text: Text
+telegram: டெலிகிராம்
+temperature: வெப்பநிலை
+text: உரை
 the_open_source_controller: The Open Source Controller
 theme_color: Theme Color
-thickness: Thickness
+thickness: தடிமன்
 threshold_mode: Threshold Mode
 thresholds_color: Thresholds Color
-time_hh_mm_ss: "Time (hh:mm:ss)"
+time_hh_mm_ss: "நேரம் (hh:mm:ss)"
 timeout: Timeout
 timestamp_key: Timestamp Key
 title: தலைப்பு
 to: To
-to_emails: To Emails
-token: Token
+to_emails: மின்னஞ்சல்களுக்கு
+token: டோக்கன்
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
 type: வகை
 unit: அலகு
-up: UP
-update: Update
+up: மேலே
+update: மேம்படுத்து
 update_data: Update Data
 update_firmware: ஃபார்ம்வேரை புதுப்பிக்கவும்
-update_node: Update Node
+update_node: நோடயை மேம்படுத்து
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
 update_script: Update Script
 update_value: Update Value
 update_y_axis: Update Y Axis
-upload: Upload
+upload: பதிவேற்று
 upload_firmware: ஃபார்ம்வேரை பதிவேற்றவும்
 url: URL
 use_global_style: Use Global Style
 username: பயனர் பெயர்
-validate_time_everyday: Validate Time Everyday
+validate_time_everyday: தினசரி நேரத்தை சரிபார்க்கவும்
 validity: Validity
-value: Value
-value_formatter: Value Formatter
+value: மதிப்பு
+value_formatter: மதிப்பு ஃபார்மேட்டர்
 value_key: Value Key
 variable: Variable
 variable_name: Variable Name
@@ -753,8 +753,8 @@ version: பதிப்பு
 web_console: வெப் கன்சோல்
 webhook: Webhook
 welcome_to_mycontroller: MyController க்கு வரவேற்கிறோம்
-width_px: Width (px)
-y_axis: Y Axis
-y_axis_config: Y Axis Config
+width_px: அகலம் (px)
+y_axis: Y அச்சு
+y_axis_config: Y அச்சு கட்டமைப்பு
 yaml: YAML
 yaml_view: YAML பார்வை
