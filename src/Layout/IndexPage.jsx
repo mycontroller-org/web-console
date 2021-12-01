@@ -35,10 +35,12 @@ class IndexPage extends React.Component {
   }
 
   render() {
+    const { isAuthenticated, metricsDBDisabled, t } = this.props
+
     // update locale
     this.updateLocale()
-    const component = this.props.isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
-    const banner = this.props.metricsDBDisabled ? (
+    const component = isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
+    const banner = metricsDBDisabled ? (
       <Banner key="banner-metrics-database" variant="warning">
         <strong>{t("metrics_database_disabled")}</strong>
       </Banner>
