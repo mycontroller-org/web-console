@@ -38,20 +38,20 @@ class SimpleLoginPage extends React.Component {
   }
 
   componentDidMount() {
-    const { t } = this.props
+    const { t, updateMetricsDB, updateDocUrl, updateLocale } = this.props
     api.status
       .get()
       .then((res) => {
-        const { documentationUrl, language } = res.data
+        const { documentationUrl, language, metricsDBDisabled } = res.data
         // update documentation url
-        this.props.updateDocUrl({
+        updateDocUrl({
           documentationUrl: documentationUrl !== "" ? documentationUrl : URL_DOCUMENTATION,
         })
-        this.props.updateMetricsDB({ metricsDBDisabled: res.data.metricsDBDisabled })
+        updateMetricsDB({ metricsDBDisabled: metricsDBDisabled })
 
         // update locale
         const lng = language && language !== "" ? language : DEFAULT_LANGUAGE
-        this.props.updateLocale({ language: lng })
+        updateLocale({ language: lng })
 
         const loginData = getValue(res.data, "login", { message: t("no_login_message") })
         this.setState({ loginData: loginData })
