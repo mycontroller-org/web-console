@@ -12,16 +12,15 @@ class AsyncSelect extends React.Component {
     options: [],
   }
 
-  onFilter = (event) => {
-    if (!event) {
-      // TODO: remove this if block and fix event undefined issue
+  onFilter = (filterValue = "") => {
+    if (this.state.loading) {
       return
     }
     const { apiOptions, optionValueFunc } = this.props
     const valueFunc = optionValueFunc ? optionValueFunc : this.getOptionValueFunc
     if (apiOptions) {
       this.setState({ loading: true }, () => {
-        const filters = this.getFilters(event.target.value)
+        const filters = this.getFilters(filterValue)
         apiOptions({ filter: filters, limit: itemsLimit })
           .then((res) => {
             const items = res.data.data
@@ -34,6 +33,17 @@ class AsyncSelect extends React.Component {
             this.setState({ loading: false })
           })
       })
+    }
+  }
+
+  componentDidMount() {
+    this.onFilter()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isDisabled } = this.props
+    if (!isDisabled && isDisabled !== prevProps.isDisabled) {
+      this.onFilter()
     }
   }
 
@@ -69,6 +79,7 @@ class AsyncSelect extends React.Component {
 
   onClear = () => {
     this.setState({ selection: "" }, () => {
+      this.onFilter()
       if (this.props.onSelectionFunc) {
         this.props.onSelectionFunc("")
       }
@@ -106,7 +117,11 @@ class AsyncSelect extends React.Component {
           <Select
             variant="typeahead"
             onToggle={this.onToggle}
-            onFilter={this.onFilter}
+            onFilter={(event) => {
+              if (event) {
+                this.onFilter(event.target.value)
+              }
+            }}
             onClear={this.onClear}
             isOpen={isOpen}
             onSelect={this.onSelection}
