@@ -2,12 +2,12 @@ import React from "react"
 import Editor from "../../../Components/Editor/Editor"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   render() {
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const editor = (
       <Editor
@@ -18,10 +18,10 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.auth.updateProfile}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.dashboard)
+          cancelFn()
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.dashboard)
+          cancelFn()
         }}
         getFormItems={getFormItems}
       />

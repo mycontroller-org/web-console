@@ -199,6 +199,7 @@ List.defaultProps = {
   toRowFunc: toRowFuncImpl,
   resourceName: "Backup and Restore",
   filtersDefinition: filtersDefinition,
+  deleteDialogTitle: "dialog.delete_title_backup",
 }
 
 const mapStateToProps = (state) => ({

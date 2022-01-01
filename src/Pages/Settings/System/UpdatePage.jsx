@@ -6,13 +6,13 @@ import { DEFAULT_LANGUAGE } from "../../../Constants/Common"
 import { DataType, FieldType } from "../../../Constants/Form"
 import { LanguageOptions } from "../../../i18n/languages"
 import { api } from "../../../Service/Api"
-import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { updateLocale } from "../../../store/entities/locale"
 import { getValue } from "../../../Util/Util"
 
 class UpdatePage extends React.Component {
   render() {
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const editor = (
       <Editor
@@ -24,10 +24,10 @@ class UpdatePage extends React.Component {
         minimapEnabled
         onSaveRedirectFunc={(data) => {
           this.props.updateLocale({ language: data.spec.language })
-          r(this.props.history, rMap.dashboard)
+          cancelFn()
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.dashboard)
+          cancelFn()
         }}
         getFormItems={getFormItems}
       />

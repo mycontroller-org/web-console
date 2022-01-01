@@ -1,6 +1,6 @@
 import React from "react"
 import DetailRootPage from "../../../Components/BasePage/DetailsBase"
-import TabDetails from "./Details"
+import Details from "./Details"
 import UpdatePage from "./UpdatePage"
 
 const DefaultTab = "details_0"
@@ -29,7 +29,7 @@ class DetailPage extends React.Component {
     const tabs = [
       {
         name: "details",
-        content: <TabDetails resourceId={id} history={history} />,
+        content: <Details resourceId={id} history={history} />,
       },
       {
         name: "edit",
@@ -38,7 +38,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="task_details"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}

@@ -10,6 +10,7 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 class UpdatePage extends React.Component {
   render() {
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const isNewEntry = id === undefined || id === ""
 
@@ -22,10 +23,18 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.forwardPayload.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.operations.forwardPayload.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.operations.forwardPayload.list)
+          }
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.operations.forwardPayload.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.operations.forwardPayload.list)
+          }
         }}
         getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />

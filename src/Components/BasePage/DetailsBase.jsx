@@ -15,7 +15,6 @@ import "./DetailsBase.scss"
 
 class DetailsPage extends React.Component {
   state = {
-    activeTabKey: "",
     tabs: [],
   }
 
@@ -25,19 +24,14 @@ class DetailsPage extends React.Component {
       this.props.tabs.forEach((tab, index) => {
         tabs.push({ ...tab, key: tab.name + "_" + index })
       })
-      const firstTabKey = tabs[0].key
-      this.setState({ activeTabKey: firstTabKey, tabs })
+      this.setState({ tabs })
     }
-  }
-
-  onTabClick = (_event, tabKey) => {
-    this.setState({ activeTabKey: tabKey })
   }
 
   render() {
     let tabsData = null
     let tabContent = null
-    const { t, pageHeader } = this.props
+    const { t, pageHeader, activeTabKey, onTabClickFn = () => {} } = this.props
 
     if (this.state.tabs.length > 0) {
       const tabElements = []
@@ -50,7 +44,7 @@ class DetailsPage extends React.Component {
             title={<TabTitleText>{t(tab.name)}</TabTitleText>}
           ></Tab>
         )
-        if (this.state.activeTabKey === tab.key) {
+        if (activeTabKey === tab.key) {
           tabContent = tab.content
         }
       })
@@ -59,8 +53,8 @@ class DetailsPage extends React.Component {
         <Tabs
           key="rootTabs"
           style={{ marginBottom: "7px" }}
-          activeKey={this.state.activeTabKey}
-          onSelect={this.onTabClick}
+          activeKey={activeTabKey}
+          onSelect={onTabClickFn}
           isBox={false}
         >
           {tabElements}
@@ -87,6 +81,8 @@ DetailsPage.propTypes = {
   pageHeader: PropTypes.string,
   actions: PropTypes.array,
   tabs: PropTypes.array,
+  activeTabKey: PropTypes.string,
+  onTabClickFn: PropTypes.func,
 }
 
 export default withTranslation()(DetailsPage)

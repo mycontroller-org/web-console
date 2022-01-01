@@ -38,7 +38,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="data_repository_modify_an_entry"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}

@@ -38,7 +38,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="schedule_details"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}

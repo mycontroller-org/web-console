@@ -84,24 +84,25 @@ description: Description
 destination_field: Destination Field
 details: Details
 dialog:
-  delete_resource_msg: Are you sure want to delete the selected items?
-  delete_title_dashboard: Delete dashboard?
-  delete_title_data_repository: Delete data repositories?
-  delete_title_field: Delete fields?
-  delete_title_firmware: Delete firmware?
-  delete_title_forward_payload: Delete forward payloads?
-  delete_title_gateway: Delete gateways?
-  delete_title_handler: Delete handlers?
-  delete_title_node: Delete nodes?
-  delete_title_schedule: Delete schedules?
-  delete_title_source: Delete sources?
-  delete_title_task: Delete tasks?
-  node_reset_heading: Reset Node?
-  node_reset_msg: Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>
-  reboot_nodes_heading: Reboot Node?
-  reboot_nodes_msg: Are you sure want to reboot the selected nodes?
-  restore_heading: Confirm to perform a restore operation?
-  restore_msg: Are you sure want to restore to selected backup file?<br/>After this operation:<3><0>Server data will be restored to <1>{{fileName}}</1></0><1>You cannot rollback this operation</1><2>Always take a backup before performing a restore operation</2><3>You may need to start the server manually</3></3>
+  delete_resource_msg: "Are you sure want to delete the selected items?"
+  delete_title_dashboard: "Delete dashboard?"
+  delete_title_data_repository: "Delete data repositories?"
+  delete_title_field: "Delete fields?"
+  delete_title_firmware: "Delete firmware?"
+  delete_title_forward_payload: "Delete forward payloads?"
+  delete_title_gateway: "Delete gateways?"
+  delete_title_handler: "Delete handlers?"
+  delete_title_node: "Delete nodes?"
+  delete_title_schedule: "Delete schedules?"
+  delete_title_source: "Delete sources?"
+  delete_title_task: "Delete tasks?"
+  delete_title_backup: "Delete backup files?"
+  node_reset_heading: "Reset Node?"
+  node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
+  reboot_nodes_heading: "Reboot Node?"
+  reboot_nodes_msg: "Are you sure want to reboot the selected nodes?"
+  restore_heading: "Confirm to perform a restore operation?"
+  restore_msg: "Are you sure want to restore to selected backup file?<br/>After this operation:<3><0>Server data will be restored to <1>{{fileName}}</1></0><1>You cannot rollback this operation</1><2>Always take a backup before performing a restore operation</2><3>You may need to start the server manually</3></3>"
 disable: Disable
 disabled: Disabled
 disabled_all: Disabled All
@@ -156,7 +157,7 @@ firmware_file: Firmware File
 firmware_update: Firmware Update
 firmwares: Firmwares
 flush_interval: Flush Interval
-forgot_username_or_password: Forgot username or password?
+forgot_username_or_password: "Forgot username or password?"
 form_generic_error_message: Check the error and/or mandatory(*) fields
 form_view: Form View
 forum: Forum
@@ -186,7 +187,7 @@ height_px: Height (px)
 helper_text:
   invalid_address_esphome: 'Invalid address, example: node1.local:6053'
   invalid_api: Invalid API
-  invalid_backup_retention_count: Invalid retention count, 0 for no limit
+  invalid_backup_retention_count: "Invalid retention count, 0 for no limit"
   invalid_baud_rate: Invalid baud rate
   invalid_broker_url: Invalid Broker URL
   invalid_current_password: Enter your current password
@@ -195,33 +196,33 @@ helper_text:
   invalid_directory: Invalid directory
   invalid_email: Invalid email
   invalid_execution_interval_empty: Execution interval should not be empty
-  invalid_field_id: Invalid field id. chars, min=1, max=100
+  invalid_field_id: "Invalid field id. chars, min=1, max=100"
   invalid_height: Invalid Height
   invalid_host: Invalid Host
-  invalid_id: Invalid id. chars, min=4, max=100, and space not allowed
-  invalid_key: Invalid key. chars, min=1 and max=100
+  invalid_id: "Invalid id. chars, min=4, max=100, and space not allowed"
+  invalid_key: "Invalid key. chars, min=1 and max=100"
   invalid_key_path: Key path can not be empty
   invalid_latitude: Invalid latitude
   invalid_limit: Invalid limit
   invalid_location: Invalid location
   invalid_longitude: Invalid longitude
-  invalid_maximum_backup: Invalid maximum backup count. int, min=0
-  invalid_name: Invalid name. chars, min=2, max=100
-  invalid_node_id: Invalid node ID. chars, min=1 and max=100
+  invalid_maximum_backup: "Invalid maximum backup count. int, min=0"
+  invalid_name: "Invalid name. chars, min=2, max=100"
+  invalid_node_id: "Invalid node ID. chars, min=1 and max=100"
   invalid_offset: Invalid offset
   invalid_payload: Invalid payload
   invalid_port: Invalid port
   invalid_prefix: Invalid prefix
   invalid_profile_confirm_password: Invalid confirm password
-  invalid_profile_password: Invalid password. chars, min=3, max=100
-  invalid_profile_username: Invalid username. chars, min=3, max=100, and space not allowed
+  invalid_profile_password: "Invalid password. chars, min=3, max=100"
+  invalid_profile_username: "Invalid username. chars, min=3, max=100, and space not allowed"
   invalid_repeat_count: Invalid repeat count
-  invalid_response_code: Enter a valid response code, enter 0 to ignore
-  invalid_retry_count: Invalid retry count. int, min=0
+  invalid_response_code: "Enter a valid response code, enter 0 to ignore"
+  invalid_retry_count: "Invalid retry count. int, min=0"
   invalid_script_empty: Script should not be empty
   invalid_server_url: Invalid server URL
-  invalid_source_id: Invalid source ID. chars, min=1 and max=100
-  invalid_text: Invalid text. chars, min=1 and max=100
+  invalid_source_id: "Invalid source ID. chars, min=1 and max=100"
+  invalid_text: "Invalid text. chars, min=1 and max=100"
   invalid_time: Invalid time
   invalid_title: Invalid title
   invalid_token: Invalid token
@@ -501,7 +502,7 @@ opts:
     desc_rgb: RGB light
     desc_rgb_cw: RGB with Cold White
     desc_rgb_cw_ww: RGB with Cold White and Warm White
-    desc_single: Single, Cold White or Warm White
+    desc_single: "Single, Cold White or Warm White"
     label_cw_ww: CW WW
     label_rgb: RGB
     label_rgb_cw: RGB CW
@@ -549,7 +550,7 @@ opts:
   schedule_frequency:
     desc_daily: Runs every day
     desc_monthly: Runs monthly once
-    desc_on_date: Runs only once at the specified date, time
+    desc_on_date: "Runs only once at the specified date, time"
     desc_weekly: Runs weekly once
     label_daily: Daily
     label_monthly: Monthly
@@ -558,7 +559,7 @@ opts:
   schedule_type:
     desc_cron: Cron expression
     desc_repeat: Repeats on a specified interval
-    desc_simple: Daily, weekly, monthly schedule
+    desc_simple: "Daily, weekly, monthly schedule"
     desc_sunrise: Based on the sunrise time
     desc_sunset: Based on the sunset time
     label_cron: Cron
@@ -715,7 +716,7 @@ theme_color: Theme Color
 thickness: Thickness
 threshold_mode: Threshold Mode
 thresholds_color: Thresholds Color
-time_hh_mm_ss: Time (hh:mm:ss)
+time_hh_mm_ss: "Time (hh:mm:ss)"
 timeout: Timeout
 timestamp_key: Timestamp Key
 title: Title

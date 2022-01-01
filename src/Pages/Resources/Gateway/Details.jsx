@@ -20,6 +20,7 @@ const tabDetails = ({ resourceId, history }) => {
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
       getDetailsFunc={getDetailsFuncImpl}
+      cardTitle="details"
     />
   )
 }

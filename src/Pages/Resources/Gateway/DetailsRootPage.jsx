@@ -22,8 +22,8 @@ class DetailPage extends React.Component {
   }
 
   render() {
-    const { id } = this.props.match.params
     const { history, match } = this.props
+    const { id } = this.props.match.params
     const { activeTabKey } = this.state
 
     const tabs = [
@@ -38,7 +38,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="gateway_details"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}

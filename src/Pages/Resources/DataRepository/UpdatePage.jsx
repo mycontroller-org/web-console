@@ -9,6 +9,7 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 class UpdatePage extends React.Component {
   render() {
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const isNewEntry = id === undefined || id === ""
 
@@ -21,10 +22,18 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.dataRepository.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.dataRepository.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.dataRepository.list)
+          }
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.dataRepository.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.dataRepository.list)
+          }
         }}
         getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />

@@ -69,13 +69,13 @@ class TabDetailsBase extends React.Component {
 
   render() {
     const { data, loading } = this.state
-    const { t } = this.props
+    const { t, cardTitle = "" } = this.props
 
     if (loading) {
       return <Loading />
     }
 
-    const content = wrapCard("details", this.props.getDetailsFunc(data), t)
+    const content = wrapCard(cardTitle, this.props.getDetailsFunc(data), t)
     const metrics = this.props.showMetrics ? <Metrics data={data} /> : null
     return (
       <>
@@ -105,6 +105,7 @@ TabDetailsBase.propTypes = {
   tableColumns: PropTypes.array,
   getDetailsFunc: PropTypes.func,
   showMetrics: PropTypes.bool,
+  cardTitle: PropTypes.string,
 }
 
 // helper functions
@@ -130,12 +131,16 @@ const wrapCard = (title, fieldsMap, t) => {
     )
   })
 
+  const cardTitle = title ? (
+    <CardTitle>
+      {t(title)} <Divider />
+    </CardTitle>
+  ) : null
+
   return (
     <GridItem key={title}>
       <Card isFlat={false}>
-        <CardTitle>
-          {t(title)} <Divider />
-        </CardTitle>
+        {cardTitle}
         <CardBody>
           <Grid hasGutter sm={12} md={12} lg={6} xl={6}>
             {content}

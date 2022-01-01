@@ -21,6 +21,7 @@ import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
 class UpdatePage extends React.Component {
   render() {
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const isNewEntry = id === undefined || id === ""
 
@@ -33,10 +34,18 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.gateway.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.gateway.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.gateway.list)
+          }
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.gateway.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.gateway.list)
+          }
         }}
         getFormItems={(rootObject) => getFormItems(rootObject, id)}
       />

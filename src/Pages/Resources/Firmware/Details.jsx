@@ -12,13 +12,14 @@ const tabDetails = ({ resourceId, history }) => {
     <TabDetailsBase
       resourceId={resourceId}
       history={history}
-      apiGetRecord={api.node.get}
-      apiListTablesRecord={api.source.list}
-      tableTitle={"sources"}
+      apiGetRecord={api.firmware.get}
+      apiListTablesRecord={api.node.list}
+      tableTitle="assigned_nodes"
       getTableFilterFunc={getTableFilterFuncImpl}
       tableColumns={tableColumns}
       getTableRowsFunc={getTableRowsFuncImpl}
       getDetailsFunc={getDetailsFuncImpl}
+      cardTitle="details"
     />
   )
 }
@@ -32,13 +33,10 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "id", value: data.id })
-  fieldsList1.push({ key: "gateway_id", value: data.gatewayId })
-  fieldsList1.push({ key: "node_id", value: data.nodeId })
-  fieldsList1.push({ key: "name", value: data.name })
-  fieldsList1.push({ key: "status", value: getStatus(data.state.status) })
-  fieldsList1.push({ key: "last_seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
-  fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "others", value: <KeyValueMap data={data.others} /> })
+  fieldsList1.push({ key: "description", value: data.description })
+  fieldsList1.push({ key: "modified_on", value: <LastSeen date={data.modifiedOn} /> })
+  fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })
+  fieldsList2.push({ key: "file_details", value: <KeyValueMap data={data.file} /> })
 
   return {
     "list-1": fieldsList1,
@@ -46,10 +44,12 @@ const getDetailsFuncImpl = (data) => {
   }
 }
 
-// Properties definition
 const tableColumns = [
-  { title: "source_id", fieldKey: "sourceId", sortable: true },
+  { title: "node_id", fieldKey: "nodeId", sortable: true },
   { title: "name", fieldKey: "name", sortable: true },
+  { title: "version", fieldKey: "labels.version", sortable: true },
+  { title: "library_version", fieldKey: "labels.library_version", sortable: true },
+  { title: "status", fieldKey: "state.status", sortable: true },
   { title: "last_seen", fieldKey: "lastSeen", sortable: true },
 ]
 
@@ -59,26 +59,24 @@ const getTableRowsFuncImpl = (rawData, _index, history) => {
       title: (
         <RouteLink
           history={history}
-          path={rMap.resources.source.detail}
+          path={rMap.resources.node.detail}
           id={rawData.id}
-          text={rawData.sourceId}
+          text={rawData.nodeId}
         />
       ),
     },
     {
       title: (
-        <RouteLink
-          history={history}
-          path={rMap.resources.source.detail}
-          id={rawData.id}
-          text={rawData.name}
-        />
+        <RouteLink history={history} path={rMap.resources.node.detail} id={rawData.id} text={rawData.name} />
       ),
     },
+    rawData.labels.version,
+    rawData.labels.library_version,
+    { title: getStatus(rawData.state.status) },
     { title: <LastSeen date={rawData.lastSeen} /> },
   ]
 }
 
 const getTableFilterFuncImpl = (data) => {
-  return { gatewayId: data.gatewayId, nodeId: data.nodeId }
+  return { "labels.assigned_firmware": data.id }
 }

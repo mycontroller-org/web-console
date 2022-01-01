@@ -25,6 +25,7 @@ class UpdatePage extends React.Component {
     }
 
     const { id } = this.props.match.params
+    const { cancelFn = () => {} } = this.props
 
     const isNewEntry = id === undefined || id === ""
 
@@ -37,10 +38,18 @@ class UpdatePage extends React.Component {
         apiSaveRecord={api.node.update}
         minimapEnabled
         onSaveRedirectFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.node.list)
+          }
         }}
         onCancelFunc={() => {
-          r(this.props.history, rMap.resources.node.list)
+          if (id) {
+            cancelFn()
+          } else {
+            r(this.props.history, rMap.resources.node.list)
+          }
         }}
         getFormItems={getFormItems}
       />

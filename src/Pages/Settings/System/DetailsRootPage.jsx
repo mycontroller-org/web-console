@@ -4,7 +4,7 @@ import TabDetails from "./Details"
 import UpdatePage from "./UpdatePage"
 
 const DefaultTab = "details_0"
-class DetailPage extends React.Component {
+class DetailsPage extends React.Component {
   state = {
     activeTabKey: "",
   }
@@ -25,7 +25,6 @@ class DetailPage extends React.Component {
     const { id } = this.props.match.params
     const { history, match } = this.props
     const { activeTabKey } = this.state
-
     const tabs = [
       {
         name: "details",
@@ -38,7 +37,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="system"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}
@@ -47,4 +46,4 @@ class DetailPage extends React.Component {
   }
 }
 
-export default DetailPage
+export default DetailsPage

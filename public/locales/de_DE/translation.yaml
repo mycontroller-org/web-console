@@ -96,6 +96,7 @@ dialog:
   delete_title_schedule: "Delete schedules?"
   delete_title_source: "Delete sources?"
   delete_title_task: "Delete tasks?"
+  delete_title_backup: "Delete backup files?"
   node_reset_heading: "Reset Node?"
   node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
   reboot_nodes_heading: "Reboot Node?"

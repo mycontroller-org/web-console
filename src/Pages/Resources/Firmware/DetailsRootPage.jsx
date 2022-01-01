@@ -2,6 +2,7 @@ import React from "react"
 import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import TabDetails from "./Details"
 import UpdatePage from "./UpdatePage"
+import FirmwareFileUpload from "./Upload"
 
 const DefaultTab = "details_0"
 class DetailPage extends React.Component {
@@ -35,10 +36,14 @@ class DetailPage extends React.Component {
         name: "edit",
         content: <UpdatePage match={match} history={history} cancelFn={this.updateDefaultTab} />,
       },
+      {
+        name: "upload_firmware",
+        content: <FirmwareFileUpload resourceId={id} />,
+      },
     ]
     return (
       <DetailRootPage
-        pageHeader="profile"
+        pageHeader="firmware_details"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}
