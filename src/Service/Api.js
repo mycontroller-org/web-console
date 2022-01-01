@@ -98,12 +98,13 @@ const updateFilter = (qp) => {
 }
 
 const newRequest = (method, url, queryParams = {}, data, headers = {}) => {
+  // Do not include token in header, now it is managed my cookie
   // grab current state
-  const auth = store.getState().entities.auth
-  if (auth.authenticated) {
-    const token = "Bearer " + (auth.authenticated ? auth.token : "")
-    headers = { ...headers, Authorization: token }
-  }
+  // const auth = store.getState().entities.auth
+  // if (auth.authenticated) {
+  //   const token = "Bearer " + (auth.authenticated ? auth.token : "")
+  //   headers = { ...headers, Authorization: token }
+  // }
 
   return myAxios.request({
     method: method,

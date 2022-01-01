@@ -16,13 +16,16 @@ const getWebsocketUrl = () => {
   wsUrl = new URL("/api/ws", window.location.href)
   wsUrl.protocol = wsUrl.protocol.replace("http", "ws")
 
+  // do not include token in request, now it is managed by cookie
   // add authorization token
-  let token = ""
-  const auth = store.getState().entities.auth
-  if (auth.authenticated) {
-    token = auth.token
-  }
-  return `${wsUrl.href}?access_token=${token}`
+  // let token = ""
+  // const auth = store.getState().entities.auth
+  // if (auth.authenticated) {
+  //   token = auth.token
+  // }
+  // return `${wsUrl.href}?access_token=${token}`
+
+  return wsUrl.href
 }
 
 export const wsConnect = () => {

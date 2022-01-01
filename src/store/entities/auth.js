@@ -13,7 +13,7 @@ const slice = createSlice({
       state.user = {
         ...action.payload,
       }
-      state.token = action.payload.token
+      state.token = "" // do not keep token here, now managed via cookie, remove this field sometime later
     },
     clearAuth: (state, action) => {
       state.authenticated = false
@@ -24,6 +24,7 @@ const slice = createSlice({
       state.user = {
         ...action.payload,
       }
+      state.token = ""
     },
   },
 })
