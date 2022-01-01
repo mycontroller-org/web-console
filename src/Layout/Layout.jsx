@@ -50,6 +50,7 @@ import { URL_FORUM, URL_SOURCE_CODE } from "../Constants/Common"
 import { languages } from "../i18n/languages"
 import logoMain from "../Logo/mc-white.svg"
 import AboutPage from "../Pages/About/About"
+import { api } from "../Service/Api"
 import { hiddenRoutes, redirect as r, routeMap as rMap, routes } from "../Service/Routes"
 import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { aboutShow } from "../store/entities/about"
@@ -151,6 +152,12 @@ class PageLayoutExpandableNav extends React.Component {
         <Redirect from="*" to="/" key="default-route" />
       </Switch>
     )
+  }
+
+  callLogout = () => {
+    api.auth.logout().then((_res) => {
+      this.props.doLogout()
+    })
   }
 
   render() {
@@ -276,7 +283,7 @@ class PageLayoutExpandableNav extends React.Component {
         >
           <UserIcon /> {t("profile")}
         </DropdownItem>
-        <DropdownItem key="group2_logout" onClick={this.props.doLogout}>
+        <DropdownItem key="group2_logout" onClick={this.callLogout}>
           <PowerOffIcon /> {t("logout")}
         </DropdownItem>
       </DropdownGroup>,

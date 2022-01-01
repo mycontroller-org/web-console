@@ -133,6 +133,7 @@ export const api = {
     login: (data) => newRequest(HTTP_VERBS.POST, "/user/login", {}, data),
     profile: () => newRequest(HTTP_VERBS.GET, "/user/profile", {}, {}),
     updateProfile: (data) => newRequest(HTTP_VERBS.POST, "/user/profile", {}, data),
+    logout: () => newRequest(HTTP_VERBS.GET, "/mc_auth/sign_out", {}, {}),
   },
   gateway: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/gateway", filter, {}),
