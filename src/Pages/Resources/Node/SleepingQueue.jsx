@@ -37,27 +37,32 @@ class SleepingQueue extends React.Component {
           ids["gatewayId"] = resource.gatewayId
           ids["nodeId"] = resource.nodeId
         }
-        api.gateway.getSleepingQueue(ids.gatewayId, ids.nodeId).then((sRes) => {
-          const allMessages = sRes.data
-          const messages = []
-          if (isGateway) {
-            Object.keys(allMessages).forEach((k) => {
-              if (allMessages[k].length > 0) {
-                messages.push(...allMessages[k])
-              }
+        api.gateway
+          .getSleepingQueue(ids.gatewayId, ids.nodeId)
+          .then((sRes) => {
+            const allMessages = sRes.data
+            const messages = []
+            if (isGateway) {
+              Object.keys(allMessages).forEach((k) => {
+                if (allMessages[k].length > 0) {
+                  messages.push(...allMessages[k])
+                }
+              })
+            } else {
+              messages.push(...allMessages)
+            }
+            this.setState({
+              loading: false,
+              resource: resource,
+              messages: messages,
+              cleaningQueue: false,
+              lastUpdate: new Date(),
+              ids: ids,
             })
-          } else {
-            messages.push(...allMessages)
-          }
-          this.setState({
-            loading: false,
-            resource: resource,
-            messages: messages,
-            cleaningQueue: false,
-            lastUpdate: new Date(),
-            ids: ids,
           })
-        })
+          .catch((_e) => {
+            this.setState({ loading: false, cleaningQueue: false, lastUpdate: new Date() })
+          })
       })
       .catch((_e) => {
         this.setState({ loading: false, cleaningQueue: false, lastUpdate: new Date() })
