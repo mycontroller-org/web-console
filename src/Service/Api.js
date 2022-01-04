@@ -143,6 +143,10 @@ export const api = {
     disable: (data) => newRequest(HTTP_VERBS.POST, "/gateway/disable", {}, data),
     reload: (data) => newRequest(HTTP_VERBS.POST, "/gateway/reload", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/gateway", {}, data),
+    getSleepingQueue: (gwID, nodeID) =>
+      newRequest(HTTP_VERBS.GET, "/gateway-sleeping-queue", { gatewayId: gwID, nodeId: nodeID }, {}),
+    clearSleepingQueue: (gwID, nodeID) =>
+      newRequest(HTTP_VERBS.GET, "/gateway-sleeping-queue/clear", { gatewayId: gwID, nodeId: nodeID }, {}),
   },
   node: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/node", filter, {}),

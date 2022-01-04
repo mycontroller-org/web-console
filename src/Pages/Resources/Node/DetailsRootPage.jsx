@@ -1,7 +1,9 @@
 import React from "react"
 import DetailRootPage from "../../../Components/BasePage/DetailsBase"
 import TabDetails from "./Details"
+import SleepingQueue from "./SleepingQueue"
 import UpdatePage from "./UpdatePage"
+import { withTranslation } from "react-i18next"
 
 const DefaultTab = "details_0"
 class DetailPage extends React.Component {
@@ -23,7 +25,7 @@ class DetailPage extends React.Component {
 
   render() {
     const { id } = this.props.match.params
-    const { history, match } = this.props
+    const { history, match, t } = this.props
     const { activeTabKey } = this.state
 
     const tabs = [
@@ -34,6 +36,10 @@ class DetailPage extends React.Component {
       {
         name: "edit",
         content: <UpdatePage match={match} history={history} cancelFn={this.updateDefaultTab} />,
+      },
+      {
+        name: "sleeping_queue",
+        content: <SleepingQueue isGateway={false} id={id} t={t} />,
       },
     ]
     return (
@@ -47,4 +53,4 @@ class DetailPage extends React.Component {
   }
 }
 
-export default DetailPage
+export default withTranslation()(DetailPage)

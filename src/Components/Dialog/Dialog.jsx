@@ -40,6 +40,19 @@ export const NodeRebootDialog = ({ show, onCloseFn, onOkFn }) => {
   )
 }
 
+export const ClearSleepingQueueDialog = ({ show, onCloseFn, onOkFn }) => {
+  const { t } = useTranslation()
+  return dialog(
+    t("dialog.clear_sleeping_queue_heading"),
+    show,
+    onCloseFn,
+    onOkFn,
+    t("clear"),
+    t("dialog.clear_sleeping_queue_msg"),
+    t
+  )
+}
+
 export const NodeResetDialog = ({ show, onCloseFn, onOkFn }) => {
   const { t } = useTranslation()
   const message = (

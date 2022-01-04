@@ -8,7 +8,7 @@ const LastUpdate = ({ time }) => {
   const lastUpdate = moment(time)
   return (
     <span className="mc-last-update">
-      {t("last_sync_with_server")}:{" "}
+      {t("data_retrieved_from_server")}:{" "}
       <i>
         {lastUpdate.fromNow()} ({lastUpdate.format("MMM Do YYYY, HH:mm:ss")})
       </i>
