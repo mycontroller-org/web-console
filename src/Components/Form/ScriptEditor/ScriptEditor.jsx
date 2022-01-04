@@ -80,14 +80,14 @@ class ScriptEditor extends React.Component {
 
     const errorMessage = ""
 
-    const saveText = saveButtonText ? saveButtonText : "save"
-    const updateBtnText = updateButtonText ? updateButtonText : "update_script"
+    const saveText = t(saveButtonText ? saveButtonText : "save")
+    const updateBtnText = t(updateButtonText ? updateButtonText : "update_script")
 
     const actionButtons = [
       { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: false },
     ]
     actionButtons.push({
-      text: "cancel",
+      text: t("cancel"),
       variant: "secondary",
       onClickFunc: this.onClose,
       isDisabled: false,
@@ -96,7 +96,7 @@ class ScriptEditor extends React.Component {
     return (
       <ErrorBoundary>
         <Button key={"edit-btn-" + id} variant="secondary" isBlock onClick={this.onOpen}>
-          {t(updateBtnText)} &nbsp;
+          {updateBtnText} &nbsp;
           <EditIcon />
         </Button>
         <Modal
