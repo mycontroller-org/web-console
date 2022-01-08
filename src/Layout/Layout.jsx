@@ -1,8 +1,10 @@
 import {
   Brand,
+  Divider,
   Dropdown,
   DropdownGroup,
   DropdownItem,
+  DropdownSeparator,
   DropdownToggle,
   Nav,
   NavExpandable,
@@ -31,6 +33,8 @@ import {
   BookIcon,
   ChatIcon,
   CogIcon,
+  ExternalLinkAltIcon,
+  ExternalLinkSquareAltIcon,
   GithubIcon,
   HelpIcon,
   InfoAltIcon,
@@ -236,6 +240,17 @@ class PageLayoutExpandableNav extends React.Component {
     const notificationDrawer = <NotificationContainer />
 
     const kebabDropdownItems = [
+      <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
+        <BookIcon /> {t("documentation")} <ExternalLinkAltIcon />
+      </DropdownItem>,
+      <DropdownItem key="forum" href={URL_FORUM} target="_blank">
+        <ChatIcon /> {t("forum")} <ExternalLinkAltIcon />
+      </DropdownItem>,
+      <DropdownItem key="source-code" href={URL_SOURCE_CODE} target="_blank">
+        <GithubIcon /> {t("source_code")} <ExternalLinkAltIcon />
+      </DropdownItem>,
+
+      <DropdownSeparator key="separator" />,
       <DropdownItem
         key="settings"
         onClick={() => {
@@ -243,15 +258,6 @@ class PageLayoutExpandableNav extends React.Component {
         }}
       >
         <CogIcon /> {t("settings")}
-      </DropdownItem>,
-      <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
-        <BookIcon /> {t("documentation")}
-      </DropdownItem>,
-      <DropdownItem key="source-code" href={URL_SOURCE_CODE} target="_blank">
-        <GithubIcon /> {t("source_code")}
-      </DropdownItem>,
-      <DropdownItem key="forum" href={URL_FORUM} target="_blank">
-        <ChatIcon /> {t("forum")}
       </DropdownItem>,
       <DropdownItem key="about" onClick={this.props.showAbout}>
         <InfoAltIcon /> {t("about")}
