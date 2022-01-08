@@ -1,10 +1,12 @@
 import { api } from "../Service/Api"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import { store } from "../store/persister"
-import { updateEvent } from "../store/entities/websocket"
+import { connected, disconnected, updateEvent } from "../store/entities/websocket"
 
 let wsClient = null
 let wsUrl = null
+
+const reconnectDelay = 5000 // 5 seconds
 
 const getWebsocketUrl = () => {
   // workaround to websocket proxy on development mode
@@ -32,6 +34,7 @@ export const wsConnect = () => {
   wsClient = new W3CWebSocket(getWebsocketUrl())
 
   wsClient.onopen = () => {
+    store.dispatch(connected())
     console.log("WebSocket Client Connected")
   }
 
@@ -39,19 +42,21 @@ export const wsConnect = () => {
     store.dispatch(updateEvent({ response: message.data }))
   }
 
-  wsClient.onclose = (err) => {
-    console.log("websocket is closed", err.reason)
+  wsClient.onclose = (event) => {
+    store.dispatch(disconnected({ message: event.reason }))
+    console.log("websocket is closed", event.reason)
     if (wsClient !== null) {
-      console.log("websocket reconnect will be attempted in 1 second")
+      console.log("websocket reconnect will be attempted in 5 seconds")
     }
     setTimeout(function () {
       if (wsClient != null) {
         wsConnect()
       }
-    }, 1000)
+    }, reconnectDelay)
   }
 
   wsClient.onerror = (err) => {
+    store.dispatch(disconnected({ message: err.message }))
     console.error("websocket encountered error: ", err.message, "Closing socket")
     if (wsClient !== null) {
       wsClient.close()

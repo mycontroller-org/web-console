@@ -1,5 +1,6 @@
 import {
   Brand,
+  Button,
   Divider,
   Dropdown,
   DropdownGroup,
@@ -18,6 +19,7 @@ import {
   PageHeaderToolsGroup,
   PageHeaderToolsItem,
   PageSidebar,
+  Popover,
   SkipToContent,
   Text,
   TextContent,
@@ -40,6 +42,7 @@ import {
   InfoAltIcon,
   LanguageIcon,
   PowerOffIcon,
+  UnpluggedIcon,
   UserIcon,
 } from "@patternfly/react-icons"
 import React from "react"
@@ -165,7 +168,7 @@ class PageLayoutExpandableNav extends React.Component {
   }
 
   render() {
-    const { location, t, languageSelected } = this.props
+    const { location, t, languageSelected, websocketConnected, websocketMessage } = this.props
 
     // selected menu
     let menuSelection = ""
@@ -295,6 +298,26 @@ class PageLayoutExpandableNav extends React.Component {
       </DropdownGroup>,
     ]
 
+    // show websocket status if disconnected
+    const websocketStatus = !websocketConnected ? (
+      <Popover
+        aria-label="websocket_disconnected"
+        showClose={true}
+        position="bottom"
+        bodyContent={(_hide) => (
+          <div>
+            {t("websocket_disconnected")}
+            <br />
+            {websocketMessage}
+          </div>
+        )}
+      >
+        <Button variant="warning">
+          <UnpluggedIcon />
+        </Button>
+      </Popover>
+    ) : null
+
     const headerTools = (
       <PageHeaderTools>
         <PageHeaderToolsGroup key="spinner">
@@ -302,6 +325,7 @@ class PageLayoutExpandableNav extends React.Component {
         </PageHeaderToolsGroup>
 
         <PageHeaderToolsGroup key="others">
+          <PageHeaderToolsItem key="web_socket">{websocketStatus}</PageHeaderToolsItem>
           <PageHeaderToolsItem visibility={{ default: "visible" }} isSelected={this.props.isDrawerExpanded}>
             <NotificationBadge
               variant={this.props.notificationDisplayVariant}
@@ -426,6 +450,8 @@ const mapStateToProps = (state) => ({
   userDetail: state.entities.auth.user,
   documentationUrl: state.entities.about.documentationUrl,
   languageSelected: state.entities.locale.language,
+  websocketConnected: state.entities.websocket.connected,
+  websocketMessage: state.entities.websocket.message,
 })
 
 const mapDispatchToProps = (dispatch) => ({

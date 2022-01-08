@@ -6,6 +6,8 @@ const slice = createSlice({
   initialState: {
     subscription: {},
     data: {},
+    connected: false,
+    message: "",
   },
   reducers: {
     subscribe: (state, action) => {
@@ -41,12 +43,21 @@ const slice = createSlice({
       let data = { ...state.data }
       state.data = updateItem(data, response)
     },
+    connected: (state, _action) => {
+      state.connected = true
+    },
+    disconnected: (state, action) => {
+      const { message } = action.payload
+      state.connected = false
+      state.message = message
+    },
   },
 })
 
 export default slice.reducer
 
-export const { subscribe, unsubscribe, loadData, unloadData, updateEvent } = slice.actions
+export const { connected, disconnected, subscribe, unsubscribe, loadData, unloadData, updateEvent } =
+  slice.actions
 
 // helpers
 const updateItem = (data = {}, responseString = "{}") => {
@@ -57,8 +68,6 @@ const updateItem = (data = {}, responseString = "{}") => {
   if (response.type !== "event" || event === undefined) {
     return data
   }
-
-  
 
   const quickId = event.entityQuickId
   const entity = event.entity

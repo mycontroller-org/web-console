@@ -763,6 +763,7 @@ variables: Variables
 version: Version
 web_console: Web Console
 webhook: Webhook
+websocket_disconnected: Websocket disconnected
 welcome_to_mycontroller: Welcome to MyController
 width_px: Width (px)
 y_axis: Y Axis

@@ -763,6 +763,7 @@ variables: Variables
 version: பதிப்பு
 web_console: வெப் கன்சோல்
 webhook: Webhook
+websocket_disconnected: Websocket disconnected
 welcome_to_mycontroller: MyController க்கு வரவேற்கிறோம்
 width_px: அகலம் (px)
 y_axis: Y அச்சு
