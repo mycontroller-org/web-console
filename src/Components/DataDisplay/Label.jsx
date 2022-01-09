@@ -68,9 +68,13 @@ export const KeyValue = ({ name, value, index = 0 }) => {
         finalValue = hideItems.includes(name) ? "******" : value !== undefined ? String(value) : ""
       }
   }
+  return getKeyValue(name, finalValue, index)
+}
+
+export const getKeyValue = (key = "", value = "", index = "") => {
   return (
-    <div className="key-value-map" key={name + index}>
-      <span className="key">{name}</span> <span className="value">{finalValue}</span>
+    <div className="key-value-map" key={key + index}>
+      <span className="key">{key}</span> <span className="value">{value}</span>
     </div>
   )
 }

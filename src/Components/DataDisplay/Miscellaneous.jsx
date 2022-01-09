@@ -1,13 +1,14 @@
 import { Label, List, ListItem, Split, SplitItem } from "@patternfly/react-core"
-
-import React from "react"
 import fileSize from "filesize"
+import React from "react"
+import { useTranslation } from "react-i18next"
 import { getValue } from "../../Util/Util"
 import { LastSeen } from "../Time/Time"
 
 export const DisplayEnabled = ({ data, field, defaultValue = false }) => {
+  const { t } = useTranslation()
   const value = getValue(data, field, defaultValue)
-  return <span>{value ? "enabled" : "disabled"}</span>
+  return <span>{value ? t("enabled") : t("disabled")}</span>
 }
 
 export const DisplayTrue = ({ data, field, defaultValue = false }) => {
