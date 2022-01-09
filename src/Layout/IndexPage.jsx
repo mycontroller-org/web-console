@@ -35,19 +35,13 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, metricsDBDisabled, t } = this.props
+    const { isAuthenticated, t } = this.props
 
     // update locale
     this.updateLocale()
     const component = isAuthenticated ? <PageLayoutExpandableNav /> : <PageLayoutLogin />
-    const banner = metricsDBDisabled ? (
-      <Banner key="banner-metrics-database" variant="warning">
-        <strong>{t("metrics_database_disabled")}</strong>
-      </Banner>
-    ) : null
     return (
       <ErrorBoundary hasMargin hasOffset>
-        {banner}
         {component}
       </ErrorBoundary>
     )
@@ -56,7 +50,6 @@ class IndexPage extends React.Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.entities.auth.authenticated,
-  metricsDBDisabled: state.entities.about.metricsDBDisabled,
   languageSelected: state.entities.locale.language,
 })
 

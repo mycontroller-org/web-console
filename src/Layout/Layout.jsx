@@ -1,4 +1,5 @@
 import {
+  Banner,
   Brand,
   Button,
   Divider,
@@ -67,6 +68,7 @@ import { notificationDrawerToggle } from "../store/entities/notification"
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
+
 class PageLayoutExpandableNav extends React.Component {
   state = {
     isDropdownOpen: false,
@@ -168,7 +170,8 @@ class PageLayoutExpandableNav extends React.Component {
   }
 
   render() {
-    const { location, t, languageSelected, websocketConnected, websocketMessage } = this.props
+    const { location, t, languageSelected, websocketConnected, websocketMessage, metricsDBDisabled } =
+      this.props
 
     // selected menu
     let menuSelection = ""
@@ -419,6 +422,12 @@ class PageLayoutExpandableNav extends React.Component {
     const pageId = "main-content-page-layout-expandable-nav"
     const PageSkipToContent = <SkipToContent href={`#${pageId}`}>Skip to content</SkipToContent>
 
+    const banner = metricsDBDisabled ? (
+      <Banner key="banner-metrics-database" variant="warning">
+        <strong>{t("metrics_database_disabled")}</strong>
+      </Banner>
+    ) : null
+
     return (
       <React.Fragment>
         <AboutPage />
@@ -435,7 +444,10 @@ class PageLayoutExpandableNav extends React.Component {
           notificationDrawer={notificationDrawer}
           isNotificationDrawerExpanded={this.props.isDrawerExpanded}
         >
-          <ErrorBoundary hasMargin>{this.renderContent()}</ErrorBoundary>
+          <ErrorBoundary hasMargin>
+            {banner}
+            {this.renderContent()}
+          </ErrorBoundary>
         </Page>
       </React.Fragment>
     )
@@ -452,6 +464,7 @@ const mapStateToProps = (state) => ({
   languageSelected: state.entities.locale.language,
   websocketConnected: state.entities.websocket.connected,
   websocketMessage: state.entities.websocket.message,
+  metricsDBDisabled: state.entities.about.metricsDBDisabled,
 })
 
 const mapDispatchToProps = (dispatch) => ({
