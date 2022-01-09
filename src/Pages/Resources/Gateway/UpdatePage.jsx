@@ -69,7 +69,7 @@ export default UpdatePage
 
 const getFormItems = (rootObject, id) => {
   objectPath.set(rootObject, "reconnectDelay", "30s", true)
-  objectPath.set(rootObject, "queueFailedMessages", false, true)
+  objectPath.set(rootObject, "queueFailedMessage", false, true)
   objectPath.set(rootObject, "labels", { location: "server" }, true)
   const items = [
     {
@@ -109,7 +109,7 @@ const getFormItems = (rootObject, id) => {
     },
     {
       label: "queue_failed_messages",
-      fieldId: "queueFailedMessages",
+      fieldId: "queueFailedMessage",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
