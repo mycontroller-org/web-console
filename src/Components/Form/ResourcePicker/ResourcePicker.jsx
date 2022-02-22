@@ -428,8 +428,8 @@ const getWebhookItems = (rootObject, callerType) => {
         validator: { isNotEmpty: {}, isURL: {} },
       },
       {
-        label: "insecure_skip_verify",
-        fieldId: "data.insecureSkipVerify",
+        label: "insecure",
+        fieldId: "data.insecure",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,

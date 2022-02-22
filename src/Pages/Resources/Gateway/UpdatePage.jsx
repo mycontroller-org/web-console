@@ -327,8 +327,8 @@ const getProtocolMqttItems = (rootObject) => {
       helperTextInvalid: "helper_text.invalid_broker_url",
     },
     {
-      label: "insecure_skip_verify",
-      fieldId: "provider.protocol.insecureSkipVerify",
+      label: "insecure",
+      fieldId: "provider.protocol.insecure",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
@@ -429,8 +429,8 @@ const getProtocolEthernetItems = (_rootObject) => {
       helperTextInvalid: "helper_text.invalid_server_url",
     },
     {
-      label: "insecure_skip_verify",
-      fieldId: "provider.protocol.insecureSkipVerify",
+      label: "insecure",
+      fieldId: "provider.protocol.insecure",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",

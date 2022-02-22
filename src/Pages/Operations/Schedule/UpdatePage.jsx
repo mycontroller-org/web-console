@@ -492,8 +492,8 @@ const getWebhookItems = (_rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "insecure_skip_verify",
-      fieldId: "customVariableConfig.webhook.insecureSkipVerify",
+      label: "insecure",
+      fieldId: "customVariableConfig.webhook.insecure",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,

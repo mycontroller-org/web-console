@@ -251,7 +251,7 @@ image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
 include_config: Include Config
-insecure_skip_verify: Insecure Skip Verify
+insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: Interpolation
 interval: Interval

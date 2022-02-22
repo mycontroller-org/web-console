@@ -153,8 +153,8 @@ const getFormItems = (rootObject, id) => {
           validator: { isPort: {}, isNotEmpty: {} },
         },
         {
-          label: "insecure_skip_verify",
-          fieldId: "spec.insecureSkipVerify",
+          label: "insecure",
+          fieldId: "spec.insecure",
           fieldType: FieldType.Switch,
           dataType: DataType.Boolean,
           value: false,
@@ -271,8 +271,8 @@ const getWebhookItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
-      label: "insecure_skip_verify",
-      fieldId: "spec.skipInsecureVerify",
+      label: "insecure",
+      fieldId: "spec.insecure",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
