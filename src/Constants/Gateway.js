@@ -1,6 +1,7 @@
 // Provider keeps supported providers list, this value will be used in backend
 export const Provider = {
   ESPHome: "esphome",
+  Generic: "generic",
   MySensorsV2: "mysensors_v2",
   PhilipsHue: "philips_hue",
   SystemMonitoring: "system_monitoring",
@@ -13,6 +14,11 @@ export const ProviderOptions = [
     value: Provider.ESPHome,
     label: "opts.gw_provider.label_esphome",
     description: "opts.gw_provider.desc_esphome",
+  },
+  {
+    value: Provider.Generic,
+    label: "opts.gw_provider.label_generic",
+    description: "opts.gw_provider.desc_generic",
   },
   {
     value: Provider.MySensorsV2,
@@ -41,6 +47,7 @@ export const Protocol = {
   MQTT: "mqtt",
   Serial: "serial",
   Ethernet: "ethernet",
+  HTTP_GENERIC: "http_generic",
 }
 
 // Protocol options list
@@ -60,6 +67,11 @@ export const ProtocolOptions = [
     label: "opts.gw_protocol.label_ethernet",
     description: "opts.gw_protocol.desc_ethernet",
   },
+  {
+    value: Protocol.HTTP_GENERIC,
+    label: "opts.gw_protocol.label_http_generic",
+    description: "opts.gw_protocol.desc_http_generic",
+  },
 ]
 
 export const filterProtocolOptions = (providerType) => {
@@ -71,6 +83,10 @@ export const filterProtocolOptions = (providerType) => {
 
     case Provider.Tasmota:
       protocols.push(Protocol.MQTT)
+      break
+
+    case Provider.Generic:
+      protocols.push(Protocol.MQTT, Protocol.HTTP_GENERIC)
       break
 
     default:

@@ -17,6 +17,8 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { getESPHomeItems } from "./EspHome/Update"
 import { getPhilipsHueItems } from "./PhilipsHue/Update"
 import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
+import { getGenericHttpItems } from "./Generic/Update"
+import { getHttpGenericProtocolItems } from "./Generic/Endpoints"
 
 class UpdatePage extends React.Component {
   render() {
@@ -145,6 +147,8 @@ const getFormItems = (rootObject, id) => {
   ]
 
   const providerType = objectPath.get(rootObject, "provider.type", "").toLowerCase()
+  const protocolType = objectPath.get(rootObject, "provider.protocol.type", "").toLowerCase()
+
   switch (providerType) {
     case Provider.MySensorsV2:
       const mySensorsItems = getMySensorsItems(rootObject)
@@ -166,8 +170,6 @@ const getFormItems = (rootObject, id) => {
     providerType !== Provider.PhilipsHue &&
     providerType !== Provider.ESPHome
   ) {
-    objectPath.set(rootObject, "provider.protocol.transmitPreDelay", "10ms", true)
-
     items.push(
       {
         label: "protocol",
@@ -182,21 +184,24 @@ const getFormItems = (rootObject, id) => {
         dataType: DataType.String,
         options: filterProtocolOptions(providerType),
         value: "",
-      },
-      {
+      }
+    )
+
+    if (protocolType !== "" && protocolType !== Protocol.HTTP_GENERIC) {
+      objectPath.set(rootObject, "provider.protocol.transmitPreDelay", "10ms", true)
+      items.push({
         label: "transmit_pre_delay",
         fieldId: "provider.protocol.transmitPreDelay",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
-      }
-    )
+      })
+    }
 
     // protocol fields
-    const protocolType = objectPath.get(rootObject, "provider.protocol.type", "").toLowerCase()
     switch (protocolType) {
       case Protocol.MQTT:
-        const protocolMqttItems = getProtocolMqttItems(rootObject)
+        const protocolMqttItems = getProtocolMqttItems(rootObject, providerType)
         items.push(...protocolMqttItems)
         break
 
@@ -210,6 +215,11 @@ const getFormItems = (rootObject, id) => {
         items.push(...protocolEthernetItems)
         break
 
+      case Protocol.HTTP_GENERIC:
+        const protocolHttpGenericItems = getHttpGenericProtocolItems(rootObject)
+        items.push(...protocolHttpGenericItems)
+        break
+
       default:
         break
     }
@@ -219,7 +229,8 @@ const getFormItems = (rootObject, id) => {
     providerType !== "" &&
     providerType !== Provider.SystemMonitoring &&
     providerType !== Provider.PhilipsHue &&
-    providerType !== Provider.ESPHome
+    providerType !== Provider.ESPHome &&
+    providerType !== Provider.Generic
   ) {
     // message logger
     objectPath.set(rootObject, "messageLogger.type", MessageLogger.None, true)
@@ -262,6 +273,9 @@ const getFormItems = (rootObject, id) => {
   } else if (providerType === Provider.ESPHome) {
     const espHomeItems = getESPHomeItems(rootObject)
     items.push(...espHomeItems)
+  } else if (providerType === Provider.Generic) {
+    const genericHttpItems = getGenericHttpItems(rootObject)
+    items.push(...genericHttpItems)
   }
 
   return items
@@ -309,7 +323,7 @@ const getMySensorsItems = (rootObject) => {
 
 // get protocol items
 // get protocol mqtt items
-const getProtocolMqttItems = (rootObject) => {
+const getProtocolMqttItems = (rootObject, providerType) => {
   objectPath.set(rootObject, "provider.protocol.qos", 0, true)
   const items = [
     {
@@ -357,7 +371,10 @@ const getProtocolMqttItems = (rootObject) => {
       helperTextInvalid: "helper_text.invalid_topic",
       validator: { isNotEmpty: {} },
     },
-    {
+  ]
+
+  if (providerType !== Provider.Generic) {
+    items.push({
       label: "publish",
       fieldId: "provider.protocol.publish",
       isRequired: true,
@@ -366,21 +383,22 @@ const getProtocolMqttItems = (rootObject) => {
       value: "",
       helperTextInvalid: "helper_text.invalid_topic",
       validator: { isNotEmpty: {} },
-    },
-    {
-      label: "qos",
-      fieldId: "provider.protocol.qos",
-      isRequired: true,
-      fieldType: FieldType.SelectTypeAhead,
-      dataType: DataType.Integer,
-      value: "",
-      options: [
-        { value: "0", label: "At most once (0)" },
-        { value: "1", label: "At least once (1)" },
-        { value: "2", label: "Exactly once (2)" },
-      ],
-    },
-  ]
+    })
+  }
+
+  items.push({
+    label: "qos",
+    fieldId: "provider.protocol.qos",
+    isRequired: true,
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.Integer,
+    value: "",
+    options: [
+      { value: "0", label: "At most once (0)" },
+      { value: "1", label: "At least once (1)" },
+      { value: "2", label: "Exactly once (2)" },
+    ],
+  })
 
   return items
 }

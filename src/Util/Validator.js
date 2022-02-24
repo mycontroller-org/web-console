@@ -1,6 +1,8 @@
 import v from "validator"
 import { t } from "typy"
 import { isDate } from "moment"
+import { getValue } from "./Util"
+import { FieldType } from "../Constants/Form"
 
 const isLengthDualList = (val, opts) => {
   if (t(opts, "min").isNumber && val.right.length < opts.min) {
@@ -145,15 +147,67 @@ export const validate = (func, val, opts) => {
 }
 
 export const validateItem = (item, value) => {
-  if (!item.validator) {
-    return true
-  }
-  const funcs = Object.keys(item.validator)
-  for (let index = 0; index < funcs.length; index++) {
-    const func = funcs[index]
-    if (!validate(func, value, item.validator[func])) {
+  const isRequired = getValue(item, "isRequired", false)
+  const fieldType = getValue(item, "fieldType", "")
+
+  if (isRequired) {
+    if (fieldType !== FieldType.Switch && validate("isEmpty", value, {})) {
       return false
     }
   }
+
+  switch (fieldType) {
+    case FieldType.KeyValueMap:
+    case FieldType.Labels:
+    case FieldType.VariablesMap:
+    case FieldType.ChartYAxisConfigMap:
+      const validateKeyFnKV = getValue(item, "validateKeyFunc", null)
+      const validateValueFnKV = getValue(item, "validateValueFunc", null)
+      if (validateKeyFnKV !== null || validateValueFnKV !== null) {
+        const valuesKV = value
+        const keysKV = Object.keys(valuesKV)
+        for (let index = 0; index < keysKV.length; index++) {
+          const key = keysKV[index]
+          const value = valuesKV[key]
+
+          if (validateKeyFnKV !== null && !validateKeyFnKV(key)) {
+            return false
+          }
+          if (validateValueFnKV !== null && !validateValueFnKV(value)) {
+            return false
+          }
+        }
+      }
+
+      break
+
+    case FieldType.DynamicArray:
+      const validateValueFnDA = getValue(item, "validateValueFunc", null)
+      if (validateValueFnDA !== null) {
+        const valuesDA = value
+        for (let index = 0; index < valuesDA.length; index++) {
+          const value = valuesDA[index]
+          if (!validateValueFnDA(value)) {
+            return false
+          }
+        }
+      }
+
+      break
+
+    default:
+      if (!item.validator) {
+        return true
+      }
+      const funcs = Object.keys(item.validator)
+      for (let index = 0; index < funcs.length; index++) {
+        const func = funcs[index]
+        if (!validate(func, value, item.validator[func])) {
+          return false
+        }
+      }
+      break
+  }
+
   return true
 }
