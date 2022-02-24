@@ -128,6 +128,8 @@ edit_widget_settings: விட்ஜெட் அமைப்புகளைத
 email: மின்னஞ்சல்
 enable: செயல்படுத்த
 enabled: செயல்படுத்தப்பட்டது
+endpoint: Endpoint
+endpoints: Endpoints
 entities: Entities
 error:
   console:
@@ -138,6 +140,7 @@ evaluations: Evaluations
 event_filters: Event Filters
 events: Events
 executed_count: செயல்படுத்தப்பட்ட எண்ணிக்கை
+execution_interval: Execution Interval
 execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 export_type: Export Type
@@ -178,6 +181,7 @@ gateway_id: கேட்வே ஐடி
 gateways: கேட்வேக்கள்
 geo_location: GEO Location
 git_commit: ஜிட் கமிட்
+global: Global
 global_config: Global Config
 golang_version: கோலாங் பதிப்பு
 handler: கையாளி
@@ -185,6 +189,7 @@ handler_details: Handler Details
 handler_parameters: Handler Parameters
 handler_type: கையாளி வகை
 handlers: கையாளுபவர்கள்
+header_name: Header Name
 headers: Headers
 heartbeat_request: Heartbeat Request
 height_px: உயரம் (px)
@@ -251,6 +256,7 @@ image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
 include_config: Include Config
+include_global: Include Global
 insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: இடைக் கணிப்பு
@@ -329,6 +335,7 @@ no_login_message: உள்நுழைவதற்கான செய்தி 
 node: நோடு
 node_config: நோடின் கட்டமைப்பு
 node_details: நோடின் விவரங்கள்
+node_endpoints: Node Endpoints
 node_id: நோடு ஐடி
 nodes: நோடுகள்
 none: ஏதுமில்லை
@@ -414,18 +421,22 @@ opts:
     label_none: ஏதுமில்லை
   gw_protocol:
     desc_ethernet: ஈதர்நெட் ப்ரோடோகால்
+    desc_http_generic: HTTP Generic Protocol
     desc_mqtt: MQTT ப்ரோடோகால்
     desc_serial: சீரியல் ப்ரோடோகால்
     label_ethernet: Ethernet
+    label_http_generic: HTTP Generic
     label_mqtt: MQTT
     label_serial: Serial
   gw_provider:
     desc_esphome: esphome.io
+    desc_generic: Generic Provider
     desc_mysensors_v2: MySensors.org பதிப்பு 2.x
     desc_philips_hue: developers.meethue.com
     desc_system_monitoring: Capture system resources and reports
     desc_tasmota: tasmota.github.io
     label_esphome: ESPHome
+    label_generic: Generic
     label_mysensors_v2: MySensors V2
     label_philips_hue: PhilipsHue
     label_system_monitoring: System Monitoring
@@ -739,6 +750,7 @@ type: வகை
 unit: அலகு
 up: மேலே
 update: மேம்படுத்து
+update_body: Update Body
 update_data: Update Data
 update_firmware: ஃபார்ம்வேரை புதுப்பிக்கவும்
 update_node: நோடயை மேம்படுத்து
