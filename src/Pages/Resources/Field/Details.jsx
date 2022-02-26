@@ -6,24 +6,26 @@ import { LastSeen } from "../../../Components/Time/Time"
 import { MetricTypeOptions } from "../../../Constants/Metric"
 import { api } from "../../../Service/Api"
 import { getItem, getValue } from "../../../Util/Util"
+import { useTranslation } from "react-i18next"
 
-const tabDetails = ({ resourceId, history }) => {
+const TabDetails = ({ resourceId, history }) => {
+  const { t } = useTranslation()
   return (
     <TabDetailsBase
       resourceId={resourceId}
       history={history}
       apiGetRecord={api.field.get}
-      getDetailsFunc={getDetailsFuncImpl}
+      getDetailsFunc={(data) => getDetailsFuncImpl(data, t)}
       showMetrics
     />
   )
 }
 
-export default tabDetails
+export default TabDetails
 
 // helper functions
 
-const getDetailsFuncImpl = (data) => {
+const getDetailsFuncImpl = (data, t) => {
   const fieldsList1 = []
   const fieldsList2 = []
 
@@ -36,7 +38,7 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "last_seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
   fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
   fieldsList2.push({ key: "others", value: <KeyValueMap data={data.others} /> })
-  fieldsList2.push({ key: "metric_type", value: getItem(data.metricType, MetricTypeOptions).label })
+  fieldsList2.push({ key: "metric_type", value: t(getItem(data.metricType, MetricTypeOptions).label) })
   fieldsList2.push({ key: "unit", value: data.unit })
   fieldsList2.push({
     key: "no_change_since",
