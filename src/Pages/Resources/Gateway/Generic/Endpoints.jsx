@@ -77,7 +77,7 @@ export const getEndpointConfigDisplayValue = (index, value, _onChange, validated
     <TextInput
       id={"value_id_" + index}
       key={"value_" + index}
-      value={`url: ${value.url ? value.url : value.topic}`}
+      value={`${value.url ? value.url : value.topic}`}
       isDisabled={true}
       validated={validated}
     />
