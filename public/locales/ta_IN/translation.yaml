@@ -202,6 +202,7 @@ helper_text:
   invalid_date: தவறான தேதி
   invalid_day_of_month: தவறான நாள்
   invalid_directory: தவறான கோப்புறை
+  invalid_duration: Invalid Duration
   invalid_email: தவறான மின்னஞ்சல்
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "தவறான பீல்ட் ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
@@ -254,6 +255,7 @@ ignore_duplicate: Ignore Duplicate
 image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
+inactive_duration: Inactive Duration
 include_config: Include Config
 include_global_config: Include Global Config
 insecure: Insecure
@@ -336,6 +338,7 @@ node_config: நோடின் கட்டமைப்பு
 node_details: நோடின் விவரங்கள்
 node_endpoints: Node Endpoints
 node_id: நோடு ஐடி
+node_state_updater: Node State Updater
 nodes: நோடுகள்
 none: ஏதுமில்லை
 notifications: அறிவிப்புகள்

@@ -28,8 +28,9 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "geo_location", value: <GeoLocation data={data.spec.geoLocation} /> })
+  fieldsList1.push({ key: "language", value: getLanguage(data.spec.language) })
   fieldsList2.push({ key: "login", value: <Login data={data.spec.login} /> })
-  fieldsList2.push({ key: "language", value: getLanguage(data.spec.language) })
+  fieldsList2.push({ key: "node_state_updater", value: <NodeStateUpdater data={data.spec.nodeStateJob} /> })
 
   return {
     "list-1": fieldsList1,
@@ -52,4 +53,12 @@ const Login = ({ data = {} }) => {
   const { t } = useTranslation()
   const loginText = getValue(data, "message", "")
   return getKeyValue(t("message"), htmlParser(loginText))
+}
+
+const NodeStateUpdater = ({ data = {} }) => {
+  const { t } = useTranslation()
+  return [
+    getKeyValue(t("execution_interval"), data.executionInterval),
+    getKeyValue(t("inactive_duration"), data.inactiveDuration),
+  ]
 }

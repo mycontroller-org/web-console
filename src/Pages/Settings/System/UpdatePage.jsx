@@ -51,7 +51,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(UpdatePage)
 
 const getFormItems = (rootObject) => {
   const autoUpdate = getValue(rootObject, "spec.geoLocation.autoUpdate", false)
-  objectPath.set(rootObject, "spec.language", DEFAULT_LANGUAGE, true)
+
+  // update values
+  if (getValue(rootObject, "spec.language", "") === "" ){
+    objectPath.set(rootObject, "spec.language", DEFAULT_LANGUAGE, false)
+  }
+  if (getValue(rootObject, "spec.nodeStateJob.executionInterval", "") === "" ){
+    objectPath.set(rootObject, "spec.nodeStateJob.executionInterval", "15m", false)
+  }
+  if (getValue(rootObject, "spec.nodeStateJob.inactiveDuration", "") === "" ){
+    objectPath.set(rootObject, "spec.nodeStateJob.inactiveDuration", "15m", false)
+  }
+  
   const items = [
     {
       label: "geo_location",
@@ -128,6 +139,35 @@ const getFormItems = (rootObject) => {
       OptionsTranslationDisabled: true,
       isDisabled: false,
       value: "",
+    },
+    {
+      label: "node_state_updater",
+      fieldId: "!node_state_updater",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "execution_interval",
+      fieldId: "spec.nodeStateJob.executionInterval",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "helper_text.invalid_duration",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "inactive_duration",
+      fieldId: "spec.nodeStateJob.inactiveDuration",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "helper_text.invalid_duration",
+      validated: "default",
+      validator: { isNotEmpty: {} },
     },
   ]
 

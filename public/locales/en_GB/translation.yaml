@@ -202,6 +202,7 @@ helper_text:
   invalid_date: Invalid date
   invalid_day_of_month: Invalid day of month
   invalid_directory: Invalid directory
+  invalid_duration: Invalid Duration
   invalid_email: Invalid email
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "Invalid field id. chars, min=1, max=100"
@@ -254,6 +255,7 @@ ignore_duplicate: Ignore Duplicate
 image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
+inactive_duration: Inactive Duration
 include_config: Include Config
 include_global_config: Include Global Config
 insecure: Insecure
@@ -336,6 +338,7 @@ node_config: Node Config
 node_details: Node Details
 node_endpoints: Node Endpoints
 node_id: Node ID
+node_state_updater: Node State Updater
 nodes: Nodes
 none: None
 notifications: Notifications
