@@ -181,7 +181,6 @@ gateway_id: Gateway ID
 gateways: Gateways
 geo_location: GEO Location
 git_commit: Git Commit
-global: Global
 global_config: Global Config
 golang_version: GoLang Version
 handler: Handler
@@ -256,7 +255,7 @@ image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
 include_config: Include Config
-include_global: Include Global
+include_global_config: Include Global Config
 insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: Interpolation
@@ -347,6 +346,7 @@ offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
 on_button: ON Button
 on_receive: On Receive
+on_send: On Send
 on_text: ON Text
 operations: Operations
 operator: Operator
@@ -421,11 +421,11 @@ opts:
     label_none: None
   gw_protocol:
     desc_ethernet: Ethernet Protocol
-    desc_http_generic: HTTP Generic Protocol
+    desc_http: HTTP Protocol
     desc_mqtt: MQTT Protocol
     desc_serial: Serial Protocol
     label_ethernet: Ethernet
-    label_http_generic: HTTP Generic
+    label_http: HTTP
     label_mqtt: MQTT
     label_serial: Serial
   gw_provider:
@@ -743,6 +743,7 @@ title: Title
 to: To
 to_emails: To Emails
 token: Token
+topic: Topic
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
 'true': 'True'

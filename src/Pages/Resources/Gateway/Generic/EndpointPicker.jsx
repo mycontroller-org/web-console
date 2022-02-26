@@ -6,7 +6,8 @@ import React from "react"
 import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import { WebhookMethodTypeOptions } from "../../../../Constants/ResourcePicker"
+import { Protocol } from "../../../../Constants/Gateway"
+import { WebhookMethodType, WebhookMethodTypeOptions } from "../../../../Constants/ResourcePicker"
 import { validate } from "../../../../Util/Validator"
 
 class EndpointConfigPicker extends React.Component {
@@ -24,7 +25,7 @@ class EndpointConfigPicker extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, name, onChange, isNode } = this.props
+    const { value, id, name, onChange, isNode, protocolType = "" } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -53,7 +54,19 @@ class EndpointConfigPicker extends React.Component {
               minimapEnabled={false}
               onCancelFunc={this.onClose}
               isWidthLimited={false}
-              getFormItems={(rootObject) => getItems(rootObject, isNode)}
+              getFormItems={(rootObject) => {
+                switch (protocolType) {
+                  case Protocol.HTTP:
+                    return getHttpItems(rootObject, isNode)
+
+                  case Protocol.MQTT:
+                    return getMqttItems(rootObject)
+
+                  default:
+                    // NOOP
+                    return
+                }
+              }}
               saveButtonText="Update"
             />
           </ErrorBoundary>
@@ -69,11 +82,12 @@ EndpointConfigPicker.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func,
   isNode: PropTypes.bool,
+  protocolType: PropTypes.string,
 }
 
 export default EndpointConfigPicker
 
-const getItems = (rootObject, isNode = false) => {
+const getHttpItems = (rootObject, isNode = false) => {
   if (!isNode) {
     objectPath.set(rootObject, "disabled", false, true)
     objectPath.set(rootObject, "includeGlobal", true, true)
@@ -81,7 +95,7 @@ const getItems = (rootObject, isNode = false) => {
 
   objectPath.set(rootObject, "url", "", true)
   objectPath.set(rootObject, "method", "", true)
-  objectPath.set(rootObject, "insecure", "", true)
+  objectPath.set(rootObject, "insecure", false, true)
   objectPath.set(rootObject, "responseCode", 0, true)
   objectPath.set(rootObject, "headers", {}, true)
   objectPath.set(rootObject, "queryParameters", {}, true)
@@ -101,8 +115,8 @@ const getItems = (rootObject, isNode = false) => {
         isRequired: false,
       },
       {
-        label: "include_global",
-        fieldId: "includeGlobal",
+        label: "include_global_config",
+        fieldId: "includeGlobalConfig",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
@@ -184,8 +198,12 @@ const getItems = (rootObject, isNode = false) => {
       updateButtonText: "update_query_parameters",
       value: {},
       isRequired: false,
-    },
-    {
+    }
+  )
+
+  const methodType = objectPath.get(rootObject, "method", "get").toUpperCase()
+  if (methodType !== "" && methodType !== WebhookMethodType.GET) {
+    items.push({
       label: "body",
       fieldId: "body",
       fieldType: FieldType.ScriptEditor,
@@ -194,6 +212,52 @@ const getItems = (rootObject, isNode = false) => {
       updateButtonText: "update_body",
       value: {},
       isRequired: false,
+    })
+  }
+
+  items.push({
+    label: "script",
+    fieldId: "script",
+    fieldType: FieldType.ScriptEditor,
+    dataType: DataType.String,
+    value: "",
+    saveButtonText: "update",
+    updateButtonText: "update_script",
+    language: "javascript",
+    minimapEnabled: true,
+    isRequired: false,
+  })
+  return items
+}
+
+const getMqttItems = (rootObject) => {
+  objectPath.set(rootObject, "topic", "", true)
+  objectPath.set(rootObject, "qos", 0, true)
+  objectPath.set(rootObject, "script", "", true)
+
+  const items = [
+    {
+      label: "topic",
+      fieldId: "topic",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperTextInvalid: "helper_text.invalid_topic",
+      validator: { isNotEmpty: {} },
+    },
+    {
+      label: "qos",
+      fieldId: "qos",
+      fieldType: FieldType.SelectTypeAhead,
+      dataType: DataType.Integer,
+      value: "",
+      isRequired: true,
+      options: [
+        { value: "0", label: "At most once (0)" },
+        { value: "1", label: "At least once (1)" },
+        { value: "2", label: "Exactly once (2)" },
+      ],
     },
     {
       label: "script",
@@ -206,7 +270,8 @@ const getItems = (rootObject, isNode = false) => {
       language: "javascript",
       minimapEnabled: true,
       isRequired: false,
-    }
-  )
+    },
+  ]
+
   return items
 }

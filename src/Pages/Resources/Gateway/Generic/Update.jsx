@@ -1,10 +1,20 @@
+import objectPath from "object-path"
 import { DataType, FieldType } from "../../../../Constants/Form"
+import { Protocol } from "../../../../Constants/Gateway"
 import { validate } from "../../../../Util/Validator"
-import { endpointConfigUpdateButtonCallback, getEndpointConfigDisplayValue } from "./Endpoints"
+import { callBackEndpointConfigUpdateButtonCallback, getEndpointConfigDisplayValue } from "./Endpoints"
 
-// get System Monitoring config
-export const getGenericHttpItems = (_rootObject) => {
-  const items = [
+// get Generic http config items
+export const getGenericNodeEndpointItems = (rootObject) => {
+  objectPath.set(rootObject, "provider.protocol.nodes", {}, true)
+  const protocolType = objectPath.get(rootObject, "provider.protocol.type", "").toLowerCase()
+
+  const items = []
+  if (protocolType === "") {
+    return items
+  }
+
+  items.push(
     {
       label: "node_endpoints",
       fieldId: "!node_endpoints",
@@ -12,7 +22,7 @@ export const getGenericHttpItems = (_rootObject) => {
     },
     {
       label: "",
-      fieldId: "provider.nodes",
+      fieldId: "provider.protocol.nodes",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
@@ -27,8 +37,50 @@ export const getGenericHttpItems = (_rootObject) => {
       validateValueFunc: (value) => value.url !== undefined || value.url !== "",
       valueField: getEndpointConfigDisplayValue,
       updateButtonCallback: (cbIndex, cbItem, cbOnChange) =>
-        endpointConfigUpdateButtonCallback(cbIndex, cbItem, cbOnChange, true),
+        callBackEndpointConfigUpdateButtonCallback(cbIndex, cbItem, cbOnChange, true, protocolType),
+    }
+  )
+
+  return items
+}
+
+// get script, generic provider
+// final script of receive and send
+export const getGenericProviderScript = (rootObject) => {
+  objectPath.set(rootObject, "provider.script.onReceive", "", true)
+  objectPath.set(rootObject, "provider.script.onSend", "", true)
+
+  const items = [
+    {
+      label: "script",
+      fieldId: "!script",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "on_receive",
+      fieldId: "provider.script.onReceive",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.String,
+      value: "",
+      saveButtonText: "update",
+      updateButtonText: "update_script",
+      language: "javascript",
+      minimapEnabled: true,
+      isRequired: false,
+    },
+    {
+      label: "on_send",
+      fieldId: "provider.script.onSend",
+      fieldType: FieldType.ScriptEditor,
+      dataType: DataType.String,
+      value: "",
+      saveButtonText: "update",
+      updateButtonText: "update_script",
+      language: "javascript",
+      minimapEnabled: true,
+      isRequired: false,
     },
   ]
+
   return items
 }

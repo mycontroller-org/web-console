@@ -47,7 +47,7 @@ export const Protocol = {
   MQTT: "mqtt",
   Serial: "serial",
   Ethernet: "ethernet",
-  HTTP_GENERIC: "http_generic",
+  HTTP: "http",
 }
 
 // Protocol options list
@@ -68,9 +68,9 @@ export const ProtocolOptions = [
     description: "opts.gw_protocol.desc_ethernet",
   },
   {
-    value: Protocol.HTTP_GENERIC,
-    label: "opts.gw_protocol.label_http_generic",
-    description: "opts.gw_protocol.desc_http_generic",
+    value: Protocol.HTTP,
+    label: "opts.gw_protocol.label_http",
+    description: "opts.gw_protocol.desc_http",
   },
 ]
 
@@ -86,7 +86,7 @@ export const filterProtocolOptions = (providerType) => {
       break
 
     case Provider.Generic:
-      protocols.push(Protocol.MQTT, Protocol.HTTP_GENERIC)
+      protocols.push(Protocol.MQTT, Protocol.HTTP)
       break
 
     default:

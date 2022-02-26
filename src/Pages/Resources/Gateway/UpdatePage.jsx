@@ -17,7 +17,7 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { getESPHomeItems } from "./EspHome/Update"
 import { getPhilipsHueItems } from "./PhilipsHue/Update"
 import { getSystemMonitoringItems } from "./SystemMonitoring/Update"
-import { getGenericHttpItems } from "./Generic/Update"
+import { getGenericNodeEndpointItems, getGenericProviderScript } from "./Generic/Update"
 import { getHttpGenericProtocolItems } from "./Generic/Endpoints"
 
 class UpdatePage extends React.Component {
@@ -184,10 +184,15 @@ const getFormItems = (rootObject, id) => {
         dataType: DataType.String,
         options: filterProtocolOptions(providerType),
         value: "",
+        resetFields: {
+          resetProtocol: (ro, newValue) => {
+            objectPath.set(ro, "provider.protocol", { type: newValue })
+          },
+        },
       }
     )
 
-    if (protocolType !== "" && protocolType !== Protocol.HTTP_GENERIC) {
+    if (protocolType !== "" && protocolType !== Protocol.HTTP) {
       objectPath.set(rootObject, "provider.protocol.transmitPreDelay", "10ms", true)
       items.push({
         label: "transmit_pre_delay",
@@ -203,6 +208,11 @@ const getFormItems = (rootObject, id) => {
       case Protocol.MQTT:
         const protocolMqttItems = getProtocolMqttItems(rootObject, providerType)
         items.push(...protocolMqttItems)
+        // include generic provider script
+        if (providerType === Provider.Generic) {
+          const scriptItems = getGenericProviderScript(rootObject)
+          items.push(...scriptItems)
+        }
         break
 
       case Protocol.Serial:
@@ -215,9 +225,15 @@ const getFormItems = (rootObject, id) => {
         items.push(...protocolEthernetItems)
         break
 
-      case Protocol.HTTP_GENERIC:
-        const protocolHttpGenericItems = getHttpGenericProtocolItems(rootObject)
-        items.push(...protocolHttpGenericItems)
+      case Protocol.HTTP:
+        if (providerType === Provider.Generic) {
+          // include generic provider script
+          const scriptItems = getGenericProviderScript(rootObject)
+          items.push(...scriptItems)
+          // include http specific items
+          const protocolHttpGenericItems = getHttpGenericProtocolItems(rootObject)
+          items.push(...protocolHttpGenericItems)
+        }
         break
 
       default:
@@ -264,18 +280,30 @@ const getFormItems = (rootObject, id) => {
     }
   }
 
-  if (providerType === Provider.SystemMonitoring) {
-    const systemMonitoringItems = getSystemMonitoringItems(rootObject)
-    items.push(...systemMonitoringItems)
-  } else if (providerType === Provider.PhilipsHue) {
-    const philipsHueItems = getPhilipsHueItems(rootObject)
-    items.push(...philipsHueItems)
-  } else if (providerType === Provider.ESPHome) {
-    const espHomeItems = getESPHomeItems(rootObject)
-    items.push(...espHomeItems)
-  } else if (providerType === Provider.Generic) {
-    const genericHttpItems = getGenericHttpItems(rootObject)
-    items.push(...genericHttpItems)
+  switch (providerType) {
+    case Provider.SystemMonitoring:
+      const systemMonitoringItems = getSystemMonitoringItems(rootObject)
+      items.push(...systemMonitoringItems)
+      break
+
+    case Provider.PhilipsHue:
+      const philipsHueItems = getPhilipsHueItems(rootObject)
+      items.push(...philipsHueItems)
+      break
+
+    case Provider.ESPHome:
+      const espHomeItems = getESPHomeItems(rootObject)
+      items.push(...espHomeItems)
+      break
+
+    case Provider.Generic:
+      // include node endpoints
+      const genericHttpItems = getGenericNodeEndpointItems(rootObject)
+      items.push(...genericHttpItems)
+      break
+
+    default:
+    // NOOP
   }
 
   return items
@@ -324,7 +352,6 @@ const getMySensorsItems = (rootObject) => {
 // get protocol items
 // get protocol mqtt items
 const getProtocolMqttItems = (rootObject, providerType) => {
-  objectPath.set(rootObject, "provider.protocol.qos", 0, true)
   const items = [
     {
       label: "broker",
@@ -374,31 +401,33 @@ const getProtocolMqttItems = (rootObject, providerType) => {
   ]
 
   if (providerType !== Provider.Generic) {
-    items.push({
-      label: "publish",
-      fieldId: "provider.protocol.publish",
-      isRequired: true,
-      fieldType: FieldType.Text,
-      dataType: DataType.String,
-      value: "",
-      helperTextInvalid: "helper_text.invalid_topic",
-      validator: { isNotEmpty: {} },
-    })
+    objectPath.set(rootObject, "provider.protocol.qos", 0, true)
+    items.push(
+      {
+        label: "publish",
+        fieldId: "provider.protocol.publish",
+        isRequired: true,
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        helperTextInvalid: "helper_text.invalid_topic",
+        validator: { isNotEmpty: {} },
+      },
+      {
+        label: "qos",
+        fieldId: "provider.protocol.qos",
+        isRequired: true,
+        fieldType: FieldType.SelectTypeAhead,
+        dataType: DataType.Integer,
+        value: "",
+        options: [
+          { value: "0", label: "At most once (0)" },
+          { value: "1", label: "At least once (1)" },
+          { value: "2", label: "Exactly once (2)" },
+        ],
+      }
+    )
   }
-
-  items.push({
-    label: "qos",
-    fieldId: "provider.protocol.qos",
-    isRequired: true,
-    fieldType: FieldType.SelectTypeAhead,
-    dataType: DataType.Integer,
-    value: "",
-    options: [
-      { value: "0", label: "At most once (0)" },
-      { value: "1", label: "At least once (1)" },
-      { value: "2", label: "Exactly once (2)" },
-    ],
-  })
 
   return items
 }
