@@ -641,8 +641,10 @@ payloads: Payloads
 per_cpu_disabled: Per CPU Disabled
 port: Port
 port_name: Port Name
+post_run: Post Run
 power: Power
 pre_delay: Pre Delay
+pre_run: Pre Run
 prefix: Prefix
 previous_value: Previous Value
 process: Process
@@ -756,8 +758,11 @@ up: UP
 update: Update
 update_body: Update Body
 update_data: Update Data
+update_endpoint: Update Endpoint
 update_firmware: Update Firmware
 update_node: Update Node
+update_post_run: Update Post Run
+update_pre_run: Update Pre Run
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
 update_script: Update Script

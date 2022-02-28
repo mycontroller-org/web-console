@@ -63,7 +63,15 @@ export const getHttpGenericProtocolItems = (rootObject) => {
       validateValueFunc: (value) => value.url !== undefined || value.url !== "",
       valueField: getEndpointConfigDisplayValue,
       updateButtonCallback: (cbIndex, cbItem, cbOnChange) =>
-        callBackEndpointConfigUpdateButtonCallback(cbIndex, cbItem, cbOnChange, false, protocolType),
+        callBackEndpointConfigUpdateButtonCallback(
+          cbIndex,
+          cbItem,
+          cbOnChange,
+          false,
+          protocolType,
+          false,
+          "update_endpoint"
+        ),
     },
   ]
   return items
@@ -90,7 +98,9 @@ export const callBackEndpointConfigUpdateButtonCallback = (
   item = {},
   onChange,
   isNode = false,
-  protocolType = Protocol.HTTP
+  protocolType = Protocol.HTTP,
+  isPreRun = false,
+  title = "update_endpoint"
 ) => {
   return (
     <EndpointConfigPicker
@@ -102,7 +112,9 @@ export const callBackEndpointConfigUpdateButtonCallback = (
         onChange(index, "value", newValue)
       }}
       isNode={isNode}
+      isPreRun={isPreRun}
       protocolType={protocolType}
+      title={title}
     />
   )
 }

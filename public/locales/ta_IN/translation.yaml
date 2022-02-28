@@ -641,8 +641,10 @@ payloads: Payloads
 per_cpu_disabled: Per CPU Disabled
 port: போர்ட்
 port_name: போர்டின் பெயர்
+post_run: Post Run
 power: ஆற்றல்
 pre_delay: Pre Delay
+pre_run: Pre Run
 prefix: Prefix
 previous_value: Previous Value
 process: Process
@@ -756,8 +758,11 @@ up: மேலே
 update: மேம்படுத்து
 update_body: Update Body
 update_data: Update Data
+update_endpoint: Update Endpoint
 update_firmware: ஃபார்ம்வேரை புதுப்பிக்கவும்
 update_node: நோடயை மேம்படுத்து
+update_post_run: Update Post Run
+update_pre_run: Update Pre Run
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
 update_script: Update Script

@@ -9,6 +9,8 @@ import { DataType, FieldType } from "../../../../Constants/Form"
 import { Protocol } from "../../../../Constants/Gateway"
 import { WebhookMethodType, WebhookMethodTypeOptions } from "../../../../Constants/ResourcePicker"
 import { validate } from "../../../../Util/Validator"
+import { callBackEndpointConfigUpdateButtonCallback, getEndpointConfigDisplayValue } from "./Endpoints"
+import { withTranslation } from "react-i18next"
 
 class EndpointConfigPicker extends React.Component {
   state = {
@@ -25,7 +27,17 @@ class EndpointConfigPicker extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { value, id, name, onChange, isNode, protocolType = "" } = this.props
+    const {
+      value,
+      id,
+      name,
+      onChange,
+      isNode,
+      protocolType = "",
+      isPreRun = false,
+      title = "update_endpoint",
+      t,
+    } = this.props
     return (
       <>
         <Button key={"edit-btn-" + id} variant="control" onClick={this.onOpen}>
@@ -33,7 +45,7 @@ class EndpointConfigPicker extends React.Component {
         </Button>
         <Modal
           key={"edit-field-data" + id}
-          title={`Update Endpoint: ${name}`}
+          title={`${t(title)}: ${name}`}
           variant={ModalVariant.medium}
           position="top"
           isOpen={isOpen}
@@ -57,7 +69,7 @@ class EndpointConfigPicker extends React.Component {
               getFormItems={(rootObject) => {
                 switch (protocolType) {
                   case Protocol.HTTP:
-                    return getHttpItems(rootObject, isNode)
+                    return getHttpItems(rootObject, isNode, isPreRun)
 
                   case Protocol.MQTT:
                     return getMqttItems(rootObject)
@@ -83,11 +95,13 @@ EndpointConfigPicker.propTypes = {
   onChange: PropTypes.func,
   isNode: PropTypes.bool,
   protocolType: PropTypes.string,
+  isPreRun: PropTypes.bool,
+  title: PropTypes.string,
 }
 
-export default EndpointConfigPicker
+export default withTranslation()(EndpointConfigPicker)
 
-const getHttpItems = (rootObject, isNode = false) => {
+const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
   if (!isNode) {
     objectPath.set(rootObject, "disabled", false, true)
     objectPath.set(rootObject, "includeGlobal", true, true)
@@ -95,16 +109,14 @@ const getHttpItems = (rootObject, isNode = false) => {
 
   objectPath.set(rootObject, "url", "", true)
   objectPath.set(rootObject, "method", "", true)
-  objectPath.set(rootObject, "insecure", false, true)
   objectPath.set(rootObject, "responseCode", 0, true)
   objectPath.set(rootObject, "headers", {}, true)
   objectPath.set(rootObject, "queryParameters", {}, true)
   objectPath.set(rootObject, "body", {}, true)
-  objectPath.set(rootObject, "script", "", true)
 
   const items = []
 
-  if (!isNode) {
+  if (!isNode || !isPreRun) {
     items.push(
       {
         label: "disabled",
@@ -158,14 +170,21 @@ const getHttpItems = (rootObject, isNode = false) => {
       value: "",
       isRequired: true,
       validator: { isNotEmpty: {} },
-    },
-    {
+    }
+  )
+
+  if (!isPreRun) {
+    objectPath.set(rootObject, "insecure", false, true)
+    items.push({
       label: "insecure",
       fieldId: "insecure",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
-    },
+    })
+  }
+
+  items.push(
     {
       label: "response_code",
       fieldId: "responseCode",
@@ -215,18 +234,91 @@ const getHttpItems = (rootObject, isNode = false) => {
     })
   }
 
-  items.push({
-    label: "script",
-    fieldId: "script",
-    fieldType: FieldType.ScriptEditor,
-    dataType: DataType.String,
-    value: "",
-    saveButtonText: "update",
-    updateButtonText: "update_script",
-    language: "javascript",
-    minimapEnabled: true,
-    isRequired: false,
-  })
+  if (!isPreRun) {
+    objectPath.set(rootObject, "script", "", true)
+    objectPath.set(rootObject, "preRun", {}, true)
+    objectPath.set(rootObject, "postRun", {}, true)
+
+    items.push(
+      {
+        label: "script",
+        fieldId: "script",
+        fieldType: FieldType.ScriptEditor,
+        dataType: DataType.String,
+        value: "",
+        saveButtonText: "update",
+        updateButtonText: "update_script",
+        language: "javascript",
+        minimapEnabled: true,
+        isRequired: false,
+      },
+      {
+        label: "pre_run",
+        fieldId: "!pre_run",
+        fieldType: FieldType.Divider,
+      },
+      {
+        label: "",
+        fieldId: "preRun",
+        fieldType: FieldType.KeyValueMap,
+        dataType: DataType.Object,
+        value: "",
+        keyLabel: "name",
+        valueLabel: "endpoint",
+        showUpdateButton: true,
+        saveButtonText: "update",
+        updateButtonText: "update",
+        minimapEnabled: true,
+        isRequired: false,
+        validateKeyFunc: (key) => validate("isVariableKey", key),
+        validateValueFunc: (value) => value.url !== undefined || value.url !== "",
+        valueField: getEndpointConfigDisplayValue,
+        updateButtonCallback: (cbIndex, cbItem, cbOnChange) =>
+          callBackEndpointConfigUpdateButtonCallback(
+            cbIndex,
+            cbItem,
+            cbOnChange,
+            true,
+            Protocol.HTTP,
+            true,
+            "update_pre_run"
+          ),
+      },
+      {
+        label: "post_run",
+        fieldId: "!post_run",
+        fieldType: FieldType.Divider,
+      },
+      {
+        label: "",
+        fieldId: "postRun",
+        fieldType: FieldType.KeyValueMap,
+        dataType: DataType.Object,
+        value: "",
+        keyLabel: "name",
+        valueLabel: "endpoint",
+        showUpdateButton: true,
+        saveButtonText: "update",
+        updateButtonText: "update",
+        minimapEnabled: true,
+        isRequired: false,
+        validateKeyFunc: (key) => validate("isVariableKey", key),
+        validateValueFunc: (value) => value.url !== undefined || value.url !== "",
+        valueField: getEndpointConfigDisplayValue,
+        updateButtonCallback: (cbIndex, cbItem, cbOnChange) =>
+          callBackEndpointConfigUpdateButtonCallback(
+            cbIndex,
+            cbItem,
+            cbOnChange,
+            true,
+            Protocol.HTTP,
+            true,
+            "update_post_run"
+          ),
+      }
+    )
+  }
+
   return items
 }
 
