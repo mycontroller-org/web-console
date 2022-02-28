@@ -154,6 +154,12 @@ const getField = (item, onChange) => {
       )
 
     case FieldType.Labels:
+      // update validation functions
+      if (!item.validateKeyFunc) {
+        item.validateKeyFunc = (key) => {
+          return validate("isLabelKey", key)
+        }
+      }
       return (
         <KeyValueMapForm
           keyValueMap={item.value}
@@ -161,17 +167,17 @@ const getField = (item, onChange) => {
           valueLabel={item.valueLabel}
           actionSpan={item.actionSpan}
           onChange={onChange}
-          validateKeyFunc={
-            item.validateKeyFunc
-              ? item.validateKeyFunc
-              : (key) => {
-                  return validate("isLabelKey", key)
-                }
-          }
+          validateKeyFunc={item.validateKeyFunc}
         />
       )
 
     case FieldType.KeyValueMap:
+      // update validation functions
+      if (!item.validateKeyFunc) {
+        item.validateKeyFunc = (key) => {
+          return validate("isKey", key)
+        }
+      }
       return (
         <KeyValueMapForm
           keyValueMap={item.value}
@@ -180,13 +186,7 @@ const getField = (item, onChange) => {
           onChange={onChange}
           actionSpan={item.actionSpan}
           showUpdateButton={item.showUpdateButton}
-          validateKeyFunc={
-            item.validateKeyFunc
-              ? item.validateKeyFunc
-              : (value) => {
-                  return validate("isKey", value)
-                }
-          }
+          validateKeyFunc={item.validateKeyFunc}
           validateValueFunc={item.validateValueFunc}
           valueField={item.valueField}
           updateButtonCallback={item.updateButtonCallback}
@@ -194,6 +194,12 @@ const getField = (item, onChange) => {
       )
 
     case FieldType.VariablesMap:
+      // update validation functions
+      if (!item.validateKeyFunc) {
+        item.validateKeyFunc = (key) => {
+          return validate("isVariableKey", key)
+        }
+      }
       return (
         <KeyValueMapForm
           key={item.fieldId}
@@ -205,13 +211,7 @@ const getField = (item, onChange) => {
           actionSpan={item.actionSpan}
           showUpdateButton={item.showUpdateButton}
           onChange={onChange}
-          validateKeyFunc={
-            item.validateKeyFunc
-              ? item.validateKeyFunc
-              : (key) => {
-                  return validate("isVariableKey", key)
-                }
-          }
+          validateKeyFunc={item.validateKeyFunc}
           valueField={getResourceDisplayValue}
           updateButtonCallback={(cbIndex, cbItem, cbOnChange) =>
             resourceUpdateButtonCallback(item.callerType, cbIndex, cbItem, cbOnChange)
@@ -240,23 +240,29 @@ const getField = (item, onChange) => {
       )
 
     case FieldType.MixedControlList:
+      // update validation functions
+      if (!item.validateValueFunc) {
+        item.validateValueFunc = (key) => {
+          return validate("isObject", key)
+        }
+      }
       return (
         <MixedControlListForm
           key={item.fieldId}
           valuesList={item.value}
           valueLabel={item.valueLabel}
           onChange={onChange}
-          validateValueFunc={
-            item.validateValueFunc
-              ? item.validateValueFunc
-              : (value) => {
-                  return validate("isObject", value)
-                }
-          }
+          validateValueFunc={item.validateValueFunc}
         />
       )
 
     case FieldType.ChartMixedResourceConfig:
+      // update validation functions
+      if (!item.validateValueFunc) {
+        item.validateValueFunc = (key) => {
+          return validate("isObject", key)
+        }
+      }
       return (
         <MixedResourceConfigList
           key={item.fieldId}
@@ -264,17 +270,17 @@ const getField = (item, onChange) => {
           yAxisConfig={item.yAxisConfig}
           valueLabel={item.valueLabel}
           onChange={onChange}
-          validateValueFunc={
-            item.validateValueFunc
-              ? item.validateValueFunc
-              : (value) => {
-                  return validate("isObject", value)
-                }
-          }
+          validateValueFunc={item.validateValueFunc}
         />
       )
 
     case FieldType.ConditionsArrayMap:
+      // update validation functions
+      if (!item.validateKeyFunc) {
+        item.validateKeyFunc = (key) => {
+          return validate("isKey", key)
+        }
+      }
       return (
         <ConditionArrayMapForm
           key={item.fieldId}
@@ -284,30 +290,24 @@ const getField = (item, onChange) => {
           direction={item.direction}
           valueLabel={item.valueLabel}
           onChange={onChange}
-          validateKeyFunc={
-            item.validateKeyFunc
-              ? item.validateKeyFunc
-              : (key) => {
-                  return validate("isKey", key)
-                }
-          }
+          validateKeyFunc={item.validateKeyFunc}
         />
       )
 
     case FieldType.DynamicArray:
+      // update validation functions
+      if (!item.validateValueFunc) {
+        item.validateValueFunc = (key) => {
+          return validate("isID", key)
+        }
+      }
       return (
         <DynamicArrayForm
           key={item.fieldId}
           valuesList={item.value}
           valueLabel={item.valueLabel}
           onChange={onChange}
-          validateValueFunc={
-            item.validateValueFunc
-              ? item.validateValueFunc
-              : (key) => {
-                  return validate("isID", key)
-                }
-          }
+          validateValueFunc={item.validateValueFunc}
           isSelectTypeAheadAsync={item.isSelectTypeAheadAsync}
           selectOptions={item.selectOptions}
         />
