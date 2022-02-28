@@ -199,6 +199,7 @@ helper_text:
   invalid_baud_rate: தவறான பாட் ரேட்
   invalid_broker_url: தவறான புரோக்கர் URL
   invalid_current_password: உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்
+  invalid_data: Invalid data
   invalid_date: தவறான தேதி
   invalid_day_of_month: தவறான நாள்
   invalid_directory: தவறான கோப்புறை
@@ -209,6 +210,7 @@ helper_text:
   invalid_height: தவறான உயரம்
   invalid_host: தவறான ஹோஸ்ட்
   invalid_id: "தவறான ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=4, அதிகபட்சம்=100"
+  invalid_interval: Invalid interval
   invalid_key: "தவறான கி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
   invalid_key_path: Key path can not be empty
   invalid_latitude: தவறான அட்சரேகை
@@ -392,6 +394,13 @@ opts:
     label_line_chart: Line Chart
     label_pie_chart: Pie Chart
     label_scatter_chart: Scatter Chart
+  code_editor_language:
+    label_html: HTML
+    label_javascript: Javascript
+    label_json: JSON
+    label_plaintext: Plan Text
+    label_xml: XML
+    label_yaml: YAML
   control_type:
     label_mixed_control: Mixed Control
     label_switch_button: Button Switch

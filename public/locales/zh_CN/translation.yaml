@@ -199,6 +199,7 @@ helper_text:
   invalid_baud_rate: Invalid baud rate
   invalid_broker_url: Invalid Broker URL
   invalid_current_password: Enter your current password
+  invalid_data: Invalid data
   invalid_date: Invalid date
   invalid_day_of_month: Invalid day of month
   invalid_directory: Invalid directory
@@ -209,6 +210,7 @@ helper_text:
   invalid_height: Invalid Height
   invalid_host: Invalid Host
   invalid_id: "Invalid id. chars, min=4, max=100, and space not allowed"
+  invalid_interval: Invalid interval
   invalid_key: "Invalid key. chars, min=1 and max=100"
   invalid_key_path: Key path can not be empty
   invalid_latitude: Invalid latitude
@@ -392,6 +394,13 @@ opts:
     label_line_chart: Line Chart
     label_pie_chart: Pie Chart
     label_scatter_chart: Scatter Chart
+  code_editor_language:
+    label_html: HTML
+    label_javascript: Javascript
+    label_json: JSON
+    label_plaintext: Plan Text
+    label_xml: XML
+    label_yaml: YAML
   control_type:
     label_mixed_control: Mixed Control
     label_switch_button: Button Switch

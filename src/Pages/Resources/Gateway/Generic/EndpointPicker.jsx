@@ -11,6 +11,8 @@ import { WebhookMethodType, WebhookMethodTypeOptions } from "../../../../Constan
 import { validate } from "../../../../Util/Validator"
 import { callBackEndpointConfigUpdateButtonCallback, getEndpointConfigDisplayValue } from "./Endpoints"
 import { withTranslation } from "react-i18next"
+import { Language } from "../../../../Constants/CodeEditor"
+import { getValue } from "../../../../Util/Util"
 
 class EndpointConfigPicker extends React.Component {
   state = {
@@ -112,7 +114,7 @@ const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
   objectPath.set(rootObject, "responseCode", 0, true)
   objectPath.set(rootObject, "headers", {}, true)
   objectPath.set(rootObject, "queryParameters", {}, true)
-  objectPath.set(rootObject, "body", {}, true)
+  objectPath.set(rootObject, "script", "", true)
 
   const items = []
 
@@ -222,36 +224,42 @@ const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
 
   const methodType = objectPath.get(rootObject, "method", "get").toUpperCase()
   if (methodType !== "" && methodType !== WebhookMethodType.GET) {
+    objectPath.set(rootObject, "body", "", true)
+    objectPath.set(rootObject, "bodyLanguage", Language.PLANTEXT, true)
+
+    const bodyLanguage = getValue(rootObject, "bodyLanguage", Language.PLANTEXT)
     items.push({
       label: "body",
       fieldId: "body",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
-      language: "yaml",
+      language: bodyLanguage,
+      enableLanguageOptions: true,
+      onLanguageUpdate: (newLanguage) => objectPath.set(rootObject, "bodyLanguage", newLanguage, false),
       updateButtonText: "update_body",
       value: {},
       isRequired: false,
     })
   }
 
+  items.push({
+    label: "script",
+    fieldId: "script",
+    fieldType: FieldType.ScriptEditor,
+    dataType: DataType.String,
+    value: "",
+    saveButtonText: "update",
+    updateButtonText: "update_script",
+    language: Language.JAVASCRIPT,
+    minimapEnabled: true,
+    isRequired: false,
+  })
+
   if (!isPreRun) {
-    objectPath.set(rootObject, "script", "", true)
     objectPath.set(rootObject, "preRun", {}, true)
     objectPath.set(rootObject, "postRun", {}, true)
 
     items.push(
-      {
-        label: "script",
-        fieldId: "script",
-        fieldType: FieldType.ScriptEditor,
-        dataType: DataType.String,
-        value: "",
-        saveButtonText: "update",
-        updateButtonText: "update_script",
-        language: "javascript",
-        minimapEnabled: true,
-        isRequired: false,
-      },
       {
         label: "pre_run",
         fieldId: "!pre_run",

@@ -47,7 +47,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <SelectOption isDisabled={option.disabled} key={index} value={option.value}>
-              {option.label}
+              {t(option.label)}
             </SelectOption>
           ))}
         </PfSelect>

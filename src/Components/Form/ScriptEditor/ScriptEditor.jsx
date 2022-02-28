@@ -1,18 +1,42 @@
-import { Button, Modal, ModalVariant, Stack, StackItem } from "@patternfly/react-core"
+import { Button, Modal, ModalVariant, Split, SplitItem, Stack, StackItem } from "@patternfly/react-core"
 import { EditIcon } from "@patternfly/react-icons"
 import PropTypes from "prop-types"
 import React from "react"
 import { withTranslation } from "react-i18next"
+import { Language, LanguageOptions } from "../../../Constants/CodeEditor"
 import { toObject, toString } from "../../../Util/Language"
 import ActionBar from "../../ActionBar/ActionBar"
 import CodeEditorBasic from "../../CodeEditor/CodeEditorBasic"
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
+import Loading from "../../Loading/Loading"
+import Select from "../../Select/Select"
 
 class ScriptEditor extends React.Component {
   state = {
     isOpen: false,
+    language: "",
+    loading: true,
   }
   editorRef = React.createRef()
+
+  componentDidMount() {
+    const { language } = this.props
+    this.setState({ language: language, loading: false })
+  }
+
+  componentDidUpdate(prevProp) {
+    if (prevProp.language !== this.props.language) {
+      this.setState({ language: this.props.language, loading: false })
+    }
+  }
+
+  onLanguageChange = (newSelection) => {
+    const { onLanguageUpdate = () => {} } = this.props
+    if (onLanguageUpdate) {
+      onLanguageUpdate(newSelection)
+    }
+    this.setState({ language: newSelection })
+  }
 
   handleEditorOnMount = (editor, _monaco) => {
     this.editorRef.current = editor
@@ -37,18 +61,23 @@ class ScriptEditor extends React.Component {
   }
 
   render() {
-    const { isOpen } = this.state
+    const { isOpen, language = Language.JAVASCRIPT, loading } = this.state
+
+    if (loading) {
+      return <Loading key="loading_script_editor" />
+    }
+
     const {
       id,
       name,
       value,
       saveButtonText,
       updateButtonText,
-      language = "javascript",
       options,
       minimapEnabled,
       readOnly,
       t,
+      enableLanguageOptions = false,
     } = this.props
 
     const otherOptions = options ? options : {}
@@ -93,6 +122,21 @@ class ScriptEditor extends React.Component {
       isDisabled: false,
     })
 
+    let languageOptions = (
+      <Split hasGutter>
+        <SplitItem>{t("language")}</SplitItem>
+        <SplitItem>
+          <Select
+            title=""
+            options={LanguageOptions}
+            defaultValue={language}
+            onSelectionFunc={this.onLanguageChange}
+            disabled={!enableLanguageOptions}
+          />
+        </SplitItem>
+      </Split>
+    )
+
     return (
       <ErrorBoundary>
         <Button key={"edit-btn-" + id} variant="secondary" isBlock onClick={this.onOpen}>
@@ -109,6 +153,7 @@ class ScriptEditor extends React.Component {
           onEscapePress={this.onClose}
         >
           <Stack hasGutter>
+            <StackItem>{languageOptions}</StackItem>
             <StackItem isFilled>{content}</StackItem>
             <StackItem>{errorMessage}</StackItem>
             <StackItem>
@@ -131,6 +176,8 @@ ScriptEditor.propTypes = {
   language: PropTypes.string,
   minimapEnabled: PropTypes.bool,
   options: PropTypes.object,
+  enableLanguageOptions: PropTypes.bool,
+  onLanguageUpdate: PropTypes.func,
 }
 
 export default withTranslation()(ScriptEditor)

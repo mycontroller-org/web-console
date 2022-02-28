@@ -1,23 +1,27 @@
 import YAML from "js-yaml"
+import { Language } from "../Constants/CodeEditor"
 
 export const toString = (language = "", data = {}) => {
   if (data === undefined || data === "") {
     return ""
   }
   switch (language) {
-    case "yaml":
-    case "json":
+    case Language.YAML:
+    case Language.JSON:
       if (data === undefined || data === "" || Object.keys(data).length === 0) {
         return ""
       }
-      if (language === "yaml") {
+      if (language === Language.YAML) {
         return YAML.dump(data)
-      } else if (language === "json") {
+      } else if (language === Language.JSON) {
         return JSON.stringify(data)
       }
       break
 
-    case "javascript":
+    case Language.JAVASCRIPT:
+    case Language.HTML:
+    case Language.PLANTEXT:
+    case Language.XML:
       return data
 
     default:
@@ -27,8 +31,8 @@ export const toString = (language = "", data = {}) => {
 
 export const toObject = (language = "", data = "") => {
   switch (language) {
-    case "yaml":
-    case "json":
+    case Language.YAML:
+    case Language.JSON:
       if (data === undefined || data === "") {
         return {}
       }
@@ -39,7 +43,10 @@ export const toObject = (language = "", data = "") => {
       }
       break
 
-    case "javascript":
+    case Language.JAVASCRIPT:
+    case Language.HTML:
+    case Language.PLANTEXT:
+    case Language.XML:
       return data
 
     default:

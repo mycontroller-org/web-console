@@ -462,6 +462,8 @@ const getField = (item, onChange) => {
           updateButtonText={item.updateButtonText}
           value={item.value}
           isDisabled={item.isDisabled}
+          enableLanguageOptions={item.enableLanguageOptions}
+          onLanguageUpdate={item.onLanguageUpdate}
         />
       )
 
