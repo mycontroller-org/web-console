@@ -64,6 +64,18 @@ export const getResource = (
         keyPath: keyPath,
       }
 
+    case ResourceType.Node:
+      return {
+        id: resource.id,
+        type: resourceType,
+        label: label,
+        payload: keyPath !== "" ? getValue(resource, keyPath, "") : "",
+        timestamp:
+          resourceTimestampKey === "" ? resource.lastSeen : getValue(resource, resourceTimestampKey, ""),
+        quickId: quickId,
+        keyPath: keyPath,
+      }
+
     case ResourceType.Field:
       return {
         id: resource.id,

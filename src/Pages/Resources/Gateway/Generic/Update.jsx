@@ -37,7 +37,15 @@ export const getGenericNodeEndpointItems = (rootObject) => {
       validateValueFunc: (value) => value.url !== undefined || value.url !== "",
       valueField: getEndpointConfigDisplayValue,
       updateButtonCallback: (cbIndex, cbItem, cbOnChange) =>
-        callBackEndpointConfigUpdateButtonCallback(cbIndex, cbItem, cbOnChange, true, protocolType),
+        callBackEndpointConfigUpdateButtonCallback(
+          cbIndex,
+          cbItem,
+          cbOnChange,
+          true,
+          protocolType,
+          false,
+          "update_endpoint"
+        ),
     }
   )
 

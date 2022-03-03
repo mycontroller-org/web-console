@@ -97,7 +97,7 @@ export const callBackEndpointConfigUpdateButtonCallback = (
   index = 0,
   item = {},
   onChange,
-  isNode = false,
+  isNodeEndpoint = false,
   protocolType = Protocol.HTTP,
   isPreRun = false,
   title = "update_endpoint"
@@ -111,7 +111,7 @@ export const callBackEndpointConfigUpdateButtonCallback = (
       onChange={(newValue) => {
         onChange(index, "value", newValue)
       }}
-      isNode={isNode}
+      isNodeEndpoint={isNodeEndpoint}
       isPreRun={isPreRun}
       protocolType={protocolType}
       title={title}

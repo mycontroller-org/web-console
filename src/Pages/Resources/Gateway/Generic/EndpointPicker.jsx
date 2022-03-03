@@ -34,7 +34,7 @@ class EndpointConfigPicker extends React.Component {
       id,
       name,
       onChange,
-      isNode,
+      isNodeEndpoint,
       protocolType = "",
       isPreRun = false,
       title = "update_endpoint",
@@ -71,7 +71,7 @@ class EndpointConfigPicker extends React.Component {
               getFormItems={(rootObject) => {
                 switch (protocolType) {
                   case Protocol.HTTP:
-                    return getHttpItems(rootObject, isNode, isPreRun)
+                    return getHttpItems(rootObject, isNodeEndpoint, isPreRun)
 
                   case Protocol.MQTT:
                     return getMqttItems(rootObject)
@@ -95,7 +95,7 @@ EndpointConfigPicker.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  isNode: PropTypes.bool,
+  isNodeEndpoint: PropTypes.bool,
   protocolType: PropTypes.string,
   isPreRun: PropTypes.bool,
   title: PropTypes.string,
@@ -103,8 +103,8 @@ EndpointConfigPicker.propTypes = {
 
 export default withTranslation()(EndpointConfigPicker)
 
-const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
-  if (!isNode) {
+const getHttpItems = (rootObject, isNodeEndpoint = false, isPreRun = false) => {
+  if (!isNodeEndpoint) {
     objectPath.set(rootObject, "disabled", false, true)
     objectPath.set(rootObject, "includeGlobal", true, true)
   }
@@ -118,7 +118,7 @@ const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
 
   const items = []
 
-  if (!isNode || !isPreRun) {
+  if (!isNodeEndpoint && !isPreRun) {
     items.push(
       {
         label: "disabled",
@@ -134,20 +134,34 @@ const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
-      },
-      {
-        label: "execution_interval",
-        fieldId: "executionInterval",
-        fieldType: FieldType.Text,
-        dataType: DataType.String,
-        value: "",
-        isRequired: true,
-        helperText: "",
-        helperTextInvalid: "helper_text.invalid_interval",
-        validated: "default",
-        validator: { isNotEmpty: {} },
       }
     )
+  }
+
+  if (!isPreRun) {
+    objectPath.set(rootObject, "insecure", false, true)
+    items.push({
+      label: "insecure",
+      fieldId: "insecure",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    })
+  }
+
+  if (!isNodeEndpoint && !isPreRun) {
+    items.push({
+      label: "execution_interval",
+      fieldId: "executionInterval",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "helper_text.invalid_interval",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    })
   }
 
   items.push(
@@ -174,17 +188,6 @@ const getHttpItems = (rootObject, isNode = false, isPreRun = false) => {
       validator: { isNotEmpty: {} },
     }
   )
-
-  if (!isPreRun) {
-    objectPath.set(rootObject, "insecure", false, true)
-    items.push({
-      label: "insecure",
-      fieldId: "insecure",
-      fieldType: FieldType.Switch,
-      dataType: DataType.Boolean,
-      value: false,
-    })
-  }
 
   items.push(
     {
