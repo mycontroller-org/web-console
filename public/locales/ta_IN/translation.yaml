@@ -107,6 +107,7 @@ dialog:
   restore_heading: "Confirm to perform a restore operation?"
   restore_msg: "தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி கோப்பில் நிச்சயமாக மீட்டெடுக்க விரும்புகிறீர்களா?<br/>இந்த செயல்பாடுக்குப் பிறகு:<3><0>Server தரவு <4>{{fileName}}</4> க்கு மீட்டமைக்கப்படும் </0><1>இந்த செயல்பாட்டை நீங்கள் திரும்பப் பெற முடியாது</1><2>மீட்பு செயல்பாட்டைச் செய்வதற்கு முன் எப்போதும் காப்புப் பிரதி எடுக்கவும்</2><3>You may need to start the server manually</3></3>"
 disable: முடக்கு
+disable_scrollbar: Disable Scrollbar
 disabled: Disabled
 disabled_all: Disabled All
 discover_nodes: நோடுகளைக் கண்டறியவும்

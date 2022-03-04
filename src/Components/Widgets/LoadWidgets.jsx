@@ -2,7 +2,7 @@ import { Card, CardBody, CardTitle, FlexItem, Split, SplitItem } from "@patternf
 import { CloseIcon, CogIcon } from "@patternfly/react-icons"
 import React from "react"
 import Measure from "react-measure"
-import { cloneDeep } from "../../Util/Util"
+import { cloneDeep, getValue } from "../../Util/Util"
 import { IconButton } from "../Buttons/Buttons"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import { WidgetType } from "../../Constants/Widgets/Widgets"
@@ -158,9 +158,16 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
         </CardTitle>
       )
     }
+
+    const scrollbarDisabled = getValue(item, "scrollbarDisabled", false)
     return (
       <div key={item.key}>
-        <Card isHoverable={false} isCompact={true} className="dashboard-widget">
+        <Card
+          isHoverable={false}
+          isCompact={true}
+          className="dashboard-widget"
+          style={{ overflow: scrollbarDisabled ? "visible" : "auto" }}
+        >
           <CardBody id="dashboard-widget" className="dashboard-widget-body">
             {titleComponent}
             <div className="dashboard-widget-content no-space">{item.content}</div>

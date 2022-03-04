@@ -1,4 +1,5 @@
 import { Modal, ModalVariant } from "@patternfly/react-core"
+import objectPath from "object-path"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { DataType, FieldType } from "../../Constants/Form"
@@ -79,7 +80,13 @@ const getFormItems = (rootObject) => {
   return items
 }
 
-const getPanelSettingsItems = (_rootObject) => {
+const getPanelSettingsItems = (rootObject) => {
+  objectPath.set(rootObject, "title", "", true)
+  objectPath.set(rootObject, "showTitle", true, true)
+  objectPath.set(rootObject, "static", false, true)
+  objectPath.set(rootObject, "scrollbarDisabled", false, true)
+  objectPath.set(rootObject, "type", "", true)
+
   const items = [
     {
       label: "title",
@@ -103,6 +110,13 @@ const getPanelSettingsItems = (_rootObject) => {
     {
       label: "is_static",
       fieldId: "static",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    },
+    {
+      label: "disable_scrollbar",
+      fieldId: "scrollbarDisabled",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,

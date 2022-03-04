@@ -107,6 +107,7 @@ dialog:
   restore_heading: "Confirm to perform a restore operation?"
   restore_msg: "Are you sure want to restore to selected backup file?<br/>After this operation:<3><0>Server data will be restored to <1>{{fileName}}</1></0><1>You cannot rollback this operation</1><2>Always take a backup before performing a restore operation</2><3>You may need to start the server manually</3></3>"
 disable: Disable
+disable_scrollbar: Disable Scrollbar
 disabled: Disabled
 disabled_all: Disabled All
 discover_nodes: Discover Nodes
