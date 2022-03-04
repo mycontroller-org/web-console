@@ -73,3 +73,15 @@ this workaround will resolve the issue
 .pf-c-date-picker {
   z-index: 101;
 }
+
+// workaround to fix overflow of menu items in the modal
+// Original issue: https://github.com/mycontroller-org/console-web/issues/8
+.pf-c-modal-box {
+  .pf-c-modal-box__body {
+    .pf-c-select {
+      .pf-c-select__menu {
+        position: relative;
+      }
+    }
+  }
+}
