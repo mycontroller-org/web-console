@@ -249,7 +249,7 @@ hide_header: Hide Header
 hide_value_column: Hide Value Column
 host: Host
 host_id: Host ID
-host_id_mapping: Host ID Mapping
+host_ids: Host IDs
 html: HTML
 hue: Hue
 icon_or_image_location: Icon or Image Location

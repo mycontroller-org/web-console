@@ -77,6 +77,8 @@ export default NodeConfigPicker
 const getItems = (rootObject) => {
   objectPath.set(rootObject, "disabled", false, true)
 
+  objectPath.set(rootObject, "hostIds", [], true)
+
   objectPath.set(rootObject, "memory.memoryDisabled", false, true)
   objectPath.set(rootObject, "memory.swapDisabled", false, true)
   objectPath.set(rootObject, "memory.unit", DataUnitType.MiB, true)
@@ -106,6 +108,19 @@ const getItems = (rootObject) => {
       dataType: DataType.Boolean,
       value: "",
       isRequired: false,
+    },
+    {
+      label: "host_ids",
+      fieldId: "!host_ids",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
+      fieldId: "hostIds",
+      fieldType: FieldType.DynamicArray,
+      dataType: DataType.ArrayString,
+      value: [],
+      validateValueFunc: (value) => validate("isKey", value),
     },
     {
       label: "memory",
