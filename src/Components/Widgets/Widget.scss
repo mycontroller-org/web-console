@@ -39,3 +39,12 @@
     }
   }
 }
+
+// enable / disable scrollbar
+.disable-scrollbar {
+  overflow: visible;
+}
+
+.enable-scrollbar {
+  overflow: auto;
+}

@@ -159,15 +159,10 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
       )
     }
 
-    const scrollbarDisabled = getValue(item, "scrollbarDisabled", false)
+    const scrollbarClass = getValue(item, "config.scrollbarDisabled", false) ? "disable-scrollbar" : "enable-scrollbar"
     return (
       <div key={item.key}>
-        <Card
-          isHoverable={false}
-          isCompact={true}
-          className="dashboard-widget"
-          style={{ overflow: scrollbarDisabled ? "visible" : "auto" }}
-        >
+        <Card isHoverable={false} isCompact={true} className={`dashboard-widget ${scrollbarClass}`}>
           <CardBody id="dashboard-widget" className="dashboard-widget-body">
             {titleComponent}
             <div className="dashboard-widget-content no-space">{item.content}</div>
