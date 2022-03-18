@@ -1,211 +1,211 @@
 ---
-about: About
+about: à propos
 actions: Actions
-active_time: Active Time
-add: Add
-add_a_field: Add a Field
-add_a_firmware: Add a Firmware
-add_a_forward_payload: Add a Forward payload
-add_a_gateway: Add a Gateway
-add_a_handler: Add a Handler
-add_a_node: Add a Node
-add_a_schedule: Add a Schedule
-add_a_source: Add a Source
-add_a_task: Add a Task
-add_an_item: Add an item
-add_widget: Add Widget
-address: Address
-alerts_empty_message: There are currently no alerts.
-alerts_empty_title: No alerts found
-alive_check_interval: Alive Check Interval
-all_rights_reserved: All Rights Reserved
-allow_overwrite: Allow Overwrite
+active_time: Temps activer
+add: ajoutez
+add_a_field: Ajouter un champ
+add_a_firmware: Ajouter un firmware
+add_a_forward_payload: "Ajout d'un transfert de données "
+add_a_gateway: Ajout d'une passerelle
+add_a_handler: Ajout d'un gestionnaire
+add_a_node: Ajout d'un nœud
+add_a_schedule: Ajout d'un horaire
+add_a_source: Ajout d'une source
+add_a_task: Ajout d'une tâche
+add_an_item: Ajout d'un élément
+add_widget: Ajout d'un widget
+address: Adresse
+alerts_empty_message: pas d’alertes en cours
+alerts_empty_title: Aucune alerte trouvée
+alive_check_interval: Intervalle de contrôle actif
+all_rights_reserved: Tous les droits sont réservés
+allow_overwrite: Autoriser le remplacement
 apache_license_2: Apache License 2.0
 api: API
-ask_confirmation: Ask Confirmation
-assigned_firmware: Assigned Firmware
-assigned_nodes: Assigned Nodes
-auto_disable: Auto Disable
-auto_update: Auto Update
-axis: Axis
-backup: Backup
-backup_and_restore: Backup and Restore
-backup_locations: Backup Locations
-battery: Battery
-baud_rate: Baud Rate
-body: Body
-bridge: Bridge
-brightness: Brightness
-broker: Broker
-browse: Browse
-build_date: Build Date
-button: Button
-button_text: Button Text
-cancel: Cancel
-chart_config: Chart Config
-chart_type: Chart Type
+ask_confirmation: Demande de confirmation
+assigned_firmware: Attribué un Firmware
+assigned_nodes: Attribué un Nœud
+auto_disable: Désactivation automatique
+auto_update: Mise à jour automatique
+axis: Axe
+backup: Sauvegarde
+backup_and_restore: Sauvegarde et Restauration
+backup_locations: Emplacements de la sauvegarde
+battery: Batterie
+baud_rate: Vitesse de transmission
+body: Corps
+bridge: Passerelle
+brightness: Luminosité
+broker: Courtier
+browse: Parcourir
+build_date: Date de création
+button: Bouton
+button_text: Texte du bouton
+cancel: Annuler
+chart_config: Configuration du graphique
+chart_type: Type de graphique
 chat_ids: Chat IDs
-clear: Clear
-clear_all: Clear All
-color: Color
-color_temperature: Color Temperature
-column_display: Column Display
-conditions: Conditions
-config: Config
+clear: Effacer
+clear_all: Tout effacer
+color: Couleur
+color_temperature: Couleurs des Températures
+column_display: Affichage des colonnes
+conditions: État
+config: Configurer
 configuration: Configuration
-configure_via: Configure via
-confirm_password: Confirm Password
-confirmation_message: Confirmation Message
-connection_timeout: Connection Timeout
-control_config: Control Config
-control_type: Control Type
-corner_smoothing: Corner Smoothing
-cpu: CPU
-cpu_disabled: CPU Disabled
-create_new: Create New
-cron_expression: Cron Expression
-current_password: Current Password
-cursor_tooltip: Cursor Tooltip
-custom_data: Custom Data
-custom_mapping: Custom Mapping
-custom_variables: Custom Variables
+configure_via: Configurer par
+confirm_password: Confirmation du mot de passe
+confirmation_message: Message de confirmation
+connection_timeout: Délai de connexion
+control_config: Contrôle de la configuration
+control_type: Type de commande
+corner_smoothing: Lissage des angles
+cpu: Processeur
+cpu_disabled: Processeur désactivé
+create_new: Créer un nouveau
+cron_expression: tâches automatisées
+current_password: Mot de passe actuel
+cursor_tooltip: Infobulle pour le curseur
+custom_data: Données personnelles
+custom_mapping: vue personnalisée
+custom_variables: Vue des Variables
 dampening: Dampening
-dashboard: Dashboard
-data: Data
-data_repository: Data Repository
-data_repository_add_an_entry: 'Data Repository: Add an entry'
-data_repository_modify_an_entry: 'Data Repository: Modify an entry'
-data_retrieved_from_server: Data retrieved from server
-data_type: Data Type
-date_yyyy_mm_dd: Date (yyyy-mm-dd)
-day_of_month: Date of Month
-day_of_week: Days of Week
-delete: Delete
+dashboard: Tableau de bord
+data: Données
+data_repository: Répertoire de données
+data_repository_add_an_entry: 'Répertoire de données: Ajouter une entrée'
+data_repository_modify_an_entry: 'Répertoire de données: Modifier une entrée'
+data_retrieved_from_server: Données récupérées du serveur
+data_type: Type de données
+date_yyyy_mm_dd: Date (année-mois-jour)
+day_of_month: Date du mois
+day_of_week: Jours de la semaine
+delete: Supprime
 description: Description
-destination_field: Destination Field
-details: Details
+destination_field: Zone de destination
+details: Détails
 dialog:
-  clear_sleeping_queue_heading: "Would you like to clear the queue?"
-  clear_sleeping_queue_msg: All the sleeping queued messages will be dropped
-  delete_resource_msg: "Are you sure want to delete the selected items?"
-  delete_title_backup: "Delete backup files?"
-  delete_title_dashboard: "Delete dashboard?"
-  delete_title_data_repository: "Delete data repositories?"
-  delete_title_field: "Delete fields?"
-  delete_title_firmware: "Delete firmware?"
+  clear_sleeping_queue_heading: " Voulez-vous vider la file d'attente?"
+  clear_sleeping_queue_msg: "Tous les messages en file d'attente seront abandonnés\n"
+  delete_resource_msg: "Êtes-vous sûr de vouloir supprimer les éléments sélectionnés ?\n"
+  delete_title_backup: "Supprimer le fichier de sauvegarde ?"
+  delete_title_dashboard: "Supprimer le tableau de bord ?"
+  delete_title_data_repository: "Supprimer le répertoire de données ?"
+  delete_title_field: "Supprimer les champs ?"
+  delete_title_firmware: "Supprimer le firmware ?"
   delete_title_forward_payload: "Delete forward payloads?"
-  delete_title_gateway: "Delete gateways?"
-  delete_title_handler: "Delete handlers?"
-  delete_title_node: "Delete nodes?"
-  delete_title_schedule: "Delete schedules?"
-  delete_title_source: "Delete sources?"
-  delete_title_task: "Delete tasks?"
-  node_reset_heading: "Reset Node?"
-  node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
-  reboot_nodes_heading: "Reboot Node?"
-  reboot_nodes_msg: "Are you sure want to reboot the selected nodes?"
-  restore_heading: "Confirm to perform a restore operation?"
-  restore_msg: "Are you sure want to restore to selected backup file?<br/>After this operation:<3><0>Server data will be restored to <1>{{fileName}}</1></0><1>You cannot rollback this operation</1><2>Always take a backup before performing a restore operation</2><3>You may need to start the server manually</3></3>"
-disable: Disable
-disable_scrollbar: Disable Scrollbar
-disabled: Disabled
-disabled_all: Disabled All
-discover_nodes: Discover Nodes
-disk: Disk
-disks: Disks
-display_name: Display Name
-display_percentage: Display Percentage
-display_text: Display Text
-display_value: Display Value
-do_update: Do Update
+  delete_title_gateway: "Supprimer les passerelles ?"
+  delete_title_handler: "Supprimer les gestionnaires ?"
+  delete_title_node: "Supprimer des nœuds ?"
+  delete_title_schedule: "Supprimer les horaires ?"
+  delete_title_source: "Supprimer les sources ?"
+  delete_title_task: "Supprimer les tâches ?"
+  node_reset_heading: "Réinitialiser le nœud ?"
+  node_reset_msg: "Êtes-vous sûr de vouloir réinitialiser les nœuds sélectionnés ?<br/>Après cette opération :<3><0>la configuration sera restaurée aux paramètres d'usine. </0><1>Vous pouvez perdre l'accès au(x) nœud(s) sélectionné(s) depuis MyController !</1></3>"
+  reboot_nodes_heading: "Redémarrer le nœud ?"
+  reboot_nodes_msg: "Êtes-vous sûr de vouloir redémarrer les nœuds sélectionnés ?"
+  restore_heading: "Confirmer pour effectuer la restauration ?"
+  restore_msg: "Êtes-vous sûr de vouloir restaurer le fichier de sauvegarde sélectionné ?<br/>Après cette opération <3><0>les données du serveur seront restaurées dans <1>{{fileName}}</1></0><1>Vous ne pouvez pas annuler cette opération</1><2>Faites toujours une sauvegarde avant d'effectuer une opération de restauration</2><3>Vous devrez peut-être démarrer le serveur manuellement</3></3>"
+disable: Désactiver
+disable_scrollbar: Désactiver la barre de défilement
+disabled: invalide
+disabled_all: invalider tous
+discover_nodes: interrogé les nœuds
+disk: Disque
+disks: Disques
+display_name: Affiche le nom
+display_percentage: Affiche le pourcentage
+display_text: Affiche le texte
+display_value: Affiche la valeur
+do_update: Faire la mise à jour
 documentation: Documentation
-down: Down
-download: Download
-drop_down_position: Drop Down Position
-duration: Duration
-edit: Edit
-edit_dashboard_settings: Edit Dashboard Settings
-edit_widget_settings: Edit Widget Settings
-email: Email
-enable: Enable
-enabled: Enabled
-endpoint: Endpoint
+down: Vers le bas
+download: Télécharger
+drop_down_position: Position du menu déroulant
+duration: Durée
+edit: Éditer
+edit_dashboard_settings: Modifier les paramètres du tableau de bord
+edit_widget_settings: Modifier les paramètres du widget
+email: E-mail
+enable: en service
+enabled: Activé
+endpoint: Point d'accès
 endpoints: Endpoints
-entities: Entities
+entities: Entités
 error:
   console:
-    invalid_login_credentials: Invalid login credentials.
-    login_msg_loading_failed: Error on fetching login message
-evaluation: Evaluation
-evaluations: Evaluations
-event_filters: Event Filters
-events: Events
-executed_count: Executed Count
-execution_interval: Execution Interval
-execution_interval_0h0m0s: Execution Interval (0h0m0s)
-execution_mode: Execution Mode
-export_type: Export Type
-'false': 'False'
-favorite: Favorite
-fetch_info: Fetch Info
-fetching: Fetching
-field: Field
-field_details: Field Details
-field_id: Field ID
-fields: Fields
-file_details: File Details
-file_uploaded_successfully: File uploaded successfully
-filename: File Name
-filename_placeholder: Drag a file here or browse to upload
-fill_opacity_%: Fill Opacity (%)
-filter: Filter
-filters: Filters
-firmware_details: Firmware Details
-firmware_file: Firmware File
-firmware_update: Firmware Update
+    invalid_login_credentials: Identifiants de connexion non valides.
+    login_msg_loading_failed: Erreur de la récupération du message de connexion
+evaluation: Évaluation
+evaluations: Évaluations
+event_filters: Filtres d'événements
+events: Événements
+executed_count: exécute la Totalisation
+execution_interval: période d'exécution
+execution_interval_0h0m0s: période d'exécution  (0h0m0s)
+execution_mode: Mode d'exécution
+export_type: Type d'exportation
+'false': 'Faux'
+favorite: Favori
+fetch_info: Récupérer les informations
+fetching: Aller chercher
+field: Champ
+field_details: Détails du champ
+field_id: ID du champ
+fields: Domaines
+file_details: Détails du fichier
+file_uploaded_successfully: Fichier téléchargé avec succès
+filename: Nom de fichier
+filename_placeholder: Faites glisser un fichier ici ou naviguez pour télécharger
+fill_opacity_%: Opacité de remplissage (%)
+filter: Filtre
+filters: Filtres
+firmware_details: Détail du Firmware
+firmware_file: Fichier du Firmware
+firmware_update: Mise à jour du firmware
 firmwares: Firmwares
 flush_interval: Flush Interval
-forgot_username_or_password: "Forgot username or password?"
-form_generic_error_message: Check the error and/or mandatory(*) fields
-form_view: Form View
+forgot_username_or_password: "Identifiant ou mot de passe oublié?"
+form_generic_error_message: Vérifiez les champs d'erreur et/ou les champs obligatoires (*)
+form_view: Vue du formulaire
 forum: Forum
 forward_payload: Forward Payload
 forward_payload_details: Forward Payload Details
-frequency: Frequency
-from: From
-from_email: From Email
-full_name: Full Name
-function: Function
-gateway: Gateway
-gateway_details: Gateway Details
-gateway_id: Gateway ID
-gateways: Gateways
-geo_location: GEO Location
+frequency: fréquence
+from: À partir
+from_email: Par E-mail
+full_name: Nom complet
+function: Fonction
+gateway: Passerelle
+gateway_details: Détails de la passerelle
+gateway_id: Identifiant de la passerelle
+gateways: Passerelles
+geo_location: Localisation GEO
 git_commit: Git Commit
-global_config: Global Config
-golang_version: GoLang Version
-handler: Handler
-handler_details: Handler Details
-handler_parameters: Handler Parameters
-handler_type: Handler Type
-handlers: Handlers
-header_name: Header Name
-headers: Headers
+global_config: Configuration générale
+golang_version: Version de la langue
+handler: Gestionnaire
+handler_details: Détails du gestionnaire
+handler_parameters: Paramètres du gestionnaire
+handler_type: Type de gestionnaire
+handlers: Gestionnaires
+header_name: Nom d'en-tête
+headers: En-têtes
 heartbeat_request: Heartbeat Request
-height_px: Height (px)
+height_px: Hauteur (en px)
 helper_text:
-  invalid_address_esphome: 'Invalid address, example: node1.local:6053'
-  invalid_api: Invalid API
-  invalid_backup_retention_count: "Invalid retention count, 0 for no limit"
-  invalid_baud_rate: Invalid baud rate
-  invalid_broker_url: Invalid Broker URL
-  invalid_current_password: Enter your current password
-  invalid_data: Invalid data
-  invalid_date: Invalid date
-  invalid_day_of_month: Invalid day of month
-  invalid_directory: Invalid directory
-  invalid_duration: Invalid Duration
-  invalid_email: Invalid email
+  invalid_address_esphome: 'Adresse invalide, exemple : node1.local:6053'
+  invalid_api: API non valide
+  invalid_backup_retention_count: "Nombre de rétention invalide, 0 pour aucune limite"
+  invalid_baud_rate: Vitesse de transmission invalide
+  invalid_broker_url: URL du courtier non valide
+  invalid_current_password: Entrer votre mot de passe actuel
+  invalid_data: Données invalides
+  invalid_date: Date invalide
+  invalid_day_of_month: Jour du mois invalide
+  invalid_directory: Répertoire non valide
+  invalid_duration: Durée non valide
+  invalid_email: Courriel non valable
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "Invalid field id. chars, min=1, max=100"
   invalid_height: Invalid Height
