@@ -41,8 +41,11 @@ class AsyncSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isDisabled } = this.props
+    const { isDisabled, apiOptions } = this.props
     if (!isDisabled && isDisabled !== prevProps.isDisabled) {
+      this.onFilter()
+    }
+    if (apiOptions !== prevProps.apiOptions) {
       this.onFilter()
     }
   }
