@@ -10,6 +10,7 @@ import {
 import React from "react"
 import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
+import { COPYRIGHT_YEAR } from "../../Constants/Common"
 import brandImg from "../../Logo/mc-white-full.svg"
 import { api } from "../../Service/Api"
 import { aboutHide } from "../../store/entities/about"
@@ -39,7 +40,7 @@ class AboutPage extends React.Component {
         className="mc-about"
         isOpen={this.props.showModel}
         onClose={this.props.hideAbout}
-        trademark={`© 2021 MyController.org. ${t("all_rights_reserved")}. ${t("apache_license_2")}`}
+        trademark={`© ${COPYRIGHT_YEAR} MyController.org. ${t("all_rights_reserved")}. ${t("apache_license_2")}`}
         brandImageSrc={brandImg}
         brandImageAlt="MyController.org"
         //productName="MYCONTROLLER.ORG"

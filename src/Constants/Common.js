@@ -2,6 +2,8 @@ export const NOTIFICATION_LIMIT = 50
 
 export const TOAST_ALERT_TIMEOUT = 5000
 
+export const COPYRIGHT_YEAR = "2022"
+
 export const ALERT_TYPE_DEFAULT = "default"
 export const ALERT_TYPE_INFO = "info"
 export const ALERT_TYPE_SUCCESS = "success"
