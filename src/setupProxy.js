@@ -20,6 +20,7 @@ module.exports = function (app) {
       target: httpTarget,
       changeOrigin: true,
       logLevel: logLevel,
+      cookieDomainRewrite: 'localhost',
     })
   )
   app.use(
