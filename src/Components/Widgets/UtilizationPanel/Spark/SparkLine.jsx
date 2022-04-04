@@ -8,13 +8,13 @@ import {
   ChartThemeColor,
   ChartVoronoiContainer,
 } from "@patternfly/react-charts"
-import { capitalizeFirstLetter, getValue } from "../../../Util/Util"
-import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
+import { capitalizeFirstLetter, getValue } from "../../../../Util/Util"
+import { ChartType } from "../../../../Constants/Widgets/UtilizationPanel"
 import { Stack, StackItem } from "@patternfly/react-core"
-import "./UtilizationPanel.scss"
-import { InterpolationType, MetricType } from "../../../Constants/Metric"
+import "./SparkLine.scss"
+import { InterpolationType, MetricType } from "../../../../Constants/Metric"
 import v from "validator"
-import { LastSeen } from "../../Time/Time"
+import { LastSeen } from "../../../Time/Time"
 
 const SparkLine = ({
   widgetId = "",
@@ -24,12 +24,12 @@ const SparkLine = ({
   dimensions = {},
   isMetricsLoading,
 }) => {
-  const chartType = getValue(config, "chart.type", ChartType.SparkLine)
+  const chartType = getValue(config, "type", ChartType.SparkLine)
   const chartColor = getValue(config, "chart.color", ChartThemeColor.blue)
   const strokeWidth = getValue(config, "chart.strokeWidth", 2)
   const fillOpacity = getValue(config, "chart.fillOpacity", 2)
   const chartInterpolation = getValue(config, "chart.interpolation", InterpolationType.Basis)
-  const metricFunction = getValue(config, "chart.metricFunction", "")
+  const metricFunction = getValue(config, "metric.metricFunction", "")
   const unit = getValue(config, "resource.unit", "")
   const roundDecimal = getValue(config, "resource.roundDecimal", 2)
   const chartHeight = getValue(config, "chart.height", 100)

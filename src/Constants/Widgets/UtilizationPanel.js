@@ -19,3 +19,23 @@ export const ChartTypeOptions = [
   { value: ChartType.SparkBar, label: "opts.utilization_chart.label_spark_bar" },
   { value: ChartType.Table, label: "opts.utilization_chart.label_table" },
 ]
+
+// table sub types
+export const TableSubType = {
+  Grouped: "grouped",
+  Mixed: "mixed",
+}
+
+// table sub type options
+export const TableSubTypeOptions = [
+  {
+    value: TableSubType.Grouped,
+    label: "opts.utilization_table_sub_type.label_grouped",
+    description: "opts.utilization_table_sub_type.desc_grouped",
+  },
+  {
+    value: TableSubType.Mixed,
+    label: "opts.utilization_table_sub_type.label_mixed",
+    description: "opts.utilization_table_sub_type.desc_mixed",
+  },
+]

@@ -23,6 +23,7 @@ export const FieldType = {
   KeyValueMap: "key_value_map",
   VariablesMap: "variables_map",
   MixedControlList: "mixed_control_list",
+  DynamicListGeneric: "dynamic_list_generic",
   ColorBox: "color_box",
   ThresholdsColor: "thresholds_color",
   DynamicArray: "dynamic_array",
@@ -40,6 +41,6 @@ export const FieldType = {
   ToggleButtonGroup: "toggle_button_group",
   ScriptEditor: "script_editor",
   SliderSimple: "slider_simple",
-  ChartYAxisConfigMap:"chart_y_axis_config_map",
-  ChartMixedResourceConfig:"chart_mixed_resource_config"
+  ChartYAxisConfigMap: "chart_y_axis_config_map",
+  ChartMixedResourceConfig: "chart_mixed_resource_config",
 }

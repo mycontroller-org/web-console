@@ -43,6 +43,7 @@ button: Bouton
 button_text: Texte du bouton
 cancel: Annuler
 chart_config: Configuration du graphique
+chart_configuration: Chart Configuration
 chart_type: Type de graphique
 chat_ids: Chat IDs
 clear: Effacer
@@ -83,6 +84,7 @@ day_of_week: Jours de la semaine
 delete: Supprime
 description: Description
 destination_field: Zone de destination
+detailed_filter: Detailed Filter
 details: Détails
 dialog:
   clear_sleeping_queue_heading: " Voulez-vous vider la file d'attente?"
@@ -159,6 +161,7 @@ filename: Nom de fichier
 filename_placeholder: Faites glisser un fichier ici ou naviguez pour télécharger
 fill_opacity_%: Opacité de remplissage (%)
 filter: Filtre
+filter_type: Filter Type
 filters: Filtres
 firmware_details: Détail du Firmware
 firmware_file: Fichier du Firmware
@@ -246,6 +249,7 @@ helper_text:
   invalid_width: Largeur invalide
 hide_border: Masquer la bordure
 hide_header: Masquer l'en-tête
+hide_status_column: Hide Status Column
 hide_value_column: Masquer la colonne de valeur
 host: hôte
 host_id: ID d'hôte
@@ -316,6 +320,7 @@ message: Message
 message_logger: Journal des messages
 method: Méthode
 metric_config: Metric Config
+metric_configuration: Metric Configuration
 metric_function: Fonction métrique
 metric_interval: Metric Interval
 metric_type: Type métrique
@@ -325,6 +330,7 @@ min_y_axis: Min (Y Axis)
 minimum: Minimum
 minimum_value: Valeur minimum
 minimum_width: Largeur minimale
+mixed_resources: Mixed Resources
 modified_on: Modifiée Activér
 name: Nom
 name_key: Nom de la Clé
@@ -667,6 +673,7 @@ publish: Publier
 qos: QoS
 query_parameters: Paramètres de la requête
 queue_failed_messages: Msg. échec de la file d'attente
+quick_id: Quick ID
 react_version: Version de réaction
 read_only: Lecture seul
 reboot: Redémarrer
@@ -681,6 +688,7 @@ resource: Ressource
 resource_by_labels: Ressource par étiquettes
 resource_by_quick_id: Resource By Quick ID
 resource_config: Configuration de la ressource
+resource_configuration: Resource Configuration
 resource_filters: Filtres de ressources
 resource_name: Nom de la ressource
 resource_type: Type de ressource
@@ -724,6 +732,7 @@ stack_charts: Diagrammes en pile
 state: État
 status: Statut
 status_at: Statut au
+status_configuration: Status Configuration
 step: Étape
 storage_export_type: Type d'exportation de stockage
 stream_message_ack: Acquittement flux message "Ack"
@@ -736,6 +745,7 @@ swap_disabled: Swap désactivé
 sync_interval: Intervalle de synchronisation
 system: Système
 system_message: Message système
+table_configuration: Table Configuration
 table_view: Vue tableau
 target_directory: Répertoire cible
 target_location: Emplacement cible
@@ -749,6 +759,7 @@ the_open_source_controller: Contrôleur Open Source
 theme_color: Couleur du thème
 thickness: Épaisseur
 threshold_mode: Mode seuil
+thresholds: Thresholds
 thresholds_color: Seuil Couleur
 time_hh_mm_ss: "Heure (hh:mm:ss)"
 timeout: Délai d'expiration
@@ -781,6 +792,7 @@ update_y_axis: Actualiser l'axe Y
 upload: Télécharger
 upload_firmware: Télécharger le firmware
 url: URL
+use_global: Use Global
 use_global_style: Utiliser le style global
 username: Nom d'utilisateur
 validate_time_everyday: Valider l'heure chaque jour

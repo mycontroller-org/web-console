@@ -43,6 +43,7 @@ button: பட்டன்
 button_text: பட்டன் உரை
 cancel: ரத்து செய்
 chart_config: விளக்கப்படம் கட்டமைப்பு
+chart_configuration: Chart Configuration
 chart_type: விளக்கப்பட வகை
 chat_ids: விளக்கப்பட ஐடிகள்
 clear: அழி
@@ -83,6 +84,7 @@ day_of_week: வாரத்தின் நாட்கள்
 delete: அழி
 description: விளக்கம்
 destination_field: இலக்கு (பீல்ட்)
+detailed_filter: Detailed Filter
 details: விவரங்கள்
 dialog:
   clear_sleeping_queue_heading: "Would you like to clear the queue?"
@@ -159,6 +161,7 @@ filename: கோப்பு பெயர்
 filename_placeholder: ஒரு கோப்பை இங்கே இழுக்கவும் அல்லது பதிவேற்ற உலாவவும்
 fill_opacity_%: ஒளிபுகாநிலையை நிரப்பவும் (%)
 filter: வடிகட்டி
+filter_type: Filter Type
 filters: வடிகட்டிகள்
 firmware_details: ஃபார்ம்வேரின் விவரங்கள்
 firmware_file: ஃபார்ம்வேர் கோப்பு
@@ -246,6 +249,7 @@ helper_text:
   invalid_width: தவறான அகலம்
 hide_border: Hide Border
 hide_header: Hide Header
+hide_status_column: Hide Status Column
 hide_value_column: Hide Value Column
 host: Host
 host_id: Host ID
@@ -316,6 +320,7 @@ message: செய்தி
 message_logger: Message Logger
 method: Method
 metric_config: மெட்ரிக் கட்டமைப்பு
+metric_configuration: Metric Configuration
 metric_function: மெட்ரிக் செயல்பாடு
 metric_interval: மெட்ரிக் இடைவெளி
 metric_type: மெட்ரிக் வகை
@@ -325,6 +330,7 @@ min_y_axis: குறைந்தபட்சம் (Y அச்சு)
 minimum: குறைந்தபட்சம்
 minimum_value: குறைந்தபட்ச மதிப்பு
 minimum_width: குறைந்தபட்ச அகலம்
+mixed_resources: Mixed Resources
 modified_on: அன்று மாற்றியமைக்கப்பட்டது
 name: பெயர்
 name_key: பெயர் Key
@@ -667,6 +673,7 @@ publish: Publish
 qos: QoS
 query_parameters: Query Parameters
 queue_failed_messages: Queue Failed Messages
+quick_id: Quick ID
 react_version: React பதிப்பு
 read_only: படிக்க மட்டுமே
 reboot: மறுதொடக்கம்
@@ -681,6 +688,7 @@ resource: ரிசோர்ஸ்
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
 resource_config: ரிசோர்ஸ் கட்டமைப்பு
+resource_configuration: Resource Configuration
 resource_filters: ரிசோர்ஸ் வடிகட்டிகள்
 resource_name: ரிசோர்ஸின் பெயர்
 resource_type: ரிசோர்ஸின் வகை
@@ -724,6 +732,7 @@ stack_charts: விளக்கப்படங்களை அடுக்க�
 state: நிலை
 status: நிலை
 status_at: Status At
+status_configuration: Status Configuration
 step: Step
 storage_export_type: Storage Export Type
 stream_message_ack: Stream Message Ack
@@ -736,6 +745,7 @@ swap_disabled: Swap Disabled
 sync_interval: Sync Interval
 system: அமைப்பு
 system_message: System Message
+table_configuration: Table Configuration
 table_view: Table View
 target_directory: Target Directory
 target_location: Target Location
@@ -749,6 +759,7 @@ the_open_source_controller: The Open Source Controller
 theme_color: Theme Color
 thickness: தடிமன்
 threshold_mode: Threshold Mode
+thresholds: Thresholds
 thresholds_color: Thresholds Color
 time_hh_mm_ss: "நேரம் (hh:mm:ss)"
 timeout: Timeout
@@ -781,6 +792,7 @@ update_y_axis: Update Y Axis
 upload: பதிவேற்று
 upload_firmware: ஃபார்ம்வேரை பதிவேற்றவும்
 url: URL
+use_global: Use Global
 use_global_style: Use Global Style
 username: பயனர் பெயர்
 validate_time_everyday: தினசரி நேரத்தை சரிபார்க்கவும்

@@ -20,6 +20,7 @@ import ColorBox from "../Color/ColorBox/ColorBox"
 import AsyncSelect from "../Select/AsyncSelect"
 import ConditionArrayMapForm from "./ConditionArrayForm"
 import DynamicArrayForm from "./DynamicArrayForm"
+import DynamicListGeneric from "./DynamicListGeneric"
 import "./Form.scss"
 import KeyValueMapForm from "./KeyValueMapForm"
 import DateRangePicker from "./RangePicker/DateRangePicker"
@@ -253,6 +254,27 @@ const getField = (item, onChange) => {
           valueLabel={item.valueLabel}
           onChange={onChange}
           validateValueFunc={item.validateValueFunc}
+        />
+      )
+
+    case FieldType.DynamicListGeneric:
+      // update validation functions
+      if (!item.validateValueFunc) {
+        item.validateValueFunc = (key) => {
+          return validate("isObject", key)
+        }
+      }
+      return (
+        <DynamicListGeneric
+          key={item.fieldId}
+          valuesList={item.value}
+          valueLabel={item.valueLabel}
+          onChange={onChange}
+          showUpdateButton={item.showUpdateButton}
+          validateKeyFunc={item.validateKeyFunc}
+          validateValueFunc={item.validateValueFunc}
+          valueField={item.valueField}
+          updateButtonCallback={item.updateButtonCallback}
         />
       )
 

@@ -1,13 +1,14 @@
-import React from "react"
 import { ChartDonutUtilization, ChartLabel } from "@patternfly/react-charts"
-import "./UtilizationPanel.scss"
-import { getPercentage, getValue } from "../../../Util/Util"
-import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
+import React from "react"
 import v from "validator"
-import { getLastSeen } from "../../Time/Time"
+import { ChartType } from "../../../../Constants/Widgets/UtilizationPanel"
+import { getPercentage, getValue } from "../../../../Util/Util"
+import { getLastSeen } from "../../../Time/Time"
+import "./DonutUtilization.scss"
 
 const DonutUtilization = ({ config = {}, resource = {} }) => {
-  const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
+  console.log("config:", JSON.stringify(config))
+  const chartType = getValue(config, "type", ChartType.CircleSize50)
   const thresholds = getValue(config, "chart.thresholds", {})
   const thickness = getValue(config, "chart.thickness", 10)
   const cornerSmoothing = getValue(config, "chart.cornerSmoothing", 0)

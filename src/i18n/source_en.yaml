@@ -43,6 +43,7 @@ button: Button
 button_text: Button Text
 cancel: Cancel
 chart_config: Chart Config
+chart_configuration: Chart Configuration
 chart_type: Chart Type
 chat_ids: Chat IDs
 clear: Clear
@@ -83,6 +84,7 @@ day_of_week: Days of Week
 delete: Delete
 description: Description
 destination_field: Destination Field
+detailed_filter: Detailed Filter
 details: Details
 dialog:
   clear_sleeping_queue_heading: Would you like to clear the queue?
@@ -159,6 +161,7 @@ filename: File Name
 filename_placeholder: Drag a file here or browse to upload
 fill_opacity_%: Fill Opacity (%)
 filter: Filter
+filter_type: Filter Type
 filters: Filters
 firmware_details: Firmware Details
 firmware_file: Firmware File
@@ -246,6 +249,7 @@ helper_text:
   invalid_width: Invalid width
 hide_border: Hide Border
 hide_header: Hide Header
+hide_status_column: Hide Status Column
 hide_value_column: Hide Value Column
 host: Host
 host_id: Host ID
@@ -316,6 +320,7 @@ message: Message
 message_logger: Message Logger
 method: Method
 metric_config: Metric Config
+metric_configuration: Metric Configuration
 metric_function: Metric Function
 metric_interval: Metric Interval
 metric_type: Metric Type
@@ -325,6 +330,7 @@ min_y_axis: Min (Y Axis)
 minimum: Minimum
 minimum_value: Minimum Value
 minimum_width: Minimum Width
+mixed_resources: Mixed Resources
 modified_on: Modified On
 name: Name
 name_key: Name Key
@@ -667,6 +673,7 @@ publish: Publish
 qos: QoS
 query_parameters: Query Parameters
 queue_failed_messages: Queue Failed Messages
+quick_id: Quick ID
 react_version: React Version
 read_only: Read Only
 reboot: Reboot
@@ -681,6 +688,7 @@ resource: Resource
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
 resource_config: Resource Config
+resource_configuration: Resource Configuration
 resource_filters: Resource Filters
 resource_name: Resource name
 resource_type: Resource Type
@@ -724,6 +732,7 @@ stack_charts: Stack Charts
 state: State
 status: Status
 status_at: Status At
+status_configuration: Status Configuration
 step: Step
 storage_export_type: Storage Export Type
 stream_message_ack: Stream Message Ack
@@ -736,6 +745,7 @@ swap_disabled: Swap Disabled
 sync_interval: Sync Interval
 system: System
 system_message: System Message
+table_configuration: Table Configuration
 table_view: Table View
 target_directory: Target Directory
 target_location: Target Location
@@ -749,6 +759,7 @@ the_open_source_controller: The Open Source Controller
 theme_color: Theme Color
 thickness: Thickness
 threshold_mode: Threshold Mode
+thresholds: Thresholds
 thresholds_color: Thresholds Color
 time_hh_mm_ss: Time (hh:mm:ss)
 timeout: Timeout
@@ -781,6 +792,7 @@ update_y_axis: Update Y Axis
 upload: Upload
 upload_firmware: Upload Firmware
 url: URL
+use_global: Use Global
 use_global_style: Use Global Style
 username: Username
 validate_time_everyday: Validate Time Everyday

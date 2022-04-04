@@ -75,6 +75,7 @@ export const updateItems = (rootObject, items) => {
       case FieldType.ConditionsArrayMap:
       case FieldType.MixedControlList:
       case FieldType.ChartMixedResourceConfig:
+      case FieldType.DynamicListGeneric:
         item.value = objectPath.get(rootObject, item.fieldId, [])
         if (item.value === null) {
           item.value = []

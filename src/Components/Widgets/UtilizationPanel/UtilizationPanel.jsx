@@ -6,8 +6,8 @@ import objectPath from "object-path"
 import Loading from "../../Loading/Loading"
 import { getItem, getNodeMetricFieldName, getNodeMetricType, getValue, isEqual } from "../../../Util/Util"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
-import DonutUtilization from "./DonutUtilization"
-import SparkLine from "./SparkLine"
+import DonutUtilization from "./Circle/DonutUtilization"
+import SparkLine from "./Spark/SparkLine"
 import moment from "moment"
 import {
   Duration,
@@ -21,10 +21,11 @@ import {
 import "./UtilizationPanel.scss"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { loadData, unloadData } from "../../../store/entities/websocket"
-import TableUtilization from "./TableUtilization"
+import TableUtilization from "./Table/TableUtilization"
 import { navigateToResource } from "../Helper/Resource"
 import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
 import { FIELD_NAME } from "../../../Constants/Common"
+import { ResourceFilterType } from "../../../Constants/Resource"
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -88,15 +89,15 @@ class UtilizationPanel extends React.Component {
       return
     }
 
-    const chartType = getValue(config, "chart.type", ChartType.CircleSize50)
+    const chartType = getValue(config, "type", ChartType.CircleSize50)
     if (!chartType.startsWith("spark")) {
       this.setState({ loadingMetrics: false })
       return
     }
 
-    const chartDuration = getValue(config, "chart.duration", Duration.LastHour)
-    const chartInterval = getValue(config, "chart.interval", getRecommendedInterval(chartDuration))
-    const metricFunction = getValue(config, "chart.metricFunction", MetricFunctionType.Mean)
+    const chartDuration = getValue(config, "metric.duration", Duration.LastHour)
+    const chartInterval = getValue(config, "metric.interval", getRecommendedInterval(chartDuration))
+    const metricFunction = getValue(config, "metric.metricFunction", MetricFunctionType.Mean)
     const resourceType = getValue(config, "resource.type", "")
 
     // if it is spark chart, get metrics data
@@ -169,92 +170,195 @@ class UtilizationPanel extends React.Component {
       return
     }
 
+    const isMixedResources = getValue(config, "resource.isMixedResources", false)
     const resourceType = getValue(config, "resource.type", "")
-    const itemsLimit = getValue(config, "resource.limit", 1)
-    const resourceFilters = getValue(config, "resource.filters", "undefined")
+    const resourceFilterType = getValue(config, "resource.filterType", ResourceFilterType.DetailedFilter)
+    let itemsLimit = getValue(config, "resource.limit", 1)
+    const resourceFilter = getValue(config, "resource.filter", {})
+
     const displayName = getValue(config, "resource.displayName", false)
     const resourceNameKey = getValue(config, "resource.nameKey", "undefined")
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
-    const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
+    const resourceTimestampKey = getValue(config, "resource.timestampKey", "")
 
-    const filters = []
-    if (resourceFilters) {
-      const keys = Object.keys(resourceFilters)
-      keys.forEach((key) => {
-        filters.push({ k: key, v: resourceFilters[key] })
-      })
-    }
-    let resourceApi = null
-    switch (resourceType) {
-      case ResourceType.Gateway:
-        resourceApi = api.gateway.list
-        break
+    const chartType = getValue(config, "type", ChartType.CircleSize50)
 
-      case ResourceType.Node:
-        resourceApi = api.node.list
-        break
-
-      case ResourceType.Source:
-        resourceApi = api.source.list
-        break
-
-      case ResourceType.Field:
-        resourceApi = api.field.list
-        break
-
-      default:
-        this.setState({ loading: false })
-        return
+    if (chartType !== ChartType.Table) {
+      itemsLimit = 1
     }
 
-    resourceApi({ filter: filters, limit: itemsLimit })
-      .then((res) => {
-        const resourcesRaw = {}
-        const resources = res.data.data.map((resource) => {
-          const name = displayName
-            ? resourceNameKey
-              ? objectPath.get(resource, resourceNameKey, "undefined")
-              : ""
-            : ""
-
-          const quickId = getQuickId(resourceType, resource)
-          resourcesRaw[quickId] = resource
-
-          // update metric type
-          let metricType = objectPath.get(resource, "metricType", "")
-          // for node resource type always fix metric type as gaugeFloat
-          if (quickId.startsWith(ResourceType.Node)) {
-            metricType = getNodeMetricType()
-          }
-          return {
-            id: resource.id,
-            quickId: quickId,
-            name: name,
-            metricType: metricType,
-            value: objectPath.get(resource, resourceValueKey, ""),
-            timestamp:
-              resourceValueTimestampKey !== "" ? objectPath.get(resource, resourceValueTimestampKey, "") : "",
-          }
+    if (isMixedResources || resourceFilterType === ResourceFilterType.QuickID) {
+      const quickIds = []
+      if (isMixedResources) {
+        const resources = getValue(config, "resource.resources", [])
+        resources.forEach((resource) => {
+          const resourceType = getValue(resource, "type", "")
+          const quickId = getValue(resource, "quickId", "")
+          quickIds.push(`${resourceType}:${quickId}`)
         })
+      } else {
+        // quickId filter
+        const resourceType = getValue(config, "resource.type", "")
+        const quickId = getValue(config, "resource.quickId", "")
+        quickIds.push(`${resourceType}:${quickId}`)
+      }
 
-        // push raw resources into redux
-        this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
-        this.setState({ loading: false, resources }, () => {
-          this.updateMetrics()
+      api.quickId
+        .getResources({ id: quickIds })
+        .then((res) => {
+          const resourcesRaw = {}
+          const resourcesMap = res.data
+          const resourceKeys = Object.keys(resourcesMap)
+          const resources = resourceKeys.map((resourceKey) => {
+            let rType = resourceType
+            let dName = displayName
+            let rNameKey = resourceNameKey
+            let rValueKey = resourceValueKey
+            let rTimestampKey = resourceTimestampKey
+            // get resource config
+            if (isMixedResources) {
+              const resources = getValue(config, "resource.resources", [])
+              for (let index; index < resources.length; index++) {
+                const r = resources[index]
+                if (resourceKey === `${r.type}:${r.quickId}`) {
+                  rType = r.type
+                  if (!r.useGlobal) {
+                    dName = getValue(r, "displayName", displayName)
+                    rNameKey = getValue(r, "nameKey", resourceNameKey)
+                    rValueKey = getValue(r, "valueKey", resourceValueKey)
+                    rTimestampKey = getValue(r, "timestampKey", resourceTimestampKey)
+                  }
+                  break
+                }
+              }
+            }
+
+            const resource = resourcesMap[resourceKey]
+            const formattedResource = this.getFormattedResource(
+              rType,
+              dName,
+              rNameKey,
+              rValueKey,
+              rTimestampKey,
+              resource
+            )
+            resourcesRaw[formattedResource.quickId] = resource
+            return formattedResource
+          })
+
+          // push raw resources into redux
+          this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
+          this.setState({ loading: false, resources }, () => {
+            this.updateMetrics()
+          })
         })
-      })
-      .catch((_e) => {
-        this.setState({ loading: false })
-      })
+        .catch((_e) => {
+          this.setState({ loading: false })
+        })
+    } else if (resourceFilterType === ResourceFilterType.DetailedFilter) {
+      // detailed filter
+      const filters = []
+      if (resourceFilter) {
+        const keys = Object.keys(resourceFilter)
+        keys.forEach((key) => {
+          filters.push({ k: key, v: resourceFilter[key] })
+        })
+      }
+      let resourceApi = null
+      switch (resourceType) {
+        case ResourceType.Gateway:
+          resourceApi = api.gateway.list
+          break
+
+        case ResourceType.Node:
+          resourceApi = api.node.list
+          break
+
+        case ResourceType.Source:
+          resourceApi = api.source.list
+          break
+
+        case ResourceType.Field:
+          resourceApi = api.field.list
+          break
+
+        default:
+          this.setState({ loading: false })
+          return
+      }
+
+      resourceApi({ filter: filters, limit: itemsLimit })
+        .then((res) => {
+          const resourcesRaw = {}
+          const resources = res.data.data.map((resource) => {
+            const formattedResource = this.getFormattedResource(
+              resourceType,
+              displayName,
+              resourceNameKey,
+              resourceValueKey,
+              resourceTimestampKey,
+              resource
+            )
+            resourcesRaw[formattedResource.quickId] = resource
+            return formattedResource
+          })
+
+          // push raw resources into redux
+          this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
+          this.setState({ loading: false, resources }, () => {
+            this.updateMetrics()
+          })
+        })
+        .catch((_e) => {
+          this.setState({ loading: false })
+        })
+    } else {
+      this.setState({ loading: false })
+    }
+  }
+
+  getFormattedResource = (
+    resourceType,
+    displayName,
+    resourceNameKey,
+    resourceValueKey,
+    resourceValueTimestampKey,
+    resource
+  ) => {
+    const name = displayName
+      ? resourceNameKey
+        ? objectPath.get(resource, resourceNameKey, "undefined")
+        : ""
+      : ""
+
+    const quickId = getQuickId(resourceType, resource)
+
+    // update metric type
+    let metricType = objectPath.get(resource, "metricType", "")
+    // for node resource type always fix metric type as gaugeFloat
+    if (quickId.startsWith(ResourceType.Node)) {
+      metricType = getNodeMetricType()
+    }
+
+    // formatted resource
+    return {
+      id: resource.id,
+      quickId: quickId,
+      name: name,
+      metricType: metricType,
+      value: objectPath.get(resource, resourceValueKey, ""),
+      timestamp:
+        resourceValueTimestampKey !== "" ? objectPath.get(resource, resourceValueTimestampKey, "") : "",
+    }
   }
 
   render() {
     const { loading, loadingMetrics, resources, metrics } = this.state
     const { widgetId, dimensions, config, history } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
-    const chartType = getValue(config, "chart.type", ChartType.CircleSize75)
+    const chartType = getValue(config, "type", ChartType.CircleSize75)
     const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
-    const resourceValueTimestampKey = getValue(config, "resource.valueTimestampKey", "")
+    const resourceValueTimestampKey = getValue(config, "resource.timestampKey", "")
     const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {

@@ -10,7 +10,7 @@ import { updateFormItemsChartsPanel } from "./ChartsPanel/Edit"
 import { updateFormItemsControlPanel } from "./ControlPanel/Edit"
 import { updateFormItemsImagePanel } from "./ImagePanel/Edit"
 import { updateFormItemsLightPanel } from "./LightPanel/Edit"
-import { updateFormItemsUtilizationPanel } from "./UtilizationPanel/Edit"
+import { getUtilizationPanelItems } from "./UtilizationPanel/Edit"
 
 const EditWidget = ({ showEditWidget, widgetConfig, onCancel, onChange, onSave }) => {
   const { t } = useTranslation()
@@ -70,7 +70,8 @@ const getFormItems = (rootObject) => {
       break
 
     case WidgetType.UtilizationPanel:
-      updateFormItemsUtilizationPanel(rootObject, items)
+      const utilizationPanelItems = getUtilizationPanelItems(rootObject)
+      items.push(...utilizationPanelItems)
       break
 
     default:
