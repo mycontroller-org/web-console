@@ -1,11 +1,12 @@
-import React from "react"
-import "./TableUtilization.scss"
-import { getValue } from "../../../../Util/Util"
-import v from "validator"
-import { LastSeen } from "../../../Time/Time"
-import { cellWidth, fitContent, Table, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
 import { Button, Progress } from "@patternfly/react-core"
+import { cellWidth, fitContent, Table, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import v from "validator"
+import { getValue } from "../../../../Util/Util"
+import { LastSeen } from "../../../Time/Time"
 import { navigateToResource } from "../../Helper/Resource"
+import "./TableUtilization.scss"
 
 const TableUtilization = ({ widgetId = "", config = {}, resources = [], history = null }) => {
   const isMixedResources = getValue(config, "resource.isMixedResources", false)
@@ -19,6 +20,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   const displayStatusPercentage = getValue(config, "table.displayStatusPercentage", false)
   const unit = getValue(config, "resource.unit", "")
   const roundDecimal = getValue(config, "resource.roundDecimal", 2)
+  const { t } = useTranslation()
 
   const resourceConfig = {
     minimumValue: minimumValue,
@@ -31,16 +33,16 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
     roundDecimal: roundDecimal,
   }
 
-  const columns = [{ title: "Name" }, { title: "Last Update" }]
+  const columns = [{ title: t("name") }, { title: t("last_seen") }]
 
   // value column
   if (!hideValueColumn || isMixedResources) {
-    columns.push({ title: "Value" })
+    columns.push({ title: t("value") })
   }
 
   // status column
   if (!hideStatusColumn || isMixedResources) {
-    columns.push({ title: "Status", transforms: [cellWidth(35), fitContent] })
+    columns.push({ title: t("status"), transforms: [cellWidth(35), fitContent] })
   }
 
   const rows = []
@@ -81,6 +83,9 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
       />
     )
   }
+
+  // sort by ascending order, by name
+  resources.sort((a, b) => (a.sortOrderPriority > b.sortOrderPriority ? 1 : -1))
 
   resources.forEach((resource) => {
     let _resourceConfig = resourceConfig

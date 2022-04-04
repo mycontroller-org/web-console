@@ -7,7 +7,6 @@ import { getLastSeen } from "../../../Time/Time"
 import "./DonutUtilization.scss"
 
 const DonutUtilization = ({ config = {}, resource = {} }) => {
-  console.log("config:", JSON.stringify(config))
   const chartType = getValue(config, "type", ChartType.CircleSize50)
   const thresholds = getValue(config, "chart.thresholds", {})
   const thickness = getValue(config, "chart.thickness", 10)

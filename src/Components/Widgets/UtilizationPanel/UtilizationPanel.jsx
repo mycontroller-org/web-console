@@ -1,31 +1,28 @@
+import moment from "moment"
+import objectPath from "object-path"
 import PropTypes from "prop-types"
 import React from "react"
-import { api } from "../../../Service/Api"
 import { connect } from "react-redux"
-import objectPath from "object-path"
-import Loading from "../../Loading/Loading"
-import { getItem, getNodeMetricFieldName, getNodeMetricType, getValue, isEqual } from "../../../Util/Util"
+import { FIELD_NAME } from "../../../Constants/Common"
+import {
+  Duration, DurationOptions,
+  getRecommendedInterval, MetricFunctionType,
+  MetricType, RefreshIntervalType
+} from "../../../Constants/Metric"
+import { ResourceFilterType } from "../../../Constants/Resource"
+import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { ChartType } from "../../../Constants/Widgets/UtilizationPanel"
+import { api } from "../../../Service/Api"
+import { loadData, unloadData } from "../../../store/entities/websocket"
+import { getItem, getNodeMetricFieldName, getNodeMetricType, getValue, isEqual } from "../../../Util/Util"
+import Loading from "../../Loading/Loading"
+import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
+import { navigateToResource } from "../Helper/Resource"
 import DonutUtilization from "./Circle/DonutUtilization"
 import SparkLine from "./Spark/SparkLine"
-import moment from "moment"
-import {
-  Duration,
-  MetricFunctionType,
-  MetricType,
-  DurationOptions,
-  getRecommendedInterval,
-  RefreshIntervalType,
-} from "../../../Constants/Metric"
-
-import "./UtilizationPanel.scss"
-import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
-import { loadData, unloadData } from "../../../store/entities/websocket"
 import TableUtilization from "./Table/TableUtilization"
-import { navigateToResource } from "../Helper/Resource"
-import { isShouldComponentUpdateWithWsData } from "../Helper/Common"
-import { FIELD_NAME } from "../../../Constants/Common"
-import { ResourceFilterType } from "../../../Constants/Resource"
+import "./UtilizationPanel.scss"
+
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -209,24 +206,27 @@ class UtilizationPanel extends React.Component {
           const resourcesRaw = {}
           const resourcesMap = res.data
           const resourceKeys = Object.keys(resourcesMap)
-          const resources = resourceKeys.map((resourceKey) => {
+          const resources = resourceKeys.map((resourceKey, index) => {
             let rType = resourceType
             let dName = displayName
             let rNameKey = resourceNameKey
             let rValueKey = resourceValueKey
             let rTimestampKey = resourceTimestampKey
+            let sortOrderPriority = `${index}`
+
             // get resource config
             if (isMixedResources) {
-              const resources = getValue(config, "resource.resources", [])
-              for (let index; index < resources.length; index++) {
-                const r = resources[index]
+              const resourcesConfig = getValue(config, "resource.resources", [])
+              for (let index = 0; index < resourcesConfig.length; index++) {
+                const r = resourcesConfig[index]
                 if (resourceKey === `${r.type}:${r.quickId}`) {
                   rType = r.type
-                  if (!r.useGlobal) {
+                  if (!getValue(r, "table.useGlobal", true)) {
                     dName = getValue(r, "displayName", displayName)
                     rNameKey = getValue(r, "nameKey", resourceNameKey)
                     rValueKey = getValue(r, "valueKey", resourceValueKey)
                     rTimestampKey = getValue(r, "timestampKey", resourceTimestampKey)
+                    sortOrderPriority = getValue(r, "sortOrderPriority", sortOrderPriority)
                   }
                   break
                 }
@@ -242,6 +242,13 @@ class UtilizationPanel extends React.Component {
               rTimestampKey,
               resource
             )
+
+            if (isMixedResources) {
+              formattedResource.sortOrderPriority = sortOrderPriority
+            } else {
+              formattedResource.sortOrderPriority = formattedResource.name
+            }
+
             resourcesRaw[formattedResource.quickId] = resource
             return formattedResource
           })

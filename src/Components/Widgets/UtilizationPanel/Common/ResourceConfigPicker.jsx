@@ -3,17 +3,17 @@ import { EditIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
 import PropTypes from "prop-types"
 import React from "react"
+import { DataType, FieldType } from "../../../../Constants/Form"
+import { ResourceFilterType, ResourceType, ResourceTypeOptions } from "../../../../Constants/Resource"
+import { getValue } from "../../../../Util/Util"
 import Editor from "../../../Editor/Editor"
 import ErrorBoundary from "../../../ErrorBoundary/ErrorBoundary"
-import { DataType, FieldType } from "../../../../Constants/Form"
 import {
   getOptionsDescriptionFunc,
   getResourceFilterFunc,
   getResourceOptionsAPI,
-  getResourceOptionValueFunc,
+  getResourceOptionValueFunc
 } from "../../../Form/ResourcePicker/ResourceUtils"
-import { ResourceFilterType, ResourceType, ResourceTypeOptions } from "../../../../Constants/Resource"
-import { getValue } from "../../../../Util/Util"
 
 class ResourceConfigPicker extends React.Component {
   state = {
@@ -178,6 +178,18 @@ const getItems = (rootObject, isTablePanel = false) => {
         isRequired: false,
       }
     )
+
+    if (isTablePanel) {
+      objectPath.set(rootObject, "sortOrderPriority", "1", true)
+      items.push({
+        label: "sort_order_priority",
+        fieldId: "sortOrderPriority",
+        fieldType: FieldType.Text,
+        dataType: DataType.String,
+        value: "",
+        isRequired: false,
+      })
+    }
 
     if (isTablePanel) {
       objectPath.set(rootObject, "table.useGlobal", true, true)
