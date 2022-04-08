@@ -16,6 +16,7 @@ import {
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { FieldHandlersList } from "../../../Util/Common"
+import { getValue } from "../../../Util/Util"
 import { validate } from "../../../Util/Validator"
 
 class UpdatePage extends React.Component {
@@ -68,6 +69,22 @@ export default UpdatePage
 // support functions
 
 const getFormItems = (rootObject, id) => {
+  objectPath.set(rootObject, "id", "", true)
+  objectPath.set(rootObject, "description", "", true)
+  objectPath.set(rootObject, "enabled", true, true)
+  objectPath.set(rootObject, "ignoreDuplicate", true, true)
+  objectPath.set(rootObject, "autoDisable", false, true)
+  objectPath.set(rootObject, "reEnableDuration", "", true)
+  objectPath.set(rootObject, "labels", {}, true)
+  objectPath.set(rootObject, "triggerOnEvent", true, true)
+  objectPath.set(rootObject, "eventFilter", {}, true)
+  objectPath.set(rootObject, "dampening.type", Dampening.None, true)
+  objectPath.set(rootObject, "variables", {}, true)
+  objectPath.set(rootObject, "evaluationType", EvaluationType.Rule, true)
+  objectPath.set(rootObject, "evaluationConfig", {}, true)
+  objectPath.set(rootObject, "handlerParameters", {}, true)
+  objectPath.set(rootObject, "handlers", [], true)
+
   const items = [
     {
       label: "id",
@@ -110,6 +127,37 @@ const getFormItems = (rootObject, id) => {
       dataType: DataType.Boolean,
       value: false,
     },
+  ]
+
+  const autoDisable = getValue(rootObject, "autoDisable", false)
+
+  if (autoDisable) {
+    items.push({
+      label: "re_enable",
+      fieldId: "reEnable",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: false,
+    })
+  }
+
+  const reEnable = getValue(rootObject, "reEnable", false)
+  if (reEnable) {
+    items.push({
+      label: "re_enable_duration",
+      fieldId: "reEnableDuration",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: true,
+      helperText: "",
+      helperTextInvalid: "helper_text.invalid_value",
+      validated: "default",
+      validator: { isNotEmpty: {} },
+    })
+  }
+
+  items.push(
     {
       label: "labels",
       fieldId: "!labels",
@@ -133,8 +181,8 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: false,
-    },
-  ]
+    }
+  )
 
   if (rootObject.triggerOnEvent) {
     items.push(
@@ -198,9 +246,9 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Select,
       dataType: DataType.String,
       options: DampeningOptions,
-      isDisabled: true, // enable this when this feature is implemented also include i18n translations
+      // isDisabled: true, // enable this when this feature is implemented also include i18n translations
       value: "",
-      resetFields: { "dampening.occurrences": 0, "dampening.evaluations": 0, "dampening.activeTime": "" },
+      resetFields: { "dampening.occurrences": 0, "dampening.evaluation": 0, "dampening.activeDuration": "" },
     }
   )
 
@@ -214,17 +262,28 @@ const getFormItems = (rootObject, id) => {
         fieldType: FieldType.Text,
         dataType: DataType.Integer,
         value: "",
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "helper_text.invalid_value",
+        validated: "default",
+        validator: { isNotEmpty: {}, isInteger: { gt: 0 } },
       })
       break
 
-    case Dampening.LastNEvaluations:
+    case Dampening.Evaluation:
+      const evaluation = getValue(rootObject, "dampening.evaluation", 0)
       items.push(
         {
-          label: "evaluations",
-          fieldId: "dampening.evaluations",
+          label: "evaluation",
+          fieldId: "dampening.evaluation",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
+          isRequired: true,
+          helperText: "",
+          helperTextInvalid: "helper_text.invalid_value",
+          validated: "default",
+          validator: { isNotEmpty: {}, isInteger: { gt: 0 } },
         },
         {
           label: "occurrences",
@@ -232,16 +291,26 @@ const getFormItems = (rootObject, id) => {
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
+          isRequired: true,
+          helperText: "",
+          helperTextInvalid: "helper_text.invalid_value",
+          validated: "default",
+          validator: { isNotEmpty: {}, isInteger: { gt: 0, lt: evaluation + 1 } },
         }
       )
       break
-    case Dampening.ActiveTime:
+    case Dampening.ActiveDuration:
       items.push({
-        label: "active_time",
-        fieldId: "dampening.activeTime",
+        label: "active_duration",
+        fieldId: "dampening.activeDuration",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
+        isRequired: true,
+        helperText: "",
+        helperTextInvalid: "helper_text.invalid_duration",
+        validated: "default",
+        validator: { isNotEmpty: {} },
       })
       break
 

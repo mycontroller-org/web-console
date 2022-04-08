@@ -1,7 +1,7 @@
 ---
 about: À propos
 actions: Actions
-active_time: Temps activer
+active_duration: Active Duration
 add: ajoutez
 add_a_field: Ajouter un champ
 add_a_firmware: Ajouter un firmware
@@ -420,6 +420,15 @@ opts:
     label_slider: Curseur
     label_switch_button: Button Switch
     label_switch_toggle: Interrupteur à bascule
+  dampening:
+    desc_active_duration: Active duration of the task
+    desc_consecutive: Number of consecutive occurrences
+    desc_evaluation: Number of occurrences in N evaluation
+    desc_none: Disable dampening feature
+    label_active_duration: Active Duration
+    label_consecutive: Consecutive
+    label_evaluation: Evaluation
+    label_none: None
   data_unit:
     label_bytes: Bytes
     label_eib: Exbi Bytes (EiB)
@@ -674,6 +683,8 @@ qos: QoS
 query_parameters: Paramètres de la requête
 queue_failed_messages: Msg. échec de la file d'attente
 quick_id: Quick ID
+re_enable: Re-enable
+re_enable_duration: Re-enable Duration
 react_version: Version de réaction
 read_only: Lecture seul
 reboot: Redémarrer

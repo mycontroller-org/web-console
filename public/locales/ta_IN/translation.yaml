@@ -1,7 +1,7 @@
 ---
 about: என்னை பற்றி
 actions: செயல்கள்
-active_time: செயலில் நேரம்
+active_duration: Active Duration
 add: சேர்
 add_a_field: ஒரு பீல்ட்டை சேர்க்கவும்
 add_a_firmware: ஒரு ஃபார்ம்வேரை சேர்க்கவும்
@@ -420,6 +420,15 @@ opts:
     label_slider: Slider
     label_switch_button: Button Switch
     label_switch_toggle: Toggle Switch
+  dampening:
+    desc_active_duration: Active duration of the task
+    desc_consecutive: Number of consecutive occurrences
+    desc_evaluation: Number of occurrences in N evaluation
+    desc_none: Disable dampening feature
+    label_active_duration: Active Duration
+    label_consecutive: Consecutive
+    label_evaluation: Evaluation
+    label_none: None
   data_unit:
     label_bytes: Bytes
     label_eib: Exbi Bytes (EiB)
@@ -674,6 +683,8 @@ qos: QoS
 query_parameters: Query Parameters
 queue_failed_messages: Queue Failed Messages
 quick_id: Quick ID
+re_enable: Re-enable
+re_enable_duration: Re-enable Duration
 react_version: React பதிப்பு
 read_only: படிக்க மட்டுமே
 reboot: மறுதொடக்கம்

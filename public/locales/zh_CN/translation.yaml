@@ -1,7 +1,7 @@
 ---
 about: About
 actions: 行动
-active_time: Active Time
+active_duration: Active Duration
 add: Add
 add_a_field: Add a Field
 add_a_firmware: Add a Firmware
@@ -420,6 +420,15 @@ opts:
     label_slider: Slider
     label_switch_button: Button Switch
     label_switch_toggle: Toggle Switch
+  dampening:
+    desc_active_duration: Active duration of the task
+    desc_consecutive: Number of consecutive occurrences
+    desc_evaluation: Number of occurrences in N evaluation
+    desc_none: Disable dampening feature
+    label_active_duration: Active Duration
+    label_consecutive: Consecutive
+    label_evaluation: Evaluation
+    label_none: None
   data_unit:
     label_bytes: Bytes
     label_eib: Exbi Bytes (EiB)
@@ -674,6 +683,8 @@ qos: QoS
 query_parameters: Query Parameters
 queue_failed_messages: Queue Failed Messages
 quick_id: Quick ID
+re_enable: Re-enable
+re_enable_duration: Re-enable Duration
 react_version: React Version
 read_only: Read Only
 reboot: Reboot

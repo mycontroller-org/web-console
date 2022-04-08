@@ -19,6 +19,7 @@ import {
   updateFilter,
   updateRecords,
 } from "../../../store/entities/operations/task"
+import { getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
@@ -107,9 +108,9 @@ const toRowFuncImpl = (rawData, history) => {
       { title: <div className="align-center">{getStatusBool(rawData.ignoreDuplicate)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.autoDisable)}</div> },
       { title: <div className="align-center">{getStatusBool(rawData.triggerOnEvent)}</div> },
-      { title: <LastSeen date={rawData.state.lastEvaluation} /> },
-      { title: <LastSeen date={rawData.state.lastSuccess} /> },
-      { title: rawData.state.message },
+      { title: <LastSeen date={getValue(rawData, "state.lastEvaluation", "")} /> },
+      { title: <LastSeen date={getValue(rawData, "state.lastSuccess", "")} /> },
+      { title: getValue(rawData, "state.message", "") },
     ],
     rid: rawData.id,
   }

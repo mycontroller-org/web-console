@@ -1,17 +1,29 @@
 // Dampening values
 export const Dampening = {
-  None: "",
+  None: "none",
   Consecutive: "consecutive",
-  LastNEvaluations: "last_n_evaluations",
-  ActiveTime: "active_time",
+  Evaluation: "evaluation",
+  ActiveDuration: "active_duration",
 }
 
 // Dampening options
 export const DampeningOptions = [
-  { value: Dampening.None, label: "None", description: "disabled" },
-  { value: Dampening.Consecutive, label: "Consecutive", description: "Consecutive" },
-  { value: Dampening.LastNEvaluations, label: "Last N Evaluations", description: "Last N Evaluations" },
-  { value: Dampening.ActiveTime, label: "Active Time", description: "Active Time" },
+  { value: Dampening.None, label: "opts.dampening.label_none", description: "opts.dampening.desc_none" },
+  {
+    value: Dampening.Consecutive,
+    label: "opts.dampening.label_consecutive",
+    description: "opts.dampening.desc_consecutive",
+  },
+  {
+    value: Dampening.Evaluation,
+    label: "opts.dampening.label_evaluation",
+    description: "opts.dampening.desc_evaluation",
+  },
+  {
+    value: Dampening.ActiveDuration,
+    label: "opts.dampening.label_active_duration",
+    description: "opts.dampening.desc_active_duration",
+  },
 ]
 
 // event types

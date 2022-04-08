@@ -6,7 +6,7 @@ import Moment from "react-moment"
 // pooled timer enabled on App.js
 // read more on: https://github.com/headzoo/react-moment#pooled-timer
 export const LastSeen = ({ date = "", tooltipPosition = "left" }) => {
-  if (date === "") {
+  if (date === "" || date === null) {
     return <span></span>
   }
   const lastSeen = moment(date)
