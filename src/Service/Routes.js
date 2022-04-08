@@ -323,6 +323,9 @@ const hiddenRoutes = [
 ]
 
 const redirect = (history, to = routeMap.home, urlParams = {}) => {
+  if (history === null) {
+    return
+  }
   //console.log(history, to, urlParams)
   //const to = t(routeMap, name).safeString
   if (to) {

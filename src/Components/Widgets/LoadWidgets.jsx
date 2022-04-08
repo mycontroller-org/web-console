@@ -33,7 +33,9 @@ export const LoadWidgets = (widgets, editEnabled, onEditClick, onDeleteClick, hi
       <ErrorBoundary>
         <Measure offset>
           {({ measureRef, contentRect }) => (
-            <div ref={measureRef}>{loadPanel(widget, history, widgetKey, contentRect.offset)}</div>
+            <div ref={measureRef}>
+              {loadPanel(widget, editEnabled ? null : history, widgetKey, contentRect.offset)}
+            </div>
           )}
         </Measure>
       </ErrorBoundary>
@@ -159,7 +161,9 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
       )
     }
 
-    const scrollbarClass = getValue(item, "config.scrollbarDisabled", false) ? "disable-scrollbar" : "enable-scrollbar"
+    const scrollbarClass = getValue(item, "config.scrollbarDisabled", false)
+      ? "disable-scrollbar"
+      : "enable-scrollbar"
     return (
       <div key={item.key}>
         <Card isHoverable={false} isCompact={true} className={`dashboard-widget ${scrollbarClass}`}>
