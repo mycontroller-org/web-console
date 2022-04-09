@@ -1,9 +1,10 @@
 [main]
 host = https://www.transifex.com
 
-[version2.source-en-yaml]
-file_filter = public/locales/<lang>/translation.yaml
+[o:mycontrollerorg:p:version2:r:source-en-yaml]
+file_filter  = public/locales/<lang>/translation.yaml
+source_file  = src/i18n/source_en.yaml
+source_lang  = en
+type         = YAML_GENERIC
 minimum_perc = 0
-source_file = src/i18n/source_en.yaml
-source_lang = en
-type = YAML_GENERIC
+
