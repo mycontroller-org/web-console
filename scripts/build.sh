@@ -13,7 +13,6 @@ then
 else
   _tx=tx
 fi
-echo "ui:tx_token:${TX_TOKEN}"
 
 ${_tx} --version
 # push i18n source
