@@ -16,9 +16,9 @@ fi
 
 ${_tx} --version
 # push i18n source
-${_tx} push --source --token ${TX_TOKEN} 
+${_tx} --token ${TX_TOKEN} push --source 
 # checkout the locale changes
-${_tx} pull --mode sourceastranslation --all --token ${TX_TOKEN} 
+${_tx} --token ${TX_TOKEN} pull --mode sourceastranslation --all
 
 # install dependencies
 yarn install
