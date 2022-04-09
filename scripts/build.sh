@@ -7,14 +7,18 @@ then
   mkdir -p ~/bin ./tx_dst
   wget -O tx.tar.gz https://github.com/transifex/cli/releases/download/${TX_VERSION}/tx-linux-amd64.tar.gz
   tar xzf tx.tar.gz -C tx_dst
-  mv tx_dst/tx ~/bin/
+  mv tx_dst/tx ./tx
   rm tx_dst tx.tar.gz -rf
+  _tx="./tx"
+else
+  _tx=tx
 fi
 
+${_tx} --version
 # push i18n source
-tx push --source
+${_tx} push --source
 # checkout the locale changes
-tx pull --mode sourceastranslation --all
+${_tx} pull --mode sourceastranslation --all
 
 # install dependencies
 yarn install
