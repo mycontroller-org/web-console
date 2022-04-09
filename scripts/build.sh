@@ -14,10 +14,13 @@ else
   _tx=tx
 fi
 
+echo "tx version:"
 ${_tx} --version
 # push i18n source
+echo "push tx source file"
 ${_tx} --token "${TX_TOKEN}" push --source 
 # checkout the locale changes
+echo "pull language files"
 ${_tx} --token "${TX_TOKEN}" pull --mode sourceastranslation --all
 
 # install dependencies
