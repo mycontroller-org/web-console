@@ -87,8 +87,8 @@ const getGlobalConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "global_config",
-      fieldId: "!global_config",
+      label: "global_configuration",
+      fieldId: "!global_configuration",
       fieldType: FieldType.Divider,
     },
     {
@@ -177,8 +177,8 @@ const getMetricConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "metric_config",
-      fieldId: "!metric_config",
+      label: "metric_configuration",
+      fieldId: "!metric_configuration",
       fieldType: FieldType.Divider,
     },
     {
@@ -248,8 +248,8 @@ const getChartConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "chart_config",
-      fieldId: "!chart_config",
+      label: "chart_configuration",
+      fieldId: "!chart_configuration",
       fieldType: FieldType.Divider,
     },
     {
@@ -362,8 +362,8 @@ const getAxisYConfigItems = (rootObject, isSingleAxis = false) => {
 
   const items = [
     {
-      label: "y_axis_config",
-      fieldId: "!y_axis_config",
+      label: "y_axis_configuration",
+      fieldId: "!y_axis_configuration",
       fieldType: FieldType.Divider,
     },
   ]
@@ -405,7 +405,7 @@ const getResourceConfigItems = (rootObject) => {
       fieldType: FieldType.Divider,
     },
     {
-      label: "config",
+      label: "",
       fieldId: "config.resources",
       fieldType: FieldType.ChartMixedResourceConfig,
       dataType: DataType.ArrayObject,
@@ -448,6 +448,13 @@ const getGroupChartResourceConfigItems = (rootObject) => {
       validator: { isNotEmpty: {} },
     },
     {
+      label: "filter",
+      fieldId: "config.resource.filters",
+      fieldType: FieldType.KeyValueMap,
+      dataType: DataType.Object,
+      value: "",
+    },
+    {
       label: "name_key",
       fieldId: "config.resource.nameKey",
       fieldType: FieldType.Text,
@@ -478,18 +485,6 @@ const getGroupChartResourceConfigItems = (rootObject) => {
       helperTextInvalid: "helper_text.invalid_limit",
       validated: "default",
       validator: { isInteger: {} },
-    },
-    {
-      label: "resource_filters",
-      fieldId: "!resource_filters",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "",
-      fieldId: "config.resource.filters",
-      fieldType: FieldType.KeyValueMap,
-      dataType: DataType.Object,
-      value: "",
     },
   ]
   return items

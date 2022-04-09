@@ -24,8 +24,8 @@ export const updateFormItemsControlPanel = (rootObject = {}, items = []) => {
 
   items.push(
     {
-      label: "control_config",
-      fieldId: "!control_config",
+      label: "control_configuration",
+      fieldId: "!control_configuration",
       fieldType: FieldType.Divider,
     },
     {
@@ -145,8 +145,8 @@ const getToggleSwitchItems = (rootObject) => {
   objectPath.set(rootObject, "config.resource.limit", 10, true)
   items.push(
     {
-      label: "resource_config",
-      fieldId: "!resource_config",
+      label: "resource_configuration",
+      fieldId: "!resource_configuration",
       fieldType: FieldType.Divider,
     },
     {
@@ -159,6 +159,13 @@ const getToggleSwitchItems = (rootObject) => {
       options: ResourceTypeOptions.filter((r) => r.value !== ResourceType.Source),
       validator: { isNotEmpty: {} },
       resetFields: { "config.resource.filters": {} },
+    },
+    {
+      label: "filter",
+      fieldId: "config.resource.filters",
+      fieldType: FieldType.KeyValueMap,
+      dataType: DataType.Object,
+      value: "",
     },
     {
       label: "name_key",
@@ -183,18 +190,6 @@ const getToggleSwitchItems = (rootObject) => {
       helperTextInvalid: "helper_text.invalid_limit",
       validated: "default",
       validator: { isInteger: {} },
-    },
-    {
-      label: "resource_filters",
-      fieldId: "!resource_filters",
-      fieldType: FieldType.Divider,
-    },
-    {
-      label: "",
-      fieldId: "config.resource.filters",
-      fieldType: FieldType.KeyValueMap,
-      dataType: DataType.Object,
-      value: "",
     }
   )
   return items

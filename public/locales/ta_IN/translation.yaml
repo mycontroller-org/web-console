@@ -42,7 +42,6 @@ build_date: அமைப்பு தேதி
 button: பட்டன்
 button_text: பட்டன் உரை
 cancel: ரத்து செய்
-chart_config: விளக்கப்படம் கட்டமைப்பு
 chart_configuration: Chart Configuration
 chart_type: விளக்கப்பட வகை
 chat_ids: விளக்கப்பட ஐடிகள்
@@ -52,13 +51,12 @@ color: நிறம்
 color_temperature: நிற வெப்பநிலை
 column_display: நெடுவரிசை காட்சி
 conditions: நிபந்தனைகள்
-config: கட்டமைப்பு
 configuration: கட்டமைப்பு
 configure_via: மூலம் கட்டமைக்க
 confirm_password: கடவுச்சொல்லை உறுதிப்படுத்தவும்
 confirmation_message: உறுதிப்படுத்தல் செய்தி
 connection_timeout: இணைப்பு நேரம் முடிவடையும் கால அவகாசம்
-control_config: கட்டுப்பாட்டு கட்டமைப்பு
+control_configuration: Control Configuration
 control_type: கட்டுப்பாட்டு வகை
 corner_smoothing: மூலையை மென்மையாக்குதல்
 cpu: CPU
@@ -185,7 +183,7 @@ gateway_id: கேட்வே ஐடி
 gateways: கேட்வேக்கள்
 geo_location: GEO Location
 git_commit: ஜிட் கமிட்
-global_config: Global Config
+global_configuration: Global Configuration
 golang_version: கோலாங் பதிப்பு
 handler: கையாளி
 handler_details: Handler Details
@@ -263,8 +261,8 @@ image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
 inactive_duration: Inactive Duration
-include_config: Include Config
-include_global_config: Include Global Config
+include_configuration: Include Configuration
+include_global_configuration: Include Global Configuration
 insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: இடைக் கணிப்பு
@@ -319,7 +317,6 @@ memory_disabled: Memory Disabled
 message: செய்தி
 message_logger: Message Logger
 method: Method
-metric_config: மெட்ரிக் கட்டமைப்பு
 metric_configuration: Metric Configuration
 metric_function: மெட்ரிக் செயல்பாடு
 metric_interval: மெட்ரிக் இடைவெளி
@@ -343,7 +340,7 @@ no_data: தகவல் இல்லை
 no_labels: லேபிள்கள் இல்லை
 no_login_message: உள்நுழைவதற்கான செய்தி எதுவும் அமைக்கப்படவில்லை
 node: நோடு
-node_config: நோடின் கட்டமைப்பு
+node_configuration: Node Configuration
 node_details: நோடின் விவரங்கள்
 node_endpoints: Node Endpoints
 node_id: நோடு ஐடி
@@ -698,7 +695,6 @@ reset: மீட்டமை
 resource: ரிசோர்ஸ்
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
-resource_config: ரிசோர்ஸ் கட்டமைப்பு
 resource_configuration: Resource Configuration
 resource_filters: ரிசோர்ஸ் வடிகட்டிகள்
 resource_name: ரிசோர்ஸின் பெயர்
@@ -822,6 +818,6 @@ websocket_disconnected: Websocket disconnected
 welcome_to_mycontroller: MyController க்கு வரவேற்கிறோம்
 width_px: அகலம் (px)
 y_axis: Y அச்சு
-y_axis_config: Y அச்சு கட்டமைப்பு
+y_axis_configuration: Y Axis Configuration
 yaml: YAML
 yaml_view: YAML பார்வை

@@ -484,7 +484,7 @@ const getWebhookItems = (_rootObject) => {
       isRequired: false,
     },
     {
-      label: "include_config",
+      label: "include_configuration",
       fieldId: "evaluationConfig.webhook.includeConfig",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,

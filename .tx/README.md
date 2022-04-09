@@ -8,7 +8,7 @@ $ tx push --source
 
 ### Pull changes
 ```bash
-tx pull --mode sourceastranslation --all
+tx pull --mode sourceastranslation --all --force
 ```
 
 #### hints

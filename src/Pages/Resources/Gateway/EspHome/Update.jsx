@@ -50,7 +50,7 @@ export const getESPHomeItems = (rootObject) => {
       dataType: DataType.Object,
       value: "",
       keyLabel: "node_id",
-      valueLabel: "node_config",
+      valueLabel: "node_configuration",
       showUpdateButton: true,
       saveButtonText: "update",
       updateButtonText: "update",

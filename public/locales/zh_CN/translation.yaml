@@ -42,7 +42,6 @@ build_date: Build Date
 button: Button
 button_text: Button Text
 cancel: Cancel
-chart_config: Chart Config
 chart_configuration: Chart Configuration
 chart_type: Chart Type
 chat_ids: Chat IDs
@@ -52,13 +51,12 @@ color: Color
 color_temperature: Color Temperature
 column_display: Column Display
 conditions: Conditions
-config: Config
 configuration: Configuration
 configure_via: Configure via
 confirm_password: Confirm Password
 confirmation_message: Confirmation Message
 connection_timeout: Connection Timeout
-control_config: Control Config
+control_configuration: Control Configuration
 control_type: Control Type
 corner_smoothing: Corner Smoothing
 cpu: CPU
@@ -185,7 +183,7 @@ gateway_id: Gateway ID
 gateways: Gateways
 geo_location: GEO Location
 git_commit: Git Commit
-global_config: Global Config
+global_configuration: Global Configuration
 golang_version: GoLang Version
 handler: Handler
 handler_details: Handler Details
@@ -263,8 +261,8 @@ image_source: Image Source
 image_type: Image Type
 in_progress: In Progress
 inactive_duration: Inactive Duration
-include_config: Include Config
-include_global_config: Include Global Config
+include_configuration: Include Configuration
+include_global_configuration: Include Global Configuration
 insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: Interpolation
@@ -319,7 +317,6 @@ memory_disabled: Memory Disabled
 message: Message
 message_logger: Message Logger
 method: Method
-metric_config: Metric Config
 metric_configuration: Metric Configuration
 metric_function: Metric Function
 metric_interval: Metric Interval
@@ -343,7 +340,7 @@ no_data: No data
 no_labels: No labels
 no_login_message: No message set for login
 node: Node
-node_config: Node Config
+node_configuration: Node Configuration
 node_details: Node Details
 node_endpoints: Node Endpoints
 node_id: Node ID
@@ -698,7 +695,6 @@ reset: Reset
 resource: Resource
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
-resource_config: Resource Config
 resource_configuration: Resource Configuration
 resource_filters: Resource Filters
 resource_name: Resource name
@@ -822,6 +818,6 @@ websocket_disconnected: Websocket disconnected
 welcome_to_mycontroller: Welcome to MyController
 width_px: Width (px)
 y_axis: Y Axis
-y_axis_config: Y Axis Config
+y_axis_configuration: Y Axis Configuration
 yaml: YAML
 yaml_view: YAML View

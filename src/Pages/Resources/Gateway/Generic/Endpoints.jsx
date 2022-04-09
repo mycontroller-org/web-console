@@ -16,8 +16,8 @@ export const getHttpGenericProtocolItems = (rootObject) => {
 
   const items = [
     {
-      label: "global_config",
-      fieldId: "!global_config",
+      label: "global_configuration",
+      fieldId: "!global_configuration",
       fieldType: FieldType.Divider,
     },
     {

@@ -129,8 +129,8 @@ const getHttpItems = (rootObject, isNodeEndpoint = false, isPreRun = false) => {
         isRequired: false,
       },
       {
-        label: "include_global_config",
-        fieldId: "includeGlobalConfig",
+        label: "include_global_configuration",
+        fieldId: "includeGlobalConfiguration",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,

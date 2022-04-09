@@ -42,7 +42,6 @@ build_date: Date de création
 button: Bouton
 button_text: Texte du bouton
 cancel: Annuler
-chart_config: Configuration du graphique
 chart_configuration: Chart Configuration
 chart_type: Type de graphique
 chat_ids: Chat IDs
@@ -52,13 +51,12 @@ color: Couleur
 color_temperature: Couleurs des Températures
 column_display: Affichage des colonnes
 conditions: État
-config: Configurer
 configuration: Configuration
 configure_via: Configurer par
 confirm_password: Confirmation du mot de passe
 confirmation_message: Message de confirmation
 connection_timeout: Délai de connexion
-control_config: Contrôle de la configuration
+control_configuration: Control Configuration
 control_type: Type de commande
 corner_smoothing: Lissage des angles
 cpu: Processeur
@@ -185,7 +183,7 @@ gateway_id: Identifiant de la passerelle
 gateways: Passerelles
 geo_location: Localisation GEO
 git_commit: Enregistrer les changements dans le référentiel
-global_config: Configuration générale
+global_configuration: Global Configuration
 golang_version: Version de la langue
 handler: Gestionnaire
 handler_details: Détails du gestionnaire
@@ -263,8 +261,8 @@ image_source: Source des images
 image_type: Type d'image
 in_progress: En cours
 inactive_duration: Durée d'inactivité
-include_config: Inclure la configuration
-include_global_config: Inclure la configuration globale
+include_configuration: Include Configuration
+include_global_configuration: Include Global Configuration
 insecure: Peu sûr
 internal_message_ack: Message de l'accusé de réception "Ack"
 interpolation: Interpolation
@@ -319,7 +317,6 @@ memory_disabled: Mémoire désactivée
 message: Message
 message_logger: Journal des messages
 method: Méthode
-metric_config: Metric Config
 metric_configuration: Metric Configuration
 metric_function: Fonction métrique
 metric_interval: Metric Interval
@@ -343,7 +340,7 @@ no_data: Pas de données
 no_labels: pas de labels
 no_login_message: Aucun message défini pour la connexion
 node: Nœud
-node_config: Configuration du Nœud
+node_configuration: Node Configuration
 node_details: Détails du Nœud
 node_endpoints: Derniers Nœuds
 node_id: ID du Nœud
@@ -698,7 +695,6 @@ reset: Réinitialiser
 resource: Ressource
 resource_by_labels: Ressource par étiquettes
 resource_by_quick_id: Resource By Quick ID
-resource_config: Configuration de la ressource
 resource_configuration: Resource Configuration
 resource_filters: Filtres de ressources
 resource_name: Nom de la ressource
@@ -822,6 +818,6 @@ websocket_disconnected: Websocket déconnecté
 welcome_to_mycontroller: Bienvenue sur MyController
 width_px: Largeur (px)
 y_axis: Y Axis
-y_axis_config: Y Axis Config
+y_axis_configuration: Y Axis Configuration
 yaml: YAML
 yaml_view: YAML View
