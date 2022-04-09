@@ -53,7 +53,7 @@ class DiskConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={(rootObject) => getItems(rootObject, name)}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -103,7 +103,7 @@ const getItems = (rootObject, sourceId) => {
       isRequired: true,
       isDisabled: false,
       helperText: "",
-      helperTextInvalid: "invalid path",
+      helperTextInvalid: "helper_text.invalid_path",
       validated: "default",
       validator: { isLength: { min: 1 }, isNotEmpty: {} },
     },

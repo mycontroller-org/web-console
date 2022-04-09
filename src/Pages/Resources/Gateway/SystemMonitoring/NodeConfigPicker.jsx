@@ -56,7 +56,7 @@ class NodeConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={getItems}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -246,11 +246,11 @@ const getItems = (rootObject) => {
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
-      keyLabel: "Source ID",
-      valueLabel: "Config",
+      keyLabel: "source_id",
+      valueLabel: "configuration",
       showUpdateButton: true,
-      saveButtonText: "Update",
-      updateButtonText: "Update",
+      saveButtonText: "update",
+      updateButtonText: "update",
       minimapEnabled: true,
       isRequired: false,
       validateKeyFunc: (key) => validate("isID", key),
@@ -286,11 +286,11 @@ const getItems = (rootObject) => {
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
-      keyLabel: "Source ID",
-      valueLabel: "Config",
+      keyLabel: "source_id",
+      valueLabel: "configuration",
       showUpdateButton: true,
-      saveButtonText: "Update",
-      updateButtonText: "Update",
+      saveButtonText: "update",
+      updateButtonText: "update",
       minimapEnabled: true,
       isRequired: false,
       validateKeyFunc: (key) => validate("isID", key),

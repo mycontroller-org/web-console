@@ -18,7 +18,7 @@ export const getSystemMonitoringItems = (_rootObject) => {
       dataType: DataType.Object,
       value: "",
       keyLabel: "node_id",
-      valueLabel: "config",
+      valueLabel: "configuration",
       showUpdateButton: true,
       saveButtonText: "update",
       updateButtonText: "update",

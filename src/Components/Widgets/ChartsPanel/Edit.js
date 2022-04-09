@@ -431,8 +431,8 @@ const getGroupChartResourceConfigItems = (rootObject) => {
 
   const items = [
     {
-      label: "resource_config",
-      fieldId: "!resource_config",
+      label: "resource_configuration",
+      fieldId: "!resource_configuration",
       fieldType: FieldType.Divider,
     },
     {

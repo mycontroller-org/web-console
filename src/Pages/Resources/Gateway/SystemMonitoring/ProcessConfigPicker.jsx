@@ -53,7 +53,7 @@ class ProcessConfigPicker extends React.Component {
               onCancelFunc={this.onClose}
               isWidthLimited={false}
               getFormItems={(rootObject) => getItems(rootObject, name)}
-              saveButtonText="Update"
+              saveButtonText="update"
             />
           </ErrorBoundary>
         </Modal>
@@ -117,7 +117,7 @@ const getItems = (rootObject, sourceId) => {
       isRequired: true,
       isDisabled: false,
       helperText: "",
-      helperTextInvalid: "invalid filters",
+      helperTextInvalid: "helper_text.invalid_filters",
       validated: "default",
       validator: { isNotEmpty: {} },
     },
