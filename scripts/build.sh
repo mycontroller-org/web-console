@@ -13,12 +13,13 @@ then
 else
   _tx=tx
 fi
+echo "ui:tx_token:${TX_TOKEN}"
 
 ${_tx} --version
 # push i18n source
-${_tx} --token ${TX_TOKEN} push --source 
+${_tx} --token "${TX_TOKEN}" push --source 
 # checkout the locale changes
-${_tx} --token ${TX_TOKEN} pull --mode sourceastranslation --all
+${_tx} --token "${TX_TOKEN}" pull --mode sourceastranslation --all
 
 # install dependencies
 yarn install
