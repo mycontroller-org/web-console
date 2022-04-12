@@ -5,9 +5,12 @@ import React from "react"
 import { connect } from "react-redux"
 import { FIELD_NAME } from "../../../Constants/Common"
 import {
-  Duration, DurationOptions,
-  getRecommendedInterval, MetricFunctionType,
-  MetricType, RefreshIntervalType
+  Duration,
+  DurationOptions,
+  getRecommendedInterval,
+  MetricFunctionType,
+  MetricType,
+  RefreshIntervalType,
 } from "../../../Constants/Metric"
 import { ResourceFilterType } from "../../../Constants/Resource"
 import { getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
@@ -22,7 +25,6 @@ import DonutUtilization from "./Circle/DonutUtilization"
 import SparkLine from "./Spark/SparkLine"
 import TableUtilization from "./Table/TableUtilization"
 import "./UtilizationPanel.scss"
-
 
 const wsKey = "dashboard_utilization_panel"
 
@@ -63,12 +65,12 @@ class UtilizationPanel extends React.Component {
   }
 
   componentDidMount() {
-    this.updateComponents()
+    this.updateResourceData()
   }
 
   componentDidUpdate(prevProps) {
     if (!isEqual(prevProps.config, this.props.config)) {
-      this.updateComponents()
+      this.updateResourceData()
     }
   }
 
@@ -157,7 +159,8 @@ class UtilizationPanel extends React.Component {
     })
   }
 
-  updateComponents = () => {
+  // updates resources data
+  updateResourceData = () => {
     this.updateRefreshInterval()
     const { config } = this.props
 
@@ -168,8 +171,20 @@ class UtilizationPanel extends React.Component {
     }
 
     const isMixedResources = getValue(config, "resource.isMixedResources", false)
-    const resourceType = getValue(config, "resource.type", "")
     const resourceFilterType = getValue(config, "resource.filterType", ResourceFilterType.DetailedFilter)
+
+    if (isMixedResources || resourceFilterType === ResourceFilterType.QuickID) {
+      this.updateMixedResources(config)
+    } else if (resourceFilterType === ResourceFilterType.DetailedFilter) {
+      this.updateNonMixedResources(config)
+    } else {
+      this.setState({ loading: false })
+    }
+  }
+
+  // update data for non mixed resources, detailed filter
+  updateNonMixedResources = (config = {}) => {
+    const resourceType = getValue(config, "resource.type", "")
     let itemsLimit = getValue(config, "resource.limit", 1)
     const resourceFilter = getValue(config, "resource.filter", {})
 
@@ -184,144 +199,151 @@ class UtilizationPanel extends React.Component {
       itemsLimit = 1
     }
 
-    if (isMixedResources || resourceFilterType === ResourceFilterType.QuickID) {
-      const quickIds = []
-      if (isMixedResources) {
-        const resources = getValue(config, "resource.resources", [])
-        resources.forEach((resource) => {
-          const resourceType = getValue(resource, "type", "")
-          const quickId = getValue(resource, "quickId", "")
-          quickIds.push(`${resourceType}:${quickId}`)
-        })
-      } else {
-        // quickId filter
-        const resourceType = getValue(config, "resource.type", "")
-        const quickId = getValue(config, "resource.quickId", "")
-        quickIds.push(`${resourceType}:${quickId}`)
-      }
-
-      api.quickId
-        .getResources({ id: quickIds })
-        .then((res) => {
-          const resourcesRaw = {}
-          const resourcesMap = res.data
-          const resourceKeys = Object.keys(resourcesMap)
-          const resources = resourceKeys.map((resourceKey, index) => {
-            let rType = resourceType
-            let dName = displayName
-            let rNameKey = resourceNameKey
-            let rValueKey = resourceValueKey
-            let rTimestampKey = resourceTimestampKey
-            let sortOrderPriority = `${index}`
-
-            // get resource config
-            if (isMixedResources) {
-              const resourcesConfig = getValue(config, "resource.resources", [])
-              for (let index = 0; index < resourcesConfig.length; index++) {
-                const r = resourcesConfig[index]
-                if (resourceKey === `${r.type}:${r.quickId}`) {
-                  rType = r.type
-                  if (!getValue(r, "table.useGlobal", true)) {
-                    dName = getValue(r, "displayName", displayName)
-                    rNameKey = getValue(r, "nameKey", resourceNameKey)
-                    rValueKey = getValue(r, "valueKey", resourceValueKey)
-                    rTimestampKey = getValue(r, "timestampKey", resourceTimestampKey)
-                    sortOrderPriority = getValue(r, "sortOrderPriority", sortOrderPriority)
-                  }
-                  break
-                }
-              }
-            }
-
-            const resource = resourcesMap[resourceKey]
-            const formattedResource = this.getFormattedResource(
-              rType,
-              dName,
-              rNameKey,
-              rValueKey,
-              rTimestampKey,
-              resource
-            )
-
-            if (isMixedResources) {
-              formattedResource.sortOrderPriority = sortOrderPriority
-            } else {
-              formattedResource.sortOrderPriority = formattedResource.name
-            }
-
-            resourcesRaw[formattedResource.quickId] = resource
-            return formattedResource
-          })
-
-          // push raw resources into redux
-          this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
-          this.setState({ loading: false, resources }, () => {
-            this.updateMetrics()
-          })
-        })
-        .catch((_e) => {
-          this.setState({ loading: false })
-        })
-    } else if (resourceFilterType === ResourceFilterType.DetailedFilter) {
-      // detailed filter
-      const filters = []
-      if (resourceFilter) {
-        const keys = Object.keys(resourceFilter)
-        keys.forEach((key) => {
-          filters.push({ k: key, v: resourceFilter[key] })
-        })
-      }
-      let resourceApi = null
-      switch (resourceType) {
-        case ResourceType.Gateway:
-          resourceApi = api.gateway.list
-          break
-
-        case ResourceType.Node:
-          resourceApi = api.node.list
-          break
-
-        case ResourceType.Source:
-          resourceApi = api.source.list
-          break
-
-        case ResourceType.Field:
-          resourceApi = api.field.list
-          break
-
-        default:
-          this.setState({ loading: false })
-          return
-      }
-
-      resourceApi({ filter: filters, limit: itemsLimit })
-        .then((res) => {
-          const resourcesRaw = {}
-          const resources = res.data.data.map((resource) => {
-            const formattedResource = this.getFormattedResource(
-              resourceType,
-              displayName,
-              resourceNameKey,
-              resourceValueKey,
-              resourceTimestampKey,
-              resource
-            )
-            resourcesRaw[formattedResource.quickId] = resource
-            return formattedResource
-          })
-
-          // push raw resources into redux
-          this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
-          this.setState({ loading: false, resources }, () => {
-            this.updateMetrics()
-          })
-        })
-        .catch((_e) => {
-          this.setState({ loading: false })
-        })
-    } else {
-      this.setState({ loading: false })
+    // detailed filter
+    const filters = []
+    if (resourceFilter) {
+      const keys = Object.keys(resourceFilter)
+      keys.forEach((key) => {
+        filters.push({ k: key, v: resourceFilter[key] })
+      })
     }
+    let resourceApi = null
+    switch (resourceType) {
+      case ResourceType.Gateway:
+        resourceApi = api.gateway.list
+        break
+
+      case ResourceType.Node:
+        resourceApi = api.node.list
+        break
+
+      case ResourceType.Source:
+        resourceApi = api.source.list
+        break
+
+      case ResourceType.Field:
+        resourceApi = api.field.list
+        break
+
+      default:
+        this.setState({ loading: false })
+        return
+    }
+
+    // update resource config
+    const _resource = getValue(config, "resource", {})
+    const _table = getValue(config, "table", {})
+    const resourceConfig = { ..._resource, table: { ..._table } }
+
+    resourceApi({ filter: filters, limit: itemsLimit })
+      .then((res) => {
+        const resourcesRaw = {}
+        const formattedResources = res.data.data.map((resource, index) => {
+          const formattedResource = this.getFormattedResource(
+            resourceType,
+            displayName,
+            resourceNameKey,
+            resourceValueKey,
+            resourceTimestampKey,
+            resource,
+            resourceConfig
+          )
+          formattedResource.sortOrderPriority = `${formattedResource.name}-${index}`
+          resourcesRaw[formattedResource.quickId] = resource
+          return formattedResource
+        })
+
+        // push raw resources into redux
+        this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
+        this.setState({ loading: false, resources: formattedResources }, () => {
+          this.updateMetrics()
+        })
+      })
+      .catch((_e) => {
+        this.setState({ loading: false })
+      })
+  }
+
+  // updates mixed resource and quick id data
+  updateMixedResources = (config = {}) => {
+    const isMixedResources = getValue(config, "resource.isMixedResources", false)
+
+    const quickIds = []
+    if (isMixedResources) {
+      const resources = getValue(config, "resource.resources", [])
+      resources.forEach((resource) => {
+        const resourceType = getValue(resource, "type", "")
+        const quickId = getValue(resource, "quickId", "")
+        const qID = `${resourceType}:${quickId}`
+        if (quickIds.indexOf(qID) === -1) {
+          // add if it is not available
+          quickIds.push(qID)
+        }
+      })
+    } else {
+      // quick id based filter
+      const resourceType = getValue(config, "resource.type", "")
+      const quickId = getValue(config, "resource.quickId", "")
+      quickIds.push(`${resourceType}:${quickId}`)
+    }
+
+    api.quickId
+      .getResources({ id: quickIds })
+      .then((res) => {
+        const resourcesRaw = {}
+        const resourcesMap = res.data
+        const resourceKeys = Object.keys(resourcesMap)
+        const formattedResources = []
+        const resourcesConfig = []
+
+        if (isMixedResources) {
+          const _resourcesConfig = getValue(config, "resource.resources", [])
+          resourcesConfig.push(..._resourcesConfig)
+        } else {
+          // for quick id based resource
+          const _resource = getValue(config, "resource", {})
+          const _table = getValue(config, "table", {})
+          resourcesConfig.push({ ..._resource, table: { ..._table } })
+        }
+
+        resourcesConfig.forEach((rc, index) => {
+          const rType = rc.type
+          const dName = getValue(rc, "displayName", false)
+          const rNameKey = getValue(rc, "nameKey", "undefined")
+          const rValueKey = getValue(rc, "valueKey", "undefined")
+          const rTimestampKey = getValue(rc, "timestampKey", "")
+          const sortOrderPriority = getValue(rc, "sortOrderPriority", `${index}`)
+
+          for (let index = 0; index < resourceKeys.length; index++) {
+            const resourceQuickID = resourceKeys[index]
+            if (resourceQuickID === `${rc.type}:${rc.quickId}`) {
+              const resource = resourcesMap[resourceQuickID]
+              const formattedResource = this.getFormattedResource(
+                rType,
+                dName,
+                rNameKey,
+                rValueKey,
+                rTimestampKey,
+                resource,
+                rc
+              )
+
+              formattedResource.sortOrderPriority = sortOrderPriority
+              resourcesRaw[formattedResource.quickId] = resource
+              formattedResources.push(formattedResource)
+            }
+          }
+        })
+
+        // push raw resources into redux
+        this.props.loadData({ key: this.getWsKey(), resources: resourcesRaw })
+        this.setState({ loading: false, resources: formattedResources }, () => {
+          this.updateMetrics()
+        })
+      })
+      .catch((_e) => {
+        this.setState({ loading: false })
+      })
   }
 
   getFormattedResource = (
@@ -330,11 +352,12 @@ class UtilizationPanel extends React.Component {
     resourceNameKey,
     resourceValueKey,
     resourceValueTimestampKey,
-    resource
+    resource,
+    resourceConfig = {}
   ) => {
     const name = displayName
       ? resourceNameKey
-        ? objectPath.get(resource, resourceNameKey, "undefined")
+        ? objectPath.get(resource, resourceNameKey, resourceNameKey)
         : ""
       : ""
 
@@ -350,12 +373,18 @@ class UtilizationPanel extends React.Component {
     // formatted resource
     return {
       id: resource.id,
+      resourceType: resourceType,
       quickId: quickId,
       name: name,
       metricType: metricType,
-      value: objectPath.get(resource, resourceValueKey, ""),
+      value: String(objectPath.get(resource, resourceValueKey, "")),
       timestamp:
         resourceValueTimestampKey !== "" ? objectPath.get(resource, resourceValueTimestampKey, "") : "",
+      key: {
+        value: resourceValueKey,
+        timestamp: resourceValueTimestampKey,
+      },
+      resourceConfig: { ...resourceConfig },
     }
   }
 
@@ -364,8 +393,6 @@ class UtilizationPanel extends React.Component {
     const { widgetId, dimensions, config, history } = this.props
     const columnDisplay = getValue(config, "chart.columnDisplay", false)
     const chartType = getValue(config, "type", ChartType.CircleSize75)
-    const resourceValueKey = getValue(config, "resource.valueKey", "undefined")
-    const resourceValueTimestampKey = getValue(config, "resource.timestampKey", "")
     const resourceType = getValue(config, "resource.type", "")
 
     if (loading) {
@@ -383,9 +410,14 @@ class UtilizationPanel extends React.Component {
       for (let index = 0; index < resources.length; index++) {
         const resource = resources[index]
         if (resource.quickId === qId) {
-          resources[index].value = objectPath.get(res, resourceValueKey, "")
-          if (resourceValueTimestampKey !== "") {
-            resources[index].timestamp = objectPath.get(res, resourceValueTimestampKey, "")
+          resources[index].resourceType = resource.resourceType
+          const rValueKey = getValue(resource, "key.value", "")
+          const rTimestampKey = getValue(resource, "key.timestamp", "")
+          if (rValueKey !== "") {
+            resources[index].value = String(objectPath.get(res, rValueKey, ""))
+          }
+          if (rTimestampKey !== "") {
+            resources[index].timestamp = objectPath.get(res, rTimestampKey, "")
           }
         }
       }

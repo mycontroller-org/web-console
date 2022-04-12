@@ -10,28 +10,9 @@ import "./TableUtilization.scss"
 
 const TableUtilization = ({ widgetId = "", config = {}, resources = [], history = null }) => {
   const isMixedResources = getValue(config, "resource.isMixedResources", false)
-  const resourcesConfig = getValue(config, "resource.resources", [])
-  const resourceType = getValue(config, "resource.type", "")
-  const thresholds = getValue(config, "table.thresholds", {})
-  const minimumValue = getValue(config, "table.minimumValue", 0)
-  const maximumValue = getValue(config, "table.maximumValue", 100)
   const hideValueColumn = getValue(config, "table.hideValueColumn", false)
   const hideStatusColumn = getValue(config, "table.hideStatusColumn", false)
-  const displayStatusPercentage = getValue(config, "table.displayStatusPercentage", false)
-  const unit = getValue(config, "resource.unit", "")
-  const roundDecimal = getValue(config, "resource.roundDecimal", 2)
   const { t } = useTranslation()
-
-  const resourceConfig = {
-    minimumValue: minimumValue,
-    maximumValue: maximumValue,
-    hideValueColumn: hideValueColumn,
-    hideStatusColumn: hideStatusColumn,
-    thresholds: thresholds,
-    displayStatusPercentage: displayStatusPercentage,
-    unit: unit,
-    roundDecimal: roundDecimal,
-  }
 
   const columns = [{ title: t("name") }, { title: t("last_seen") }]
 
@@ -62,7 +43,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   const getStatus = (resource = {}, resourceConfig = {}) => {
     // get color
     let thresholdColor = "#06c"
-    getFormattedThresholds(resourceConfig.thresholds).forEach((threshold) => {
+    getFormattedThresholds(resourceConfig.table.thresholds).forEach((threshold) => {
       if (resource.value >= threshold.value) {
         thresholdColor = threshold.color
       }
@@ -77,9 +58,9 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
           "--pf-c-progress__bar--before--BackgroundColor": thresholdColor,
         }}
         value={resource.value}
-        min={resourceConfig.minimumValue}
-        max={resourceConfig.maximumValue}
-        measureLocation={resourceConfig.displayStatusPercentage ? "inside" : "none"}
+        min={resourceConfig.table.minimumValue}
+        max={resourceConfig.table.maximumValue}
+        measureLocation={resourceConfig.table.displayStatusPercentage ? "inside" : "none"}
       />
     )
   }
@@ -88,19 +69,11 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   resources.sort((a, b) => (a.sortOrderPriority > b.sortOrderPriority ? 1 : -1))
 
   resources.forEach((resource) => {
-    let _resourceConfig = resourceConfig
-    if (isMixedResources) {
-      // get specific resource
-      for (let index = 0; index < resourcesConfig.length; index++) {
-        const rConfig = resourcesConfig[index]
-        if (`${rConfig.type}:${rConfig.quickId}` === resource.quickId) {
-          _resourceConfig = { ...resourceConfig, roundDecimal: rConfig.roundDecimal, unit: rConfig.unit }
-          if (!rConfig.useGlobal) {
-            _resourceConfig = { ..._resourceConfig, ...rConfig.table }
-          }
-          break
-        }
-      }
+    let _resourceConfig = resource.resourceConfig
+
+    // if asked to use custom table data take it
+    if (isMixedResources && !resource.resourceConfig.useGlobal) {
+      _resourceConfig.table = { ...resource.resourceConfig.table }
     }
 
     const rowItems = [
@@ -109,7 +82,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
           <Button
             variant="link"
             isInline
-            onClick={() => navigateToResource(resourceType, resource.id, history)}
+            onClick={() => navigateToResource(resource.resourceType, resource.id, history)}
           >
             {resource.name !== "" ? resource.name : "undefined"}
           </Button>
@@ -124,20 +97,16 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
       },
     ]
 
-    if (_resourceConfig.hideValueColumn) {
-      if (isMixedResources) {
-        rowItems.push(null)
-      }
-    } else {
+    if (!_resourceConfig.table.hideValueColumn) {
       rowItems.push({ title: getResourceValue(resource, _resourceConfig) })
+    } else if (isMixedResources) {
+      rowItems.push(null)
     }
 
-    if (_resourceConfig.hideStatusColumn) {
-      if (isMixedResources) {
-        rowItems.push(null)
-      }
-    } else {
+    if (!_resourceConfig.table.hideStatusColumn) {
       rowItems.push({ title: getStatus(resource, _resourceConfig) })
+    } else if (isMixedResources) {
+      rowItems.push(null)
     }
 
     rows.push(rowItems)
@@ -166,7 +135,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
 export default TableUtilization
 
 // helper functions
-const getFormattedThresholds = (thresholds) => {
+const getFormattedThresholds = (thresholds = {}) => {
   const thresholdKeys = Object.keys(thresholds)
   return thresholdKeys.map((key) => {
     return { value: parseFloat(key), color: thresholds[key] }
