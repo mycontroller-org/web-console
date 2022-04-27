@@ -38,8 +38,8 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "enabled", value: data.enabled ? "true" : "false" })
   fieldsList1.push({ key: "status", value: getStatus(data.state ? data.state.status : "unavailable") })
   fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })
-  fieldsList2.push({ key: "provider", value: data.provider.type })
-  fieldsList2.push({ key: "protocol", value: <KeyValueMap data={data.provider.protocol} /> })
+  fieldsList2.push({ key: "provider", value: getValue(data, "provider.type", "") })
+  fieldsList2.push({ key: "protocol", value: <KeyValueMap data={getValue(data, "provider.protocol", "")} /> })
 
   return {
     "list-1": fieldsList1,

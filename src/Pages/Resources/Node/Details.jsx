@@ -6,6 +6,7 @@ import { getStatus } from "../../../Components/Icons/Icons"
 import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
 import { routeMap as rMap } from "../../../Service/Routes"
+import { getValue } from "../../../Util/Util"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -36,7 +37,7 @@ const getDetailsFuncImpl = (data) => {
   fieldsList1.push({ key: "gateway_id", value: data.gatewayId })
   fieldsList1.push({ key: "node_id", value: data.nodeId })
   fieldsList1.push({ key: "name", value: data.name })
-  fieldsList1.push({ key: "status", value: getStatus(data.state.status) })
+  fieldsList1.push({ key: "status", value: getStatus(getValue(data, "state.status", "")) })
   fieldsList1.push({ key: "last_seen", value: <LastSeen date={data.lastSeen} tooltipPosition="top" /> })
   fieldsList2.push({ key: "labels", value: <Labels data={data.labels} /> })
   fieldsList2.push({ key: "others", value: <KeyValueMap data={data.others} /> })
