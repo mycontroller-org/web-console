@@ -65,6 +65,7 @@ import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
 import { updateLocale } from "../store/entities/locale"
 import { notificationDrawerToggle } from "../store/entities/notification"
+import Theme from "../Theme/Theme"
 //import imgAvatar from "./imgAvatar.svg";
 import "./Layout.scss"
 import NotificationContainer from "./NotificationContainer"
@@ -430,6 +431,7 @@ class PageLayoutExpandableNav extends React.Component {
 
     return (
       <React.Fragment>
+        <Theme />
         <AboutPage />
         <Toaster />
         <Page
