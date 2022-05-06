@@ -8,6 +8,12 @@
   --mc-dashboard-background-color: #f7f7f7;
   --mc-widget-background-color: #fff;
   --mc-widget-title-background-color: #f6f6f6;
+  --mc-widget-title-color: #434343;
+  --mc-timestamp-color: var(--pf-global--palette--black-600);
+  --mc-widget-utilization-title-color: var(--pf-global--palette--black-600);
+  --mc-widget-utilization-value-color: var(--pf-global--palette--black-800);
+  --mc-widget-utilization-unit-color: var(--pf-global--palette--black-600);
+  --mc-widget-utilization-function-color: var(--pf-global--palette--black-400);
 }
 
 .pf-c-card {

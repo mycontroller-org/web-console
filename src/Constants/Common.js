@@ -23,6 +23,8 @@ export const URL_SOURCE_CODE = "https://github.com/mycontroller-org/server"
 
 export const DEFAULT_LANGUAGE = "en_GB"
 
+export const DEFAULT_THEME = "default"
+
 export const SECURE_SHARE_PREFIX = "/secure_share/"
 export const INSECURE_SHARE_PREFIX = "/insecure_share/"
 

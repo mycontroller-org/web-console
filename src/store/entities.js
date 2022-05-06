@@ -16,6 +16,7 @@ import resourceGatewayReducer from "./entities/resources/gateway"
 import resourceNodeReducer from "./entities/resources/node"
 import resourceSourceReducer from "./entities/resources/source"
 import systemBackupReducer from "./entities/system/backup"
+import themeReducer from "./entities/theme"
 import toasterReducer from "./entities/toaster"
 import websocketReducer from "./entities/websocket"
 
@@ -39,4 +40,5 @@ export default combineReducers({
   systemBackup: systemBackupReducer,
   websocket: websocketReducer,
   locale: localeReducer,
+  theme: themeReducer,
 })

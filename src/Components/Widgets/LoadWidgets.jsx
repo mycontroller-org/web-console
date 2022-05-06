@@ -153,7 +153,7 @@ const cardWrapper = (items, editEnabled, onEditClick, onDeleteClick) => {
         <CardTitle className={"dashboard-widget-title " + stickTitleOnTopClass}>
           <Split>
             <SplitItem isFilled className="dashboard-widget-title-text">
-              <span style={{ color: "#434343" }}>{item.title}</span>
+              <span>{item.title}</span>
             </SplitItem>
             <SplitItem>{actionButtons}</SplitItem>
           </Split>

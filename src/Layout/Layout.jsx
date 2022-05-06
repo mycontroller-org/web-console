@@ -42,6 +42,7 @@ import {
   HelpIcon,
   InfoAltIcon,
   LanguageIcon,
+  PaletteIcon,
   PowerOffIcon,
   UnpluggedIcon,
   UserIcon,
@@ -64,6 +65,7 @@ import { wsConnect, wsDisconnect } from "../Service/Websocket"
 import { aboutShow } from "../store/entities/about"
 import { clearAuth } from "../store/entities/auth"
 import { updateLocale } from "../store/entities/locale"
+import { updateTheme } from "../store/entities/theme"
 import { notificationDrawerToggle } from "../store/entities/notification"
 import Theme from "../Theme/Theme"
 //import imgAvatar from "./imgAvatar.svg";
@@ -72,42 +74,67 @@ import NotificationContainer from "./NotificationContainer"
 
 class PageLayoutExpandableNav extends React.Component {
   state = {
-    isDropdownOpen: false,
-    isKebabDropdownOpen: false,
+    isUserDropdownOpen: false,
+    isHelpDropdownOpen: false,
     isLanguageDropdownOpen: false,
+    isThemeDropdownOpen: false,
     activeGroup: "grp-1",
     activeItem: "grp-1_itm-1",
+    themes: [],
   }
 
   componentDidMount() {
     wsConnect()
+    // load themes
+    this.fetchThemes()
+  }
+
+  fetchThemes = () => {
+    const defaultThemes = [{ name: "default", description: "default theme" }]
+    const _page = {
+      limit: 15, // limits 15 entries
+      offset: 0,
+      filter: [{ k: "labels.gui_theme", o: "eq", v: "true" }],
+      // sort: { f: "id", o: "asc" },
+    }
+    api.dataRepository
+      .list(_page)
+      .then((res) => {
+        const themes = res.data.data.map((theme) => {
+          return { name: theme.id, description: theme.description }
+        })
+        this.setState({ themes: [...defaultThemes, ...themes] })
+      })
+      .catch((_e) => {
+        this.setState({ themes: defaultThemes })
+      })
   }
 
   componentWillUnmount() {
     wsDisconnect()
   }
 
-  onDropdownToggle = (isDropdownOpen) => {
+  onUserDropdownToggle = (isUserDropdownOpen) => {
     this.setState({
-      isDropdownOpen,
+      isUserDropdownOpen,
     })
   }
 
-  onDropdownSelect = (_event) => {
+  onUserDropdownSelect = (_event) => {
     this.setState({
-      isDropdownOpen: !this.state.isDropdownOpen,
+      isUserDropdownOpen: !this.state.isUserDropdownOpen,
     })
   }
 
-  onKebabDropdownToggle = (isKebabDropdownOpen) => {
+  onHelpDropdownToggle = (isHelpDropdownOpen) => {
     this.setState({
-      isKebabDropdownOpen,
+      isHelpDropdownOpen,
     })
   }
 
-  onKebabDropdownSelect = (_event) => {
+  onHelpDropdownSelect = (_event) => {
     this.setState({
-      isKebabDropdownOpen: !this.state.isKebabDropdownOpen,
+      isHelpDropdownOpen: !this.state.isHelpDropdownOpen,
     })
   }
 
@@ -120,6 +147,18 @@ class PageLayoutExpandableNav extends React.Component {
   onLanguageDropdownSelect = (_event) => {
     this.setState({
       isLanguageDropdownOpen: !this.state.isLanguageDropdownOpen,
+    })
+  }
+
+  onThemeDropdownToggle = (isThemeDropdownOpen) => {
+    this.setState({
+      isThemeDropdownOpen,
+    })
+  }
+
+  onThemeDropdownSelect = (_event) => {
+    this.setState({
+      isThemeDropdownOpen: !this.state.isThemeDropdownOpen,
     })
   }
 
@@ -171,8 +210,16 @@ class PageLayoutExpandableNav extends React.Component {
   }
 
   render() {
-    const { location, t, languageSelected, websocketConnected, websocketMessage, metricsDBDisabled } =
-      this.props
+    const {
+      location,
+      t,
+      languageSelected,
+      themeSelected,
+      websocketConnected,
+      websocketMessage,
+      metricsDBDisabled,
+    } = this.props
+    const { themes } = this.state
 
     // selected menu
     let menuSelection = ""
@@ -246,7 +293,7 @@ class PageLayoutExpandableNav extends React.Component {
 
     const notificationDrawer = <NotificationContainer />
 
-    const kebabDropdownItems = [
+    const helpDropdownItems = [
       <DropdownItem key="documentation" href={this.props.documentationUrl} target="_blank">
         <BookIcon /> {t("documentation")} <ExternalLinkAltIcon />
       </DropdownItem>,
@@ -286,6 +333,21 @@ class PageLayoutExpandableNav extends React.Component {
         </DropdownItem>
       )
     })
+
+    const themeDropdownItems = themes.map((theme) => {
+      const thSelected = theme.name === themeSelected ? "language_selected" : ""
+      return (
+        <DropdownItem
+          key={`theme_${theme.name}`}
+          className={`language_item ${thSelected}`}
+          onClick={() => this.props.updateTheme({ theme: theme.name })}
+          description={theme.description}
+        >
+          {theme.name}
+        </DropdownItem>
+      )
+    })
+
     const userDropdownItems = [
       <DropdownGroup key="group2">
         <DropdownItem
@@ -344,16 +406,16 @@ class PageLayoutExpandableNav extends React.Component {
             <Dropdown
               isPlain
               position="right"
-              onSelect={this.onKebabDropdownSelect}
+              onSelect={this.onHelpDropdownSelect}
               toggle={
                 <DropdownToggle
                   toggleIndicator={null}
-                  onToggle={this.onKebabDropdownToggle}
+                  onToggle={this.onHelpDropdownToggle}
                   icon={<HelpIcon />}
                 />
               }
-              isOpen={this.state.isKebabDropdownOpen}
-              dropdownItems={kebabDropdownItems}
+              isOpen={this.state.isHelpDropdownOpen}
+              dropdownItems={helpDropdownItems}
             />
           </PageHeaderToolsItem>
           <PageHeaderToolsItem>
@@ -373,14 +435,32 @@ class PageLayoutExpandableNav extends React.Component {
               dropdownItems={languageItems}
             />
           </PageHeaderToolsItem>
+
           <PageHeaderToolsItem>
             <Dropdown
               isPlain
               position="right"
-              onSelect={this.onDropdownSelect}
-              isOpen={this.state.isDropdownOpen}
+              onSelect={this.onThemeDropdownSelect}
+              isOpen={this.state.isThemeDropdownOpen}
               toggle={
-                <DropdownToggle onToggle={this.onDropdownToggle} icon={<UserIcon />}>
+                <DropdownToggle
+                  toggleIndicator={null}
+                  onToggle={this.onThemeDropdownToggle}
+                  icon={<PaletteIcon size="sm" />}
+                />
+              }
+              dropdownItems={themeDropdownItems}
+            />
+          </PageHeaderToolsItem>
+
+          <PageHeaderToolsItem>
+            <Dropdown
+              isPlain
+              position="right"
+              onSelect={this.onUserDropdownSelect}
+              isOpen={this.state.isUserDropdownOpen}
+              toggle={
+                <DropdownToggle onToggle={this.onUserDropdownToggle} icon={<UserIcon />}>
                   <span className="mc-mobile-view">{this.props.userDetail.fullName}</span>
                 </DropdownToggle>
               }
@@ -464,6 +544,7 @@ const mapStateToProps = (state) => ({
   userDetail: state.entities.auth.user,
   documentationUrl: state.entities.about.documentationUrl,
   languageSelected: state.entities.locale.language,
+  themeSelected: state.entities.theme.selection,
   websocketConnected: state.entities.websocket.connected,
   websocketMessage: state.entities.websocket.message,
   metricsDBDisabled: state.entities.about.metricsDBDisabled,
@@ -474,6 +555,7 @@ const mapDispatchToProps = (dispatch) => ({
   showAbout: () => dispatch(aboutShow()),
   doLogout: () => dispatch(clearAuth()),
   updateLocale: (data) => dispatch(updateLocale(data)),
+  updateTheme: (data) => dispatch(updateTheme(data)),
 })
 
 export default withRouter(
