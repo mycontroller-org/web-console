@@ -1,20 +1,21 @@
-import React from "react"
 import {
   ChartArea,
-  ChartTooltip,
   ChartBar,
   ChartGroup,
   ChartLine,
   ChartThemeColor,
+  ChartTooltip,
   ChartVoronoiContainer,
 } from "@patternfly/react-charts"
-import { capitalizeFirstLetter, getValue } from "../../../../Util/Util"
-import { ChartType } from "../../../../Constants/Widgets/UtilizationPanel"
 import { Stack, StackItem } from "@patternfly/react-core"
-import "./SparkLine.scss"
-import { InterpolationType, MetricType } from "../../../../Constants/Metric"
+import React from "react"
+import { useTranslation } from "react-i18next"
 import v from "validator"
+import { InterpolationType, MetricType } from "../../../../Constants/Metric"
+import { ChartType } from "../../../../Constants/Widgets/UtilizationPanel"
+import { capitalizeFirstLetter, getValue } from "../../../../Util/Util"
 import { LastSeen } from "../../../Time/Time"
+import "./SparkLine.scss"
 
 const SparkLine = ({
   widgetId = "",
@@ -36,6 +37,8 @@ const SparkLine = ({
   const yAxisMinValue = getValue(config, "chart.yAxisMinValue", "")
   const yAxisMaxValue = getValue(config, "chart.yAxisMaxValue", "")
   const chartWidth = dimensions.width + 20 // include padding px to put the char till edge of the container
+
+  const { t } = useTranslation()
 
   const displayValueFloat = parseFloat(resource.value)
   let displayValue = resource.value
@@ -148,7 +151,7 @@ const SparkLine = ({
 
   if (resource.metricType === MetricType.Binary) {
     unitText = ""
-    displayValueText = displayValue ? "ON" : "OFF"
+    displayValueText = displayValue === "true" ? t("on") : t("off")
   }
 
   if (resource.metricType !== MetricType.Binary && isMetricDataAvailable) {

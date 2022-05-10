@@ -209,6 +209,7 @@ helper_text:
   invalid_email: தவறான மின்னஞ்சல்
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "தவறான பீல்ட் ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
+  invalid_filters: Invalid filters
   invalid_height: தவறான உயரம்
   invalid_host: தவறான ஹோஸ்ட்
   invalid_id: "தவறான ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=4, அதிகபட்சம்=100"
@@ -223,6 +224,7 @@ helper_text:
   invalid_name: "தவறான பெயர். எழுத்துக்கள், குறைந்தபட்சம்=2, அதிகபட்சம்=100"
   invalid_node_id: "தவறான நோடு ஐடி. எழுத்துக்கள், குறைந்தபட்சம்=1, அதிகபட்சம்=100"
   invalid_offset: தவறான ஆஃப்செட்
+  invalid_path: Invalid path
   invalid_payload: தவறான பேலோட்
   invalid_port: தவறான போர்ட்
   invalid_prefix: தவறான முற்சேர்க்கை
@@ -350,9 +352,11 @@ none: ஏதுமில்லை
 notifications: அறிவிப்புகள்
 number_of_axis: Number of Axis
 occurrences: நிகழ்வுகள்
+'off': 'OFF'
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
+'on': 'ON'
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send

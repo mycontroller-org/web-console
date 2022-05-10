@@ -352,9 +352,11 @@ none: None
 notifications: Notifications
 number_of_axis: Number of Axis
 occurrences: Occurrences
+'off': 'OFF'
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
+'on': 'ON'
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send

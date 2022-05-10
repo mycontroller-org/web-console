@@ -209,6 +209,7 @@ helper_text:
   invalid_email: Invalid email
   invalid_execution_interval_empty: Execution interval should not be empty
   invalid_field_id: "Invalid field id. chars, min=1, max=100"
+  invalid_filters: Invalid filters
   invalid_height: Invalid Height
   invalid_host: Invalid Host
   invalid_id: "Invalid id. chars, min=4, max=100, and space not allowed"
@@ -223,6 +224,7 @@ helper_text:
   invalid_name: "Invalid name. chars, min=2, max=100"
   invalid_node_id: "Invalid node ID. chars, min=1 and max=100"
   invalid_offset: Invalid offset
+  invalid_path: Invalid path
   invalid_payload: Invalid payload
   invalid_port: Invalid port
   invalid_prefix: Invalid prefix
@@ -350,9 +352,11 @@ none: None
 notifications: Notifications
 number_of_axis: Number of Axis
 occurrences: Occurrences
+'off': 'OFF'
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
+'on': 'ON'
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send

@@ -209,6 +209,7 @@ helper_text:
   invalid_email: Courriel non valable
   invalid_execution_interval_empty: L'intervalle d'exécution ne doit pas être vide
   invalid_field_id: "Champ id.chars invalide, min=1, max=100"
+  invalid_filters: Invalid filters
   invalid_height: Hauteur invalide
   invalid_host: Hôte invalide
   invalid_id: "Caractères id non valides, min=4, max=100,  et espace non autorisés"
@@ -223,6 +224,7 @@ helper_text:
   invalid_name: "Nom non valide, min=2, max=100"
   invalid_node_id: "ID de nœud non valide, min=1   max=100 caractères."
   invalid_offset: "Décalage de la compensation invalide , \"Offset\""
+  invalid_path: Invalid path
   invalid_payload: Valeurs des données Invalide
   invalid_port: Port invalide
   invalid_prefix: Préfixe invalide
@@ -350,9 +352,11 @@ none: Aucun
 notifications: Notifications
 number_of_axis: Nombre d'axes
 occurrences: Occurrences
+'off': 'OFF'
 off_text: OFF Texte
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
+'on': 'ON'
 on_button: Bouton MARCHE
 on_receive: En réception
 on_send: En cours d'envoi
