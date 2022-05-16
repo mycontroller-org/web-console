@@ -49,17 +49,12 @@ class TabDetailsBase extends React.Component {
 
   getTable = (data) => {
     const { tableTitle, apiListTablesRecord, tableColumns, getTableFilterFunc, history, t } = this.props
-    // update table headers
-    const tableColumnsUpdated = tableColumns.map((tc) => {
-      const header = { ...tc }
-      header.title = t(tc.title)
-      return header
-    })
+
     return (
       <Table
-        title={t(tableTitle)}
+        title={tableTitle}
         apiGetRecords={apiListTablesRecord}
-        tableColumns={tableColumnsUpdated}
+        tableColumns={tableColumns}
         toRowFunc={this.tableRowFuncCellWrapper}
         history={history}
         filters={getTableFilterFunc(data)}

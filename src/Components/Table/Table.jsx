@@ -2,6 +2,7 @@ import { Pagination, PaginationVariant, Title } from "@patternfly/react-core"
 import { sortable, Table as PfTable, TableBody, TableHeader, TableVariant } from "@patternfly/react-table"
 import PropTypes from "prop-types"
 import React from "react"
+import { withTranslation } from "react-i18next"
 
 const ITEMS_LIMIT = 10
 
@@ -23,16 +24,16 @@ class Table extends React.Component {
     })
 
     const limit = pagination.limit ? pagination.limit : ITEMS_LIMIT
-    const offset = pagination.page ? pagination.page : 0
+    const pageNo = pagination.page ? pagination.page : 0
     const _page = {
       limit: limit,
-      offset: offset * limit,
+      offset: pageNo * limit,
       filter: filters,
     }
     // update sortBy
-    let sortBy = null
+    let sortBy = {}
     if (pagination.sortBy) {
-      sortBy = pagination.sortBy
+      sortBy = { ...this.state.sortBy, ...pagination.sortBy }
     } else if (this.state.sortBy && this.state.sortBy.field) {
       sortBy = this.state.sortBy
     }
@@ -51,7 +52,7 @@ class Table extends React.Component {
           rows: rows,
           records: res.data,
           limit: _page.limit,
-          page: _page.offset,
+          page: pageNo,
           sortBy: sortBy,
         })
       })
@@ -75,7 +76,7 @@ class Table extends React.Component {
   }
 
   onSortBy = (_event, index, direction) => {
-    //console.log(index, direction, this.props.tableColumns[index])
+    // console.log(index, direction, this.props.tableColumns[index])
     const header = this.props.tableColumns[index]
     if (header) {
       this.fetchRecords({ sortBy: { field: header.fieldKey, direction: direction, index: index } })
@@ -83,58 +84,61 @@ class Table extends React.Component {
   }
 
   render() {
+    const { t, tableColumns, title } = this.props
+    const { loading, rows, sortBy, records, limit, page } = this.state
+
     // update table headers
-    const tableColumns = this.props.tableColumns.map((tc) => {
-      const header = { title: tc.title }
+    const tableColumnsUpdated = tableColumns.map((tc) => {
+      const header = { title: t(tc.title) }
       if (tc.sortable) {
         header.transforms = [sortable]
       }
       return header
     })
 
-    const title = this.props.title ? <Title headingLevel="h6">{this.props.title}</Title> : null
+    const titleUpdated = title ? <Title headingLevel="h6">{t(title)}</Title> : null
 
-    const loading = <div style={{ marginBottom: "15px" }}>Loading...</div>
+    const loadingElement = <div style={{ marginBottom: "15px" }}>{t("loading")}...</div>
 
     let table = null
-    if (!this.state.loading) {
+    if (!loading) {
       table =
-        this.state.rows.length > 0 ? (
+        rows.length > 0 ? (
           <>
             <PfTable
               aria-label="Compact Table"
               variant={TableVariant.compact}
-              cells={tableColumns}
-              rows={this.state.rows}
+              cells={tableColumnsUpdated}
+              rows={rows}
               rowLabeledBy="rowIndex"
               canSelectAll={false}
               className="mc-table"
               borders={true}
-              sortBy={this.state.sortBy}
+              sortBy={sortBy}
               onSort={this.onSortBy}
             >
               <TableHeader />
               <TableBody rowKey="rid" />
             </PfTable>
             <Pagination
-              itemCount={this.state.records.count}
+              itemCount={records.count}
               widgetId="pagination-options-menu-bottom"
-              perPage={this.state.limit}
-              page={this.state.page + 1}
+              perPage={limit}
+              page={page + 1}
               variant={PaginationVariant.bottom}
               onSetPage={this.onPageSet}
               onPerPageSelect={this.onPerPage}
             />
           </>
         ) : (
-          <div style={{ marginBottom: "15px" }}>No data</div>
+          <div style={{ marginBottom: "15px" }}>{t("no_data")}</div>
         )
     }
 
     return (
       <>
-        {title}
-        {this.state.loading ? loading : table}
+        {titleUpdated}
+        {loading ? loadingElement : table}
       </>
     )
   }
@@ -149,4 +153,4 @@ Table.propTypes = {
   history: PropTypes.object,
 }
 
-export default Table
+export default withTranslation()(Table)
