@@ -186,7 +186,7 @@ class Editor extends React.Component {
           onChange={this.onFormValueChange}
         />
       )
-    } else {
+    } else if (!disableEditor) {
       const codeString = toString(this.props.language, rootObject)
 
       const otherOptions = this.props.otherOptions ? this.props.otherOptions : {}
@@ -289,7 +289,7 @@ class Editor extends React.Component {
                 <Radio
                   isChecked={!formView}
                   isDisabled={disableEditor}
-                  onChange={this.onViewChange}
+                  onChange={disableEditor ? () => {} : this.onViewChange}
                   label={t("yaml_view")}
                   id={"yaml_view_" + uuidv4()}
                 />
