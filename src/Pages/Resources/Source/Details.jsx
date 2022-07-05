@@ -61,7 +61,7 @@ const tableColumns = [
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, history) => {
-  const isReadOnly = getValue(rawData, "labels.readonly", "false") === "true"
+  const isReadOnly = getValue(rawData, "labels.read_only", "false") === "true"
   const currentValue = isReadOnly ? (
     getFieldValue(getValue(rawData, "current.value", ""))
   ) : (
