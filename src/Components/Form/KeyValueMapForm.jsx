@@ -133,6 +133,7 @@ class KeyValueMapForm extends React.Component {
       isActionDisabled = false,
       showUpdateButton = false,
       updateButtonCallback = () => {},
+      keyField = getKeyField,
       valueField = getValueField,
       isKeyDisabled = false,
       isValueDisabled = false,
@@ -167,26 +168,31 @@ class KeyValueMapForm extends React.Component {
           <AddCircleOIcon key={"add-btn" + index} onClick={this.onAdd} className="btn-add icon-btn" />
         ) : null
 
-      const updateButton = showUpdateButton ? updateButtonCallback(index, item, this.onChange) : null
+      const updateButton = showUpdateButton
+        ? updateButtonCallback(index, item, (newValue) => this.onChange(index, "value", newValue))
+        : null
       return (
         <>
           <GridItem span={4}>
-            <TextInput
-              id={"key_id_" + index}
-              key={"key_" + index}
-              value={item.key}
-              validated={validatedKey}
-              isDisabled={isKeyDisabled}
-              onChange={(newValue) => {
-                this.onChange(index, "key", newValue)
-              }}
-            />
+            {keyField(
+              index,
+              item.key,
+              (newKey) => this.onChange(index, "key", newKey),
+              validatedKey,
+              isKeyDisabled
+            )}
           </GridItem>
 
           <GridItem span={8 - actionSpan}>
             <Split>
               <SplitItem isFilled>
-                {valueField(index, item.value, this.onChange, validatedValue, isValueDisabled)}
+                {valueField(
+                  index,
+                  item.value,
+                  (newValue) => this.onChange(index, "value", newValue),
+                  validatedValue,
+                  isValueDisabled
+                )}
               </SplitItem>
               <SplitItem>{updateButton}</SplitItem>
             </Split>
@@ -249,6 +255,7 @@ KeyValueMapForm.propTypes = {
   validateValueFunc: PropTypes.func,
   showUpdateButton: PropTypes.bool,
   updateButtonCallback: PropTypes.func,
+  keyField: PropTypes.func,
   valueField: PropTypes.func,
   forceSync: PropTypes.bool,
 }
@@ -256,6 +263,19 @@ KeyValueMapForm.propTypes = {
 export default withTranslation()(KeyValueMapForm)
 
 // helper functions
+
+const getKeyField = (index, key, onChange, validated, isDisabled = false) => {
+  return (
+    <TextInput
+      id={"key_id_" + index}
+      key={"key_" + index}
+      value={key}
+      validated={validated}
+      isDisabled={isDisabled}
+      onChange={onChange}
+    />
+  )
+}
 
 const getValueField = (index, value, onChange, validated, isDisabled = false) => {
   return (
@@ -265,9 +285,7 @@ const getValueField = (index, value, onChange, validated, isDisabled = false) =>
       value={value}
       validated={validated}
       isDisabled={isDisabled}
-      onChange={(newValue) => {
-        onChange(index, "value", newValue)
-      }}
+      onChange={onChange}
     />
   )
 }

@@ -13,6 +13,9 @@ import SourceUpdatePage from "../Pages/Resources/Source/UpdatePage"
 import FieldDetailPage from "../Pages/Resources/Field/DetailsRootPage"
 import FieldListPage from "../Pages/Resources/Field/ListPage"
 import FieldUpdatePage from "../Pages/Resources/Field/UpdatePage"
+import VirtualDeviceDetailPage from "../Pages/Resources/VirtualDevice/DetailsRootPage"
+import VirtualDeviceListPage from "../Pages/Resources/VirtualDevice/ListPage"
+import VirtualDeviceUpdatePage from "../Pages/Resources/VirtualDevice/UpdatePage"
 import ProfilePage from "../Pages/Settings/Profile/DetailsPage"
 import ForwardPayloadListPage from "../Pages/Operations/ForwardPayload/ListPage"
 import ForwardPayloadUpdatePage from "../Pages/Operations/ForwardPayload/UpdatePage"
@@ -65,6 +68,12 @@ const routeMap = {
       detail: "/resources/field/list/:id",
       update: "/resources/field/update/:id",
       add: "/resources/field/add",
+    },
+    virtualDevice: {
+      list: "/resources/virtualdevice",
+      detail: "/resources/virtualdevice/list/:id",
+      update: "/resources/virtualdevice/update/:id",
+      add: "/resources/virtualdevice/add",
     },
     firmware: {
       list: "/resources/firmware",
@@ -162,8 +171,14 @@ const routes = [
         component: FieldListPage,
       },
       {
-        id: "seperator_1",
+        id: "separator_1",
         isSeparator: true,
+      },
+      {
+        id: "virtual_device",
+        title: "virtual_devices",
+        to: routeMap.resources.virtualDevice.list,
+        component: VirtualDeviceListPage,
       },
       {
         id: "firmware",
@@ -271,6 +286,14 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.field.add,
     component: FieldUpdatePage,
+  },
+  {
+    to: routeMap.resources.virtualDevice.detail,
+    component: VirtualDeviceDetailPage,
+  },
+  {
+    to: routeMap.resources.virtualDevice.add,
+    component: VirtualDeviceUpdatePage,
   },
   {
     to: routeMap.operations.forwardPayload.detail,

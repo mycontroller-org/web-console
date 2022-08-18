@@ -12,6 +12,7 @@ add_a_node: Add a Node
 add_a_schedule: Add a Schedule
 add_a_source: Add a Source
 add_a_task: Add a Task
+add_a_virtual_device: Add a Virtual Device
 add_an_item: Add an item
 add_widget: Add Widget
 address: Address
@@ -84,6 +85,7 @@ description: Description
 destination_field: Destination Field
 detailed_filter: Detailed Filter
 details: Details
+device_type: Device Type
 dialog:
   clear_sleeping_queue_heading: Would you like to clear the queue?
   clear_sleeping_queue_msg: All the sleeping queued messages will be dropped
@@ -621,6 +623,44 @@ opts:
     label_multiple_unordered: Multiple Unordered
     label_orange: Orange
     label_purple: Purple
+  trait_type:
+    label_app_selector: App Selector
+    label_arm_disarm: Arm Disarm
+    label_brightness: Brightness
+    label_camera_stream: Camera Stream
+    label_channel: Channel
+    label_color_setting: Color Setting
+    label_cook: Cook
+    label_dispense: Dispense
+    label_dock: Dock
+    label_energy_storage: Energy Storage
+    label_fan_speed: Fan Speed
+    label_fill: Fill
+    label_humidity_setting: Humidity Setting
+    label_input_selector: Input Selector
+    label_light_effects: Light Effects
+    label_locator: Locator
+    label_lock_unlock: Lock Unlock
+    label_media_state: Media State
+    label_modes: Modes
+    label_network_control: Network Control
+    label_object_detection: Object Detection
+    label_on_off: On Off
+    label_open_close: Open Close
+    label_reboot: Reboot
+    label_rotation: Rotation
+    label_run_cycle: Run Cycle
+    label_scene: Scene
+    label_sensor_state: Sensor State
+    label_software_update: Software Update
+    label_start_stop: Start Stop
+    label_status_report: Status Report
+    label_temperature_control: Temperature Control
+    label_temperature_setting: Temperature Setting
+    label_timer: Timer
+    label_toggles: Toggles
+    label_transport_control: Transport Control
+    label_volume: Volume
   utilization_chart:
     label_circle_050: Half Circle
     label_circle_075: 3/4 Circle
@@ -629,6 +669,87 @@ opts:
     label_spark_bar: Spark Bar
     label_spark_line: Spark Line
     label_table: Table
+  vd_type:
+    label_air_conditioner: Air Conditioner
+    label_air_cooler: Air Cooler
+    label_air_freshener: Air Freshener
+    label_air_purifier: Air Purifier
+    label_audio_video_receiver: Audio Video Receiver
+    label_awning: Awning
+    label_bathtub: Bathtub
+    label_bed: Bed
+    label_blender: Blender
+    label_blinds: Blinds
+    label_boiler: Boiler
+    label_camera: Camera
+    label_carbon_monoxide_detector: Carbon Monoxide Detector
+    label_charger: Charger
+    label_closet: Closet
+    label_coffee_maker: Coffee Maker
+    label_cooktop: Cooktop
+    label_curtain: Curtain
+    label_dehumidifier: Dehumidifier
+    label_dehydrator: Dehydrator
+    label_dishwasher: Dishwasher
+    label_door: Door
+    label_door_bell: Door Bell
+    label_drawer: Drawer
+    label_dryer: Dryer
+    label_fan: Fan
+    label_faucet: Faucet
+    label_fireplace: Fireplace
+    label_freezer: Freezer
+    label_fryer: Fryer
+    label_garage_door: Garage Door
+    label_gate: Gate
+    label_grill: Grill
+    label_heater: Heater
+    label_hood: Hood
+    label_humidifier: Humidifier
+    label_kettle: Kettle
+    label_light: Light
+    label_lock: Lock
+    label_media_remote: Media Remote
+    label_microwave: Microwave
+    label_mop: Mop
+    label_mower: Mower
+    label_multicooker: Multicooker
+    label_network: Network
+    label_outlet: Outlet
+    label_oven: Oven
+    label_pergola: Pergola
+    label_pet_feeder: Pet Feeder
+    label_pressure_cooker: Pressure Cooker
+    label_radiator: Radiator
+    label_refrigerator: Refrigerator
+    label_router: Router
+    label_scene: Scene
+    label_security_system: Security System
+    label_sensor: Sensor
+    label_set_top_box: Set Top Box
+    label_shower: Shower
+    label_shutter: Shutter
+    label_smoke_detector: Smoke Detector
+    label_soundbar: Soundbar
+    label_sous_vide: Sous Vide
+    label_speaker: Speaker
+    label_sprinkler: Sprinkler
+    label_stand_mixer: Stand Mixer
+    label_streaming_box: Streaming Box
+    label_streaming_soundbar: Streaming Soundbar
+    label_streaming_stick: Streaming Stick
+    label_switch: Switch
+    label_television: Television
+    label_thermostat: Thermostat
+    label_vacuum: Vacuum
+    label_valve: Valve
+    label_washer: Washer
+    label_water_heater: Water Heater
+    label_water_purifier: Water Purifier
+    label_water_softener: Water Softener
+    label_weather_station: Weather Station
+    label_window: Window
+    label_yogurt_maker: Yogurt Maker
   week_day:
     label_friday: Friday
     label_monday: Monday
@@ -782,6 +903,8 @@ to: To
 to_emails: To Emails
 token: Token
 topic: Topic
+trait: Trait
+traits: Traits
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
 'true': 'True'
@@ -816,6 +939,8 @@ variable: Variable
 variable_name: Variable Name
 variables: Variables
 version: Version
+virtual_device_details: Virtual Device Details
+virtual_devices: Virtual Devices
 web_console: Web Console
 webhook: Webhook
 websocket_disconnected: Websocket disconnected

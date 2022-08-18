@@ -34,7 +34,7 @@ const getDetailsFuncImpl = (data) => {
   const fieldsList2 = []
 
   fieldsList1.push({ key: "id", value: data.id })
-  fieldsList1.push({ key: "name", value: data.name })
+  fieldsList1.push({ key: "description", value: data.description })
   fieldsList1.push({ key: "enabled", value: data.enabled ? "true" : "false" })
   fieldsList1.push({ key: "status", value: getStatus(data.state ? data.state.status : "unavailable") })
   fieldsList1.push({ key: "labels", value: <Labels data={data.labels} /> })

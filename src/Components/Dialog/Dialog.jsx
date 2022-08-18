@@ -9,6 +9,7 @@ const DeleteDialog = ({ dialogTitle, show, onCloseFn, onOkFn }) => {
     <Modal
       className="mc-model"
       variant={ModalVariant.small}
+      position="top"
       title={<Trans i18nKey="dialog.delete_resource_heading">{t(dialogTitle)}</Trans>}
       isOpen={show}
       onClose={onCloseFn}
@@ -103,6 +104,7 @@ const dialog = (
       key={title}
       className="mc-model"
       variant={ModalVariant.small}
+      position="top"
       title={title}
       isOpen={isOpen}
       onClose={onCloseFn}

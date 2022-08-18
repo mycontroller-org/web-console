@@ -189,6 +189,7 @@ const getField = (item, onChange) => {
           showUpdateButton={item.showUpdateButton}
           validateKeyFunc={item.validateKeyFunc}
           validateValueFunc={item.validateValueFunc}
+          keyField={item.keyField}
           valueField={item.valueField}
           updateButtonCallback={item.updateButtonCallback}
         />

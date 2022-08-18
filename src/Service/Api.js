@@ -166,6 +166,12 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/field", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/field", {}, data),
   },
+  virtualDevice: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/virtualdevice", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/virtualdevice/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/virtualdevice", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/virtualdevice", {}, data),
+  },
   metric: {
     fetch: (queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries),
   },
