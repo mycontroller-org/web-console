@@ -3,7 +3,7 @@ import React from "react"
 import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
 import ListBase from "../../../Components/BasePage/ListBase"
-import { getStatusBool } from "../../../Components/Icons/Icons"
+import { getStatus, getStatusBool } from "../../../Components/Icons/Icons"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { LastSeen } from "../../../Components/Time/Time"
@@ -18,7 +18,8 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/resources/virtualDevice"
+} from "../../../store/entities/resources/virtualAssistant"
+import { getValue } from "../../../Util/Util"
 
 class List extends ListBase {
   state = {
@@ -38,13 +39,19 @@ class List extends ListBase {
     {
       type: "enable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.virtualDevice.enable)
+        this.actionFuncWithRefresh(api.virtualAssistant.enable)
       },
     },
     {
       type: "disable",
       onClick: () => {
-        this.actionFuncWithRefresh(api.virtualDevice.disable)
+        this.actionFuncWithRefresh(api.virtualAssistant.disable)
+      },
+    },
+    {
+      type: "reload",
+      onClick: () => {
+        this.actionFuncWithRefresh(api.virtualAssistant.reload)
       },
     },
     { type: "separator" },
@@ -58,7 +65,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.resources.virtualDevice.add)
+        r(this.props.history, rMap.resources.virtualAssistant.add)
       },
     },
   ]
@@ -66,7 +73,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="virtual_devices" />
+        <PageTitle title="virtual_assistants" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -74,35 +81,40 @@ class List extends ListBase {
 }
 
 // Properties definition
+
 const tableColumns = [
-  { title: "enabled", fieldKey: "enabled", sortable: true },
-  { title: "name", fieldKey: "name", sortable: true },
+  { title: "id", fieldKey: "id", sortable: true },
   { title: "description", fieldKey: "description", sortable: true },
-  { title: "location", fieldKey: "location", sortable: true },
-  { title: "device_type", fieldKey: "deviceType", sortable: true },
+  { title: "enabled", fieldKey: "enabled", sortable: true },
+  { title: "provider", fieldKey: "provider.type", sortable: true },
+  { title: "status", fieldKey: "state.status", sortable: true },
+  { title: "since", fieldKey: "state.since", sortable: true },
+  { title: "message", fieldKey: "state.message", sortable: true },
   { title: "modified_on", fieldKey: "modifiedOn", sortable: true },
 ]
 
 const toRowFuncImpl = (rawData, history) => {
   return {
     cells: [
-      { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
       {
         title: (
           <Button
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.resources.virtualDevice.detail, { id: rawData.id })
+              r(history, rMap.resources.virtualAssistant.detail, { id: rawData.id })
             }}
           >
-            {rawData.name}
+            {rawData.id}
           </Button>
         ),
       },
       { title: rawData.description },
-      { title: rawData.location },
-      { title: rawData.deviceType },
+      { title: <div className="align-center">{getStatusBool(rawData.enabled)}</div> },
+      getValue(rawData, "providerType", ""),
+      { title: getStatus(getValue(rawData, "state.status", "")) },
+      { title: <LastSeen date={getValue(rawData, "state.since", "")} /> },
+      getValue(rawData, "state.message", ""),
       { title: <LastSeen date={rawData.modifiedOn} /> },
     ],
     rid: rawData.id,
@@ -110,32 +122,31 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
-  { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
+  { category: "id", categoryName: "id", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
   { category: "enabled", categoryName: "enabled", fieldType: "enabled", dataType: "boolean" },
-  { category: "deviceType", categoryName: "type", fieldType: "input", dataType: "string" },
   { category: "labels", categoryName: "labels", fieldType: "label", dataType: "string" },
 ]
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.virtualDevice.list,
-  apiDeleteRecords: api.virtualDevice.delete,
+  apiGetRecords: api.virtualAssistant.list,
+  apiDeleteRecords: api.virtualAssistant.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  deleteDialogTitle: "dialog.delete_title_virtual_device",
+  deleteDialogTitle: "dialog.delete_title_virtual_assistant",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.resourceVirtualDevice.loading,
-  records: state.entities.resourceVirtualDevice.records,
-  pagination: state.entities.resourceVirtualDevice.pagination,
-  count: state.entities.resourceVirtualDevice.count,
-  lastUpdate: state.entities.resourceVirtualDevice.lastUpdate,
-  revision: state.entities.resourceVirtualDevice.revision,
-  filters: state.entities.resourceVirtualDevice.filters,
-  sortBy: state.entities.resourceVirtualDevice.sortBy,
+  loading: state.entities.resourceVirtualAssistant.loading,
+  records: state.entities.resourceVirtualAssistant.records,
+  pagination: state.entities.resourceVirtualAssistant.pagination,
+  count: state.entities.resourceVirtualAssistant.count,
+  lastUpdate: state.entities.resourceVirtualAssistant.lastUpdate,
+  revision: state.entities.resourceVirtualAssistant.revision,
+  filters: state.entities.resourceVirtualAssistant.filters,
+  sortBy: state.entities.resourceVirtualAssistant.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

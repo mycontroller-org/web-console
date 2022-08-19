@@ -12,10 +12,12 @@ add_a_node: Add a Node
 add_a_schedule: Add a Schedule
 add_a_source: Add a Source
 add_a_task: Add a Task
+add_a_virtual_assistant: Add a Virtual Assistant
 add_a_virtual_device: Add a Virtual Device
 add_an_item: Add an item
 add_widget: Add Widget
 address: Address
+agent_user_id: Agent User ID
 alerts_empty_message: There are currently no alerts.
 alerts_empty_title: No alerts found
 alive_check_interval: Alive Check Interval
@@ -85,6 +87,7 @@ description: Description
 destination_field: Destination Field
 detailed_filter: Detailed Filter
 details: Details
+device_filter: Device Filter
 device_type: Device Type
 dialog:
   clear_sleeping_queue_heading: Would you like to clear the queue?
@@ -102,6 +105,8 @@ dialog:
   delete_title_schedule: Delete schedules?
   delete_title_source: Delete sources?
   delete_title_task: Delete tasks?
+  delete_title_virtual_assistant: Delete virtual assistant?
+  delete_title_virtual_device: Delete virtual device?
   node_reset_heading: Reset Node?
   node_reset_msg: Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>
   reboot_nodes_heading: Reboot Node?
@@ -146,6 +151,7 @@ executed_count: Executed Count
 execution_interval: Execution Interval
 execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
+experimental: Experimental
 export_type: Export Type
 'false': 'False'
 favorite: Favorite
@@ -280,6 +286,7 @@ json: JSON
 keep_me_logged_in_30_days: Keep me logged in for 30 days.
 key: Key
 key_path: Key Path
+label: Label
 labels: Labels
 language: Language
 last_evaluation: Last Evaluation
@@ -669,6 +676,11 @@ opts:
     label_spark_bar: Spark Bar
     label_spark_line: Spark Line
     label_table: Table
+  va_provider:
+    desc_alexa: Amazon Alexa
+    desc_google_assistant: Google Assistant
+    label_alexa: Alexa
+    label_google_assistant: Google Assistant
   vd_type:
     label_air_conditioner: Air Conditioner
     label_air_cooler: Air Cooler
@@ -939,6 +951,9 @@ variable: Variable
 variable_name: Variable Name
 variables: Variables
 version: Version
+virtual_assistant: Virtual Assistant
+virtual_assistant_details: Virtual Assistant Details
+virtual_assistants: Virtual Assistants
 virtual_device_details: Virtual Device Details
 virtual_devices: Virtual Devices
 web_console: Web Console

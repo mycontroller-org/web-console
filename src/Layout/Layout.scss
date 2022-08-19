@@ -82,3 +82,11 @@ Removes the gray color of bottom page
 .language_selected {
   background-color: var(--pf-global--palette--blue-100);
 }
+
+.mc-badge-experimental {
+  padding-left: 5px;
+  .pf-c-badge {
+    background-color: var(--pf-global--warning-color--100);
+    color: var(--pf-global--palette--black-900);
+  }
+}

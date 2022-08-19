@@ -1,4 +1,5 @@
 import {
+  Badge,
   Banner,
   Brand,
   Button,
@@ -256,6 +257,11 @@ class PageLayoutExpandableNav extends React.Component {
               preventDefault={true}
             >
               {t(m.title)}
+              {m.isExperimental ? (
+                <span className="mc-badge-experimental">
+                  <Badge>{t("experimental")}</Badge>
+                </span>
+              ) : null}
             </NavItem>
           )
         }
@@ -283,6 +289,11 @@ class PageLayoutExpandableNav extends React.Component {
                   preventDefault={true}
                 >
                   {t(m.title)}
+                  {m.isExperimental ? (
+                    <span className="mc-badge-experimental">
+                      <Badge>{t("experimental")}</Badge>
+                    </span>
+                  ) : null}
                 </NavItem>
               )
             }

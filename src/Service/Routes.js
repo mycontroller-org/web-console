@@ -16,6 +16,9 @@ import FieldUpdatePage from "../Pages/Resources/Field/UpdatePage"
 import VirtualDeviceDetailPage from "../Pages/Resources/VirtualDevice/DetailsRootPage"
 import VirtualDeviceListPage from "../Pages/Resources/VirtualDevice/ListPage"
 import VirtualDeviceUpdatePage from "../Pages/Resources/VirtualDevice/UpdatePage"
+import VirtualAssistantDetailPage from "../Pages/Resources/VirtualAssistant/DetailsRootPage"
+import VirtualAssistantListPage from "../Pages/Resources/VirtualAssistant/ListPage"
+import VirtualAssistantUpdatePage from "../Pages/Resources/VirtualAssistant/UpdatePage"
 import ProfilePage from "../Pages/Settings/Profile/DetailsPage"
 import ForwardPayloadListPage from "../Pages/Operations/ForwardPayload/ListPage"
 import ForwardPayloadUpdatePage from "../Pages/Operations/ForwardPayload/UpdatePage"
@@ -74,6 +77,12 @@ const routeMap = {
       detail: "/resources/virtualdevice/list/:id",
       update: "/resources/virtualdevice/update/:id",
       add: "/resources/virtualdevice/add",
+    },
+    virtualAssistant: {
+      list: "/resources/virtualassistant",
+      detail: "/resources/virtualassistant/list/:id",
+      update: "/resources/virtualassistant/update/:id",
+      add: "/resources/virtualassistant/add",
     },
     firmware: {
       list: "/resources/firmware",
@@ -175,12 +184,6 @@ const routes = [
         isSeparator: true,
       },
       {
-        id: "virtual_device",
-        title: "virtual_devices",
-        to: routeMap.resources.virtualDevice.list,
-        component: VirtualDeviceListPage,
-      },
-      {
         id: "firmware",
         title: "firmwares",
         to: routeMap.resources.firmware.list,
@@ -191,6 +194,24 @@ const routes = [
         title: "data_repository",
         to: routeMap.resources.dataRepository.list,
         component: DataRepositoryListPage,
+      },
+      {
+        id: "separator_2",
+        isSeparator: true,
+      },
+      {
+        id: "virtual_device",
+        title: "virtual_devices",
+        to: routeMap.resources.virtualDevice.list,
+        component: VirtualDeviceListPage,
+        isExperimental: true,
+      },
+      {
+        id: "virtual_assistant",
+        title: "virtual_assistants",
+        to: routeMap.resources.virtualAssistant.list,
+        component: VirtualAssistantListPage,
+        isExperimental: true,
       },
     ],
   },
@@ -288,14 +309,6 @@ const hiddenRoutes = [
     component: FieldUpdatePage,
   },
   {
-    to: routeMap.resources.virtualDevice.detail,
-    component: VirtualDeviceDetailPage,
-  },
-  {
-    to: routeMap.resources.virtualDevice.add,
-    component: VirtualDeviceUpdatePage,
-  },
-  {
     to: routeMap.operations.forwardPayload.detail,
     component: ForwardPayloadDetailPage,
   },
@@ -318,6 +331,22 @@ const hiddenRoutes = [
   {
     to: routeMap.resources.dataRepository.add,
     component: DataRepositoryUpdatePage,
+  },
+  {
+    to: routeMap.resources.virtualDevice.detail,
+    component: VirtualDeviceDetailPage,
+  },
+  {
+    to: routeMap.resources.virtualDevice.add,
+    component: VirtualDeviceUpdatePage,
+  },
+  {
+    to: routeMap.resources.virtualAssistant.detail,
+    component: VirtualAssistantDetailPage,
+  },
+  {
+    to: routeMap.resources.virtualAssistant.add,
+    component: VirtualAssistantUpdatePage,
   },
   {
     to: routeMap.operations.task.detail,

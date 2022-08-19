@@ -15,6 +15,8 @@ import resourceFirmwareReducer from "./entities/resources/firmware"
 import resourceGatewayReducer from "./entities/resources/gateway"
 import resourceNodeReducer from "./entities/resources/node"
 import resourceSourceReducer from "./entities/resources/source"
+import resourceVirtualAssistantReducer from "./entities/resources/virtualAssistant"
+import resourceVirtualDeviceReducer from "./entities/resources/virtualDevice"
 import systemBackupReducer from "./entities/system/backup"
 import themeReducer from "./entities/theme"
 import toasterReducer from "./entities/toaster"
@@ -34,6 +36,8 @@ export default combineReducers({
   resourceFirmware: resourceFirmwareReducer,
   resourceDataRepository: resourceDataRepositoryReducer,
   operationForwardPayload: operationForwardPayloadReducer,
+  resourceVirtualAssistant: resourceVirtualAssistantReducer,
+  resourceVirtualDevice: resourceVirtualDeviceReducer,
   operationTask: operationTaskReducer,
   operationHandler: operationHandlerReducer,
   operationScheduler: operationSchedulerReducer,

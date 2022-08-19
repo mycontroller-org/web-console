@@ -171,6 +171,16 @@ export const api = {
     get: (id) => newRequest(HTTP_VERBS.GET, "/virtualdevice/" + id, {}, {}),
     update: (data) => newRequest(HTTP_VERBS.POST, "/virtualdevice", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/virtualdevice", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/virtualdevice/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/virtualdevice/disable", {}, data),
+  },
+  virtualAssistant: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/virtualassistant", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/virtualassistant/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/virtualassistant", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/virtualassistant", {}, data),
+    enable: (data) => newRequest(HTTP_VERBS.POST, "/virtualassistant/enable", {}, data),
+    disable: (data) => newRequest(HTTP_VERBS.POST, "/virtualassistant/disable", {}, data),
   },
   metric: {
     fetch: (queries) => newRequest(HTTP_VERBS.POST, "/metric", {}, queries),

@@ -12,9 +12,12 @@ add_a_node: Ajout d'un nœud
 add_a_schedule: Ajout d'un horaire
 add_a_source: Ajout d'une source
 add_a_task: Ajout d'une tâche
+add_a_virtual_assistant: Add a Virtual Assistant
+add_a_virtual_device: Add a Virtual Device
 add_an_item: Ajout d'un élément
 add_widget: Ajout d'un widget
 address: Adresse
+agent_user_id: Agent User ID
 alerts_empty_message: pas d’alertes en cours
 alerts_empty_title: Aucune alerte trouvée
 alive_check_interval: Intervalle de contrôle actif
@@ -84,6 +87,8 @@ description: Description
 destination_field: Zone de destination
 detailed_filter: Detailed Filter
 details: Détails
+device_filter: Device Filter
+device_type: Device Type
 dialog:
   clear_sleeping_queue_heading: " Voulez-vous vider la file d'attente?"
   clear_sleeping_queue_msg: Tous les messages en file d'attente seront abandonnés
@@ -100,6 +105,8 @@ dialog:
   delete_title_schedule: "Supprimer les horaires ?"
   delete_title_source: "Supprimer les sources ?"
   delete_title_task: "Supprimer les tâches ?"
+  delete_title_virtual_assistant: "Delete virtual assistant?"
+  delete_title_virtual_device: "Delete virtual device?"
   node_reset_heading: "Réinitialiser le nœud ?"
   node_reset_msg: "Êtes-vous sûr de vouloir réinitialiser les nœuds sélectionnés?<br/> Après cette opération :<3><0>la configuration sera restaurée aux paramètres d'usine.</0><1>Vous pouvez perdre l'accès au(x) nœud(s) sélectionné(s) depuis MyController !</1></3>"
   reboot_nodes_heading: "Redémarrer le nœud ?"
@@ -144,6 +151,7 @@ executed_count: exécute la Totalisation
 execution_interval: période d'exécution
 execution_interval_0h0m0s: période d'exécution  (0h0m0s)
 execution_mode: Mode d'exécution
+experimental: Experimental
 export_type: Type d'exportation
 'false': 'Faux'
 favorite: Favori
@@ -278,6 +286,7 @@ json: JSON
 keep_me_logged_in_30_days: Resté connecté pendant 30 jours.
 key: Clé
 key_path: Emplacement de la clé
+label: Label
 labels: Labels
 language: Langage
 last_evaluation: "Dernière Évaluation "
@@ -621,6 +630,44 @@ opts:
     label_multiple_unordered: Multiples non ordonnés
     label_orange: Orange
     label_purple: Mauve
+  trait_type:
+    label_app_selector: App Selector
+    label_arm_disarm: Arm Disarm
+    label_brightness: Brightness
+    label_camera_stream: Camera Stream
+    label_channel: Channel
+    label_color_setting: Color Setting
+    label_cook: Cook
+    label_dispense: Dispense
+    label_dock: Dock
+    label_energy_storage: Energy Storage
+    label_fan_speed: Fan Speed
+    label_fill: Fill
+    label_humidity_setting: Humidity Setting
+    label_input_selector: Input Selector
+    label_light_effects: Light Effects
+    label_locator: Locator
+    label_lock_unlock: Lock Unlock
+    label_media_state: Media State
+    label_modes: Modes
+    label_network_control: Network Control
+    label_object_detection: Object Detection
+    label_on_off: On Off
+    label_open_close: Open Close
+    label_reboot: Reboot
+    label_rotation: Rotation
+    label_run_cycle: Run Cycle
+    label_scene: Scene
+    label_sensor_state: Sensor State
+    label_software_update: Software Update
+    label_start_stop: Start Stop
+    label_status_report: Status Report
+    label_temperature_control: Temperature Control
+    label_temperature_setting: Temperature Setting
+    label_timer: Timer
+    label_toggles: Toggles
+    label_transport_control: Transport Control
+    label_volume: Volume
   utilization_chart:
     label_circle_050: Demi cercle
     label_circle_075: 3/4 Cercle
@@ -629,6 +676,92 @@ opts:
     label_spark_bar: Sparkline en Histogramme
     label_spark_line: Sparkline en ligne
     label_table: Tableau
+  va_provider:
+    desc_alexa: Amazon Alexa
+    desc_google_assistant: Google Assistant
+    label_alexa: Alexa
+    label_google_assistant: Google Assistant
+  vd_type:
+    label_air_conditioner: Air Conditioner
+    label_air_cooler: Air Cooler
+    label_air_freshener: Air Freshener
+    label_air_purifier: Air Purifier
+    label_audio_video_receiver: Audio Video Receiver
+    label_awning: Awning
+    label_bathtub: Bathtub
+    label_bed: Bed
+    label_blender: Blender
+    label_blinds: Blinds
+    label_boiler: Boiler
+    label_camera: Camera
+    label_carbon_monoxide_detector: Carbon Monoxide Detector
+    label_charger: Charger
+    label_closet: Closet
+    label_coffee_maker: Coffee Maker
+    label_cooktop: Cooktop
+    label_curtain: Curtain
+    label_dehumidifier: Dehumidifier
+    label_dehydrator: Dehydrator
+    label_dishwasher: Dishwasher
+    label_door: Door
+    label_door_bell: Door Bell
+    label_drawer: Drawer
+    label_dryer: Dryer
+    label_fan: Fan
+    label_faucet: Faucet
+    label_fireplace: Fireplace
+    label_freezer: Freezer
+    label_fryer: Fryer
+    label_garage_door: Garage Door
+    label_gate: Gate
+    label_grill: Grill
+    label_heater: Heater
+    label_hood: Hood
+    label_humidifier: Humidifier
+    label_kettle: Kettle
+    label_light: Light
+    label_lock: Lock
+    label_media_remote: Media Remote
+    label_microwave: Microwave
+    label_mop: Mop
+    label_mower: Mower
+    label_multicooker: Multicooker
+    label_network: Network
+    label_outlet: Outlet
+    label_oven: Oven
+    label_pergola: Pergola
+    label_pet_feeder: Pet Feeder
+    label_pressure_cooker: Pressure Cooker
+    label_radiator: Radiator
+    label_refrigerator: Refrigerator
+    label_router: Router
+    label_scene: Scene
+    label_security_system: Security System
+    label_sensor: Sensor
+    label_set_top_box: Set Top Box
+    label_shower: Shower
+    label_shutter: Shutter
+    label_smoke_detector: Smoke Detector
+    label_soundbar: Soundbar
+    label_sous_vide: Sous Vide
+    label_speaker: Speaker
+    label_sprinkler: Sprinkler
+    label_stand_mixer: Stand Mixer
+    label_streaming_box: Streaming Box
+    label_streaming_soundbar: Streaming Soundbar
+    label_streaming_stick: Streaming Stick
+    label_switch: Switch
+    label_television: Television
+    label_thermostat: Thermostat
+    label_vacuum: Vacuum
+    label_valve: Valve
+    label_washer: Washer
+    label_water_heater: Water Heater
+    label_water_purifier: Water Purifier
+    label_water_softener: Water Softener
+    label_weather_station: Weather Station
+    label_window: Window
+    label_yogurt_maker: Yogurt Maker
   week_day:
     label_friday: Vendredi
     label_monday: Lundi
@@ -782,6 +915,8 @@ to: Pour
 to_emails: Vers Courriels
 token: Jeton
 topic: Sujet
+trait: Trait
+traits: Traits
 transmit_pre_delay: Prédélai de transmission
 trigger_on_event: Déclencher sur événement
 'true': 'Vrai'
@@ -816,6 +951,11 @@ variable: Variable
 variable_name: Nom de variable
 variables: variables
 version: Version
+virtual_assistant: Virtual Assistant
+virtual_assistant_details: Virtual Assistant Details
+virtual_assistants: Virtual Assistants
+virtual_device_details: Virtual Device Details
+virtual_devices: Virtual Devices
 web_console: Console Internet
 webhook: " rappel HTTP \"Webhook'"
 websocket_disconnected: Websocket déconnecté
