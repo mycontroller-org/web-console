@@ -1,7 +1,7 @@
 // Provider keeps supported providers list, this value will be used in backend
 export const Provider = {
   GoogleAssistant: "google_assistant",
-  Alexa: "alexa",
+  Alexa: "alexa_assistant",
 }
 
 // Providers options list
