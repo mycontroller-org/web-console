@@ -75,8 +75,8 @@ dampening: atténuer
 dashboard: Tableau de bord
 data: Données
 data_repository: Répertoire de données
-data_repository_add_an_entry: 'Répertoire de données: Ajouter une entrée'
-data_repository_modify_an_entry: 'Répertoire de données: Modifier une entrée'
+data_repository_add_an_entry: "Répertoire de données: Ajouter une entrée"
+data_repository_modify_an_entry: "Répertoire de données: Modifier une entrée"
 data_retrieved_from_server: Données récupérées du serveur
 data_type: Type de données
 date_yyyy_mm_dd: Date (année-mois-jour)
@@ -111,6 +111,8 @@ dialog:
   node_reset_msg: "Êtes-vous sûr de vouloir réinitialiser les nœuds sélectionnés?<br/> Après cette opération :<3><0>la configuration sera restaurée aux paramètres d'usine.</0><1>Vous pouvez perdre l'accès au(x) nœud(s) sélectionné(s) depuis MyController !</1></3>"
   reboot_nodes_heading: "Redémarrer le nœud ?"
   reboot_nodes_msg: "Êtes-vous sûr de vouloir redémarrer les nœuds sélectionnés ?"
+  reset_msg_jwt_secret: "Are you sure want to reset the JWT secret? After this operation, all the existing logged in sessions to this server will be invalid also you will be logged out!"
+  reset_title_jwt_secret: Reset JWT secret
   restore_heading: "Confirmer pour effectuer la restauration ?"
   restore_msg: "Êtes-vous sûr de vouloir restaurer le fichier de sauvegarde sélectionné ?<br/>Après cette opération <3><0>les données du serveur seront restaurées dans <1>{{fileName}}</1></0><1>Vous ne pouvez pas annuler cette opération</1><2>Faites toujours une sauvegarde avant d'effectuer une opération de restauration</2><3>Vous devrez peut-être démarrer le serveur manuellement</3></3>"
 disable: Désactiver
@@ -153,7 +155,7 @@ execution_interval_0h0m0s: période d'exécution  (0h0m0s)
 execution_mode: Mode d'exécution
 experimental: Experimental
 export_type: Type d'exportation
-'false': 'Faux'
+"false": "Faux"
 favorite: Favori
 fetch_info: Récupérer les informations
 fetching: Aller chercher
@@ -203,7 +205,7 @@ headers: En-têtes
 heartbeat_request: Demande de Pulsation
 height_px: Hauteur (en px)
 helper_text:
-  invalid_address_esphome: 'Adresse invalide, exemple : node1.local:6053'
+  invalid_address_esphome: "Adresse invalide, exemple : node1.local:6053"
   invalid_api: API non valide
   invalid_backup_retention_count: "Nombre de rétention invalide, 0 pour aucune limite"
   invalid_baud_rate: Vitesse de transmission invalide
@@ -283,6 +285,7 @@ is_sleep_node: " Nœud en veille"
 is_static: Est statique
 javascript: Javascript
 json: JSON
+jwt_secret: JWT Secret
 keep_me_logged_in_30_days: Resté connecté pendant 30 jours.
 key: Clé
 key_path: Emplacement de la clé
@@ -333,7 +336,7 @@ metric_function: Fonction métrique
 metric_interval: Metric Interval
 metric_type: Type métrique
 metrics: Metrics
-metrics_database_disabled: 'WARNING : Base de données de métriques désactivée'
+metrics_database_disabled: "WARNING : Base de données de métriques désactivée"
 min_y_axis: Min (Y Axis)
 minimum: Minimum
 minimum_value: Valeur minimum
@@ -361,11 +364,11 @@ none: Aucun
 notifications: Notifications
 number_of_axis: Nombre d'axes
 occurrences: Occurrences
-'off': 'OFF'
+"off": "OFF"
 off_text: OFF Texte
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
-'on': 'ON'
+"on": "ON"
 on_button: Bouton MARCHE
 on_receive: En réception
 on_send: En cours d'envoi
@@ -829,6 +832,7 @@ reload: Recharger
 repeat_count: Nombre de répétitions
 request_heartbeat: Demander Pulsation
 reset: Réinitialiser
+resetting: Resetting...
 resource: Ressource
 resource_by_labels: Ressource par étiquettes
 resource_by_quick_id: Resource By Quick ID
@@ -848,7 +852,7 @@ round_decimal: Décimale arrondie
 rule: Règle
 run_a_backup: Exécuter une sauvegarde
 run_backup: Exécuter la sauvegarde
-s_no: '#'
+s_no: "#"
 saturation: Saturation
 save: Sauvegarde
 schedule: Calendrier Horaire
@@ -919,7 +923,7 @@ trait: Trait
 traits: Traits
 transmit_pre_delay: Prédélai de transmission
 trigger_on_event: Déclencher sur événement
-'true': 'Vrai'
+"true": "Vrai"
 type: Type
 unit: Unité
 up: HAUT

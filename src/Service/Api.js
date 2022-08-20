@@ -248,6 +248,7 @@ export const api = {
     getSystemSettings: () => newRequest(HTTP_VERBS.GET, "/settings/system", {}, {}),
     getJobs: () => newRequest(HTTP_VERBS.GET, "/settings/jobs", {}, {}),
     getBackupLocations: () => newRequest(HTTP_VERBS.GET, "/settings/backuplocations", {}, {}),
+    resetJwtSecret: () => newRequest(HTTP_VERBS.GET, "/settings/system/jwtsecret/reset", {}, {}),
   },
   backup: {
     list: (filter) => newRequest(HTTP_VERBS.GET, "/backup", filter, {}),

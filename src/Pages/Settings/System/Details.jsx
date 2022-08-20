@@ -7,6 +7,7 @@ import { DisplayEnabled } from "../../../Components/DataDisplay/Miscellaneous"
 import { getLanguage } from "../../../i18n/languages"
 import { api } from "../../../Service/Api"
 import { getValue } from "../../../Util/Util"
+import ResetJwtSecret from "./ResetJwtSecret"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -29,6 +30,7 @@ const getDetailsFuncImpl = (data) => {
 
   fieldsList1.push({ key: "geo_location", value: <GeoLocation data={data.spec.geoLocation} /> })
   fieldsList1.push({ key: "language", value: getLanguage(data.spec.language) })
+  fieldsList1.push({ key: "jwt_secret", value: <ResetJwtSecret /> })
   fieldsList2.push({ key: "login", value: <Login data={data.spec.login} /> })
   fieldsList2.push({ key: "node_state_updater", value: <NodeStateUpdater data={data.spec.nodeStateJob} /> })
 

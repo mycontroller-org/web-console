@@ -75,8 +75,8 @@ dampening: Dampening
 dashboard: டாஷ்போர்டு
 data: தகவல்கள்
 data_repository: தரவு களஞ்சியம்
-data_repository_add_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டைச் சேர்க்கவும்'
-data_repository_modify_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டை மாற்றவும்'
+data_repository_add_an_entry: "தரவு களஞ்சியம்: ஒரு உள்ளீட்டைச் சேர்க்கவும்"
+data_repository_modify_an_entry: "தரவு களஞ்சியம்: ஒரு உள்ளீட்டை மாற்றவும்"
 data_retrieved_from_server: Data retrieved from server
 data_type: தரவு வகை
 date_yyyy_mm_dd: தேதி (yyy-mm-dd)
@@ -111,6 +111,8 @@ dialog:
   node_reset_msg: "Are you sure want to reset the selected nodes?<br/>After this operation:<3><0>Configuration will be restored to factory settings.</0><1>you may lose access to the selected node(s) from MyController!</1></3>"
   reboot_nodes_heading: "நோடயை மறுதொடக்கம் செய்யவா?"
   reboot_nodes_msg: "தேர்ந்தெடுக்கப்பட்ட நோடுகளை நிச்சயமாக மறுதொடக்கம் செய்ய விரும்புகிறீர்களா?"
+  reset_msg_jwt_secret: "Are you sure want to reset the JWT secret? After this operation, all the existing logged in sessions to this server will be invalid also you will be logged out!"
+  reset_title_jwt_secret: Reset JWT secret
   restore_heading: "Confirm to perform a restore operation?"
   restore_msg: "தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி கோப்பில் நிச்சயமாக மீட்டெடுக்க விரும்புகிறீர்களா?<br/>இந்த செயல்பாடுக்குப் பிறகு:<3><0>Server தரவு <4>{{fileName}}</4> க்கு மீட்டமைக்கப்படும் </0><1>இந்த செயல்பாட்டை நீங்கள் திரும்பப் பெற முடியாது</1><2>மீட்பு செயல்பாட்டைச் செய்வதற்கு முன் எப்போதும் காப்புப் பிரதி எடுக்கவும்</2><3>You may need to start the server manually</3></3>"
 disable: முடக்கு
@@ -153,7 +155,7 @@ execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 experimental: Experimental
 export_type: Export Type
-'false': 'False'
+"false": "False"
 favorite: பிடித்தவை
 fetch_info: தகவலைப் பெறவும்
 fetching: Fetching
@@ -203,7 +205,7 @@ headers: Headers
 heartbeat_request: Heartbeat Request
 height_px: உயரம் (px)
 helper_text:
-  invalid_address_esphome: 'தவறான முகவரி. உதாரணமாக: node1.local:6053'
+  invalid_address_esphome: "தவறான முகவரி. உதாரணமாக: node1.local:6053"
   invalid_api: தவறான API
   invalid_backup_retention_count: தவறான காப்பு தக்கவைப்பு எண்ணிக்கை. 0-க்கு வரம்பு இல்லை
   invalid_baud_rate: தவறான பாட் ரேட்
@@ -283,6 +285,7 @@ is_sleep_node: Is Sleep Node
 is_static: நிலையானது
 javascript: ஜாவாஸ்கிரிப்ட்
 json: JSON
+jwt_secret: JWT Secret
 keep_me_logged_in_30_days: 30 நாட்களுக்கு என்னை நினைவில் வைக்கவும்.
 key: Key
 key_path: Key Path
@@ -333,7 +336,7 @@ metric_function: மெட்ரிக் செயல்பாடு
 metric_interval: மெட்ரிக் இடைவெளி
 metric_type: மெட்ரிக் வகை
 metrics: மெட்ரிக்ஸ்
-metrics_database_disabled: 'எச்சரிக்கை: மெட்ரிக்ஸ் தரவுத்தளம் முடக்கப்பட்டுள்ளது'
+metrics_database_disabled: "எச்சரிக்கை: மெட்ரிக்ஸ் தரவுத்தளம் முடக்கப்பட்டுள்ளது"
 min_y_axis: குறைந்தபட்சம் (Y அச்சு)
 minimum: குறைந்தபட்சம்
 minimum_value: குறைந்தபட்ச மதிப்பு
@@ -361,11 +364,11 @@ none: ஏதுமில்லை
 notifications: அறிவிப்புகள்
 number_of_axis: Number of Axis
 occurrences: நிகழ்வுகள்
-'off': 'OFF'
+"off": "OFF"
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
-'on': 'ON'
+"on": "ON"
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send
@@ -829,6 +832,7 @@ reload: Reload
 repeat_count: Repeat Count
 request_heartbeat: Request Heartbeat
 reset: மீட்டமை
+resetting: Resetting...
 resource: ரிசோர்ஸ்
 resource_by_labels: Resource By Labels
 resource_by_quick_id: Resource By Quick ID
@@ -848,7 +852,7 @@ round_decimal: Round Decimal
 rule: ரூல்
 run_a_backup: Run a Backup
 run_backup: Run Backup
-s_no: '#'
+s_no: "#"
 saturation: Saturation
 save: சேமிக்க
 schedule: Schedule
@@ -919,7 +923,7 @@ trait: Trait
 traits: Traits
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
-'true': 'True'
+"true": "True"
 type: வகை
 unit: அலகு
 up: மேலே

@@ -90,6 +90,39 @@ export const RestoreDialog = ({ show, fileName, onCloseFn, onOkFn }) => {
   return dialog(t("dialog.restore_heading"), show, onCloseFn, onOkFn, t("restore"), message, t)
 }
 
+export const CommonDialog = ({
+  dialogTitle,
+  dialogMsg,
+  show,
+  onCloseFn,
+  onOkFn,
+  confirmBtnText = "continue",
+  variant = "warning",
+}) => {
+  const { t } = useTranslation()
+  return (
+    <Modal
+      className="mc-model"
+      variant={ModalVariant.small}
+      position="top"
+      title={t(dialogTitle)}
+      isOpen={show}
+      onClose={onCloseFn}
+      showClose={false}
+      actions={[
+        <Button key="cancel" variant="secondary" onClick={onCloseFn}>
+          {t("cancel")}
+        </Button>,
+        <Button key="confirm" variant={variant} onClick={onOkFn}>
+          {t(confirmBtnText)}
+        </Button>,
+      ]}
+    >
+      {t(dialogMsg)}
+    </Modal>
+  )
+}
+
 const dialog = (
   title = "",
   isOpen = false,
