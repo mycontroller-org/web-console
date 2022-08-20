@@ -75,8 +75,8 @@ dampening: Dampening
 dashboard: Dashboard
 data: Data
 data_repository: Data Repository
-data_repository_add_an_entry: "Data Repository: Add an entry"
-data_repository_modify_an_entry: "Data Repository: Modify an entry"
+data_repository_add_an_entry: 'Data Repository: Add an entry'
+data_repository_modify_an_entry: 'Data Repository: Modify an entry'
 data_retrieved_from_server: Data retrieved from server
 data_type: Data Type
 date_yyyy_mm_dd: Date (yyyy-mm-dd)
@@ -155,7 +155,7 @@ execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 experimental: Experimental
 export_type: Export Type
-"false": "False"
+'false': 'False'
 favorite: Favorite
 fetch_info: Fetch Info
 fetching: Fetching
@@ -205,7 +205,7 @@ headers: Headers
 heartbeat_request: Heartbeat Request
 height_px: Height (px)
 helper_text:
-  invalid_address_esphome: "Invalid address, example: node1.local:6053"
+  invalid_address_esphome: 'Invalid address, example: node1.local:6053'
   invalid_api: Invalid API
   invalid_backup_retention_count: Invalid retention count, 0 for no limit
   invalid_baud_rate: Invalid baud rate
@@ -336,7 +336,7 @@ metric_function: Metric Function
 metric_interval: Metric Interval
 metric_type: Metric Type
 metrics: Metrics
-metrics_database_disabled: "WARNING: Metrics database disabled"
+metrics_database_disabled: 'WARNING: Metrics database disabled'
 min_y_axis: Min (Y Axis)
 minimum: Minimum
 minimum_value: Minimum Value
@@ -364,11 +364,11 @@ none: None
 notifications: Notifications
 number_of_axis: Number of Axis
 occurrences: Occurrences
-"off": "OFF"
+'off': 'OFF'
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
-"on": "ON"
+'on': 'ON'
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send
@@ -852,7 +852,7 @@ round_decimal: Round Decimal
 rule: Rule
 run_a_backup: Run a Backup
 run_backup: Run Backup
-s_no: "#"
+s_no: '#'
 saturation: Saturation
 save: Save
 schedule: Schedule
@@ -923,7 +923,7 @@ trait: Trait
 traits: Traits
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
-"true": "True"
+'true': 'True'
 type: Type
 unit: Unit
 up: UP
@@ -938,6 +938,7 @@ update_pre_run: Update Pre Run
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
 update_script: Update Script
+update_trait: Update trait
 update_value: Update Value
 update_y_axis: Update Y Axis
 upload: Upload

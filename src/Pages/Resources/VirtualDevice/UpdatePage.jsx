@@ -15,6 +15,7 @@ import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
 import { getValue } from "../../../Util/Util"
 import { validate } from "../../../Util/Validator"
 import VdResourcePicker from "./VdResourcePicker"
+import { withTranslation } from "react-i18next"
 
 class UpdatePage extends React.Component {
   state = {
@@ -73,7 +74,7 @@ class UpdatePage extends React.Component {
   }
 }
 
-export default UpdatePage
+export default withTranslation()(UpdatePage)
 
 // support functions
 
