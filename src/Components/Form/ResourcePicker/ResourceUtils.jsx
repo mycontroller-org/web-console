@@ -232,9 +232,7 @@ export const resourceUpdateButtonCallback = (callerType, index = 0, item = {}, o
       name={item.key}
       id={"model_" + index}
       callerType={callerType}
-      onChange={(newValue) => {
-        onChange(index, "value", newValue)
-      }}
+      onChange={onChange}
     />
   )
 }
