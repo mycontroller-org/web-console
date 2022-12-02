@@ -1,6 +1,5 @@
 // Handler type values
 export const HandlerType = {
-  Noop: "noop",
   Resource: "resource",
   Email: "email",
   Telegram: "telegram",
@@ -10,11 +9,6 @@ export const HandlerType = {
 
 // Handler type options
 export const HandlerTypeOptions = [
-  {
-    value: HandlerType.Noop,
-    label: "opts.handler_type.label_noop",
-    description: "opts.handler_type.desc_noop",
-  },
   {
     value: HandlerType.Resource,
     label: "opts.handler_type.label_resource",
