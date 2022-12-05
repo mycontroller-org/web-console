@@ -256,6 +256,13 @@ export const api = {
     runOnDemandBackup: (data) => newRequest(HTTP_VERBS.POST, "/backup/run", {}, data),
     runRestore: (query) => newRequest(HTTP_VERBS.GET, "/restore/run", query, {}),
   },
+  serviceToken: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/servicetoken", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/servicetoken/" + id, {}, {}),
+    create: (data) => newRequest(HTTP_VERBS.POST, "/servicetoken/create", {}, data),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/servicetoken/update", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/servicetoken", {}, data),
+  },
   quickId: {
     getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
   },

@@ -10,6 +10,7 @@ add_a_gateway: Ajout d'une passerelle
 add_a_handler: Ajout d'un gestionnaire
 add_a_node: Ajout d'un nœud
 add_a_schedule: Ajout d'un horaire
+add_a_service_token: Add a Service Token
 add_a_source: Ajout d'une source
 add_a_task: Ajout d'une tâche
 add_a_virtual_assistant: Add a Virtual Assistant
@@ -61,10 +62,13 @@ confirmation_message: Message de confirmation
 connection_timeout: Délai de connexion
 control_configuration: Control Configuration
 control_type: Type de commande
+copied: Copied
+copy: Copy
 corner_smoothing: Lissage des angles
 cpu: Processeur
 cpu_disabled: Processeur désactivé
 create_new: Créer un nouveau
+created_on: Created On
 cron_expression: tâches automatisées
 current_password: Mot de passe actuel
 cursor_tooltip: Infobulle pour le curseur
@@ -75,8 +79,8 @@ dampening: atténuer
 dashboard: Tableau de bord
 data: Données
 data_repository: Répertoire de données
-data_repository_add_an_entry: "Répertoire de données: Ajouter une entrée"
-data_repository_modify_an_entry: "Répertoire de données: Modifier une entrée"
+data_repository_add_an_entry: 'Répertoire de données: Ajouter une entrée'
+data_repository_modify_an_entry: 'Répertoire de données: Modifier une entrée'
 data_retrieved_from_server: Données récupérées du serveur
 data_type: Type de données
 date_yyyy_mm_dd: Date (année-mois-jour)
@@ -103,6 +107,7 @@ dialog:
   delete_title_handler: "Supprimer les gestionnaires ?"
   delete_title_node: "Supprimer des nœuds ?"
   delete_title_schedule: "Supprimer les horaires ?"
+  delete_title_service_token: "Delete service token?"
   delete_title_source: "Supprimer les sources ?"
   delete_title_task: "Supprimer les tâches ?"
   delete_title_virtual_assistant: "Delete virtual assistant?"
@@ -154,8 +159,9 @@ execution_interval: période d'exécution
 execution_interval_0h0m0s: période d'exécution  (0h0m0s)
 execution_mode: Mode d'exécution
 experimental: Experimental
+expires_on: Expires On
 export_type: Type d'exportation
-"false": "Faux"
+'false': 'Faux'
 favorite: Favori
 fetch_info: Récupérer les informations
 fetching: Aller chercher
@@ -205,7 +211,7 @@ headers: En-têtes
 heartbeat_request: Demande de Pulsation
 height_px: Hauteur (en px)
 helper_text:
-  invalid_address_esphome: "Adresse invalide, exemple : node1.local:6053"
+  invalid_address_esphome: 'Adresse invalide, exemple : node1.local:6053'
   invalid_api: API non valide
   invalid_backup_retention_count: "Nombre de rétention invalide, 0 pour aucune limite"
   invalid_baud_rate: Vitesse de transmission invalide
@@ -336,7 +342,7 @@ metric_function: Fonction métrique
 metric_interval: Metric Interval
 metric_type: Type métrique
 metrics: Metrics
-metrics_database_disabled: "WARNING : Base de données de métriques désactivée"
+metrics_database_disabled: 'WARNING : Base de données de métriques désactivée'
 min_y_axis: Min (Y Axis)
 minimum: Minimum
 minimum_value: Valeur minimum
@@ -345,6 +351,7 @@ mixed_resources: Mixed Resources
 modified_on: Modifiée Activér
 name: Nom
 name_key: Nom de la Clé
+never_expire: Never Expire
 new: Nouveau
 new_password: Nouveau mot de passe
 no_change_since: Aucun changement depuis
@@ -364,11 +371,11 @@ none: Aucun
 notifications: Notifications
 number_of_axis: Nombre d'axes
 occurrences: Occurrences
-"off": "OFF"
+'off': 'OFF'
 off_text: OFF Texte
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
-"on": "ON"
+'on': 'ON'
 on_button: Bouton MARCHE
 on_receive: En réception
 on_send: En cours d'envoi
@@ -852,7 +859,7 @@ round_decimal: Décimale arrondie
 rule: Règle
 run_a_backup: Exécuter une sauvegarde
 run_backup: Exécuter la sauvegarde
-s_no: "#"
+s_no: '#'
 saturation: Saturation
 save: Sauvegarde
 schedule: Calendrier Horaire
@@ -862,6 +869,11 @@ schedules: Table Horaires
 script: Script
 select_an_option: Sélectionner une option
 server: Serveur
+service_not_generated: Service token not generated
+service_token_copy_title: Copy Service Token
+service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
+service_token_details: Service Token Details
+service_tokens: Service Tokens
 settings: Réglages
 show_grid_x: Affiche la grille X
 show_grid_y: Affiche la grille Y
@@ -923,7 +935,7 @@ trait: Trait
 traits: Traits
 transmit_pre_delay: Prédélai de transmission
 trigger_on_event: Déclencher sur événement
-"true": "Vrai"
+'true': 'Vrai'
 type: Type
 unit: Unité
 up: HAUT
@@ -938,6 +950,7 @@ update_pre_run: Mise à jour avant l’exécution
 update_query_parameters: Mise à jour des paramètres
 update_resource: Actualiser Ressource
 update_script: Mise à jour du script
+update_trait: Update trait
 update_value: Actualiser Valeur
 update_y_axis: Actualiser l'axe Y
 upload: Télécharger
@@ -945,6 +958,7 @@ upload_firmware: Télécharger le firmware
 url: URL
 use_global: Use Global
 use_global_style: Utiliser le style global
+user_id: User ID
 username: Nom d'utilisateur
 validate_time_everyday: Valider l'heure chaque jour
 validity: Validité

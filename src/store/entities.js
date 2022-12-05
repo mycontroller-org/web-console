@@ -21,6 +21,7 @@ import systemBackupReducer from "./entities/system/backup"
 import themeReducer from "./entities/theme"
 import toasterReducer from "./entities/toaster"
 import websocketReducer from "./entities/websocket"
+import settingsServiceTokenReducer from "./entities/system/serviceToken"
 
 export default combineReducers({
   notification: notificationReducer,
@@ -45,4 +46,5 @@ export default combineReducers({
   websocket: websocketReducer,
   locale: localeReducer,
   theme: themeReducer,
+  settingsServiceToken: settingsServiceTokenReducer,
 })

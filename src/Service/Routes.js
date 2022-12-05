@@ -40,6 +40,9 @@ import ScheduleUpdatePage from "../Pages/Operations/Schedule/UpdatePage"
 import ScheduleDetailPage from "../Pages/Operations/Schedule/DetailsRootPage"
 import SystemDetailsPage from "../Pages/Settings/System/DetailsRootPage"
 import SystemBackupPage from "../Pages/Settings/Backup/ListPage"
+import ServiceTokenDetailPage from "../Pages/Settings/ServiceToken/DetailsRootPage"
+import ServiceTokenListPage from "../Pages/Settings/ServiceToken/ListPage"
+import ServiceTokenUpdatePage from "../Pages/Settings/ServiceToken/UpdatePage"
 
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 //import TopologyPage from "../Pages/Topology/Topology"
@@ -101,6 +104,12 @@ const routeMap = {
     profile: "/settings/profile",
     system: "/settings/system",
     backup: "/settings/backup",
+    serviceToken: {
+      list: "/settings/servicetoken",
+      detail: "/settings/servicetoken/list/:id",
+      update: "/settings/servicetoken/update/:id",
+      add: "/settings/servicetoken/add",
+    },
   },
   operations: {
     forwardPayload: {
@@ -267,6 +276,12 @@ const routes = [
         to: routeMap.settings.backup,
         component: SystemBackupPage,
       },
+      {
+        id: "service-token",
+        title: "service_tokens",
+        to: routeMap.settings.serviceToken.list,
+        component: ServiceTokenListPage,
+      },
     ],
   },
 ]
@@ -371,6 +386,14 @@ const hiddenRoutes = [
   {
     to: routeMap.operations.scheduler.add,
     component: ScheduleUpdatePage,
+  },
+  {
+    to: routeMap.settings.serviceToken.detail,
+    component: ServiceTokenDetailPage,
+  },
+  {
+    to: routeMap.settings.serviceToken.add,
+    component: ServiceTokenUpdatePage,
   },
 ]
 

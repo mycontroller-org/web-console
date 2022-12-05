@@ -10,6 +10,7 @@ add_a_gateway: Add a Gateway
 add_a_handler: Add a Handler
 add_a_node: Add a Node
 add_a_schedule: Add a Schedule
+add_a_service_token: Add a Service Token
 add_a_source: Add a Source
 add_a_task: Add a Task
 add_a_virtual_assistant: Add a Virtual Assistant
@@ -61,10 +62,13 @@ confirmation_message: Confirmation Message
 connection_timeout: Connection Timeout
 control_configuration: Control Configuration
 control_type: Control Type
+copied: Copied
+copy: Copy
 corner_smoothing: Corner Smoothing
 cpu: CPU
 cpu_disabled: CPU Disabled
 create_new: Create New
+created_on: Created On
 cron_expression: Cron Expression
 current_password: Current Password
 cursor_tooltip: Cursor Tooltip
@@ -103,6 +107,7 @@ dialog:
   delete_title_handler: Delete handlers?
   delete_title_node: Delete nodes?
   delete_title_schedule: Delete schedules?
+  delete_title_service_token: Delete service token?
   delete_title_source: Delete sources?
   delete_title_task: Delete tasks?
   delete_title_virtual_assistant: Delete virtual assistant?
@@ -154,6 +159,7 @@ execution_interval: Execution Interval
 execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 experimental: Experimental
+expires_on: Expires On
 export_type: Export Type
 'false': 'False'
 favorite: Favorite
@@ -345,6 +351,7 @@ mixed_resources: Mixed Resources
 modified_on: Modified On
 name: Name
 name_key: Name Key
+never_expire: Never Expire
 new: New
 new_password: New Password
 no_change_since: No Change Since
@@ -862,6 +869,11 @@ schedules: Schedules
 script: Script
 select_an_option: Select an option
 server: Server
+service_not_generated: Service token not generated
+service_token_copy_title: Copy Service Token
+service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
+service_token_details: Service Token Details
+service_tokens: Service Tokens
 settings: Settings
 show_grid_x: Show Grid X
 show_grid_y: Show Grid Y
@@ -946,6 +958,7 @@ upload_firmware: Upload Firmware
 url: URL
 use_global: Use Global
 use_global_style: Use Global Style
+user_id: User ID
 username: Username
 validate_time_everyday: Validate Time Everyday
 validity: Validity

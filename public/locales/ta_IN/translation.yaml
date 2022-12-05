@@ -10,6 +10,7 @@ add_a_gateway: ஒரு கேட்வேவை சேர்க்கவும
 add_a_handler: ஒரு ஹேண்ட்லரை சேர்க்கவும்
 add_a_node: ஒரு நோடுயை சேர்க்கவும்
 add_a_schedule: Add a Schedule
+add_a_service_token: Add a Service Token
 add_a_source: ஒரு சோர்ஸ்யை சேர்க்கவும்
 add_a_task: ஒரு டாஸ்க்யை சேர்க்கவும்
 add_a_virtual_assistant: Add a Virtual Assistant
@@ -61,10 +62,13 @@ confirmation_message: உறுதிப்படுத்தல் செய்
 connection_timeout: இணைப்பு நேரம் முடிவடையும் கால அவகாசம்
 control_configuration: Control Configuration
 control_type: கட்டுப்பாட்டு வகை
+copied: Copied
+copy: Copy
 corner_smoothing: மூலையை மென்மையாக்குதல்
 cpu: CPU
 cpu_disabled: CPU முடக்கப்பட்டது
 create_new: புதிதாக உருவாக்கு
+created_on: Created On
 cron_expression: கிரான் தகவல்கள்
 current_password: தற்போதைய கடவுச்சொல்
 cursor_tooltip: கர்சர் உதவிக்குறிப்பு
@@ -75,8 +79,8 @@ dampening: Dampening
 dashboard: டாஷ்போர்டு
 data: தகவல்கள்
 data_repository: தரவு களஞ்சியம்
-data_repository_add_an_entry: "தரவு களஞ்சியம்: ஒரு உள்ளீட்டைச் சேர்க்கவும்"
-data_repository_modify_an_entry: "தரவு களஞ்சியம்: ஒரு உள்ளீட்டை மாற்றவும்"
+data_repository_add_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டைச் சேர்க்கவும்'
+data_repository_modify_an_entry: 'தரவு களஞ்சியம்: ஒரு உள்ளீட்டை மாற்றவும்'
 data_retrieved_from_server: Data retrieved from server
 data_type: தரவு வகை
 date_yyyy_mm_dd: தேதி (yyy-mm-dd)
@@ -103,6 +107,7 @@ dialog:
   delete_title_handler: "Delete handlers?"
   delete_title_node: "நோடுகளை நீக்கவா?"
   delete_title_schedule: "Delete schedules?"
+  delete_title_service_token: "Delete service token?"
   delete_title_source: "Delete sources?"
   delete_title_task: "Delete tasks?"
   delete_title_virtual_assistant: "Delete virtual assistant?"
@@ -154,8 +159,9 @@ execution_interval: Execution Interval
 execution_interval_0h0m0s: Execution Interval (0h0m0s)
 execution_mode: Execution Mode
 experimental: Experimental
+expires_on: Expires On
 export_type: Export Type
-"false": "False"
+'false': 'False'
 favorite: பிடித்தவை
 fetch_info: தகவலைப் பெறவும்
 fetching: Fetching
@@ -205,7 +211,7 @@ headers: Headers
 heartbeat_request: Heartbeat Request
 height_px: உயரம் (px)
 helper_text:
-  invalid_address_esphome: "தவறான முகவரி. உதாரணமாக: node1.local:6053"
+  invalid_address_esphome: 'தவறான முகவரி. உதாரணமாக: node1.local:6053'
   invalid_api: தவறான API
   invalid_backup_retention_count: தவறான காப்பு தக்கவைப்பு எண்ணிக்கை. 0-க்கு வரம்பு இல்லை
   invalid_baud_rate: தவறான பாட் ரேட்
@@ -336,7 +342,7 @@ metric_function: மெட்ரிக் செயல்பாடு
 metric_interval: மெட்ரிக் இடைவெளி
 metric_type: மெட்ரிக் வகை
 metrics: மெட்ரிக்ஸ்
-metrics_database_disabled: "எச்சரிக்கை: மெட்ரிக்ஸ் தரவுத்தளம் முடக்கப்பட்டுள்ளது"
+metrics_database_disabled: 'எச்சரிக்கை: மெட்ரிக்ஸ் தரவுத்தளம் முடக்கப்பட்டுள்ளது'
 min_y_axis: குறைந்தபட்சம் (Y அச்சு)
 minimum: குறைந்தபட்சம்
 minimum_value: குறைந்தபட்ச மதிப்பு
@@ -345,6 +351,7 @@ mixed_resources: Mixed Resources
 modified_on: அன்று மாற்றியமைக்கப்பட்டது
 name: பெயர்
 name_key: பெயர் Key
+never_expire: Never Expire
 new: புதிய
 new_password: புதிய கடவுச்சொல்
 no_change_since: இருந்து எந்த மாற்றமும் இல்லை
@@ -364,11 +371,11 @@ none: ஏதுமில்லை
 notifications: அறிவிப்புகள்
 number_of_axis: Number of Axis
 occurrences: நிகழ்வுகள்
-"off": "OFF"
+'off': 'OFF'
 off_text: OFF Text
 offset_0h0m0s: Offset (0h0m0s)
 offset_y_%: Offset Y (%)
-"on": "ON"
+'on': 'ON'
 on_button: ON Button
 on_receive: On Receive
 on_send: On Send
@@ -852,7 +859,7 @@ round_decimal: Round Decimal
 rule: ரூல்
 run_a_backup: Run a Backup
 run_backup: Run Backup
-s_no: "#"
+s_no: '#'
 saturation: Saturation
 save: சேமிக்க
 schedule: Schedule
@@ -862,6 +869,11 @@ schedules: Schedules
 script: ஸ்கிரிப்ட்
 select_an_option: ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்
 server: சர்வர்
+service_not_generated: Service token not generated
+service_token_copy_title: Copy Service Token
+service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
+service_token_details: Service Token Details
+service_tokens: Service Tokens
 settings: அமைப்புகள்
 show_grid_x: கட்டம் X காட்டு
 show_grid_y: கட்டம் Y காட்டு
@@ -923,7 +935,7 @@ trait: Trait
 traits: Traits
 transmit_pre_delay: Transmit Pre Delay
 trigger_on_event: Trigger On Event
-"true": "True"
+'true': 'True'
 type: வகை
 unit: அலகு
 up: மேலே
@@ -938,6 +950,7 @@ update_pre_run: Update Pre Run
 update_query_parameters: Update Query Parameters
 update_resource: Update Resource
 update_script: Update Script
+update_trait: Update trait
 update_value: Update Value
 update_y_axis: Update Y Axis
 upload: பதிவேற்று
@@ -945,6 +958,7 @@ upload_firmware: ஃபார்ம்வேரை பதிவேற்றவ�
 url: URL
 use_global: Use Global
 use_global_style: Use Global Style
+user_id: User ID
 username: பயனர் பெயர்
 validate_time_everyday: தினசரி நேரத்தை சரிபார்க்கவும்
 validity: Validity

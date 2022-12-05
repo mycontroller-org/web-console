@@ -133,8 +133,8 @@ class Editor extends React.Component {
         if (this.props.apiSaveRecord) {
           this.props
             .apiSaveRecord(data)
-            .then((_res) => {
-              this.callOnSaveRedirect(data)
+            .then((res) => {
+              this.callOnSaveRedirect(data, res.data)
             })
             .catch((_e) => {})
         } else if (this.props.onSaveFunc) {
@@ -148,9 +148,9 @@ class Editor extends React.Component {
 
   onDownloadClick = () => {}
 
-  callOnSaveRedirect = (data = {}) => {
+  callOnSaveRedirect = (data = {}, saveResponse = {}) => {
     if (this.props.onSaveRedirectFunc) {
-      this.props.onSaveRedirectFunc(data)
+      this.props.onSaveRedirectFunc(data, saveResponse)
     }
   }
 
