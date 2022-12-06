@@ -35,7 +35,7 @@ export const wsConnect = () => {
 
   wsClient.onopen = () => {
     store.dispatch(connected())
-    console.log("WebSocket Client Connected")
+    // console.log("WebSocket Client Connected")
   }
 
   wsClient.onmessage = (message) => {
@@ -44,10 +44,10 @@ export const wsConnect = () => {
 
   wsClient.onclose = (event) => {
     store.dispatch(disconnected({ message: event.reason }))
-    console.log("websocket is closed", event.reason)
-    if (wsClient !== null) {
-      console.log("websocket reconnect will be attempted in 5 seconds")
-    }
+    // console.log("websocket is closed", event.reason)
+    // if (wsClient !== null) {
+    //   console.log("websocket reconnect will be attempted in 5 seconds")
+    // }
     setTimeout(function () {
       if (wsClient != null) {
         wsConnect()
@@ -57,7 +57,7 @@ export const wsConnect = () => {
 
   wsClient.onerror = (err) => {
     store.dispatch(disconnected({ message: err.message }))
-    console.error("websocket encountered error: ", err.message, "Closing socket")
+    // console.error("websocket encountered error: ", err.message, "closing socket")
     if (wsClient !== null) {
       wsClient.close()
     }

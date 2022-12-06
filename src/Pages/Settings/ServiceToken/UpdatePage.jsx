@@ -47,6 +47,7 @@ class UpdatePage extends React.Component {
 
     const tokenModal = (
       <Modal
+        position="top"
         variant={ModalVariant.large}
         isOpen={showToken}
         aria-label="no_header_footer"

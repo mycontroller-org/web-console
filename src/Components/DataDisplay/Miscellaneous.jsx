@@ -1,5 +1,5 @@
 import { Label, List, ListItem, Split, SplitItem } from "@patternfly/react-core"
-import fileSize from "filesize"
+import { filesize as fileSize } from "filesize"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { getValue } from "../../Util/Util"
