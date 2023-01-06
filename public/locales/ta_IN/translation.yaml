@@ -143,6 +143,7 @@ edit_widget_settings: விட்ஜெட் அமைப்புகளைத
 email: மின்னஞ்சல்
 enable: செயல்படுத்த
 enabled: செயல்படுத்தப்பட்டது
+encryption_key: Encryption Key
 endpoint: Endpoint
 endpoints: Endpoints
 entities: Entities
@@ -957,6 +958,8 @@ upload: பதிவேற்று
 upload_firmware: ஃபார்ம்வேரை பதிவேற்றவும்
 url: URL
 use_global: Use Global
+use_global_encryption_key: Use Global Encryption Key
+use_global_password: Use Global Password
 use_global_style: Use Global Style
 user_id: User ID
 username: பயனர் பெயர்

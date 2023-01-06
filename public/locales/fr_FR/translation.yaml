@@ -143,6 +143,7 @@ edit_widget_settings: Modifier les paramètres du widget
 email: E-mail
 enable: en service
 enabled: Activé
+encryption_key: Encryption Key
 endpoint: Point d'accès
 endpoints: Points de terminaison
 entities: Entités
@@ -957,6 +958,8 @@ upload: Télécharger
 upload_firmware: Télécharger le firmware
 url: URL
 use_global: Use Global
+use_global_encryption_key: Use Global Encryption Key
+use_global_password: Use Global Password
 use_global_style: Utiliser le style global
 user_id: User ID
 username: Nom d'utilisateur
