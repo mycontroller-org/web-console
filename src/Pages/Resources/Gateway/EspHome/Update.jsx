@@ -10,7 +10,7 @@ export const getESPHomeItems = (rootObject) => {
   objectPath.set(rootObject, "provider.aliveCheckInterval", "15s", true)
   const items = [
     {
-      label: "configuration",
+      label: "global_configuration",
       fieldId: "!configuration_sm",
       fieldType: FieldType.Divider,
     },
@@ -35,6 +35,13 @@ export const getESPHomeItems = (rootObject) => {
       dataType: DataType.String,
       value: "",
     },
+    {
+      label: "encryption_key",
+      fieldId: "provider.encryptionKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+    },
     // {
     //   label: "Auto Discover",
     //   fieldId: "provider.autoDiscover",
@@ -45,12 +52,17 @@ export const getESPHomeItems = (rootObject) => {
     // },
     {
       label: "nodes",
+      fieldId: "!nodes_list",
+      fieldType: FieldType.Divider,
+    },
+    {
+      label: "",
       fieldId: "provider.nodes",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.Object,
       value: "",
-      keyLabel: "node_id",
-      valueLabel: "node_configuration",
+      keyLabel: "name",
+      valueLabel: "configuration",
       showUpdateButton: true,
       saveButtonText: "update",
       updateButtonText: "update",

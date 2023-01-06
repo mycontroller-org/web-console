@@ -6,6 +6,7 @@ import React from "react"
 import Editor from "../../../../Components/Editor/Editor"
 import ErrorBoundary from "../../../../Components/ErrorBoundary/ErrorBoundary"
 import { DataType, FieldType } from "../../../../Constants/Form"
+import { getValue } from "../../../../Util/Util"
 
 class NodeConfigPicker extends React.Component {
   state = {
@@ -73,7 +74,10 @@ export default NodeConfigPicker
 const getItems = (rootObject) => {
   objectPath.set(rootObject, "disabled", false, true)
   objectPath.set(rootObject, "address", "", true)
+  objectPath.set(rootObject, "useGlobalPassword", false, true)
   objectPath.set(rootObject, "password", "", true)
+  objectPath.set(rootObject, "useGlobalEncryptionKey", false, true)
+  objectPath.set(rootObject, "encryptionKey", "", true)
   objectPath.set(rootObject, "timeout", "5s", true)
   objectPath.set(rootObject, "aliveCheckInterval", "15s", true)
   objectPath.set(rootObject, "reconnectDelay", "30s", true)
@@ -107,14 +111,52 @@ const getItems = (rootObject) => {
         },
       },
     },
+  ]
+
+  items.push(
     {
+      label: "use_global_password",
+      fieldId: "useGlobalPassword",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+      isRequired: false,
+    },
+    {
+      label: "use_global_encryption_key",
+      fieldId: "useGlobalEncryptionKey",
+      fieldType: FieldType.Switch,
+      dataType: DataType.Boolean,
+      value: "",
+      isRequired: false,
+    }
+  )
+
+  const useGlobalPassword = getValue(rootObject, "useGlobalPassword", false)
+  if (!useGlobalPassword) {
+    items.push({
       label: "password",
       fieldId: "password",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
       isRequired: false,
-    },
+    })
+  }
+
+  const useGlobalEncryptionKey = getValue(rootObject, "useGlobalEncryptionKey", false)
+  if (!useGlobalEncryptionKey) {
+    items.push({
+      label: "encryption_key",
+      fieldId: "encryptionKey",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
+      value: "",
+      isRequired: false,
+    })
+  }
+
+  items.push(
     {
       label: "connection_timeout",
       fieldId: "timeout",
@@ -138,7 +180,8 @@ const getItems = (rootObject) => {
       dataType: DataType.String,
       value: "",
       isRequired: false,
-    },
-  ]
+    }
+  )
+
   return items
 }
