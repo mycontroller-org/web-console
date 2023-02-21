@@ -59,7 +59,7 @@ class AboutPage extends React.Component {
             <TextListItem component="dd">{bk.buildDate}</TextListItem>
             <TextListItem component="dt">{t("golang_version")}</TextListItem>
             <TextListItem component="dd">
-              {bk.goLang} ({bk.platform}, {bk.arch})
+              {bk.goVersion} ({bk.platform}, {bk.arch})
             </TextListItem>
           </TextList>
 
