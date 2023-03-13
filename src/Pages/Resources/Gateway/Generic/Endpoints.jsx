@@ -109,7 +109,7 @@ export const callBackEndpointConfigUpdateButtonCallback = (
       name={item.key}
       id={"model_" + index}
       onChange={(newValue) => {
-        onChange(index, "value", newValue)
+        onChange(newValue)
       }}
       isNodeEndpoint={isNodeEndpoint}
       isPreRun={isPreRun}

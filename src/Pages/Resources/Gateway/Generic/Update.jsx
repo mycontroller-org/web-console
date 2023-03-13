@@ -1,6 +1,5 @@
 import objectPath from "object-path"
 import { DataType, FieldType } from "../../../../Constants/Form"
-import { Protocol } from "../../../../Constants/Gateway"
 import { validate } from "../../../../Util/Validator"
 import { callBackEndpointConfigUpdateButtonCallback, getEndpointConfigDisplayValue } from "./Endpoints"
 
