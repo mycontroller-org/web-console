@@ -60,6 +60,7 @@ class List extends ListBase {
 
 // Properties definition
 const tableColumns = [
+  { title: "name", fieldKey: "name", sortable: true },
   { title: "description", fieldKey: "description", sortable: true },
   { title: "never_expire", fieldKey: "neverExpire", sortable: true },
   { title: "expires_on", fieldKey: "expiresOn", sortable: true },
@@ -91,6 +92,7 @@ const toRowFuncImpl = (rawData, history) => {
 }
 
 const filtersDefinition = [
+  { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
   { category: "neverExpire", categoryName: "never_expire", fieldType: "neverExpire", dataType: "boolean" },
   { category: "expiresOn", categoryName: "expires_on", fieldType: "input", dataType: "string" },

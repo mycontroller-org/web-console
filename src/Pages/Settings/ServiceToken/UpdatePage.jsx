@@ -134,8 +134,8 @@ const getFormItems = (rootObject) => {
       isDisabled: true,
     },
     {
-      label: "description",
-      fieldId: "description",
+      label: "name",
+      fieldId: "name",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -144,6 +144,12 @@ const getFormItems = (rootObject) => {
       helperTextInvalid: "helper_text.invalid_name",
       validated: "default",
       validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
+    },
+    {
+      label: "description",
+      fieldId: "description",
+      fieldType: FieldType.Text,
+      dataType: DataType.String,
     },
     {
       label: "never_expire",
