@@ -79,10 +79,11 @@ const toRowFuncImpl = (rawData, history) => {
               r(history, rMap.settings.serviceToken.detail, { id: rawData.id })
             }}
           >
-            {rawData.description}
+            {rawData.name}
           </Button>
         ),
       },
+      { title: rawData.description },
       { title: <div className="align-center">{getStatusBool(rawData.neverExpire)}</div> },
       { title: <LastSeen date={rawData.expiresOn} /> },
       { title: <LastSeen date={rawData.createdOn} /> },
