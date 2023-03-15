@@ -2,7 +2,6 @@ import { Label, Tooltip } from "@patternfly/react-core"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { FieldDataType } from "../../Constants/ResourcePicker"
-import { getRootObject } from "../Form/ResourcePicker/ResourceUtils"
 import "./Resource.scss"
 
 const DefaultType = "variable"
@@ -20,7 +19,7 @@ export const ResourceVariables = ({ data = [], originalType = DefaultType }) => 
   names.sort()
 
   const elements = names.map((name, index) => {
-    const rootObject = getRootObject(data[name])
+    const rootObject = data[name]
     return (
       <div className="mc-resource-variables" key={name + index}>
         <span className="key">{name}</span>
@@ -31,9 +30,8 @@ export const ResourceVariables = ({ data = [], originalType = DefaultType }) => 
   return elements
 }
 
-const getResource = (rootObject = {}, originalType, t = () => {}) => {
-  const data = rootObject.data
-  switch (rootObject.type) {
+const getResource = (data = {}, originalType, t = () => {}) => {
+  switch (data.type) {
     case FieldDataType.TypeString:
       return (
         <>
@@ -41,7 +39,7 @@ const getResource = (rootObject = {}, originalType, t = () => {}) => {
             {t("string")}
           </Label>
           <Label variant="outline" color="grey" icon={<IconValue />}>
-            {rootObject.string}
+            {data.value}
           </Label>
         </>
       )
@@ -71,13 +69,13 @@ const getResource = (rootObject = {}, originalType, t = () => {}) => {
             {t("backup")}
           </Label>
           <Label variant="outline" icon={<IconPrefix />}>
-            {data.spec.prefix}
+            {data.prefix}
           </Label>
           <Label variant="outline" icon={<IconExport />}>
-            {data.spec.storageExportType}
+            {data.storageExportType}
           </Label>
           <Label variant="outline" icon={<IconTargetDirectory />}>
-            {data.spec.targetDirectory}
+            {data.targetDirectory}
           </Label>
         </>
       )
@@ -113,7 +111,7 @@ const getResource = (rootObject = {}, originalType, t = () => {}) => {
       )
 
     default:
-      return String(rootObject)
+      return String(data)
   }
 }
 

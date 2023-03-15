@@ -329,7 +329,7 @@ const getBackupItems = (rootObject) => {
     dataType: DataType.String,
     options: BackupProviderTypeOptions,
     value: "",
-    resetFields: { "spec.spec": {} },
+    // resetFields: { "spec": {} },
     validator: { isNotEmpty: {} },
   })
 
@@ -340,7 +340,7 @@ const getBackupItems = (rootObject) => {
       items.push(
         {
           label: "export_type",
-          fieldId: "spec.spec.storageExportType",
+          fieldId: "spec.storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
           options: StorageExportTypeOptions,
@@ -350,7 +350,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "target_directory",
-          fieldId: "spec.spec.targetDirectory",
+          fieldId: "spec.targetDirectory",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
@@ -361,7 +361,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "prefix",
-          fieldId: "spec.spec.prefix",
+          fieldId: "spec.prefix",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
@@ -372,7 +372,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "retention_count",
-          fieldId: "spec.spec.retentionCount",
+          fieldId: "spec.retentionCount",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
@@ -380,6 +380,20 @@ const getBackupItems = (rootObject) => {
           helperTextInvalid: "helper_text.invalid_backup_retention_count",
           validated: "default",
           validator: { isInteger: {} },
+        },
+        {
+          label: "include_secure_share",
+          fieldId: "spec.includeSecureShare",
+          fieldType: FieldType.Switch,
+          dataType: DataType.Boolean,
+          value: false,
+        },
+        {
+          label: "include_insecure_share",
+          fieldId: "spec.includeInsecureShare",
+          fieldType: FieldType.Switch,
+          dataType: DataType.Boolean,
+          value: false,
         }
       )
       break

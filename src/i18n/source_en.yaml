@@ -282,6 +282,8 @@ in_progress: In Progress
 inactive_duration: Inactive Duration
 include_configuration: Include Configuration
 include_global_configuration: Include Global Configuration
+include_insecure_share: Include Insecure Share
+include_secure_share: Include Secure Share
 insecure: Insecure
 internal_message_ack: Internal Message Ack
 interpolation: Interpolation

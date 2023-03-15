@@ -18,6 +18,7 @@ import {
   WebhookMethodType,
   WebhookMethodTypeOptions,
 } from "../../../Constants/ResourcePicker"
+import { getValue } from "../../../Util/Util"
 import { validate } from "../../../Util/Validator"
 import Editor from "../../Editor/Editor"
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary"
@@ -26,8 +27,6 @@ import {
   getResourceFilterFunc,
   getResourceOptionsAPI,
   getResourceOptionValueFunc,
-  getRootObject,
-  updateValue,
 } from "./ResourceUtils"
 
 class ResourcePicker extends React.Component {
@@ -65,9 +64,12 @@ class ResourcePicker extends React.Component {
               key={"editor" + id}
               disableEditor={false}
               language="yaml"
-              rootObject={getRootObject(value)}
+              rootObject={value}
               onSaveFunc={(rootObject) => {
-                updateValue(rootObject, onChange, this.onClose)
+                if (onChange) {
+                  onChange(rootObject)
+                }
+                this.onClose()
               }}
               onChangeFunc={() => {}}
               minimapEnabled={false}
@@ -97,6 +99,7 @@ const getItems = (rootObject, callerType) => {
   const FieldTypes = FieldDataTypeOptions.filter((t) => {
     if (callerType === CallerType.Variable) {
       switch (t.value) {
+        // allow only the following types as variable
         case FieldDataType.TypeString:
         case FieldDataType.TypeResourceByLabels:
         case FieldDataType.TypeResourceByQuickId:
@@ -106,11 +109,39 @@ const getItems = (rootObject, callerType) => {
           return false
       }
     } else {
-      return true
+      // block only string for parameters
+      return t.value !== FieldDataType.TypeString
     }
   })
 
   const items = []
+
+  items.push({
+    label: "type",
+    fieldId: "type",
+    fieldType: FieldType.SelectTypeAhead,
+    dataType: DataType.String,
+    value: "",
+    isRequired: true,
+    isDisabled: false,
+    helperText: "",
+    helperTextInvalid: "helper_text.invalid_type",
+    validated: "default",
+    options: FieldTypes,
+    validator: { isNotEmpty: {} },
+    resetFields: {
+      resetTypeFunc: (rootObject, newValue) => {
+        const disabledValue = getValue(rootObject, "disabled", "")
+        // delete all the keys
+        Object.keys(rootObject).forEach((key) => delete rootObject[key])
+        // keep only type
+        rootObject["type"] = newValue
+        if (callerType === CallerType.Parameter) {
+          rootObject["disabled"] = disabledValue
+        }
+      },
+    },
+  })
 
   if (callerType === CallerType.Parameter) {
     items.push({
@@ -124,23 +155,7 @@ const getItems = (rootObject, callerType) => {
     })
   }
 
-  items.push({
-    label: "data_type",
-    fieldId: "type",
-    fieldType: FieldType.SelectTypeAhead,
-    dataType: DataType.String,
-    value: "",
-    isRequired: true,
-    isDisabled: false,
-    helperText: "",
-    helperTextInvalid: "helper_text.invalid_type",
-    validated: "default",
-    options: FieldTypes,
-    validator: { isNotEmpty: {} },
-    resetFields: { data: {}, string: "" },
-  })
-
-  const dataType = objectPath.get(rootObject, "type", FieldDataType.TypeString)
+  const dataType = getValue(rootObject, "type", FieldDataType.TypeString)
 
   switch (dataType) {
     case FieldDataType.TypeResourceByQuickId:
@@ -172,7 +187,7 @@ const getItems = (rootObject, callerType) => {
     default:
       items.push({
         label: "value",
-        fieldId: "string",
+        fieldId: "value",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
@@ -186,7 +201,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
   const items = []
   items.push({
     label: "resource_type",
-    fieldId: "data.resourceType",
+    fieldId: "resourceType",
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
     value: "",
@@ -195,7 +210,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
     validator: { isNotEmpty: {} },
   })
 
-  const resourceType = objectPath.get(rootObject, "data.resourceType", "")
+  const resourceType = getValue(rootObject, "resourceType", "")
 
   switch (dataType) {
     case FieldDataType.TypeResourceByQuickId:
@@ -206,7 +221,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
         const resourceDescriptionFunc = getOptionsDescriptionFunc(resourceType)
         items.push({
           label: "resource",
-          fieldId: "data.quickId",
+          fieldId: "quickId",
           apiOptions: resourceAPI,
           optionValueFunc: resourceOptionValueFunc,
           fieldType: FieldType.SelectTypeAheadAsync,
@@ -225,7 +240,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
     case FieldDataType.TypeResourceByLabels:
       items.push({
         label: "labels",
-        fieldId: "data.labels",
+        fieldId: "labels",
         fieldType: FieldType.Labels,
         dataType: DataType.Object,
         value: {},
@@ -239,7 +254,7 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
   if (callerType === CallerType.Variable || resourceType === ResourceType.DataRepository) {
     items.push({
       label: "key_path",
-      fieldId: "data.keyPath",
+      fieldId: "keyPath",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -255,14 +270,14 @@ const getResourceDataItems = (rootObject = {}, dataType, callerType) => {
     items.push(
       {
         label: "payload",
-        fieldId: "data.payload",
+        fieldId: "payload",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
       },
       {
         label: "pre_delay",
-        fieldId: "data.preDelay",
+        fieldId: "preDelay",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
@@ -277,7 +292,7 @@ const getEmailDataItems = (_rootObject) => {
   const items = [
     {
       label: "from",
-      fieldId: "data.from",
+      fieldId: "from",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
@@ -285,7 +300,7 @@ const getEmailDataItems = (_rootObject) => {
     },
     {
       label: "to",
-      fieldId: "data.to",
+      fieldId: "to",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
       validateValueFunc: (key) => {
@@ -295,14 +310,14 @@ const getEmailDataItems = (_rootObject) => {
     },
     {
       label: "subject",
-      fieldId: "data.subject",
+      fieldId: "subject",
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
     },
     {
       label: "body",
-      fieldId: "data.body",
+      fieldId: "body",
       fieldType: FieldType.TextArea,
       dataType: DataType.String,
       value: "",
@@ -315,14 +330,14 @@ const getTelegramDataItems = (_rootObject) => {
   const items = [
     {
       label: "chat_ids",
-      fieldId: "data.chatIds",
+      fieldId: "chatIds",
       fieldType: FieldType.DynamicArray,
       dataType: DataType.ArrayString,
       value: [],
     },
     {
       label: "parse_mode",
-      fieldId: "data.parseMode",
+      fieldId: "parseMode",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       value: "",
@@ -330,7 +345,7 @@ const getTelegramDataItems = (_rootObject) => {
     },
     {
       label: "text",
-      fieldId: "data.text",
+      fieldId: "text",
       fieldType: FieldType.TextArea,
       dataType: DataType.String,
       isRequired: true,
@@ -348,23 +363,23 @@ const getBackupItems = (rootObject) => {
   const items = []
   items.push({
     label: "provider_type",
-    fieldId: "data.providerType",
+    fieldId: "providerType",
     isRequired: true,
     fieldType: FieldType.SelectTypeAhead,
     dataType: DataType.String,
     options: BackupProviderTypeOptions,
     value: "",
-    resetFields: { "data.spec": {} },
+    // resetFields: { "spec": {} },
     validator: { isNotEmpty: {} },
   })
 
-  const providerType = objectPath.get(rootObject, "data.providerType", "")
+  const providerType = getValue(rootObject, "providerType", "")
   switch (providerType) {
     case BackupProviderType.Disk:
       items.push(
         {
           label: "storage_export_type",
-          fieldId: "data.spec.storageExportType",
+          fieldId: "storageExportType",
           fieldType: FieldType.SelectTypeAhead,
           dataType: DataType.String,
           options: StorageExportTypeOptions,
@@ -373,7 +388,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "target_directory",
-          fieldId: "data.spec.targetDirectory",
+          fieldId: "targetDirectory",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
@@ -381,7 +396,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "prefix",
-          fieldId: "data.spec.prefix",
+          fieldId: "prefix",
           fieldType: FieldType.Text,
           dataType: DataType.String,
           value: "",
@@ -389,7 +404,7 @@ const getBackupItems = (rootObject) => {
         },
         {
           label: "retention_count",
-          fieldId: "data.spec.retentionCount",
+          fieldId: "retentionCount",
           fieldType: FieldType.Text,
           dataType: DataType.Integer,
           value: "",
@@ -410,14 +425,14 @@ const getBackupItems = (rootObject) => {
 const getWebhookItems = (rootObject, callerType) => {
   const items = []
 
-  objectPath.set(rootObject, "data.responseCode", 0, true)
+  objectPath.set(rootObject, "responseCode", 0, true)
 
   if (callerType === CallerType.Variable) {
-    objectPath.set(rootObject, "data.method", WebhookMethodType.GET, true)
+    objectPath.set(rootObject, "method", WebhookMethodType.GET, true)
     items.push(
       {
         label: "url",
-        fieldId: "data.server",
+        fieldId: "server",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
@@ -429,18 +444,18 @@ const getWebhookItems = (rootObject, callerType) => {
       },
       {
         label: "insecure",
-        fieldId: "data.insecure",
+        fieldId: "insecure",
         fieldType: FieldType.Switch,
         dataType: DataType.Boolean,
         value: false,
       }
     )
   } else {
-    objectPath.set(rootObject, "data.method", WebhookMethodType.POST, true)
+    objectPath.set(rootObject, "method", WebhookMethodType.POST, true)
     items.push(
       {
         label: "server",
-        fieldId: "data.server",
+        fieldId: "server",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
@@ -448,7 +463,7 @@ const getWebhookItems = (rootObject, callerType) => {
       },
       {
         label: "api",
-        fieldId: "data.api",
+        fieldId: "api",
         fieldType: FieldType.Text,
         dataType: DataType.String,
         value: "",
@@ -460,7 +475,7 @@ const getWebhookItems = (rootObject, callerType) => {
   items.push(
     {
       label: "method",
-      fieldId: "data.method",
+      fieldId: "method",
       fieldType: FieldType.SelectTypeAhead,
       dataType: DataType.String,
       options: WebhookMethodTypeOptions,
@@ -469,7 +484,7 @@ const getWebhookItems = (rootObject, callerType) => {
     },
     {
       label: "response_code",
-      fieldId: "data.responseCode",
+      fieldId: "responseCode",
       fieldType: FieldType.Text,
       dataType: DataType.Integer,
       value: "",
@@ -480,7 +495,7 @@ const getWebhookItems = (rootObject, callerType) => {
     },
     {
       label: "headers",
-      fieldId: "data.headers",
+      fieldId: "headers",
       fieldType: FieldType.KeyValueMap,
       dataType: DataType.ArrayObject,
       value: {},
@@ -489,7 +504,7 @@ const getWebhookItems = (rootObject, callerType) => {
     },
     {
       label: "query_parameters",
-      fieldId: "data.queryParameters",
+      fieldId: "queryParameters",
       fieldType: FieldType.ScriptEditor,
       dataType: DataType.Object,
       language: "yaml",
@@ -499,23 +514,23 @@ const getWebhookItems = (rootObject, callerType) => {
     }
   )
 
-  const methodType = objectPath.get(rootObject, "data.method", "")
+  const methodType = getValue(rootObject, "method", "")
 
   if (methodType !== WebhookMethodType.GET) {
     items.push({
       label: "custom_data",
-      fieldId: "data.customData",
+      fieldId: "customData",
       fieldType: FieldType.Switch,
       dataType: DataType.Boolean,
       value: "",
       isRequired: false,
     })
 
-    const customData = objectPath.get(rootObject, "data.customData", false)
+    const customData = getValue(rootObject, "customData", false)
     if (customData) {
       items.push({
         label: "data",
-        fieldId: "data.data",
+        fieldId: "data",
         fieldType: FieldType.ScriptEditor,
         dataType: DataType.Object,
         language: "yaml",

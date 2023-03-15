@@ -1,51 +1,9 @@
-import YAML from "js-yaml"
-import Base64 from "base-64"
-import UTF8 from "utf8"
 import { api } from "../../../Service/Api"
 import { ResourceType, FieldDataType } from "../../../Constants/ResourcePicker"
-import { getValue } from "../../../Util/Util"
 import React from "react"
 import { TextInput } from "@patternfly/react-core"
 import ResourcePicker from "./ResourcePicker"
 import { getDynamicFilter } from "../../../Util/Filter"
-
-export const updateValue = (rootObject = {}, onChange, onClose) => {
-  const dataType = getValue(rootObject, "type", FieldDataType.TypeString)
-  const isDisabled = getValue(rootObject, "disabled", "")
-
-  let data = ""
-  if (dataType !== FieldDataType.TypeString) {
-    try {
-      const yamlString = YAML.dump(rootObject.data)
-      const utf8Bytes = UTF8.encode(yamlString)
-      const base64String = Base64.encode(utf8Bytes)
-      const narrowedRootObject = { type: dataType, disabled: isDisabled, data: base64String }
-      data = JSON.stringify(narrowedRootObject)
-    } catch (err) {
-      data = err.toString()
-    }
-  } else {
-    data = getValue(rootObject, "string", "")
-  }
-
-  if (onChange) {
-    onChange(data)
-  }
-  onClose()
-}
-
-export const getRootObject = (value = "") => {
-  try {
-    const rootData = JSON.parse(value)
-    const utf8Bytes = Base64.decode(rootData.data)
-    const yamlString = UTF8.decode(utf8Bytes)
-    const dataObject = YAML.load(yamlString)
-    rootData.data = dataObject
-    return rootData
-  } catch (_err) {
-    return { type: FieldDataType.TypeString, string: value }
-  }
-}
 
 export const getResourceType = (quickId) => {
   if (quickId === "") {
@@ -203,15 +161,50 @@ export const getOptionsDescriptionFunc = (resourceType) => {
 }
 
 // returns variable value to display on variables list
-export const getResourceDisplayValue = (index, value, _onChange, validated, _isDisabled) => {
-  let textValue = null
-  try {
-    const objValue = JSON.parse(value)
-    textValue = `type: ${objValue.type}`
-  } catch (_error) {
-    // ignore errors
-    textValue = `type: string, value: ${value}`
+export const getResourceDisplayValue = (index, item = {}, _onChange, validated, _isDisabled) => {
+  let textValue = `${item.type}`
+  switch (item.type) {
+    case FieldDataType.TypeString:
+      textValue += `: ${item.value}`
+      break
+
+    case FieldDataType.TypeTelegram:
+      textValue += `: ${item.text}`
+      break
+
+    case FieldDataType.TypeResourceByQuickId:
+      textValue += `: ${item.resourceType}:${item.quickId}`
+      // include payload, if available
+      if (item.payload) {
+        textValue += ` => ${item.payload}`
+      }
+      break
+
+    case FieldDataType.TypeResourceByLabels:
+      textValue += `: ${item.resourceType}:${Object.keys(item.labels)
+        .map((key) => {
+          return `${key}=${item.labels[key]}`
+        })
+        .join(",")}`
+      // include payload, if available
+      if (item.payload) {
+        textValue += ` => ${item.payload}`
+      }
+      break
+
+    case FieldDataType.TypeBackup:
+      textValue += `: ${item.prefix}, ${item.targetDirectory}, ${item.storageExportType}`
+      break
+
+    case FieldDataType.TypeEmail:
+      textValue += `: ${item.subject}`
+      break
+
+    case FieldDataType.TypeWebhook:
+      textValue += `: ${item.server}`
+      break
   }
+
   return (
     <TextInput
       id={"value_id_" + index}
