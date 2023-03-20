@@ -1,5 +1,5 @@
 {
-  "name": "mycontroller-console-web",
+  "name": "mycontroller-web-console",
   "version": "2.0.0",
   "private": true,
   "dependencies": {
