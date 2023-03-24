@@ -1,3 +1,4 @@
+import * as monaco from "monaco-editor"
 import Editor, { loader } from "@monaco-editor/react"
 import React from "react"
 
@@ -17,6 +18,11 @@ const consoleTheme = {
     "editorLineNumber.foreground": "#f0f0f0",
   },
 }
+
+// load required files from local, not from CDN registry
+// see: https://github.com/suren-atoyan/monaco-react/blob/master/README.md#loader-config
+// https://github.com/suren-atoyan/monaco-react/issues/327
+loader.config({ monaco })
 
 loader
   .init()
