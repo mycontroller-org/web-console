@@ -3,18 +3,22 @@ This project has web console source code for the MyController server. This proje
 
 
 ## Setup development environment
-To setup the development environment you need to run the [backend server](https://github.com/mycontroller-org/backend) locally or somewhere else, should be accessible from your computer.<br>
+To setup the development environment you need to run the [MyController server](https://github.com/mycontroller-org/server) locally or somewhere else, should be accessible from your computer.<br>
 
-By default it looks the backend server on `http://localhost:8080` and websocket on `ws://localhost:8080`.<br>
-You can update the following environment variables to point your backend,
+By default access the MyController server on `http://localhost:8080` and websocket on `ws://localhost:8080`.<br>
+You can update the following environment variables to point your MyController server,
 
-*   `MC_PROXY_HTTP` - backend http url, default: `http://localhost:8080`
-*   `MC_PROXY_WEBSOCKET` - backend websocket url, default `ws://localhost:8080`
+*   `MC_PROXY_HTTP` - MyController server http url, default: `http://localhost:8080`
+*   `MC_PROXY_WEBSOCKET` - MyController server websocket url, default `ws://localhost:8080`
 
 ```bash
-# to update the backend server details in linux
+# to update the MyController server details in linux
+# example: MyController server is running on 192.168.1.21
 export MC_PROXY_HTTP="http://192.168.1.21:8080"
 export MC_PROXY_WEBSOCKET="ws://192.168.1.21:8080"
+
+# then do,
+yarn start
 ```
 
 ## Available Scripts
@@ -33,5 +37,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 
+To see your changes on your production environment. You can copy the `build` directory and replace it with `web_console` in MyController server.
+
 ## Release
-There is no separate release for this project. The [backend repository](https://github.com/mycontroller-org/backend) takes the corresponding version(`tag`, `branch`) of this project and builds along with the backend code.
+There is no separate release for this project. The [server repository](https://github.com/mycontroller-org/server) takes the corresponding version(`tag`, `branch`) of this project and builds along with the backend code.
