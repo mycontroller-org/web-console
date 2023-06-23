@@ -16,9 +16,15 @@ keys.forEach((key) => {
   writeToEnv(key, predefined[key])
 })
 
-// add branch name
+// add branch name or tag name
 childProcess.exec("git rev-parse --abbrev-ref HEAD", (_err, stdout) => {
-  writeToEnv("REACT_APP_GIT_BRANCH", stdout)
+  if (stdout === "HEAD") {
+    childProcess.exec(" git describe --abbrev=0 --tags", (_err, stdout) => {
+      writeToEnv("REACT_APP_GIT_BRANCH", stdout)
+    })
+  } else {
+    writeToEnv("REACT_APP_GIT_BRANCH", stdout)
+  }
 })
 
 // add sha in short
