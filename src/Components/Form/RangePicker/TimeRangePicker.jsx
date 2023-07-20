@@ -2,14 +2,13 @@ import { Split, SplitItem, TimePicker } from "@patternfly/react-core"
 import React from "react"
 import "./TimeRangePicker.scss"
 
-
 const TimeRangePicker = ({ value = {}, onChange = () => {}, is24Hour = true }) => {
   return (
     <Split>
       <SplitItem>
         <TimePicker
           className="mc-time-range-picker"
-          onChange={(from) => {
+          onChange={(_event, from) => {
             onChange({ ...value, from })
           }}
           defaultTime={value.from}
@@ -21,7 +20,7 @@ const TimeRangePicker = ({ value = {}, onChange = () => {}, is24Hour = true }) =
       <SplitItem>
         <TimePicker
           className="mc-time-range-picker"
-          onChange={(to) => {
+          onChange={(_event, to) => {
             onChange({ ...value, to })
           }}
           defaultTime={value.to}

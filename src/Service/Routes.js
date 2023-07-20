@@ -45,7 +45,7 @@ import ServiceTokenListPage from "../Pages/Settings/ServiceToken/ListPage"
 import ServiceTokenUpdatePage from "../Pages/Settings/ServiceToken/UpdatePage"
 
 // import dummyPage from "../Pages/DummyPage/DummyPage"
-//import TopologyPage from "../Pages/Topology/Topology"
+import TopologyPage from "../Pages/Topology/Topology"
 
 const routeMap = {
   home: "/",
@@ -152,12 +152,12 @@ const routes = [
         component: Dashboard,
         icon: <TachometerAltIcon />,
       },
-      // {
-      //   id: "dashboardTopology",
-      //   title: "Topology",
-      //   to: "/dashboard/topology",
-      //   component: TopologyPage,
-      // },
+      {
+        id: "dashboardTopology",
+        title: "Topology",
+        to: "/dashboard/topology",
+        component: TopologyPage,
+      },
     ],
   },
   {

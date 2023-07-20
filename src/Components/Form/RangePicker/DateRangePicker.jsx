@@ -6,7 +6,7 @@ const DateRangePicker = ({ value = {}, onChange = () => {} }) => {
     <Split>
       <SplitItem>
         <DatePicker
-          onChange={(from) => {
+          onChange={(_event, from) => {
             onChange({ ...value, from })
           }}
           value={value.from}
@@ -16,7 +16,7 @@ const DateRangePicker = ({ value = {}, onChange = () => {} }) => {
       <SplitItem style={{ padding: "3px 12px 0 12px" }}>to</SplitItem>
       <SplitItem>
         <DatePicker
-          onChange={(to) => {
+          onChange={(_event, to) => {
             onChange({ ...value, to })
           }}
           value={value.to}
