@@ -21,7 +21,7 @@ class ImageURLPanel extends React.Component {
       clearInterval(this.interval)
     }
     const { config } = this.props
-    const refreshInterval = getValue(config, "chart.refreshInterval", RefreshIntervalType.None)
+    const refreshInterval = getValue(config, "refreshInterval", RefreshIntervalType.None)
     if (refreshInterval >= 1000) {
       this.interval = setInterval(() => {
         const diffTime = new Date().getTime() - this.lastMetricUpdate + 200 // add 200 milliseconds as offset
