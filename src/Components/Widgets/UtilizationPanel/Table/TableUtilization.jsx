@@ -31,7 +31,7 @@ const TableUtilization = ({ widgetId = "", config = {}, resources = [], history 
   const getResourceValue = (resource = {}, resourceConfig = {}) => {
     const displayValueFloat = parseFloat(resource.value)
     let displayValue = resource.value
-    if (v.isFloat(String(displayValue), {})) {
+    if (!Number.isNaN(displayValueFloat) && v.isFloat(String(displayValue), {})) {
       displayValue = displayValueFloat.toFixed(resourceConfig.roundDecimal)
     }
     if (resourceConfig.unit && resourceConfig.unit !== "") {
