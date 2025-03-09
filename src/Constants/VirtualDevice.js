@@ -69,6 +69,7 @@ export const DeviceType = {
   StreamingSoundbar: "streaming_soundbar",
   StreamingStick: "streaming_stick",
   Switch: "switch",
+  Tank: "tank",
   Television: "television",
   Thermostat: "thermostat",
   Vacuum: "vacuum",
@@ -359,6 +360,10 @@ export const DeviceTypeOptions = [
   {
     value: DeviceType.Switch,
     label: "opts.vd_type.label_switch",
+  },
+  {
+    value: DeviceType.Tank,
+    label: "opts.vd_type.label_tank",
   },
   {
     value: DeviceType.Television,

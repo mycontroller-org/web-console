@@ -1,14 +1,10 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
-import { RouteLink } from "../../../Components/Buttons/Buttons"
-import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { Labels } from "../../../Components/DataDisplay/Label"
 import { getStatusBool } from "../../../Components/Icons/Icons"
 import { LastSeen } from "../../../Components/Time/Time"
-import InputField from "../../../Components/Widgets/ControlPanel/Common/InputField"
-import { FieldDataType, getQuickId, ResourceType } from "../../../Constants/ResourcePicker"
 import { api } from "../../../Service/Api"
-import { routeMap as rMap } from "../../../Service/Routes"
-import { getFieldValue, getValue } from "../../../Util/Util"
+import { getValue } from "../../../Util/Util"
 
 const updateTraits = (resourceId, filter = { offset: 0, limit: 10 }) =>
   new Promise(function (resolve, reject) {
@@ -77,21 +73,20 @@ const getDetailsFuncImpl = (data) => {
 
 // Properties definition
 const tableColumns = [
-  { title: "trait", fieldKey: "trait", sortable: false },
+  { title: "name", fieldKey: "name", sortable: false },
+  { title: "trait", fieldKey: "id", sortable: false },
   { title: "resource", fieldKey: "resource", sortable: false },
+  { title: "labels", fieldKey: "labels", sortable: false },
 ]
 
 const getTableRowsFuncImpl = (rawData, _index, _history) => {
   const resource = getValue(rawData, "resource", {})
-  let resourceData = null
-  if (resource.type === FieldDataType.TypeResourceByQuickId) {
-    resourceData = `${resource.resourceType}: ${resource.quickId}`
-  } else if (resource.type === FieldDataType.TypeResourceByLabels) {
-    resourceData = `${resource.resourceType}: ${JSON.stringify(resource.labels)}`
-  } else {
-    resourceData = JSON.stringify(resource)
-  }
-  return [{ title: rawData.trait }, { title: resourceData }]
+  return [
+    { title: resource.name },
+    { title: resource.traitType },
+    { title: `${resource.resourceType}:${resource.quickId}` },
+    { title: JSON.stringify(resource.labels) },
+  ]
 }
 
 const getTableFilterFuncImpl = (data) => {

@@ -1,19 +1,15 @@
-import { SelectVariant, TextInput } from "@patternfly/react-core"
+import { TextInput } from "@patternfly/react-core"
 import objectPath from "object-path"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import Editor from "../../../Components/Editor/Editor"
-import Select from "../../../Components/Form/Select"
 import Loading from "../../../Components/Loading/Loading"
 import PageContent from "../../../Components/PageContent/PageContent"
 import PageTitle from "../../../Components/PageTitle/PageTitle"
 import { DataType, FieldType } from "../../../Constants/Form"
-import { FieldDataType } from "../../../Constants/ResourcePicker"
-import { DeviceTraitOptions, DeviceTypeOptions } from "../../../Constants/VirtualDevice"
+import { DeviceTypeOptions } from "../../../Constants/VirtualDevice"
 import { api } from "../../../Service/Api"
 import { redirect as r, routeMap as rMap } from "../../../Service/Routes"
-import { getValue } from "../../../Util/Util"
-import { validate } from "../../../Util/Validator"
 import VdResourcePicker from "./VdResourcePicker"
 import { withTranslation } from "react-i18next"
 
@@ -86,7 +82,7 @@ const getFormItems = (rootObject, id, t) => {
   objectPath.set(rootObject, "name", "", true)
   objectPath.set(rootObject, "description", "", true)
   objectPath.set(rootObject, "enabled", true, true)
-  objectPath.set(rootObject, "traits", {}, true)
+  objectPath.set(rootObject, "traits", [], true)
   objectPath.set(rootObject, "labels", {}, true)
 
   const items = [
@@ -156,20 +152,19 @@ const getFormItems = (rootObject, id, t) => {
     {
       label: "",
       fieldId: "traits",
-      fieldType: FieldType.KeyValueMap,
-      dataType: DataType.Object,
-      value: "",
-      keyLabel: "trait",
-      valueLabel: "resource",
+      fieldType: FieldType.DynamicListGeneric,
+      dataType: DataType.ArrayObject,
+      value: [],
       showUpdateButton: true,
       saveButtonText: "update",
       updateButtonText: "update",
       minimapEnabled: true,
       isRequired: false,
-      validateKeyFunc: (key) => validate("isID", key),
-      validateValueFunc: (value) => value.url !== undefined || value.url !== "",
-      keyField: (index, key, onChange, _validated, isDisabled) =>
-        getTraitValue(getValue(rootObject, "traits", {}), index, key, onChange, isDisabled, t),
+      validateValueFunc: (value) =>
+        (value.name !== undefined || value.name !== "") &&
+        (value.traitType !== undefined || value.traitType !== "") &&
+        (value.resourceType !== undefined || value.resourceType !== "") &&
+        (value.quickId !== undefined || value.quickId !== ""),
       valueField: getResourceConfigDisplayValue,
       updateButtonCallback: callBackResourceConfigUpdateButtonCallback,
     },
@@ -196,10 +191,6 @@ export const getResourceConfigDisplayValue = (index, value, _onChange, validated
   if (value === undefined || value === "") {
     resourceData = "undefined"
     validated = "error"
-  } else if (value.type === FieldDataType.TypeResourceByQuickId) {
-    resourceData = `${value.resourceType}: ${value.quickId}`
-  } else if (value.type === FieldDataType.TypeResourceByLabels) {
-    resourceData = `${value.resourceType}: ${JSON.stringify(value.labels)}`
   } else {
     resourceData = JSON.stringify(value)
   }
@@ -217,44 +208,5 @@ export const getResourceConfigDisplayValue = (index, value, _onChange, validated
 
 // calls the model to update the resource config details
 export const callBackResourceConfigUpdateButtonCallback = (index = 0, item = {}, onChange) => {
-  return <VdResourcePicker id={index} name={item.key} value={item.value} onChange={onChange} />
-}
-
-// returns display value of key
-const getTraitValue = (traitsObject, index, selectedTrait, onChange, isDisabled, t) => {
-  const traitDefined = Object.keys(traitsObject)
-  const updatedDeviceTraitOptions = DeviceTraitOptions.filter((t) => {
-    if (t.value === selectedTrait) {
-      return true
-    }
-    for (let index = 0; index < traitDefined.length; index++) {
-      if (traitDefined[index] === t.value) {
-        return false
-      }
-    }
-    return true
-  })
-
-  // update localization
-  const localizationDeviceTraitOptions = updatedDeviceTraitOptions.map((dTrait) => {
-    return {
-      value: dTrait.value,
-      label: t(dTrait.label),
-      description: t(dTrait.description),
-    }
-  })
-
-  return (
-    <Select
-      key={"key_" + index}
-      variant={SelectVariant.typeahead}
-      direction={"down"}
-      options={localizationDeviceTraitOptions}
-      onChange={onChange}
-      selected={selectedTrait}
-      isDisabled={isDisabled}
-      isMulti={false}
-      isArrayData={false}
-    />
-  )
+  return <VdResourcePicker id={index} value={item} onChange={onChange} />
 }
