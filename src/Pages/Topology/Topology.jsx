@@ -184,8 +184,7 @@ class TopologyPage extends React.Component {
         if (
           _item.labels &&
           _item.labels.parent_id &&
-          _item.labels.parent_id != "" &&
-          _item.labels.parent_id != "0"
+          _item.labels.parent_id != ""
         ) {
           edges.push({
             id: `edge-${_index}`,
