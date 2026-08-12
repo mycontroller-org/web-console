@@ -167,6 +167,9 @@ export const validateItem = (item, value) => {
     if (fieldType !== FieldType.Switch && validate("isEmpty", value, {})) {
       return false
     }
+  } else if (fieldType !== FieldType.Switch && validate("isEmpty", value, {})) {
+    // optional empty values skip format checks (e.g. optional email)
+    return true
   }
 
   // Array fields: never run string-only validators (validator lib throws on non-strings)
