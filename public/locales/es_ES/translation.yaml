@@ -10,9 +10,11 @@ add_a_gateway: Add a Gateway
 add_a_handler: Add a Handler
 add_a_node: Add a Node
 add_a_schedule: Add a Schedule
+add_a_policy: Add a Policy
 add_a_service_token: Add a Service Token
 add_a_source: Add a Source
 add_a_task: Add a Task
+add_a_user: Add a User
 add_a_virtual_assistant: Add a Virtual Assistant
 add_a_virtual_device: Add a Virtual Device
 add_an_item: Add an item
@@ -143,6 +145,8 @@ edit: Edit
 edit_dashboard_settings: Edit Dashboard Settings
 edit_widget_settings: Edit Widget Settings
 email: Email
+edit_statement: Edit Statement
+effect: Effect
 enable: Enable
 enabled: Enabled
 encryption_key: Encryption Key
@@ -885,6 +889,8 @@ service_token_copy_title: Copy Service Token
 service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
 service_token_details: Service Token Details
 service_tokens: Service Tokens
+policies: Policies
+policy_details: Policy Details
 settings: Settings
 show_grid_x: Show Grid X
 show_grid_y: Show Grid Y
@@ -996,3 +1002,7 @@ y_axis: Y Axis
 y_axis_configuration: Y Axis Configuration
 yaml: YAML
 yaml_view: YAML View
+statement: Statement
+statements: Statements
+user_details: User Details
+users: Users

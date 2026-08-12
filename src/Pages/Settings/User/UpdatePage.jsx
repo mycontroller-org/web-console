@@ -95,6 +95,10 @@ const getFormItems = (rootObject, id) => {
       fieldType: FieldType.Text,
       dataType: DataType.String,
       value: "",
+      isRequired: true,
+      helperTextInvalid: "helper_text.invalid_name",
+      validated: "default",
+      validator: { isLength: { min: 2, max: 100 }, isNotEmpty: {} },
     },
     {
       label: "email",

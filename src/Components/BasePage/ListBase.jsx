@@ -177,12 +177,15 @@ class ListPage extends React.Component {
       let rows
       if (rowId === -1) {
         rows = prevState.rows.map((row) => {
-          if (!row.disableSelection) {
+          if (!row.locked) {
             row.selected = isSelected
           }
           return row
         })
       } else {
+        if (prevState.rows[rowId] && prevState.rows[rowId].locked) {
+          return prevState
+        }
         rows = [...prevState.rows]
         rows[rowId].selected = isSelected
       }
@@ -193,7 +196,7 @@ class ListPage extends React.Component {
   getSelectedRowIDs = () => {
     const selectedIDs = []
     this.state.rows.forEach((row) => {
-      if (row.selected) {
+      if (row.selected && !row.locked) {
         selectedIDs.push(row.rid)
       }
     })

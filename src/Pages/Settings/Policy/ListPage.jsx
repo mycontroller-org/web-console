@@ -94,7 +94,7 @@ const toRowFuncImpl = (rawData, history) => {
       { title: <LastSeen date={rawData.modifiedOn} /> },
     ],
     rid: rawData.id,
-    disableSelection: !!rawData.system,
+    locked: !!rawData.system,
   }
 }
 
