@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { getDynamicFilter } from "../../Util/Filter"
 
-const itemsLimit = 10
+const defaultItemsLimit = 10
 
 class AsyncSelect extends React.Component {
   state = {
@@ -21,7 +21,8 @@ class AsyncSelect extends React.Component {
     if (apiOptions) {
       this.setState({ loading: true }, () => {
         const filters = this.getFilters(filterValue)
-        apiOptions({ filter: filters, limit: itemsLimit })
+        const limit = this.props.limit || defaultItemsLimit
+        apiOptions({ filter: filters, limit: limit })
           .then((res) => {
             const items = res.data.data
             const options = items.map((item) => {
@@ -73,20 +74,30 @@ class AsyncSelect extends React.Component {
   }
 
   onSelection = (_event, selection) => {
+    const { isMulti, selected, onSelectionFunc } = this.props
+    if (isMulti) {
+      const current = Array.isArray(selected) ? [...selected] : []
+      const next = current.includes(selection)
+        ? current.filter((v) => v !== selection)
+        : [...current, selection]
+      if (onSelectionFunc) {
+        onSelectionFunc(next)
+      }
+      return
+    }
     this.setState({ isOpen: false }, () => {
-      if (this.props.onSelectionFunc) {
-        this.props.onSelectionFunc(selection)
+      if (onSelectionFunc) {
+        onSelectionFunc(selection)
       }
     })
   }
 
   onClear = () => {
-    this.setState({ selection: "" }, () => {
-      this.onFilter()
-      if (this.props.onSelectionFunc) {
-        this.props.onSelectionFunc("")
-      }
-    })
+    const { isMulti, onSelectionFunc } = this.props
+    this.onFilter()
+    if (onSelectionFunc) {
+      onSelectionFunc(isMulti ? [] : "")
+    }
   }
 
   onToggle = (isOpen) => {
@@ -102,10 +113,12 @@ class AsyncSelect extends React.Component {
       direction = "down",
       isCreatable,
       createText,
+      isMulti = false,
     } = this.props
     const selectOptions = options.map((option) => {
       return <SelectOption value={option.label} description={option.description} />
     })
+    const selections = isMulti ? (Array.isArray(selected) ? selected : []) : selected
 
     const spinnerSpan = showSpinner ? 1 : 0
     const spinner =
@@ -118,7 +131,7 @@ class AsyncSelect extends React.Component {
       <Grid hasGutter>
         <GridItem span={12 - spinnerSpan}>
           <Select
-            variant="typeahead"
+            variant={isMulti ? "typeaheadMulti" : "typeahead"}
             onToggle={this.onToggle}
             onFilter={(event) => {
               if (event) {
@@ -128,7 +141,7 @@ class AsyncSelect extends React.Component {
             onClear={this.onClear}
             isOpen={isOpen}
             onSelect={this.onSelection}
-            selections={selected}
+            selections={selections}
             isDisabled={isDisabled}
             direction={direction}
             isCreatable={isCreatable}
@@ -151,11 +164,13 @@ AsyncSelect.propTypes = {
   getOptionsDescriptionFunc: PropTypes.func,
   onSelectionFunc: PropTypes.func,
   isDisabled: PropTypes.bool,
-  selected: PropTypes.string,
+  isMulti: PropTypes.bool,
+  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   showSpinner: PropTypes.bool,
   direction: PropTypes.string,
   isCreatable: PropTypes.bool,
   createText: PropTypes.string,
+  limit: PropTypes.number,
 }
 
 export default AsyncSelect

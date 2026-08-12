@@ -448,6 +448,11 @@ const getField = (item, onChange) => {
           getOptionsDescriptionFunc={item.getOptionsDescriptionFunc}
           onSelectionFunc={onChange}
           selected={item.value}
+          isMulti={item.isMulti}
+          limit={item.limit}
+          direction={item.direction}
+          isCreatable={item.isCreatable}
+          createText={item.createText}
         />
       )
 
