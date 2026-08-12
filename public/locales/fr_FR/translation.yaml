@@ -108,6 +108,8 @@ dialog:
   delete_title_node: "Supprimer des nœuds ?"
   delete_title_schedule: "Supprimer les horaires ?"
   delete_title_service_token: "Delete service token?"
+  delete_title_user: "Delete user?"
+  delete_title_policy: "Delete policy?"
   delete_title_source: "Supprimer les sources ?"
   delete_title_task: "Supprimer les tâches ?"
   delete_title_virtual_assistant: "Delete virtual assistant?"
@@ -262,6 +264,14 @@ helper_text:
   invalid_type: Type invalide
   invalid_url: URL invalide
   invalid_username: Nom d'utilisateur invalide
+  invalid_password: Invalid password
+  password_leave_empty: Leave empty to keep the current password
+  policy_description: Short summary of what this policy grants
+  policy_system: Built-in policies cannot be changed or deleted
+  policy_statements: Add one or more allow or deny rules. Use the edit button to set actions and resources for each statement.
+  policy_id: Policy identifier (e.g. living-room-read)
+  policy_actions: "Actions: get, list, create, update, delete, enable, disable, reload, action, or *"
+  policy_resources: "Resources: gateway:*, field:site-a.room-1.*, task:night-mode, or *"
   invalid_value: valeur invalide
   invalid_width: Largeur invalide
 hide_border: Masquer la bordure

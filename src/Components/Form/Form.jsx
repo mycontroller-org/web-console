@@ -37,6 +37,7 @@ import {
 } from "./Widget/ChartsPanel/ChartYAxisConfigMapUtils"
 import MixedResourceConfigList from "./Widget/ChartsPanel/MixedResourceConfigList/MixedResourceConfigList"
 import MixedControlListForm from "./Widget/MixedControlList"
+import PolicyStatementsForm from "./PolicyStatementsForm"
 
 // item sample
 // const item = {
@@ -119,6 +120,7 @@ const getField = (item, onChange) => {
   switch (item.fieldType) {
     case FieldType.Text:
     case FieldType.Password:
+    case FieldType.Email:
       return (
         <TextInput
           id={itemId}
@@ -169,6 +171,9 @@ const getField = (item, onChange) => {
           actionSpan={item.actionSpan}
           onChange={onChange}
           validateKeyFunc={item.validateKeyFunc}
+          isActionDisabled={item.isDisabled}
+          isKeyDisabled={item.isDisabled}
+          isValueDisabled={item.isDisabled}
         />
       )
 
@@ -276,6 +281,16 @@ const getField = (item, onChange) => {
           validateValueFunc={item.validateValueFunc}
           valueField={item.valueField}
           updateButtonCallback={item.updateButtonCallback}
+        />
+      )
+
+    case FieldType.PolicyStatements:
+      return (
+        <PolicyStatementsForm
+          key={item.fieldId}
+          valuesList={item.value || []}
+          onChange={onChange}
+          isDisabled={!!item.isDisabled}
         />
       )
 

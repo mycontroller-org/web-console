@@ -47,6 +47,9 @@ const getValue = (item, data) => {
     case DataType.ArrayObject:
       return data
 
+    case DataType.ArrayString:
+      return Array.isArray(data) ? data : []
+
     case DataType.Object:
       return data
 
@@ -76,6 +79,7 @@ export const updateItems = (rootObject, items) => {
       case FieldType.MixedControlList:
       case FieldType.ChartMixedResourceConfig:
       case FieldType.DynamicListGeneric:
+      case FieldType.PolicyStatements:
         item.value = objectPath.get(rootObject, item.fieldId, [])
         if (item.value === null) {
           item.value = []
