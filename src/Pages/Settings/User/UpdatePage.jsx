@@ -132,24 +132,21 @@ const getFormItems = (rootObject, id) => {
     {
       label: "policies",
       fieldId: "policies",
-      fieldType: FieldType.DynamicArray,
+      fieldType: FieldType.SelectTypeAheadAsync,
       dataType: DataType.ArrayString,
       value: [],
-      isSelectTypeAheadAsync: true,
-      selectOptions: {
-        direction: DropDownPositionType.UP,
-        isCreatable: false,
-        apiOptions: api.policy.list,
-        optionValueKey: "id",
-        getFiltersFunc: (value) => {
-          return [{ k: "id", o: Operator.Regex, v: value }]
-        },
-        optionValueFunc: (item) => {
-          return item.id
-        },
-        getOptionsDescriptionFunc: (item) => {
-          return item.description || item.id
-        },
+      isMulti: true,
+      limit: 20,
+      apiOptions: api.policy.list,
+      optionValueKey: "id",
+      getFiltersFunc: (value) => {
+        return [{ k: "id", o: Operator.Regex, v: value }]
+      },
+      optionValueFunc: (item) => {
+        return item.id
+      },
+      getOptionsDescriptionFunc: (item) => {
+        return item.description || item.id
       },
     },
     {

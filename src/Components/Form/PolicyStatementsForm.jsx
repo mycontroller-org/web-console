@@ -6,9 +6,7 @@ import {
   Modal,
   ModalVariant,
   Split,
-  Text,
   TextInput,
-  TextVariants,
 } from "@patternfly/react-core"
 import { AddCircleOIcon, EditIcon, MinusCircleIcon } from "@patternfly/react-icons"
 import objectPath from "object-path"
@@ -171,16 +169,10 @@ class PolicyStatementsForm extends React.Component {
 
     return (
       <Grid className="mc-key-value-map-items">
-        <GridItem span={11}>
-          <Text className="field-title" component={TextVariants.h4}>
-            {t("statements")}
-          </Text>
-        </GridItem>
-        <GridItem span={1} />
         {rows}
         {items.length === 0 && !isDisabled ? (
           <GridItem span={12}>
-            <Button variant="secondary" onClick={this.onAdd}>
+            <Button variant="secondary" isBlock onClick={this.onAdd}>
               {t("add_an_item")}
             </Button>
           </GridItem>

@@ -219,6 +219,7 @@ export const validateItem = (item, value) => {
 
     case FieldType.SelectTypeAhead:
     case FieldType.SelectTypeAheadMultiple:
+    case FieldType.SelectTypeAheadAsync:
       if (item.dataType === DataType.ArrayString || Array.isArray(value)) {
         if (!Array.isArray(value)) {
           return !isRequired

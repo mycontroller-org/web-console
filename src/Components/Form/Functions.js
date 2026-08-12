@@ -92,6 +92,8 @@ export const updateItems = (rootObject, items) => {
         break
 
       case FieldType.SelectTypeAhead:
+      case FieldType.SelectTypeAheadAsync:
+      case FieldType.SelectTypeAheadMultiple:
         if (item.dataType === DataType.ArrayString) {
           item.value = objectPath.get(rootObject, item.fieldId, [])
           if (item.value === null) {
