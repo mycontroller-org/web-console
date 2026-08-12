@@ -893,8 +893,6 @@ service_tokens: Service Tokens
 policies: Policies
 policy_details: Policy Details
 statement: Statement
-true: "true"
-false: "false"
 user_details: User Details
 users: Users
 settings: Settings
