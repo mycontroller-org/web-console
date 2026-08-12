@@ -43,4 +43,5 @@ export const FieldType = {
   SliderSimple: "slider_simple",
   ChartYAxisConfigMap: "chart_y_axis_config_map",
   ChartMixedResourceConfig: "chart_mixed_resource_config",
+  PolicyStatements: "policy_statements",
 }

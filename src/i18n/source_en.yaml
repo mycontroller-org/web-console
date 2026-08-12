@@ -10,9 +10,11 @@ add_a_gateway: Add a Gateway
 add_a_handler: Add a Handler
 add_a_node: Add a Node
 add_a_schedule: Add a Schedule
+add_a_policy: Add a Policy
 add_a_service_token: Add a Service Token
 add_a_source: Add a Source
 add_a_task: Add a Task
+add_a_user: Add a User
 add_a_virtual_assistant: Add a Virtual Assistant
 add_a_virtual_device: Add a Virtual Device
 add_an_item: Add an item
@@ -108,6 +110,8 @@ dialog:
   delete_title_node: Delete nodes?
   delete_title_schedule: Delete schedules?
   delete_title_service_token: Delete service token?
+  delete_title_user: Delete user?
+  delete_title_policy: Delete policy?
   delete_title_source: Delete sources?
   delete_title_task: Delete tasks?
   delete_title_virtual_assistant: Delete virtual assistant?
@@ -262,6 +266,14 @@ helper_text:
   invalid_type: Invalid type
   invalid_url: Invalid URL
   invalid_username: Invalid username
+  invalid_password: Invalid password
+  password_leave_empty: Leave empty to keep the current password
+  policy_description: Short summary of what this policy grants
+  policy_system: Built-in policies cannot be changed or deleted
+  policy_statements: Add one or more allow or deny rules. Use the edit button to set actions and resources for each statement.
+  policy_id: Policy identifier (e.g. living-room-read)
+  policy_actions: "Actions: get, list, create, update, delete, enable, disable, reload, action, or *"
+  policy_resources: "Resources: gateway:*, field:site-a.room-1.*, task:night-mode, or *"
   invalid_value: Invalid value
   invalid_width: Invalid width
 hide_border: Hide Border
@@ -878,6 +890,13 @@ service_token_copy_title: Copy Service Token
 service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
 service_token_details: Service Token Details
 service_tokens: Service Tokens
+policies: Policies
+policy_details: Policy Details
+statement: Statement
+true: "true"
+false: "false"
+user_details: User Details
+users: Users
 settings: Settings
 show_grid_x: Show Grid X
 show_grid_y: Show Grid Y
@@ -989,3 +1008,6 @@ y_axis: Y Axis
 y_axis_configuration: Y Axis Configuration
 yaml: YAML
 yaml_view: YAML View
+edit_statement: Edit Statement
+statements: Statements
+effect: Effect

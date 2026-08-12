@@ -22,6 +22,8 @@ import themeReducer from "./entities/theme"
 import toasterReducer from "./entities/toaster"
 import websocketReducer from "./entities/websocket"
 import settingsServiceTokenReducer from "./entities/system/serviceToken"
+import settingsUserReducer from "./entities/system/user"
+import settingsPolicyReducer from "./entities/system/policy"
 
 export default combineReducers({
   notification: notificationReducer,
@@ -47,4 +49,6 @@ export default combineReducers({
   locale: localeReducer,
   theme: themeReducer,
   settingsServiceToken: settingsServiceTokenReducer,
+  settingsUser: settingsUserReducer,
+  settingsPolicy: settingsPolicyReducer,
 })

@@ -177,7 +177,9 @@ class ListPage extends React.Component {
       let rows
       if (rowId === -1) {
         rows = prevState.rows.map((row) => {
-          row.selected = isSelected
+          if (!row.disableSelection) {
+            row.selected = isSelected
+          }
           return row
         })
       } else {

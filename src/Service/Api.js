@@ -263,6 +263,18 @@ export const api = {
     update: (data) => newRequest(HTTP_VERBS.POST, "/servicetoken/update", {}, data),
     delete: (data) => newRequest(HTTP_VERBS.DELETE, "/servicetoken", {}, data),
   },
+  user: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/user", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/user/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/user", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/user", {}, data),
+  },
+  policy: {
+    list: (filter) => newRequest(HTTP_VERBS.GET, "/policy", filter, {}),
+    get: (id) => newRequest(HTTP_VERBS.GET, "/policy/" + id, {}, {}),
+    update: (data) => newRequest(HTTP_VERBS.POST, "/policy", {}, data),
+    delete: (data) => newRequest(HTTP_VERBS.DELETE, "/policy", {}, data),
+  },
   quickId: {
     getResources: (queries) => newRequest(HTTP_VERBS.GET, "/quickid", queries, {}),
   },

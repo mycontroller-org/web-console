@@ -111,7 +111,20 @@ class Editor extends React.Component {
     })
   }
 
+  isLocked = (rootObject = this.state.rootObject) => {
+    if (this.props.readOnly) {
+      return true
+    }
+    if (typeof this.props.readOnlyIf === "function") {
+      return !!this.props.readOnlyIf(rootObject)
+    }
+    return false
+  }
+
   onSaveClick = () => {
+    if (this.isLocked()) {
+      return
+    }
     if (this.props.apiSaveRecord || this.props.onSaveFunc) {
       this.setState((prevState) => {
         const { formView, rootObject, inValidItems } = prevState
@@ -167,6 +180,7 @@ class Editor extends React.Component {
   render() {
     const { loading, rootObject, formView, isReloadable, inValidItems } = this.state
     const { saveButtonText, isWidthLimited = true, disableEditor = false, t } = this.props
+    const locked = this.isLocked(rootObject)
     if (loading) {
       return <Loading />
     }
@@ -192,7 +206,7 @@ class Editor extends React.Component {
       const otherOptions = this.props.otherOptions ? this.props.otherOptions : {}
 
       const basicOptions = {
-        readOnly: this.props.readOnly,
+        readOnly: locked || this.props.readOnly,
         minimap: { enabled: this.props.minimapEnabled },
       }
 
@@ -221,9 +235,15 @@ class Editor extends React.Component {
 
     const saveText = t(saveButtonText ? saveButtonText : "save")
 
-    const actionButtons = [
-      { text: saveText, variant: "primary", onClickFunc: this.onSaveClick, isDisabled: saveDisabled },
-    ]
+    const actionButtons = []
+    if (!locked) {
+      actionButtons.push({
+        text: saveText,
+        variant: "primary",
+        onClickFunc: this.onSaveClick,
+        isDisabled: saveDisabled,
+      })
+    }
 
     if (isReloadable) {
       actionButtons.push({
@@ -324,6 +344,7 @@ Editor.propTypes = {
   getFormItems: PropTypes.func,
   isWidthLimited: PropTypes.bool,
   saveButtonText: PropTypes.string,
+  readOnlyIf: PropTypes.func,
 }
 
 export default withTranslation()(Editor)

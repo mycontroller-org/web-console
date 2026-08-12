@@ -2,7 +2,7 @@ import v from "validator"
 import { t } from "typy"
 import { isDate } from "moment"
 import { getValue } from "./Util"
-import { FieldType } from "../Constants/Form"
+import { DataType, FieldType } from "../Constants/Form"
 
 const isLengthDualList = (val, opts) => {
   if (t(opts, "min").isNumber && val.right.length < opts.min) {
@@ -65,16 +65,29 @@ export const validate = (func, val, opts) => {
       return v.isCurrency(val, opts)
 
     case "isEmpty":
+      // validator.isEmpty only accepts strings; arrays/objects must be handled here
+      if (val === undefined || val === null) {
+        return true
+      }
+      if (t(val).isArray) {
+        return val.length === 0
+      }
       if (t(val).isObject) {
         return Object.keys(val).length === 0
       }
-      return v.isEmpty(val, opts)
+      return v.isEmpty(String(val), opts)
 
     case "isNotEmpty":
+      if (val === undefined || val === null) {
+        return false
+      }
+      if (t(val).isArray) {
+        return val.length > 0
+      }
       if (t(val).isObject) {
         return Object.keys(val).length > 0
       }
-      return !v.isEmpty(val, opts)
+      return !v.isEmpty(String(val), opts)
 
     case "isEqual":
       return val === opts.value
@@ -156,6 +169,7 @@ export const validateItem = (item, value) => {
     }
   }
 
+  // Array fields: never run string-only validators (validator lib throws on non-strings)
   switch (fieldType) {
     case FieldType.KeyValueMap:
     case FieldType.Labels:
@@ -182,17 +196,69 @@ export const validateItem = (item, value) => {
       break
 
     case FieldType.DynamicArray:
-      const validateValueFnDA = getValue(item, "validateValueFunc", null)
-      if (validateValueFnDA !== null) {
-        const valuesDA = value
-        for (let index = 0; index < valuesDA.length; index++) {
-          const value = valuesDA[index]
-          if (!validateValueFnDA(value)) {
+      {
+        if (!Array.isArray(value)) {
+          return !isRequired
+        }
+        if (isRequired && value.length === 0) {
+          return false
+        }
+        const validateValueFnDA = getValue(item, "validateValueFunc", null)
+        if (validateValueFnDA !== null) {
+          for (let index = 0; index < value.length; index++) {
+            if (!validateValueFnDA(value[index])) {
+              return false
+            }
+          }
+        }
+      }
+      break
+
+    case FieldType.SelectTypeAhead:
+    case FieldType.SelectTypeAheadMultiple:
+      if (item.dataType === DataType.ArrayString || Array.isArray(value)) {
+        if (!Array.isArray(value)) {
+          return !isRequired
+        }
+        if (isRequired && value.length === 0) {
+          return false
+        }
+        if (item.validator) {
+          const funcs = Object.keys(item.validator)
+          for (let index = 0; index < funcs.length; index++) {
+            const func = funcs[index]
+            if (!validate(func, value, item.validator[func])) {
+              return false
+            }
+          }
+        }
+        return true
+      }
+      // single string select
+      if (item.validator) {
+        const funcs = Object.keys(item.validator)
+        for (let index = 0; index < funcs.length; index++) {
+          const func = funcs[index]
+          if (!validate(func, value, item.validator[func])) {
             return false
           }
         }
       }
+      break
 
+    case FieldType.PolicyStatements:
+      if (!Array.isArray(value) || value.length === 0) {
+        return !isRequired
+      }
+      for (let index = 0; index < value.length; index++) {
+        const st = value[index] || {}
+        if (!Array.isArray(st.actions) || st.actions.length === 0) {
+          return false
+        }
+        if (!Array.isArray(st.resources) || st.resources.length === 0) {
+          return false
+        }
+      }
       break
 
     default:

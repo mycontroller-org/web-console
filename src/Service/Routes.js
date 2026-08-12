@@ -43,6 +43,12 @@ import SystemBackupPage from "../Pages/Settings/Backup/ListPage"
 import ServiceTokenDetailPage from "../Pages/Settings/ServiceToken/DetailsRootPage"
 import ServiceTokenListPage from "../Pages/Settings/ServiceToken/ListPage"
 import ServiceTokenUpdatePage from "../Pages/Settings/ServiceToken/UpdatePage"
+import UserDetailPage from "../Pages/Settings/User/DetailsRootPage"
+import UserListPage from "../Pages/Settings/User/ListPage"
+import UserUpdatePage from "../Pages/Settings/User/UpdatePage"
+import PolicyDetailPage from "../Pages/Settings/Policy/DetailsRootPage"
+import PolicyListPage from "../Pages/Settings/Policy/ListPage"
+import PolicyUpdatePage from "../Pages/Settings/Policy/UpdatePage"
 
 // import dummyPage from "../Pages/DummyPage/DummyPage"
 import TopologyPage from "../Pages/Topology/Topology"
@@ -109,6 +115,18 @@ const routeMap = {
       detail: "/settings/servicetoken/list/:id",
       update: "/settings/servicetoken/update/:id",
       add: "/settings/servicetoken/add",
+    },
+    user: {
+      list: "/settings/user",
+      detail: "/settings/user/list/:id",
+      update: "/settings/user/update/:id",
+      add: "/settings/user/add",
+    },
+    policy: {
+      list: "/settings/policy",
+      detail: "/settings/policy/list/:id",
+      update: "/settings/policy/update/:id",
+      add: "/settings/policy/add",
     },
   },
   operations: {
@@ -282,6 +300,18 @@ const routes = [
         to: routeMap.settings.serviceToken.list,
         component: ServiceTokenListPage,
       },
+      {
+        id: "users",
+        title: "users",
+        to: routeMap.settings.user.list,
+        component: UserListPage,
+      },
+      {
+        id: "policies",
+        title: "policies",
+        to: routeMap.settings.policy.list,
+        component: PolicyListPage,
+      },
     ],
   },
 ]
@@ -394,6 +424,22 @@ const hiddenRoutes = [
   {
     to: routeMap.settings.serviceToken.add,
     component: ServiceTokenUpdatePage,
+  },
+  {
+    to: routeMap.settings.user.detail,
+    component: UserDetailPage,
+  },
+  {
+    to: routeMap.settings.user.add,
+    component: UserUpdatePage,
+  },
+  {
+    to: routeMap.settings.policy.detail,
+    component: PolicyDetailPage,
+  },
+  {
+    to: routeMap.settings.policy.add,
+    component: PolicyUpdatePage,
   },
 ]
 

@@ -22,7 +22,9 @@ class Select extends React.Component {
         const selectionValue = getValueByLabel(options, selectionLabel)
         let finalValue = selectionValue
         if (isMulti) {
-          let itemsSelected = isArrayData ? [...selected] : selected.split(",")
+          let itemsSelected = isArrayData
+            ? [...(Array.isArray(selected) ? selected : [])]
+            : String(selected || "").split(",")
           if (itemsSelected.includes(selectionValue)) {
             itemsSelected = itemsSelected.filter((v) => v !== selectionValue)
           } else {
@@ -70,7 +72,8 @@ class Select extends React.Component {
     let selections = []
 
     if (isArrayData) {
-      selections = selected.map((s) => {
+      const selectedArr = Array.isArray(selected) ? selected : []
+      selections = selectedArr.map((s) => {
         return getLabelByValue(options, s)
       })
     } else {
