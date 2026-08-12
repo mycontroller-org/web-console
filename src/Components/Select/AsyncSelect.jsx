@@ -1,4 +1,4 @@
-import { Grid, GridItem, Select, SelectOption, Spinner } from "@patternfly/react-core"
+import { Grid, GridItem, Select, SelectOption, SelectVariant, Spinner } from "@patternfly/react-core"
 import PropTypes from "prop-types"
 import React from "react"
 import { getDynamicFilter } from "../../Util/Filter"
@@ -58,6 +58,9 @@ class AsyncSelect extends React.Component {
   }
 
   getFilters = (value) => {
+    if (!value) {
+      return []
+    }
     if (this.props.getFiltersFunc) {
       return this.props.getFiltersFunc(value)
     }
@@ -116,7 +119,7 @@ class AsyncSelect extends React.Component {
       isMulti = false,
     } = this.props
     const selectOptions = options.map((option) => {
-      return <SelectOption value={option.label} description={option.description} />
+      return <SelectOption key={option.label} value={option.label} description={option.description} />
     })
     const selections = isMulti ? (Array.isArray(selected) ? selected : []) : selected
 
@@ -131,7 +134,7 @@ class AsyncSelect extends React.Component {
       <Grid hasGutter>
         <GridItem span={12 - spinnerSpan}>
           <Select
-            variant={isMulti ? "typeaheadMulti" : "typeahead"}
+            variant={isMulti ? SelectVariant.typeaheadMulti : SelectVariant.typeahead}
             onToggle={this.onToggle}
             onFilter={(event) => {
               if (event) {
