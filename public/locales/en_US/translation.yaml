@@ -1002,8 +1002,6 @@ users: Users
 policies: Policies
 user_details: User Details
 policy_details: Policy Details
-add_a_user: Add a User
-add_a_policy: Add a Policy
 statement: Statement
 edit_statement: Edit Statement
 statements: Statements
