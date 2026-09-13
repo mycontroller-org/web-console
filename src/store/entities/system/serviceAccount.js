@@ -1,6 +1,6 @@
 import { getBase } from "../listPageBase"
 
-const slice = getBase("serviceToken")
+const slice = getBase("serviceAccount")
 
 export default slice.reducer
 

@@ -11,7 +11,7 @@ add_a_handler: ஒரு ஹேண்ட்லரை சேர்க்கவு
 add_a_node: ஒரு நோடுயை சேர்க்கவும்
 add_a_schedule: Add a Schedule
 add_a_policy: Add a Policy
-add_a_service_token: Add a Service Token
+add_a_service_account: Add a Service Account
 add_a_source: ஒரு சோர்ஸ்யை சேர்க்கவும்
 add_a_task: ஒரு டாஸ்க்யை சேர்க்கவும்
 add_a_user: Add a User
@@ -109,7 +109,7 @@ dialog:
   delete_title_handler: "Delete handlers?"
   delete_title_node: "நோடுகளை நீக்கவா?"
   delete_title_schedule: "Delete schedules?"
-  delete_title_service_token: "Delete service token?"
+  delete_title_service_account: "Delete service account?"
   delete_title_user: "Delete user?"
   delete_title_policy: "Delete policy?"
   delete_title_source: "Delete sources?"
@@ -270,6 +270,7 @@ helper_text:
   invalid_username: தவறான பயனர்பெயர்
   invalid_password: Invalid password
   password_leave_empty: Leave empty to keep the current password
+  service_account_user: Leave empty to create for yourself. Pick a user to create the account for them.
   invalid_value: தவறான மதிப்பு
   invalid_width: தவறான அகலம்
 hide_border: Hide Border
@@ -878,11 +879,12 @@ schedules: Schedules
 script: ஸ்கிரிப்ட்
 select_an_option: ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்
 server: சர்வர்
-service_not_generated: Service token not generated
-service_token_copy_title: Copy Service Token
-service_token_copy_warning_msg: This service token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
-service_token_details: Service Token Details
-service_tokens: Service Tokens
+service_account_not_generated: Service account token not generated
+service_account_copy_title: Copy Service Account Token
+service_account_copy_warning_msg: This token will only be displayed once. It will not be stored and cannot be retrieved. Please be sure to save it now.
+service_account_barcode_help: Scan this barcode to log in with the token.
+service_account_details: Service Account Details
+service_accounts: Service Accounts
 policies: Policies
 policy_details: Policy Details
 settings: அமைப்புகள்

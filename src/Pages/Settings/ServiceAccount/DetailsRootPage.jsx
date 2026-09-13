@@ -38,7 +38,7 @@ class DetailPage extends React.Component {
     ]
     return (
       <DetailRootPage
-        pageHeader="service_token_details"
+        pageHeader="service_account_details"
         tabs={tabs}
         activeTabKey={activeTabKey}
         onTabClickFn={this.onTabClick}

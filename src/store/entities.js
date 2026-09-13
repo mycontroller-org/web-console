@@ -21,7 +21,7 @@ import systemBackupReducer from "./entities/system/backup"
 import themeReducer from "./entities/theme"
 import toasterReducer from "./entities/toaster"
 import websocketReducer from "./entities/websocket"
-import settingsServiceTokenReducer from "./entities/system/serviceToken"
+import settingsServiceAccountReducer from "./entities/system/serviceAccount"
 import settingsUserReducer from "./entities/system/user"
 import settingsPolicyReducer from "./entities/system/policy"
 
@@ -48,7 +48,7 @@ export default combineReducers({
   websocket: websocketReducer,
   locale: localeReducer,
   theme: themeReducer,
-  settingsServiceToken: settingsServiceTokenReducer,
+  settingsServiceAccount: settingsServiceAccountReducer,
   settingsUser: settingsUserReducer,
   settingsPolicy: settingsPolicyReducer,
 })
