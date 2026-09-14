@@ -1,3 +1,7 @@
+> **This repository is no longer maintained.**
+>
+> The web console has moved into the [MyController server](https://github.com/mycontroller-org/server) repository (`web-console/`). Please open issues and pull requests there.
+
 # MyController v2.x Web Console
 This project has web console source code for the MyController server. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -40,4 +44,4 @@ The build is minified and the filenames include the hashes.<br />
 To see your changes on your production environment. You can copy the `build` directory and replace it with `web_console` in MyController server.
 
 ## Release
-There is no separate release for this project. The [server repository](https://github.com/mycontroller-org/server) takes the corresponding version(`tag`, `branch`) of this project and builds along with the backend code.
+This repository is archived. The console is released with the [server repository](https://github.com/mycontroller-org/server).
