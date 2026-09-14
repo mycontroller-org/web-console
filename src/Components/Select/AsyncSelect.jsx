@@ -26,7 +26,8 @@ class AsyncSelect extends React.Component {
           .then((res) => {
             const items = res.data.data
             const options = items.map((item) => {
-              return { label: valueFunc(item), description: this.getDescription(item) }
+              const value = valueFunc(item)
+              return { value: value, label: value, description: this.getDescription(item) }
             })
             this.setState({ options: options, loading: false })
           })
@@ -119,7 +120,11 @@ class AsyncSelect extends React.Component {
       isMulti = false,
     } = this.props
     const selectOptions = options.map((option) => {
-      return <SelectOption key={option.label} value={option.label} description={option.description} />
+      return (
+        <SelectOption key={option.value} value={option.value} description={option.description}>
+          {option.label}
+        </SelectOption>
+      )
     })
     const selections = isMulti ? (Array.isArray(selected) ? selected : []) : selected
 

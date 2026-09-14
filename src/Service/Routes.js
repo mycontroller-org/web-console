@@ -40,9 +40,9 @@ import ScheduleUpdatePage from "../Pages/Operations/Schedule/UpdatePage"
 import ScheduleDetailPage from "../Pages/Operations/Schedule/DetailsRootPage"
 import SystemDetailsPage from "../Pages/Settings/System/DetailsRootPage"
 import SystemBackupPage from "../Pages/Settings/Backup/ListPage"
-import ServiceTokenDetailPage from "../Pages/Settings/ServiceToken/DetailsRootPage"
-import ServiceTokenListPage from "../Pages/Settings/ServiceToken/ListPage"
-import ServiceTokenUpdatePage from "../Pages/Settings/ServiceToken/UpdatePage"
+import ServiceAccountDetailPage from "../Pages/Settings/ServiceAccount/DetailsRootPage"
+import ServiceAccountListPage from "../Pages/Settings/ServiceAccount/ListPage"
+import ServiceAccountUpdatePage from "../Pages/Settings/ServiceAccount/UpdatePage"
 import UserDetailPage from "../Pages/Settings/User/DetailsRootPage"
 import UserListPage from "../Pages/Settings/User/ListPage"
 import UserUpdatePage from "../Pages/Settings/User/UpdatePage"
@@ -110,11 +110,11 @@ const routeMap = {
     profile: "/settings/profile",
     system: "/settings/system",
     backup: "/settings/backup",
-    serviceToken: {
-      list: "/settings/servicetoken",
-      detail: "/settings/servicetoken/list/:id",
-      update: "/settings/servicetoken/update/:id",
-      add: "/settings/servicetoken/add",
+    serviceAccount: {
+      list: "/settings/serviceaccount",
+      detail: "/settings/serviceaccount/list/:id",
+      update: "/settings/serviceaccount/update/:id",
+      add: "/settings/serviceaccount/add",
     },
     user: {
       list: "/settings/user",
@@ -295,10 +295,14 @@ const routes = [
         component: SystemBackupPage,
       },
       {
-        id: "service-token",
-        title: "service_tokens",
-        to: routeMap.settings.serviceToken.list,
-        component: ServiceTokenListPage,
+        id: "separator_settings_1",
+        isSeparator: true,
+      },
+      {
+        id: "policies",
+        title: "policies",
+        to: routeMap.settings.policy.list,
+        component: PolicyListPage,
       },
       {
         id: "users",
@@ -307,10 +311,10 @@ const routes = [
         component: UserListPage,
       },
       {
-        id: "policies",
-        title: "policies",
-        to: routeMap.settings.policy.list,
-        component: PolicyListPage,
+        id: "service-account",
+        title: "service_accounts",
+        to: routeMap.settings.serviceAccount.list,
+        component: ServiceAccountListPage,
       },
     ],
   },
@@ -418,12 +422,12 @@ const hiddenRoutes = [
     component: ScheduleUpdatePage,
   },
   {
-    to: routeMap.settings.serviceToken.detail,
-    component: ServiceTokenDetailPage,
+    to: routeMap.settings.serviceAccount.detail,
+    component: ServiceAccountDetailPage,
   },
   {
-    to: routeMap.settings.serviceToken.add,
-    component: ServiceTokenUpdatePage,
+    to: routeMap.settings.serviceAccount.add,
+    component: ServiceAccountUpdatePage,
   },
   {
     to: routeMap.settings.user.detail,

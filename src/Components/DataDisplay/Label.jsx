@@ -79,6 +79,18 @@ export const getKeyValue = (key = "", value = "", index = "") => {
   )
 }
 
+export const Statements = ({ statements = [] }) => {
+  const items = Array.isArray(statements) ? statements : []
+  const data = {}
+  items.forEach((st, index) => {
+    const n = index + 1
+    data[`${n}.effect`] = st.effect || "Allow"
+    data[`${n}.actions`] = Array.isArray(st.actions) ? st.actions.join(", ") : ""
+    data[`${n}.resources`] = Array.isArray(st.resources) ? st.resources.join(", ") : ""
+  })
+  return <KeyValueMap data={data} />
+}
+
 export const KeyValueMap = ({ data = {} }) => {
   const { t } = useTranslation()
 

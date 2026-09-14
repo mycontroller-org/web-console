@@ -18,7 +18,7 @@ import {
   onSortBy,
   updateFilter,
   updateRecords,
-} from "../../../store/entities/system/serviceToken"
+} from "../../../store/entities/system/serviceAccount"
 
 class List extends ListBase {
   state = {
@@ -43,7 +43,7 @@ class List extends ListBase {
       type: "addButton",
       group: "right1",
       onClick: () => {
-        r(this.props.history, rMap.settings.serviceToken.add)
+        r(this.props.history, rMap.settings.serviceAccount.add)
       },
     },
   ]
@@ -51,7 +51,7 @@ class List extends ListBase {
   render() {
     return (
       <>
-        <PageTitle title="service_tokens" />
+        <PageTitle title="service_accounts" />
         <PageContent>{super.render()}</PageContent>
       </>
     )
@@ -61,6 +61,7 @@ class List extends ListBase {
 // Properties definition
 const tableColumns = [
   { title: "name", fieldKey: "name", sortable: true },
+  { title: "username", fieldKey: "username", sortable: true },
   { title: "description", fieldKey: "description", sortable: true },
   { title: "never_expire", fieldKey: "neverExpire", sortable: true },
   { title: "expires_on", fieldKey: "expiresOn", sortable: true },
@@ -76,12 +77,28 @@ const toRowFuncImpl = (rawData, history) => {
             variant="link"
             isInline
             onClick={(_e) => {
-              r(history, rMap.settings.serviceToken.detail, { id: rawData.id })
+              r(history, rMap.settings.serviceAccount.detail, { id: rawData.id })
             }}
           >
             {rawData.name}
           </Button>
         ),
+      },
+      {
+        title:
+          rawData.userId && rawData.username ? (
+            <Button
+              variant="link"
+              isInline
+              onClick={(_e) => {
+                r(history, rMap.settings.user.detail, { id: rawData.userId })
+              }}
+            >
+              {rawData.username}
+            </Button>
+          ) : (
+            rawData.username || ""
+          ),
       },
       { title: rawData.description },
       { title: <div className="align-center">{getStatusBool(rawData.neverExpire)}</div> },
@@ -94,6 +111,7 @@ const toRowFuncImpl = (rawData, history) => {
 
 const filtersDefinition = [
   { category: "name", categoryName: "name", fieldType: "input", dataType: "string" },
+  { category: "username", categoryName: "username", fieldType: "input", dataType: "string" },
   { category: "description", categoryName: "description", fieldType: "input", dataType: "string" },
   { category: "neverExpire", categoryName: "never_expire", fieldType: "neverExpire", dataType: "boolean" },
   { category: "expiresOn", categoryName: "expires_on", fieldType: "input", dataType: "string" },
@@ -102,23 +120,23 @@ const filtersDefinition = [
 
 // supply required properties
 List.defaultProps = {
-  apiGetRecords: api.serviceToken.list,
-  apiDeleteRecords: api.serviceToken.delete,
+  apiGetRecords: api.serviceAccount.list,
+  apiDeleteRecords: api.serviceAccount.delete,
   tableColumns: tableColumns,
   toRowFunc: toRowFuncImpl,
-  deleteDialogTitle: "dialog.delete_title_service_token",
+  deleteDialogTitle: "dialog.delete_title_service_account",
   filtersDefinition: filtersDefinition,
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.entities.settingsServiceToken.loading,
-  records: state.entities.settingsServiceToken.records,
-  pagination: state.entities.settingsServiceToken.pagination,
-  count: state.entities.settingsServiceToken.count,
-  lastUpdate: state.entities.settingsServiceToken.lastUpdate,
-  revision: state.entities.settingsServiceToken.revision,
-  filters: state.entities.settingsServiceToken.filters,
-  sortBy: state.entities.settingsServiceToken.sortBy,
+  loading: state.entities.settingsServiceAccount.loading,
+  records: state.entities.settingsServiceAccount.records,
+  pagination: state.entities.settingsServiceAccount.pagination,
+  count: state.entities.settingsServiceAccount.count,
+  lastUpdate: state.entities.settingsServiceAccount.lastUpdate,
+  revision: state.entities.settingsServiceAccount.revision,
+  filters: state.entities.settingsServiceAccount.filters,
+  sortBy: state.entities.settingsServiceAccount.sortBy,
 })
 
 const mapDispatchToProps = (dispatch) => ({

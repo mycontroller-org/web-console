@@ -1,9 +1,11 @@
 import React from "react"
 import TabDetailsBase from "../../../Components/BasePage/TabDetailsBase"
-import { KeyValueMap, Labels } from "../../../Components/DataDisplay/Label"
+import { RouteLink } from "../../../Components/Buttons/Buttons"
+import { Labels, Statements } from "../../../Components/DataDisplay/Label"
 import { DisplayTrue } from "../../../Components/DataDisplay/Miscellaneous"
 import { LastSeen } from "../../../Components/Time/Time"
 import { api } from "../../../Service/Api"
+import { routeMap as rMap } from "../../../Service/Routes"
 
 const tabDetails = ({ resourceId, history }) => {
   return (
@@ -11,7 +13,13 @@ const tabDetails = ({ resourceId, history }) => {
       resourceId={resourceId}
       history={history}
       apiGetRecord={api.policy.get}
+      apiListTablesRecord={api.user.list}
+      tableTitle="users"
+      getTableFilterFunc={getTableFilterFuncImpl}
+      tableColumns={tableColumns}
+      getTableRowsFunc={getTableRowsFuncImpl}
       getDetailsFunc={getDetailsFuncImpl}
+      cardTitle="details"
     />
   )
 }
@@ -29,18 +37,41 @@ const getDetailsFuncImpl = (data) => {
 
   fieldsList2.push({ key: "modified_on", value: <LastSeen date={data.modifiedOn} tooltipPosition="top" /> })
 
-  const statements = Array.isArray(data.statements) ? data.statements : []
-  const statementsMap = {}
-  statements.forEach((st, index) => {
-    const n = index + 1
-    statementsMap[`${n}.effect`] = st.effect || "Allow"
-    statementsMap[`${n}.actions`] = Array.isArray(st.actions) ? st.actions.join(", ") : ""
-    statementsMap[`${n}.resources`] = Array.isArray(st.resources) ? st.resources.join(", ") : ""
-  })
-  fieldsList2.push({ key: "statements", value: <KeyValueMap data={statementsMap} /> })
+  fieldsList2.push({ key: "statements", value: <Statements statements={data.statements} /> })
 
   return {
     "list-1": fieldsList1,
     "list-2": fieldsList2,
   }
+}
+
+const tableColumns = [
+  { title: "username", fieldKey: "username", sortable: true },
+  { title: "full_name", fieldKey: "fullName", sortable: true },
+  { title: "email", fieldKey: "email", sortable: true },
+  { title: "disabled", fieldKey: "disabled", sortable: true },
+  { title: "modified_on", fieldKey: "modifiedOn", sortable: true },
+]
+
+const getTableRowsFuncImpl = (rawData, _index, history) => {
+  return [
+    {
+      title: (
+        <RouteLink
+          history={history}
+          path={rMap.settings.user.detail}
+          id={rawData.id}
+          text={rawData.username}
+        />
+      ),
+    },
+    { title: rawData.fullName },
+    { title: rawData.email },
+    { title: rawData.disabled ? "true" : "false" },
+    { title: <LastSeen date={rawData.modifiedOn} /> },
+  ]
+}
+
+const getTableFilterFuncImpl = (data) => {
+  return { policies: data.id }
 }
